@@ -1,0 +1,10 @@
+There is one type of thing: "row", "column", and "value".
+
+0..8 are rows.
+0..8 are columns.
+1..9 are values.
+
+Fluents
+An element (row,column) having a value is an inertial fluent(int).
+
+Actions

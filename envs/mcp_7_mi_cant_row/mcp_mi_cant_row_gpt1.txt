@@ -1,0 +1,8 @@
+There are four types of things: vessel, location, group, and integer.
+
+Problem Description:
+Three missionaries and three cannibals shall cross a river in a boat which carries at most two people at once. The boat cannot cross the river with nothing on it. On either side, the cannibals may never outnumber the missionaries or the missionaries will be eaten. Also, the cannibals may never outnumber the missionaries on the boat or the missionaries will be eaten. Missionaries cannot row.
+
+boat is a vessel. bank1 and bank2 are locations. missionaries and cannibals are groups. 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, and 10 are integers.
+
+Three missionaries and three cannibals are at location bank1. The boat is at location bank1. Find a plan so that all missionaries and all cannibals are at location bank2.

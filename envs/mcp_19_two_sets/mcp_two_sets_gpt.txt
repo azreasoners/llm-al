@@ -1,0 +1,9 @@
+There are five types of things: vessel, location, group, set, and integer.
+
+Problem Description:
+Consider the following. Three missionaries and three cannibals shall cross a river in a boat which carries at most two people at once. The boat cannot cross the river with nothing on it. On either side, the cannibals may never outnumber the missionaries or the missionaries will be eaten. Also, the cannibals may never outnumber the missionaries on the boat or the missionaries will be eaten. The boat's capacity is 2. The problem just described is doubled to have two separate occurrences at once, which don't interact with each other. That is, there are two sets, each with their respective set of three missionaries and three cannibals, a boat, and so on.
+
+Instance:
+boat1 is a vessel vessels. bank1 and bank2 are locations. missionaries and cannibals are groups. 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, and 10 are integers.
+
+For each set, three missionaries and three cannibals are at location bank1, the boat is at location bank1. Find a plan so that all missionaries and all cannibals are at location bank2 for both sets.

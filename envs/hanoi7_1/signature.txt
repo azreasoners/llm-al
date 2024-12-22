@@ -1,0 +1,13 @@
+There are three types of things: "loc", "disk", and "peg".
+"loc" includes "disk".
+"loc" includes "peg".
+
+a,b, and c are pegs.
+d1, d2, d3, d4, d5, d6, and d7 are disks. 
+
+Fluents
+The (disk)'s location is an inertial fluent (loc).
+A (disk) being heavier than another (disk) is an inertial fluent (boolean).
+
+Actions
+Moving a (disk) to a (loc) is an action.

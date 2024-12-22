@@ -1,0 +1,21 @@
+There are four types of things: "vessel", "location", "group", and "integer".
+
+boat is a vessel.
+bank1 and bank2 are locations
+missionaries and cannibals are groups
+0..10 are integers.
+
+Fluents
+The loc of a (vessel) is an inertial fluent (location).
+The number of a (group) at a (location) is an additive fluent (integer).
+The capacity of a (vessel) is an inertial fluent (integer).
+
+Actions
+Crossing a (vessel) is an action.
+Staying (of a group) is an action with a value of integer.
+A (vessel) going is an attribute (location) of the crossing action.
+The amount of members on a (vessel) of a (group) is an attribute (integer) of the crossing action.
+Using the bridge is an action.
+Using the bridge to go from is an attribute (location) of the using bridge action.
+Using the bridge to go to is an attribute (location) of the using bridge action.
+Using the bridge with a number of a (group) is an attribute (integer) of the using bridge action.

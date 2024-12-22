@@ -1,0 +1,1 @@
+Three missionaries and three cannibals are at location bank1. There is an oar on bank1 and an oar on bank2. The boat is at location bank1. Find a plan so that all missionaries and all cannibals are at location bank2. 

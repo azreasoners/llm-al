@@ -1,0 +1,154 @@
+:- maxAdditive :: 6.
+
+:- sorts
+    vessel;
+    location;
+    group;
+    integer.
+
+
+
+:- objects
+    boat :: vessel;
+    bank1, bank2 :: location;
+    missionaries, cannibals, jesus :: group;
+    0..10 :: integer.
+
+
+
+:- variables
+    Vessel :: vessel;
+    G :: group;
+    Loc :: location;
+    N, N1, N2, Cap, N_m, N_c, L_m, L_c, Rem_m, Rem_c, T :: integer;
+    Bool :: boolean.
+
+
+
+:- constants
+    numOnBank(group, location) :: additiveFluent(integer);
+    jesusLocation :: inertialFluent(location);
+    boatLocation :: inertialFluent(location);
+    cross(vessel) :: exogenousAction;
+    loading(vessel, group) :: attribute(integer) of cross(vessel);
+    jesusOnBoat(vessel) :: attribute(boolean) of cross(vessel);
+    walk :: exogenousAction;
+    capacity(vessel) :: inertialFluent(integer);
+    totalNum(group) :: inertialFluent(integer).
+
+% Generated constraints
+
+% 1a. Crossing the boat causes the boatLocation to change from bank1 to bank2.
+cross(Vessel) causes boatLocation = bank2 if boatLocation = bank1.
+
+% 1b. Crossing the boat causes the boatLocation to change from bank2 to bank1.
+cross(Vessel) causes boatLocation = bank1 if boatLocation = bank2.
+
+% 2. Crossing the boat causes numOnBank(group, boatLocation) to decrease by loading(Vessel, group) for each group.
+cross(Vessel) decrements numOnBank(G, boatLocation) by N if loading(Vessel, G) = N.
+
+% 3a. Crossing the boat from bank1 to bank2 increases numOnBank(G, bank2) by loading(Vessel, G).
+cross(Vessel) increments numOnBank(G, bank2) by N if boatLocation = bank1 & loading(Vessel, G) = N.
+
+% 3b. Crossing the boat from bank2 to bank1 increases numOnBank(G, bank1) by loading(Vessel, G).
+cross(Vessel) increments numOnBank(G, bank1) by N if boatLocation = bank2 & loading(Vessel, G) = N.
+
+% 4a. Crossing the boat causes jesusLocation to change to bank2 if jesusOnBoat(Vessel) = true and boatLocation is bank1.
+cross(Vessel) causes jesusLocation = bank2 if boatLocation = bank1 & jesusOnBoat(Vessel) = true.
+
+% 4b. Crossing the boat causes jesusLocation to change to bank1 if jesusOnBoat(Vessel) = true and boatLocation is bank2.
+cross(Vessel) causes jesusLocation = bank1 if boatLocation = bank2 & jesusOnBoat(Vessel) = true.
+
+% 5a. Walking causes jesusLocation to change to bank2 if jesusLocation = bank1.
+walk causes jesusLocation = bank2 if jesusLocation = bank1.
+
+% 5b. Walking causes jesusLocation to change to bank1 if jesusLocation = bank2.
+walk causes jesusLocation = bank1 if jesusLocation = bank2.
+
+% 6a. Crossing the boat is not executable if jesusOnBoat(Vessel) = true and the total number of people loaded onto the boat (including Jesus) is less than one.
+nonexecutable cross(Vessel) if loading(Vessel, missionaries) = N1 & loading(Vessel, cannibals) = N2 & jesusOnBoat(Vessel) = true & N1 + N2 + 1 < 1.
+
+% 6b. Crossing the boat is not executable if jesusOnBoat(Vessel) = false and the total number of people loaded onto the boat is less than one.
+nonexecutable cross(Vessel) if loading(Vessel, missionaries) = N1 & loading(Vessel, cannibals) = N2 & jesusOnBoat(Vessel) = false & N1 + N2 < 1.
+
+% 7a. Crossing the boat is not executable if jesusOnBoat(Vessel) = true and the total number of people loaded onto the boat exceeds capacity(Vessel).
+nonexecutable cross(Vessel) if loading(Vessel, missionaries) = N1 & loading(Vessel, cannibals) = N2 & capacity(Vessel) = Cap & jesusOnBoat(Vessel) = true & N1 + N2 + 1 > Cap.
+
+% 7b. Crossing the boat is not executable if jesusOnBoat(Vessel) = false and the total number of people loaded onto the boat exceeds capacity(Vessel).
+nonexecutable cross(Vessel) if loading(Vessel, missionaries) = N1 & loading(Vessel, cannibals) = N2 & capacity(Vessel) = Cap & jesusOnBoat(Vessel) = false & N1 + N2 > Cap.
+
+% 8. Crossing the boat is not executable if loading(Vessel, group) is greater than numOnBank(group, boatLocation) for any group.
+nonexecutable cross(Vessel) if loading(Vessel, G) = N & numOnBank(G, boatLocation) = N1 & N > N1.
+
+% 9a. Crossing the boat is not executable if cannibals loaded onto the boat exceed missionaries loaded onto the boat plus one if jesusOnBoat(Vessel) = true.
+nonexecutable cross(Vessel) if loading(Vessel, cannibals) = N_c & loading(Vessel, missionaries) = N_m & jesusOnBoat(Vessel) = true & N_c > N_m + 1.
+
+% 9b. Crossing the boat is not executable if cannibals loaded onto the boat exceed missionaries loaded onto the boat if jesusOnBoat(Vessel) = false.
+nonexecutable cross(Vessel) if loading(Vessel, cannibals) = N_c & loading(Vessel, missionaries) = N_m & jesusOnBoat(Vessel) = false & N_c > N_m.
+
+% 10a. Crossing the boat is not executable if cannibals remaining on the starting bank after loading would outnumber missionaries remaining on the starting bank plus one when Jesus is at that bank and not on the boat.
+nonexecutable cross(Vessel) if boatLocation = Loc & jesusLocation = Loc & jesusOnBoat(Vessel) = false &
+    numOnBank(cannibals, Loc) = N_c & loading(Vessel, cannibals) = L_c & Rem_c = N_c - L_c &
+    numOnBank(missionaries, Loc) = N_m & loading(Vessel, missionaries) = L_m & Rem_m = N_m - L_m &
+    Rem_c > Rem_m + 1.
+
+% 10b. Crossing the boat is not executable if cannibals remaining on the starting bank after loading would outnumber missionaries remaining on the starting bank when Jesus is not at that bank.
+nonexecutable cross(Vessel) if boatLocation = Loc & jesusLocation \= Loc &
+    numOnBank(cannibals, Loc) = N_c & loading(Vessel, cannibals) = L_c & Rem_c = N_c - L_c &
+    numOnBank(missionaries, Loc) = N_m & loading(Vessel, missionaries) = L_m & Rem_m = N_m - L_m &
+    Rem_c > Rem_m.
+
+% 11a. Walking is not executable if Jesus is already at bank2.
+nonexecutable walk if jesusLocation = bank2.
+
+% 11b. Walking is not executable if Jesus is already at bank1.
+nonexecutable walk if jesusLocation = bank1.
+
+% 12a. At any time, the total number of people in each group equals totalNum(group) if the group is not jesus.
+always (G \= jesus & numOnBank(G, bank1) = N1 & numOnBank(G, bank2) = N2 & totalNum(G) = T) -> N1 + N2 = T.
+
+% 12b. For Jesus individually
+always jesusLocation = Loc -> numOnBank(jesus, Loc) = 1.
+
+always jesusLocation \= Loc -> numOnBank(jesus, Loc) = 0.
+
+% 14a. It is impossible for cannibals to outnumber missionaries on any bank when Jesus is at that bank.
+impossible N_c > N_m + 1 & numOnBank(cannibals, Loc) = N_c & numOnBank(missionaries, Loc) = N_m & jesusLocation = Loc.
+
+% 14b. It is impossible for cannibals to outnumber missionaries on any bank when Jesus is not at that bank.
+impossible N_c > N_m & numOnBank(cannibals, Loc) = N_c & numOnBank(missionaries, Loc) = N_m & jesusLocation \= Loc.
+
+% 15a. It is not permissible for cannibals to outnumber missionaries on the boat during crossing when Jesus is on the boat.
+nonexecutable cross(Vessel) if loading(Vessel, cannibals) = N_c & loading(Vessel, missionaries) = N_m & jesusOnBoat(Vessel) = true & N_c > N_m + 1.
+
+% 15b. It is not permissible for cannibals to outnumber missionaries on the boat during crossing when Jesus is not on the boat.
+nonexecutable cross(Vessel) if loading(Vessel, cannibals) = N_c & loading(Vessel, missionaries) = N_m & jesusOnBoat(Vessel) = false & N_c > N_m.
+
+% 17. Loading(Vessel, group) during a crossing must be at least zero (cannot be negative).
+nonexecutable cross(Vessel) if loading(Vessel, G) = N & N < 0.
+
+% 19. It is not permissible to cross the boat and walk at the same time.
+nonexecutable cross(Vessel) & walk if true.
+
+% 20. The capacity of the boat is 2.
+capacity(boat) = 2.
+
+% Total number of people in each group.
+totalNum(missionaries) = 2.
+totalNum(cannibals) = 3.
+totalNum(jesus) = 1.
+
+% Initial conditions
+boatLocation = bank1.
+jesusLocation = bank1.
+
+% PROGRAM END
+
+noconcurrency.
+
+
+:- query
+    0: numOnBank(missionaries, bank1) = 2 & numOnBank(cannibals, bank1) = 3 & numOnBank(jesus, bank1)=1 & jesusLocation = bank1 & boatLocation = bank1;
+    0: walk;
+    0: cross(boat);
+    0: loading(boat, missionaries) = 1 & loading(boat, cannibals) = 1 & jesusOnBoat(boat) = false.
