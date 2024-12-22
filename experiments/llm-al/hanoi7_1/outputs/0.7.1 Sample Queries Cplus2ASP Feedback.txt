@@ -1,0 +1,90 @@
+% Query 1: Try to move disk d1 to peg a when it has disk d2 on top of it (unsatisfiable)
+:- query
+    0: loc(d1)=c & loc(d2)=d1 & weight(d1)=7 & weight(d2)=6;
+    0: move(d1,a).
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+
+
+% Query 2: Try to move heavier disk d3 onto lighter disk d6 (unsatisfiable)
+:- query
+    0: loc(d3)=d2 & loc(d2)=d1 & weight(d3)=5 & weight(d2)=6 & weight(d1)=7;
+    0: loc(d6)=d4 & weight(d6)=2 & weight(d4)=4;
+    0: move(d3,d6).
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+
+
+% Query 3: Try to move disk d5 onto itself (unsatisfiable)
+:- query
+    0: loc(d5)=b & weight(d5)=3;
+    0: move(d5,d5).
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+
+
+% Query 4: Move disk d6 onto heavier disk d3 (satisfiable)
+:- query
+    0: loc(d6)=d4 & loc(d4)=a & weight(d6)=2 & weight(d4)=4;
+    0: loc(d3)=d2 & loc(d2)=d1 & loc(d1)=c & weight(d3)=5 & weight(d2)=6 & weight(d1)=7;
+    0: move(d6,d3).
+
+Cplus2ASP Output:
+
+Solving...
+Solution: 1
+	
+
+	0:  loc(d1)=c loc(d2)=d1 loc(d3)=d2 loc(d4)=a loc(d5)=d7 loc(d6)=d4 loc(d7)=d5 weight(d1)=7 weight(d2)=6 weight(d3)=5 weight(d4)=4 weight(d5)=1 weight(d6)=2 weight(d7)=4
+
+	ACTIONS:  move(d6, d3)
+
+	1:  loc(d1)=c loc(d2)=d1 loc(d3)=d2 loc(d4)=a loc(d5)=d7 loc(d6)=d3 loc(d7)=d5 weight(d1)=7 weight(d2)=6 weight(d3)=5 weight(d4)=4 weight(d5)=1 weight(d6)=2 weight(d7)=4
+
+SATISFIABLE
+Models       : 1+
+
+
+% Query 5: Try to move disks d5 and d7 both to peg c at the same time (unsatisfiable)
+:- query
+    0: loc(d5)=b & weight(d5)=3 & loc(d7)=d5 & weight(d7)=1;
+    0: move(d5,c) & move(d7,c).
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+
+
+
+
+:- query
+    0: loc(d1)=c & loc(d2)=d1 & loc(d3)=d2 & loc(d4)=a & loc(d5)=b & loc(d6)=d4 & loc(d7)=d5 &
+       weight(d1)=7 & weight(d2)=6 & weight(d3)=5 & weight(d4)=4 & weight(d5)=3 & weight(d6)=2 & weight(d7)=1;
+    maxstep: loc(d1)=c & loc(d2)=c & loc(d3)=c & loc(d4)=c & loc(d5)=c & loc(d6)=c & loc(d7)=c.
+
+
+Cplus2ASP Output:
+
+TIMEOUT

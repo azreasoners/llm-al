@@ -1,0 +1,8 @@
+% Assigning a value to a cell causes the value at that cell to become that value.
+% The assignValue action is not executable if the cell already has a value.
+% The assignValue action is not executable if the same value exists in the same row.
+% The assignValue action is not executable if the same value exists in the same column.
+% The assignValue action is not executable if the same value exists in the same 3x3 square.
+% It is impossible for two cells in the same row to have the same value.
+% It is impossible for two cells in the same column to have the same value.
+% It is impossible for two cells in the same 3x3 square to have the same value.

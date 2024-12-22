@@ -1,0 +1,9 @@
+There are two types of objects: "thing" and "side".
+
+Mouse, Snake, Cheese, and boat are the things.
+LeftBank, RightBank are the sides of the river.
+
+Actions
+moveBoat moves the boat from one side to the other.
+boardBoat puts a thing on the boat.
+unboardBoard takes a thing off of the boat.

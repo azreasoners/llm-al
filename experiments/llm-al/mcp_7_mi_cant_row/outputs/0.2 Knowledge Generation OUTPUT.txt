@@ -1,0 +1,14 @@
+% Crossing causes the boat to be at the opposite bank.
+% Crossing causes the number of missionaries at the departing bank to decrease by the number of missionaries crossing.
+% Crossing causes the number of cannibals at the departing bank to decrease by the number of cannibals crossing.
+% Crossing causes the number of missionaries at the arriving bank to increase by the number of missionaries crossing.
+% Crossing causes the number of cannibals at the arriving bank to increase by the number of cannibals crossing.
+% Crossing is not executable if the total number of people crossing is zero.
+% Crossing is not executable if the total number of people crossing exceeds two.
+% Crossing is not executable if the boat is not at the location where the crossing is initiated.
+% Crossing is not executable if any of the numbers of missionaries or cannibals crossing is negative or exceeds the number of that group at the departing bank.
+% Crossing is not executable if the number of missionaries crossing is greater than zero and the number of cannibals crossing is zero.
+% Crossing is not executable if after the crossing, the number of cannibals at either bank exceeds the number of missionaries at that bank, unless there are no missionaries at that bank.
+% Crossing is not executable if during the crossing, the number of cannibals crossing exceeds the number of missionaries crossing, unless there are no missionaries crossing.
+% It is impossible for the number of cannibals at either bank to exceed the number of missionaries at that bank, unless there are no missionaries at that bank.
+% It is impossible for the number of cannibals crossing to exceed the number of missionaries crossing, unless there are no missionaries crossing.

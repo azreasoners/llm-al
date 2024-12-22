@@ -1,0 +1,9 @@
+% The capacity of a vessel limits the total number of people who can be on the vessel during crossing.
+% Crossing a vessel causes the location of the vessel to change to the other bank.
+% Crossing a vessel causes the people on the vessel to be at the new location and no longer on the vessel.
+% The action cross(vessel) is not executable if the total number of people boarding the vessel is zero.
+% The action cross(vessel) is not executable if the total number of people boarding exceeds the capacity of the vessel.
+% The action cross(vessel) is not executable if the amount of any group boarding the vessel is negative or exceeds the number of people of that group at the current location.
+% The action cross(vessel) is not executable if the cannibals on the vessel outnumber the missionaries on the vessel during crossing.
+% The action cross(vessel) is not executable if, after crossing, the cannibals would outnumber the missionaries at any location.
+% On either bank, the cannibals may never outnumber the missionaries unless there are no missionaries at that location.

@@ -1,0 +1,109 @@
+prolog
+% PROGRAM CHANGED? [CHANGED]
+% BC+ signature
+:- sorts
+    vessel;
+    location;
+    integer.
+
+:- objects
+    boat :: vessel;
+    bank1, bank2 :: location;
+    0..3 :: integer.
+
+:- variables
+    Loc, OtherLoc :: location;
+    NM, NC, N1, N2 :: integer.
+
+:- constants
+    cross(integer, integer) :: exogenousAction;
+    % The action cross(NM, NC) represents crossing the river with NM missionaries and NC cannibals.
+
+    numMissionariesAt(location) :: additiveFluent(integer);
+    numCannibalsAt(location) :: additiveFluent(integer);
+    boatAt :: inertialFluent(location).
+
+% Generated constraints
+
+% Crossing causes the boat to move to the other bank
+cross(NM, NC) causes boatAt = bank2 if boatAt = bank1.
+cross(NM, NC) causes boatAt = bank1 if boatAt = bank2.
+
+% Crossing decrements the number of missionaries and cannibals at the current bank.
+cross(NM, NC) decrements numMissionariesAt(Loc) by NM if boatAt = Loc.
+cross(NM, NC) decrements numCannibalsAt(Loc) by NC if boatAt = Loc.
+
+% Crossing increments the number of missionaries and cannibals at the other bank.
+cross(NM, NC) increments numMissionariesAt(OtherLoc) by NM if boatAt = Loc & OtherLoc \= Loc.
+cross(NM, NC) increments numCannibalsAt(OtherLoc) by NC if boatAt = Loc & OtherLoc \= Loc.
+
+% Constraints/Non-executable actions
+
+% Crossing is not executable if the total number crossing is zero.
+nonexecutable cross(NM, NC) if NM + NC = 0.
+
+% Crossing is not executable if the total number crossing exceeds 2.
+nonexecutable cross(NM, NC) if NM + NC > 2.
+
+% Crossing is not executable if NM or NC is negative.
+nonexecutable cross(NM, NC) if NM < 0.
+nonexecutable cross(NM, NC) if NC < 0.
+
+% Crossing is not executable if the number of missionaries crossing exceeds the number at the current bank.
+nonexecutable cross(NM, NC) if boatAt = Loc & numMissionariesAt(Loc) = N1 & NM > N1.
+
+% Similarly for cannibals.
+nonexecutable cross(NM, NC) if boatAt = Loc & numCannibalsAt(Loc) = N2 & NC > N2.
+
+% Crossing is not executable if missionaries attempt to cross alone (missionaries cannot row).
+nonexecutable cross(NM, NC) if NM > 0 & NC = 0.
+
+% Crossing is not executable if cannibals outnumber missionaries on the boat (unless no missionaries are crossing).
+nonexecutable cross(NM, NC) if NM > 0 & NC > NM.
+
+% Cannibals cannot outnumber missionaries on any bank unless there are no missionaries on that bank.
+always numCannibalsAt(Loc) <= numMissionariesAt(Loc) | numMissionariesAt(Loc) = 0.
+
+% Boat cannot cross the river without any people on it (at least one person must be on the boat)
+nonexecutable cross(NM, NC) if NM + NC = 0.
+
+% The boat cannot carry more than two people
+nonexecutable cross(NM, NC) if NM + NC > 2.
+
+% MAIN QUERY CHANGED? [UNCHANGED]
+% Original natural language query: Three missionaries and three cannibals are at location bank1. The boat is at location bank1. Find a plan so that all missionaries and all cannibals are at location bank2.
+
+:- query
+    0: numMissionariesAt(bank1) = 3 & numCannibalsAt(bank1) = 3 & numMissionariesAt(bank2) = 0 & numCannibalsAt(bank2) = 0 & boatAt = bank1;
+    maxstep: numMissionariesAt(bank2) = 3 & numCannibalsAt(bank2) = 3 & numMissionariesAt(bank1) = 0 & numCannibalsAt(bank1) = 0.
+
+% SAMPLE QUERIES CHANGED? [UNCHANGED]
+% Query 1: Two cannibals cross from bank1 to bank2 (satisfiable)
+
+:- query
+    0: numMissionariesAt(bank1) = 3 & numCannibalsAt(bank1) = 3 & numMissionariesAt(bank2) = 0 & numCannibalsAt(bank2) = 0 & boatAt = bank1;
+    0: cross(0, 2).
+
+% Query 2: Two missionaries try to cross alone from bank1 to bank2 (unsatisfiable)
+
+:- query
+    0: numMissionariesAt(bank1) = 3 & numCannibalsAt(bank1) = 3 & numMissionariesAt(bank2) = 0 & numCannibalsAt(bank2) = 0 & boatAt = bank1;
+    0: cross(2, 0).
+
+% Query 3: One missionary and one cannibal cross from bank1 to bank2 (satisfiable)
+
+:- query
+    0: numMissionariesAt(bank1) = 3 & numCannibalsAt(bank1) = 3 & numMissionariesAt(bank2) = 0 & numCannibalsAt(bank2) = 0 & boatAt = bank1;
+    0: cross(1, 1).
+
+% Query 4: One missionary crosses alone from bank1 to bank2, leaving missionaries outnumbered by cannibals on bank1 (unsatisfiable)
+
+:- query
+    0: numMissionariesAt(bank1) = 3 & numCannibalsAt(bank1) = 3 & numMissionariesAt(bank2) = 0 & numCannibalsAt(bank2) = 0 & boatAt = bank1;
+    0: cross(1, 0).
+
+% Query 5: Two cannibals and one missionary try to cross from bank1 to bank2 (unsatisfiable)
+
+:- query
+    0: numMissionariesAt(bank1) = 3 & numCannibalsAt(bank1) = 3 & numMissionariesAt(bank2) = 0 & numCannibalsAt(bank2) = 0 & boatAt = bank1;
+    0: cross(1, 2).

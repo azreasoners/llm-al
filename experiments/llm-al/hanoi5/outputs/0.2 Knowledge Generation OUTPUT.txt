@@ -1,0 +1,11 @@
+% Moving a disk causes the disk's location to become the target location.
+% The move action is not executable if another disk is on top of the disk being moved.
+% The move action is not executable if there is already a disk at the target location.
+% The move action is not executable if the disk being moved is heavier than the disk at the target location when moving onto a disk.
+% A disk cannot be moved onto a disk if it is heavier than that disk.
+% Disks cannot be at the same location at the same time.
+% A disk is on another disk or peg if its location is that disk or peg.
+% A disk cannot be on itself.
+% A disk cannot be moved if there is a disk on top of it.
+% The weight of a disk remains the same unless explicitly changed.
+% The location of a disk remains the same unless changed by a move action.

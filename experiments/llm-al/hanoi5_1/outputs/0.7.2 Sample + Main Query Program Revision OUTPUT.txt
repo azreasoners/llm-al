@@ -1,0 +1,87 @@
+% PROGRAM CHANGED? [UNCHANGED]
+% BC+ signature
+
+:- sorts
+    loc >> disk, peg;
+    disk;
+    peg;
+    integer.
+
+
+:- objects
+    d1, d2, d3, d4, d5 :: disk;
+    a, b, c :: peg;
+    1..5 :: integer.
+
+
+:- variables
+    D, D1, D2, D3, D4 :: disk;
+    P, P1, P2, P3, P4 :: peg;
+    L, L1, L2, L3, L4 :: loc;
+    N, N1, N2, N3, N4 :: integer.
+
+
+:- constants
+    move(disk, loc) :: exogenousAction;
+    loc(disk) :: inertialFluent(loc);
+    weight(disk) :: inertialFluent(integer).
+
+% Generated constraints
+
+% 1. Moving a disk to a location causes its location to be that location.
+move(D,L) causes loc(D)=L.
+
+% 2. The move action is not executable if there is a disk on top of the disk being moved.
+nonexecutable move(D,L) if loc(D1)=D & D1\=D.
+
+% 3. The move action is not executable if moving a disk onto a disk that is lighter than it.
+nonexecutable move(D,L) if L=D1 & weight(D) > weight(D1).
+
+% 4. The move action is not executable if moving a disk onto itself.
+nonexecutable move(D,L) if D=L.
+
+% 5. It is impossible for a disk to be located at itself.
+impossible loc(D)=D.
+
+% 6. It is impossible for two disks to be at the same location.
+impossible loc(D1)=L & loc(D2)=L & D1\=D2.
+
+% 7. Setting the weights of disks d1 to d5.
+weight(d1) = 5.
+weight(d2) = 4.
+weight(d3) = 3.
+weight(d4) = 2.
+weight(d5) = 1.
+
+% MAIN QUERY CHANGED? [CHANGED]
+
+:- query
+    0: loc(d1)=b & loc(d2)=d1 & loc(d3)=c & loc(d4)=a & loc(d5)=d4;
+    maxstep: loc(d1)=c & loc(d2)=d1 & loc(d3)=d2 & loc(d4)=d3 & loc(d5)=d4.
+
+% SAMPLE QUERIES CHANGED? [UNCHANGED]
+
+% Query 1: Try to move disk d1 to peg a when it has disk d2 on top of it (unsatisfiable)
+:- query
+    0: loc(d1)=b & loc(d2)=d1 & loc(d3)=c & loc(d4)=a & loc(d5)=d4;
+    0: move(d1,a).
+
+% Query 2: Move disk d5 onto disk d4 when d5 is lighter (satisfiable)
+:- query
+    0: loc(d4)=b & loc(d5)=a;
+    0: move(d5,d4).
+
+% Query 3: Try to move disk d2 onto disk d3 when d2 is heavier than d3 (unsatisfiable)
+:- query
+    0: loc(d1)=b & loc(d2)=d1 & loc(d3)=c;
+    0: move(d2,d3).
+
+% Query 4: Move disk d3 onto disk d2 when d3 is lighter (satisfiable)
+:- query
+    0: loc(d1)=b & loc(d2)=d1 & loc(d3)=c;
+    0: move(d3,d2).
+
+% Query 5: Try to move disk d4 onto itself (unsatisfiable)
+:- query
+    0: loc(d4)=a;
+    0: move(d4,d4).

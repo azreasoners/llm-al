@@ -1,0 +1,95 @@
+:- sorts
+    vessel;
+    location;
+    group;
+    integer.
+
+
+:- objects
+    boat :: vessel;
+    bank1, bank2 :: location;
+    missionaries, strongMissionary, cannibals :: group;
+    0..10 :: integer.
+
+
+:- variables
+    V, V1, V2, V3, V4 :: vessel;
+    Loc, Loc1, Loc2, Loc3, Loc4 :: location;
+    G, G1, G2, G3, G4 :: group;
+    N, N1, N2, N3, N4, C :: integer;
+    Bool, Bool1, Bool2, Bool3, Bool4 :: boolean.
+
+
+:- constants
+    loc(vessel) :: inertialFluent(location);  % The location of the vessel.
+    capacity(vessel) :: inertialFluent(integer);  % The capacity of the vessel.
+
+    cross(vessel) :: exogenousAction;  % Crossing action.
+    numCrossing(vessel, group) :: attribute(integer) of cross(vessel);  % Number from a group crossing in the vessel.
+    toLocation(vessel) :: attribute(location) of cross(vessel);  % Destination location.
+
+    numAt(group, location) :: additiveFluent(integer).  % Number of people of a group at a location.
+
+% Generated constraints
+
+% 1. Crossing in a vessel causes loc(vessel) to become toLocation(vessel).
+cross(V) causes loc(V) = Loc if toLocation(V) = Loc.
+
+% 2. Crossing in a vessel causes numAt(G, loc(V)) to decrease by numCrossing(V, G) for each group G.
+cross(V) decrements numAt(G, Loc) by N if loc(V) = Loc & numCrossing(V, G) = N.
+
+% 3. Crossing in a vessel causes numAt(G, toLocation(V)) to increase by numCrossing(V, G) for each group G.
+cross(V) increments numAt(G, Loc) by N if toLocation(V) = Loc & numCrossing(V, G) = N.
+
+% 4. The cross(V) action is not executable if the sum over all groups G of numCrossing(V, G) is zero.
+nonexecutable cross(V) if N1 + N2 + N3 = 0 &
+    numCrossing(V, missionaries) = N1 &
+    numCrossing(V, strongMissionary) = N2 &
+    numCrossing(V, cannibals) = N3.
+
+% 5. The cross(V) action is not executable if the sum over all groups G of numCrossing(V, G) exceeds capacity(V).
+nonexecutable cross(V) if N1 + N2 + N3 > C &
+    numCrossing(V, missionaries) = N1 &
+    numCrossing(V, strongMissionary) = N2 &
+    numCrossing(V, cannibals) = N3 &
+    capacity(V) = C.
+
+% 6. The cross(V) action is not executable if numCrossing(V, G) is greater than numAt(G, loc(V)) for any group G.
+nonexecutable cross(V) if N1 > N2 &
+    numCrossing(V, G) = N1 &
+    numAt(G, Loc) = N2 &
+    loc(V) = Loc.
+
+% 7. The capacity of the boat is two.
+capacity(boat) = 2.
+
+% 8. The number of people of any group at any location cannot be negative.
+impossible numAt(G, Loc) < 0.
+
+% 9. On either bank, if there are missionaries present, the number of cannibals cannot exceed the number of missionaries.
+impossible numAt(missionaries, Loc) = N1 &
+          numAt(strongMissionary, Loc) = N2 &
+          numAt(cannibals, Loc) = N3 &
+          N1 + N2 > 0 &
+          N3 > N1 + N2.
+
+%10. The cross(V) action is not executable if there are more cannibals than missionaries on the vessel without the strong missionary.
+nonexecutable cross(V) if N1 + N2 > 0 &
+    N3 > N1 + N2 &
+    N2 = 0 &
+    numCrossing(V, missionaries) = N1 &
+    numCrossing(V, strongMissionary) = N2 &
+    numCrossing(V, cannibals) = N3.
+
+
+:- query
+    0: loc(boat) = bank1 &
+       numAt(missionaries, bank1) = 3 &
+       numAt(strongMissionary, bank1) = 1 &
+       numAt(cannibals, bank1) = 4 &
+       numAt(missionaries, bank2) = 0 &
+       numAt(strongMissionary, bank2) = 0 &
+       numAt(cannibals, bank2) = 0;
+    maxstep: numAt(missionaries, bank2) = 3 &
+             numAt(strongMissionary, bank2) = 1 &
+             numAt(cannibals, bank2) = 4.

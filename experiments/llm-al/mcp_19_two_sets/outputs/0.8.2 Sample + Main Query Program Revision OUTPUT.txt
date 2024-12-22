@@ -1,0 +1,111 @@
+prolog
+% PROGRAM CHANGED? [UNCHANGED]
+% BC+ signature
+:- sorts
+    set;
+    group;
+    location;
+    integer.
+
+
+:- objects
+    s1, s2 :: set;
+    missionaries, cannibals :: group;
+    bank1, bank2 :: location;
+    0..10 :: integer.
+
+
+:- variables
+    S, S1, S2 :: set;
+    G, G1, G2 :: group;
+    L, L1, L2 :: location;
+    N, N1, N2, N3, N4, N_m, N_c :: integer.
+
+
+:- constants
+    cross(S) :: exogenousAction;
+    dest(S) :: attribute(location) of cross(S);
+    numCrossing(S, G) :: attribute(integer) of cross(S);
+    boatLoc(S) :: inertialFluent(location);
+    numAt(S, G, L) :: additiveFluent(integer).
+
+% Generated constraints
+
+% 1. The crossing action of a set causes the boat's location for that set to become the destination of the crossing action for that set.
+cross(S) causes boatLoc(S) = L if dest(S) = L.
+
+% 2. The crossing action of a set causes the number of people of each group at the destination location for that set to increase by the number of people of that group crossing in that set's boat.
+cross(S) increments numAt(S, G, L) by N if dest(S) = L & numCrossing(S, G) = N.
+
+% 3. The crossing action of a set causes the number of people of each group at the origin location for that set to decrease by the number of people of that group crossing in that set's boat.
+cross(S) decrements numAt(S, G, L) by N if boatLoc(S) = L & numCrossing(S, G) = N.
+
+% 5. The crossing action of a set is not executable if the boat's location for that set is equal to the destination location of the crossing action for that set.
+nonexecutable cross(S) if boatLoc(S) = dest(S).
+
+% 6. The crossing action of a set is not executable if the total number of people crossing in that set's boat is zero.
+nonexecutable cross(S) if numCrossing(S, missionaries) = N_m & numCrossing(S, cannibals) = N_c & N_m + N_c = 0.
+
+% 7. The total number of people crossing in a set's boat cannot exceed 2.
+nonexecutable cross(S) if numCrossing(S, missionaries) = N_m & numCrossing(S, cannibals) = N_c & N_m + N_c > 2.
+
+% 8. The crossing action of a set is not executable if the number of people of any group crossing in that set's boat is less than zero.
+nonexecutable cross(S) if numCrossing(S, G) = N & N < 0.
+
+% 9. The crossing action of a set is not executable if the number of people of any group crossing in that set's boat exceeds the number of people of that group at the origin location for that set.
+nonexecutable cross(S) if numCrossing(S, G) = N1 & numAt(S, G, L) = N2 & boatLoc(S) = L & N1 > N2.
+
+% 11. The number of people of any group at any location for a set cannot be negative.
+always numAt(S, G, L) >= 0.
+
+% 13. The crossing action of a set is not executable if the number of cannibals crossing in that set's boat exceeds the number of missionaries crossing in that set's boat, unless the number of missionaries crossing is zero.
+nonexecutable cross(S) if numCrossing(S, missionaries) = N_m & numCrossing(S, cannibals) = N_c & N_m > 0 & N_c > N_m.
+
+% 14. The total number of people of each group in a set is constant and equal to 3.
+always numAt(S, G, bank1) + numAt(S, G, bank2) = 3.
+
+% 15. The cannibals may not outnumber the missionaries at any location for a set.
+always (numAt(S, missionaries, L) = N_m & numAt(S, cannibals, L) = N_c & N_m > 0) -> N_c <= N_m.
+
+% Note: Constraint numbers are kept consistent with the prior numbering for clarity.
+
+% MAIN QUERY CHANGED? [UNCHANGED]
+:- query
+    0: numAt(s1, missionaries, bank1) = 3 & numAt(s1, cannibals, bank1) = 3 & numAt(s1, missionaries, bank2) = 0 & numAt(s1, cannibals, bank2) = 0 & boatLoc(s1) = bank1 &
+       numAt(s2, missionaries, bank1) = 3 & numAt(s2, cannibals, bank1) = 3 & numAt(s2, missionaries, bank2) = 0 & numAt(s2, cannibals, bank2) = 0 & boatLoc(s2) = bank1;
+    maxstep: numAt(s1, missionaries, bank2) = 3 & numAt(s1, cannibals, bank2) = 3 & boatLoc(s1) = bank2 &
+             numAt(s2, missionaries, bank2) = 3 & numAt(s2, cannibals, bank2) = 3 & boatLoc(s2) = bank2.
+
+% SAMPLE QUERIES CHANGED? [UNCHANGED]
+% Query 1: Attempt to cross three people in the boat for set s1 (exceeds capacity, unsatisfiable)
+:- query
+    0: numAt(s1, missionaries, bank1) = 3 & numAt(s1, cannibals, bank1) = 3 & boatLoc(s1) = bank1;
+    0: cross(s1) & dest(s1) = bank2 &
+       numCrossing(s1, missionaries) = 2 & numCrossing(s1, cannibals) = 1.
+
+% Query 2: Attempt to cross the river with no people in the boat for set s1 (boat cannot cross empty, unsatisfiable)
+:- query
+    0: numAt(s1, missionaries, bank1) = 3 & numAt(s1, cannibals, bank1) = 3 & boatLoc(s1) = bank1;
+    0: cross(s1) & dest(s1) = bank2 &
+       numCrossing(s1, missionaries) = 0 & numCrossing(s1, cannibals) = 0.
+
+% Query 3: Attempt to cross the river to the same bank where the boat is currently located for set s1 (unsatisfiable)
+:- query
+    0: numAt(s1, missionaries, bank1) = 3 & numAt(s1, cannibals, bank1) = 3 & boatLoc(s1) = bank1;
+    0: cross(s1) & dest(s1) = bank1 &
+       numCrossing(s1, missionaries) = 1 & numCrossing(s1, cannibals) = 1.
+
+% Query 4: Attempt to cross with a negative number of missionaries for set s1 (negative numbers not allowed, unsatisfiable)
+:- query
+    0: numAt(s1, missionaries, bank1) = 3 & boatLoc(s1) = bank1;
+    0: cross(s1) & dest(s1) = bank2 &
+       numCrossing(s1, missionaries) = -1 & numCrossing(s1, cannibals) = 1.
+
+% Query 5: Move one missionary and one cannibal from bank1 to bank2 for set s1 (valid crossing, satisfiable)
+:- query
+    0: numAt(s1, missionaries, bank1) = 3 & numAt(s1, cannibals, bank1) = 3 & boatLoc(s1) = bank1 &
+       numAt(s1, missionaries, bank2) = 0 & numAt(s1, cannibals, bank2) = 0;
+    0: cross(s1) & dest(s1) = bank2 &
+       numCrossing(s1, missionaries) = 1 & numCrossing(s1, cannibals) = 1;
+    1: numAt(s1, missionaries, bank1) = 2 & numAt(s1, cannibals, bank1) = 2 &
+       numAt(s1, missionaries, bank2) = 1 & numAt(s1, cannibals, bank2) = 1 & boatLoc(s1) = bank2.

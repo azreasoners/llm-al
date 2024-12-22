@@ -1,0 +1,88 @@
+% PROGRAM CHANGED? [UNCHANGED]
+% BC+ signature
+:- sorts
+    integer;
+    loc >> disk, peg;
+    disk;
+    peg.
+
+:- objects
+    d1, d2, d3, d4, d5 :: disk;
+    a, b, c :: peg;
+    1..5 :: integer.
+
+:- variables
+    D, D1, D2, D3, D4 :: disk;
+    P, P1, P2, P3, P4 :: peg;
+    L, L1, L2, L3, L4 :: loc;
+    N, N1, N2, N3, N4 :: integer.
+
+:- constants
+    loc(disk) :: inertialFluent(loc); % The location of a disk.
+    move(disk, loc) :: exogenousAction; % The action of moving a disk to a location.
+    weight(disk) :: inertialFluent(integer). % The weight of a disk.
+
+% Generated constraints
+
+% 1. Moving a disk causes the disk's location to become the target location.
+move(D,L) causes loc(D)=L.
+
+% 2. The move action is not executable if another disk is on top of the disk being moved.
+nonexecutable move(D,L) if loc(D1)=D & D1 \= D.
+
+% 3. The move action is not executable if there is already a disk at the target location.
+nonexecutable move(D,L) if loc(D1)=L & D1 \= D.
+
+% 4. The move action is not executable if the disk being moved is heavier than the disk at the target location when moving onto a disk.
+nonexecutable move(D,L) if L=D1 & weight(D)>weight(D1).
+
+% 5. A disk cannot be on itself.
+impossible loc(D)=D.
+
+% 6. Disks cannot be at the same location at the same time.
+impossible loc(D1)=loc(D2) & D1 \= D2.
+
+% 7. The weight of a disk remains the same unless explicitly changed.
+% (No action changes the weight; inertia maintains it.)
+
+% 8. The location of a disk remains the same unless changed by a move action.
+% (Inertia of loc(disk) handles this.)
+
+% MAIN QUERY CHANGED? [UNCHANGED]
+
+:- query
+    0: loc(d1)=a & loc(d2)=d1 & loc(d3)=d2 & loc(d4)=d3 & loc(d5)=d4 &
+       weight(d1)=5 & weight(d2)=4 & weight(d3)=3 & weight(d4)=2 & weight(d5)=1;
+    maxstep: loc(d1)=c & loc(d2)=d1 & loc(d3)=d2 & loc(d4)=d3 & loc(d5)=d4.
+
+% SAMPLE QUERIES CHANGED? [UNCHANGED]
+
+% Query 1: Move the top disk (d5) from its current position to peg 'c' (satisfiable)
+:- query
+    0:  loc(d1)=a & loc(d2)=d1 & loc(d3)=d2 & loc(d4)=d3 & loc(d5)=d4 &
+        weight(d1)=5 & weight(d2)=4 & weight(d3)=3 & weight(d4)=2 & weight(d5)=1;
+    0:  move(d5, c).
+
+% Query 2: Attempt to move disk d4 while disk d5 is on top of it (unsatisfiable)
+:- query
+    0:  loc(d1)=a & loc(d2)=d1 & loc(d3)=d2 & loc(d4)=d3 & loc(d5)=d4 &
+        weight(d1)=5 & weight(d2)=4 & weight(d3)=3 & weight(d4)=2 & weight(d5)=1;
+    0:  move(d4, b).
+
+% Query 3: Attempt to move a heavier disk (d2) onto a lighter disk (d4) (unsatisfiable)
+:- query
+    0:  loc(d1)=a & loc(d2)=d1 & loc(d3)=b & loc(d4)=d3 & loc(d5)=c &
+        weight(d1)=4 & weight(d2)=3 & weight(d3)=2 & weight(d4)=1 & weight(d5)=5;
+    0:  move(d2, d4).
+
+% Query 4: Attempt to move a disk onto itself (unsatisfiable)
+:- query
+    0:  loc(d1)=a & weight(d1)=5;
+    0:  move(d1, d1).
+
+% Query 5: Move a disk from one peg to another empty peg (satisfiable)
+% Changed to ensure the target peg 'c' is empty.
+
+:- query
+    0:  loc(d1)=a & weight(d1)=3;
+    0:  move(d1, c).

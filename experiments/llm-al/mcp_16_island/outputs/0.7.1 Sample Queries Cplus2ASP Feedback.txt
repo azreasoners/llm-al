@@ -1,0 +1,107 @@
+% Query 1: Attempt to cross the river by moving 3 cannibals from bank1 to bank2 in one trip (unsatisfiable)
+:- query
+    0: numM(bank1) = 5 & numC(bank1) = 5 & loc(boat) = bank1;
+    0: cross(boat) & dest(boat) = bank2 & numC_on(boat) = 3 & numM_on(boat) = 0.
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+
+
+% Query 2: Try to cross the river with an empty boat (unsatisfiable)
+:- query
+    0: numM(bank1) = 5 & numC(bank1) = 5 & loc(boat) = bank1;
+    0: cross(boat) & dest(boat) = bank2 & numC_on(boat) = 0 & numM_on(boat) = 0.
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+
+
+% Query 3: Attempt to move 1 cannibal from bank1 to bank2 when there are no cannibals at bank1 (unsatisfiable)
+:- query
+    0: numM(bank1) = 5 & numC(bank1) = 0 & numM(bank2) = 0 & numC(bank2) = 5 & loc(boat) = bank1;
+    0: cross(boat) & dest(boat) = bank2 & numC_on(boat) = 1 & numM_on(boat) = 0.
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+
+
+% Query 4: Successfully move 1 missionary and 1 cannibal from bank1 to bank2 (satisfiable)
+:- query
+    0: numM(bank1) = 5 & numC(bank1) = 5 & loc(boat) = bank1;
+    0: cross(boat) & dest(boat) = bank2 & numM_on(boat) = 1 & numC_on(boat) = 1.
+
+Cplus2ASP Output:
+
+Solving...
+Solution: 1
+	
+
+	0:  capacity(boat)=2 loc(boat)=bank1 numC(bank1)=5 numC(bank2)=0 numC(boat)=1 numC(island)=0 numM(bank1)=5 numM(bank2)=0 numM(boat)=6 numM(island)=0
+
+	ACTIONS:  cross(boat) dest(boat)=bank2 numC_on(boat)=1 numM_on(boat)=1
+
+	1:  capacity(boat)=2 loc(boat)=bank2 numC(bank1)=4 numC(bank2)=1 numC(boat)=1 numC(island)=0 numM(bank1)=4 numM(bank2)=1 numM(boat)=6 numM(island)=0
+
+SATISFIABLE
+Models       : 1+
+
+
+% Query 5: Try to move 1 missionary alone to bank2, leaving more cannibals than missionaries at bank1 (unsatisfiable)
+:- query
+    0: numM(bank1) = 5 & numC(bank1) = 5 & loc(boat) = bank1;
+    0: cross(boat) & dest(boat) = bank2 & numM_on(boat) = 1 & numC_on(boat) = 0.
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+
+
+
+
+
+:- query
+    0: numM(bank1) = 5 & numC(bank1) = 5 & numM(bank2) = 0 & numC(bank2) = 0 & numM(island) = 0 & numC(island) = 0 & loc(boat) = bank1;
+    maxstep: numM(bank2) = 5 & numC(bank2) = 5.
+
+
+In your original program, the error occurs because you included the object `boat` directly as a parameter in the constants' declarations, specifically in `cross(boat) :: exogenousAction;`. In BC+, constants (such as actions and fluents) should be declared with parameters as **sorts**, not objects. 
+
+To fix this error, you need to replace `boat` with the corresponding sort `vessel` in the constants declarations. This way, you can use variables of the sort `vessel` in your rules and refer to `boat` as an object of that sort when needed.
+
+In the updated constants declarations, `cross(vessel)` is now correctly declared:
+
+
+prolog
+:- constants
+    cross(vessel) :: exogenousAction;
+    loc(vessel) :: inertialFluent(location);
+    capacity(vessel) :: inertialFluent(integer);
+    numM(place) :: additiveFluent(integer);
+    numC(place) :: additiveFluent(integer);
+    dest(vessel) :: attribute(location) of cross(vessel);
+    numM_on(vessel) :: attribute(integer) of cross(vessel);
+    numC_on(vessel) :: attribute(integer) of cross(vessel).
+
+
+Cplus2ASP Output:
+
+TIMEOUT

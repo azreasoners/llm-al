@@ -1,0 +1,41 @@
+```
+Actions:
+cross(set)
+    [Reading: The action of set's boat crossing the river.]
+
+Constants:
+boatLoc(set)
+    [Reading: The location of the boat for set.]
+numAt(set, group, location)
+    [Reading: The number of people of group at location for set.]
+numCrossing(set, group)
+    [Reading: The number of people of group crossing in set's boat.]
+dest(set)
+    [Reading: The destination location of the crossing action for set.]
+
+BC+ Signature:
+:- sorts
+    set;
+    group;
+    location;
+    integer.
+
+:- objects
+    s1, s2 :: set;
+    missionaries, cannibals :: group;
+    bank1, bank2 :: location;
+    0..10 :: integer.
+
+:- variables
+    S, S1, S2 :: set;
+    G, G1, G2 :: group;
+    L, L1, L2 :: location;
+    N, N1, N2, N3, N4 :: integer.
+
+:- constants
+    cross(set) :: exogenousAction;
+    dest(set) :: attribute(location) of cross(set);
+    numCrossing(set, group) :: attribute(integer) of cross(set);
+    boatLoc(set) :: inertialFluent(location);
+    numAt(set, group, location) :: additiveFluent(integer);
+```

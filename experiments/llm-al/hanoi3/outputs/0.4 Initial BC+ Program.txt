@@ -1,0 +1,49 @@
+:- sorts
+    disk;
+    peg;
+    loc >> {disk, peg};
+    integer.
+
+
+:- objects
+    d1, d2, d3           :: disk;
+    a, b, c              :: peg;
+    1..3                 :: integer.
+
+
+:- variables
+    D, D1, D2, D3, D4    :: disk;
+    P, P1, P2, P3, P4    :: peg;
+    L, L1, L2, L3, L4    :: loc;
+    N, N1, N2, N3, N4    :: integer.
+
+
+:- constants
+    move(disk, loc)         :: exogenousAction;
+    loc(disk)               :: inertialFluent(loc);
+    weight(disk)            :: inertialFluent(integer).
+
+
+% constraints/rules
+
+% 1. Moving a disk to a location causes its location to be that location.
+move(D,L) causes loc(D)=L.
+
+% 2. Moving a disk is not executable if there is another disk whose location is the disk being moved.
+nonexecutable move(D,L) if loc(D1)=D & D1\=D.
+
+% 3. Moving a disk onto another disk is not executable if the moving disk's weight is greater than the destination disk's weight.
+nonexecutable move(D,L) if L=D2 & weight(D)=N1 & weight(D2)=N2 & N1 > N2.
+
+% 4. Moving a disk onto a location is not executable if there is a disk whose location is the destination location.
+nonexecutable move(D,L) if loc(D2)=L & D2\=D.
+
+% 5. A disk cannot be moved onto itself.
+nonexecutable move(D,L) if L=D.
+
+
+% query
+
+:- query
+    0: loc(d1)=a & loc(d2)=d1 & loc(d3)=d2 & weight(d1)=3 & weight(d2)=2 & weight(d3)=1;
+    maxstep: loc(d1)=c & loc(d2)=d1 & loc(d3)=d2.

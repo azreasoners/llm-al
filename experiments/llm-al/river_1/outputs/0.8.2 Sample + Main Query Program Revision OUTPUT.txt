@@ -1,0 +1,118 @@
+% PROGRAM CHANGED? [UNCHANGED]
+% BC+ signature
+:- sorts
+    item;
+    thing >> item;
+    side.
+
+% Objects
+
+:- objects
+    mouse, snake, cheese, boat :: thing;
+    mouse, snake, cheese :: item;
+    LeftBank, RightBank :: side.
+
+% Variables
+
+:- variables
+    T :: thing;
+    T1, T2, T3, T4 :: item;
+    S, S1, S2, S3, S4 :: side;
+    Bool, Bool1, Bool2, Bool3, Bool4 :: boolean.
+
+% Constants
+
+:- constants
+    moveBoat(side) :: exogenousAction;
+    boardBoat(item) :: exogenousAction;
+    unboardBoat(item) :: exogenousAction;
+    loc(thing) :: inertialFluent(side);
+    onBoat(item) :: inertialFluent(boolean).
+
+% Generated constraints
+
+% 1. Moving the boat to a side causes the location of the boat to be that side.
+moveBoat(S) causes loc(boat) = S.
+
+% 2. Moving the boat to a side causes the location of any item on the boat to be that side.
+moveBoat(S) causes loc(T1) = S if onBoat(T1).
+
+% 3. Moving the boat is not executable if the boat is already on that side.
+nonexecutable moveBoat(S) if loc(boat) = S.
+
+% 4. Boarding the boat with an item causes the item to be on the boat.
+boardBoat(T1) causes onBoat(T1).
+
+% 5. Boarding the boat with an item causes the location of the item to be the same as the boat's location.
+boardBoat(T1) causes loc(T1) = loc(boat).
+
+% 6. Boarding the boat is not executable if the item is already on the boat.
+nonexecutable boardBoat(T1) if onBoat(T1).
+
+% 7. Boarding the boat is not executable if the item is not on the same side as the boat.
+nonexecutable boardBoat(T1) if loc(T1) \= loc(boat).
+
+% 8. Boarding the boat is not executable if there is already an item on the boat.
+nonexecutable boardBoat(T1) if onBoat(T2) & T1 \= T2.
+
+% 9. Unboarding an item from the boat causes the item to not be on the boat.
+unboardBoat(T1) causes ~onBoat(T1).
+
+% 10. Unboarding an item from the boat causes the location of the item to remain the same as the boat's location.
+unboardBoat(T1) causes loc(T1) = loc(boat).
+
+% 11. Unboarding an item is not executable if the item is not on the boat.
+nonexecutable unboardBoat(T1) if ~onBoat(T1).
+
+% 12. It is impossible for more than one item to be on the boat at the same time.
+impossible onBoat(T1) & onBoat(T2) & T1 \= T2.
+
+% 13. If the snake and the mouse are left alone on a side without the boat, then the snake eats the mouse.
+impossible loc(mouse) = S & loc(snake) = S & loc(boat) \= S & ~onBoat(mouse) & ~onBoat(snake).
+
+% 14. If the mouse and the cheese are left alone on a side without the boat, then the mouse eats the cheese.
+impossible loc(mouse) = S & loc(cheese) = S & loc(boat) \= S & ~onBoat(mouse) & ~onBoat(cheese).
+
+% 18. A thing's location is the same as the boat's location if it is on the boat.
+loc(T1) = loc(boat) if onBoat(T1).
+
+% 19. Moving the boat is not executable if an item is boarding or unboarding the boat at the same time.
+nonexecutable moveBoat(S) & boardBoat(T1) if true.
+nonexecutable moveBoat(S) & unboardBoat(T1) if true.
+
+% MAIN QUERY CHANGED? [UNCHANGED]
+% The mouse, snake, and cheese are on side LeftBank, along with the boat. Find a plan to get the mouse, snake, and piece of cheese across the river, on the side RightBank.
+:- query
+    0: loc(mouse) = LeftBank & loc(snake) = LeftBank & loc(cheese) = LeftBank & loc(boat) = LeftBank & ~onBoat(mouse) & ~onBoat(snake) & ~onBoat(cheese);
+    maxstep: loc(mouse) = RightBank & loc(snake) = RightBank & loc(cheese) = RightBank.
+
+% SAMPLE QUERIES CHANGED? [UNCHANGED]
+% Sample queries and outputs:
+
+% Query 1: Attempt to move the boat from LeftBank to LeftBank when it's already on LeftBank (unsatisfiable)
+:- query
+    0: loc(boat) = LeftBank;
+    0: moveBoat(LeftBank).
+
+% Query 2: Try to board the mouse onto the boat when mouse is on RightBank and boat is on LeftBank (unsatisfiable)
+:- query
+    0: loc(boat) = LeftBank & loc(mouse) = RightBank;
+    0: boardBoat(mouse).
+
+% Query 3: Try to have the mouse and snake on the boat at the same time (unsatisfiable)
+:- query
+    0: loc(boat) = LeftBank & loc(mouse) = LeftBank & loc(snake) = LeftBank & ~onBoat(mouse) & onBoat(snake);
+    0: boardBoat(mouse).
+
+% Query 4: Try to leave mouse and cheese alone on LeftBank while the boat travels to RightBank (unsatisfiable)
+:- query
+    0: loc(boat) = LeftBank & loc(mouse) = LeftBank & loc(cheese) = LeftBank & loc(snake) = RightBank & ~onBoat(mouse) & ~onBoat(cheese);
+    0: moveBoat(RightBank).
+
+% Query 5: Successfully transport the mouse from LeftBank to RightBank (satisfiable)
+:- query
+    0: loc(boat) = LeftBank & loc(mouse) = LeftBank & ~onBoat(mouse);
+    0: boardBoat(mouse);
+    1: moveBoat(RightBank);
+    2: unboardBoat(mouse);
+    maxstep: loc(mouse) = RightBank & ~onBoat(mouse).

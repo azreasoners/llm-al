@@ -1,0 +1,99 @@
+% PROGRAM CHANGED? [CHANGED]
+
+% BC+ signature
+
+:- sorts
+    integer;
+    value0;
+    value;
+    row;
+    column.
+
+% Declaring supersort relationships
+value0 >> value;   % value0 includes values from value
+integer >> value0; % integer includes values from value0
+integer >> row;    % integer includes values from row
+integer >> column; % integer includes values from column
+
+:- objects
+    0..9 :: value0;
+    1..9 :: value;
+    0..8 :: row;
+    0..8 :: column;
+    0..9 :: integer;  % integers from 0 to 9
+
+:- variables
+    R, R1, R2, R3, R4 :: row;
+    C, C1, C2, C3, C4 :: column;
+    V, V1, V2, V3, V4 :: value;
+    N1, N2, N3, N4 :: integer.
+
+:- constants
+    assign(row, column, value) :: exogenousAction;
+    valueAt(row, column) :: inertialFluent(value0).
+
+% Generated constraints
+
+% Default valueAt(R,C)=0 when no evidence to the contrary
+default valueAt(R,C)=0.
+
+% 1. Assigning a value to a cell causes the value at that cell to be that value.
+assign(R,C,V) causes valueAt(R,C)=V.
+
+% 2. Assigning a value to a cell is not executable if the cell already has a value assigned (non-zero).
+nonexecutable assign(R,C,V) if valueAt(R,C)=V1 & V1\=0.
+
+% 3. Assigning a value to a cell is not executable if the same value already exists in the same row.
+nonexecutable assign(R,C,V) if valueAt(R,C1)=V & V\=0 & C1\=C.
+
+% 4. Assigning a value to a cell is not executable if the same value already exists in the same column.
+nonexecutable assign(R,C,V) if valueAt(R1,C)=V & V\=0 & R1\=R.
+
+% 5. Assigning a value to a cell is not executable if the same value already exists in the same 3x3 square.
+nonexecutable assign(R,C,V) if valueAt(R1,C1)=V & V\=0 & (R1\=R | C1\=C) & N1=R//3 & N2=R1//3 & N1=N2 & N3=C//3 & N4=C1//3 & N3=N4.
+
+% 6. No two cells in the same row can have the same value.
+impossible valueAt(R,C1)=V & valueAt(R,C2)=V & V\=0 & C1\=C2.
+
+% 7. No two cells in the same column can have the same value.
+impossible valueAt(R1,C)=V & valueAt(R2,C)=V & V\=0 & R1\=R2.
+
+% 8. No two cells in the same 3x3 square can have the same value.
+impossible valueAt(R1,C1)=V & valueAt(R2,C2)=V & V\=0 & (R1\=R2 | C1\=C2) & N1=R1//3 & N2=R2//3 & N1=N2 & N3=C1//3 & N4=C2//3 & N3=N4.
+
+% MAIN QUERY CHANGED? [UNCHANGED]
+
+:- query
+    0: valueAt(0,0)=8 & valueAt(1,2)=3 & valueAt(1,3)=6 & valueAt(2,1)=7 & valueAt(2,4)=9 & valueAt(2,6)=2 &
+       valueAt(3,1)=5 & valueAt(3,5)=7 & valueAt(4,4)=4 & valueAt(4,5)=5 & valueAt(4,6)=7 & valueAt(5,3)=1 &
+       valueAt(5,7)=3 & valueAt(6,2)=1 & valueAt(6,7)=6 & valueAt(6,8)=8 & valueAt(7,2)=8 & valueAt(7,3)=5 &
+       valueAt(7,7)=1 & valueAt(8,1)=9 & valueAt(8,6)=4.
+
+% SAMPLE QUERIES CHANGED? [CHANGED]
+
+% Query 0: Check satisfiability of program signature and rules (ignores other queries). (satisfiable)
+:- query = sat.
+
+% Query 1: Assign value 5 to cell (0,0) when the cell is empty and there are no conflicts (satisfiable)
+:- query
+    0: assign(0,0,5).
+
+% Query 2: Assign value 5 to cell (0,0) when cell (0,1) already has value 5 (unsatisfiable)
+:- query
+    0: valueAt(0,1)=5;
+    0: assign(0,0,5).
+
+% Query 3: Assign value 5 to cell (0,0) when cell (1,0) already has value 5 (unsatisfiable)
+:- query
+    0: valueAt(1,0)=5;
+    0: assign(0,0,5).
+
+% Query 4: Assign value 5 to cell (0,0) when cell (1,1) already has value 5 in the same 3x3 square (unsatisfiable)
+:- query
+    0: valueAt(1,1)=5;
+    0: assign(0,0,5).
+
+% Query 5: Assign value 6 to cell (0,0) when it already has value 5 (unsatisfiable)
+:- query
+    0: valueAt(0,0)=5;
+    0: assign(0,0,6).

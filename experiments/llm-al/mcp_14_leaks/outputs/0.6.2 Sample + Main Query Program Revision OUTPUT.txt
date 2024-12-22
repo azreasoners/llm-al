@@ -1,0 +1,133 @@
+% PROGRAM CHANGED? [UNCHANGED]
+% BC+ signature
+
+:- sorts
+    vessel;
+    location;
+    group;
+    integer;
+    boolean.
+
+:- objects
+    boat :: vessel;
+    bank1, bank2 :: location;
+    missionaries, cannibals :: group;
+    0..10 :: integer.
+
+:- variables
+    V, V1, V2, V3, V4 :: vessel;
+    Loc, Loc1, Loc2, Loc3, Loc4 :: location;
+    G, G1, G2, G3, G4 :: group;
+    N, N1, N2, N3, N4 :: integer;
+    Bool, Bool1, Bool2, Bool3, Bool4 :: boolean.
+
+:- constants
+    cross(vessel) :: exogenousAction;
+    from(vessel) :: attribute(location) of cross(vessel);
+    to(vessel) :: attribute(location) of cross(vessel);
+    numOnBoard(vessel, group) :: attribute(integer) of cross(vessel);
+    loc(vessel) :: inertialFluent(location);
+    numOnBank(group, location) :: inertialFluent(integer);
+    numOnBoat(group) :: inertialFluent(integer);
+    capacity(vessel) :: inertialFluent(integer).
+
+% constraints/rules
+
+% 1. Crossing the boat causes the location of the vessel to change to the destination location.
+cross(V) causes loc(V) = Loc if to(V) = Loc.
+
+% 2. Crossing the boat causes the number of individuals of any group on the boat to become zero.
+cross(V) causes numOnBoat(G) = 0.
+
+% 3. Crossing the boat causes the number of individuals of any group at the starting location to decrease by the number of that group on board.
+cross(V) causes numOnBank(G, Loc) = N if from(V) = Loc & numOnBank(G, Loc) = N1 & numOnBoard(V, G) = N2 & N = N1 - N2.
+
+% 4. Crossing the boat causes the number of individuals of any group at the destination location to increase by the number of that group on board.
+cross(V) causes numOnBank(G, Loc) = N if to(V) = Loc & numOnBank(G, Loc) = N1 & numOnBoard(V, G) = N2 & N = N1 + N2.
+
+% 5. The crossing action is not executable if the total number of individuals on board is zero, as the boat cannot cross empty.
+nonexecutable cross(V) if numOnBoard(V, missionaries) = N1 & numOnBoard(V, cannibals) = N2 & N1 + N2 = 0.
+
+% 6. The crossing action is not executable if the total number of individuals on board exceeds the capacity of the vessel.
+nonexecutable cross(V) if numOnBoard(V, missionaries) = N1 & numOnBoard(V, cannibals) = N2 & capacity(V) = N3 & N1 + N2 > N3.
+
+% 7. The crossing action is not executable if the number of missionaries on board exceeds the number of missionaries at the starting location.
+nonexecutable cross(V) if from(V) = Loc & numOnBoard(V, missionaries) = N1 & numOnBank(missionaries, Loc) = N2 & N1 > N2.
+
+% 8. The crossing action is not executable if the number of cannibals on board exceeds the number of cannibals at the starting location.
+nonexecutable cross(V) if from(V) = Loc & numOnBoard(V, cannibals) = N1 & numOnBank(cannibals, Loc) = N2 & N1 > N2.
+
+% 9. After crossing, it is not allowed for the number of cannibals to outnumber the number of missionaries at either location, unless the number of missionaries at that location is zero.
+impossible numOnBank(cannibals, Loc) > numOnBank(missionaries, Loc) & numOnBank(missionaries, Loc) > 0.
+
+% 10. It is impossible for the number of cannibals on the boat to outnumber the number of missionaries on the boat, unless the number of missionaries on the boat is zero.
+impossible numOnBoat(cannibals) > numOnBoat(missionaries) & numOnBoat(missionaries) > 0.
+
+% 12. The capacity of the boat remains constant and is equal to two.
+capacity(boat) = 2.
+
+% 13. At any time, the numbers of missionaries and cannibals at each location and on the boat cannot be negative.
+impossible numOnBank(G, Loc) < 0.
+impossible numOnBoat(G) < 0.
+
+% 14. The total number of missionaries across both banks and the boat remains constant at 3.
+always numOnBank(missionaries, bank1) + numOnBank(missionaries, bank2) + numOnBoat(missionaries) = 3.
+
+% 14b. The total number of cannibals across both banks and the boat remains constant at 3.
+always numOnBank(cannibals, bank1) + numOnBank(cannibals, bank2) + numOnBoat(cannibals) = 3.
+
+
+% MAIN QUERY CHANGED? [UNCHANGED]
+
+% Three missionaries and three cannibals are at location bank1. The boat is at location bank1. Find a plan so that all missionaries and all cannibals are at location bank2.
+
+:- query
+    0: loc(boat) = bank1 & numOnBank(missionaries, bank1) = 3 & numOnBank(cannibals, bank1) = 3 & numOnBank(missionaries, bank2) = 0 & numOnBank(cannibals, bank2) = 0 & numOnBoat(missionaries) = 0 & numOnBoat(cannibals) = 0;
+    maxstep: numOnBank(missionaries, bank2) = 3 & numOnBank(cannibals, bank2) = 3 & numOnBank(missionaries, bank1) = 0 & numOnBank(cannibals, bank1) = 0.
+
+% SAMPLE QUERIES CHANGED? [UNCHANGED]
+
+% Query 1: Attempting to cross the river with an empty boat (unsatisfiable)
+:- query
+    0: loc(boat) = bank1 & numOnBank(missionaries, bank1) = 3 & numOnBank(cannibals, bank1) = 3 &
+       numOnBoat(missionaries) = 0 & numOnBoat(cannibals) = 0;
+    0: cross(boat) & from(boat) = bank1 & to(boat) = bank2 &
+       numOnBoard(boat, missionaries) = 0 & numOnBoard(boat, cannibals) = 0.
+
+% Query 2: Attempting to cross the river with more people than the boat's capacity (unsatisfiable)
+:- query
+    0: loc(boat) = bank1 & numOnBank(missionaries, bank1) = 3 & numOnBank(cannibals, bank1) = 3 &
+       numOnBoat(missionaries) = 0 & numOnBoat(cannibals) = 0;
+    0: cross(boat) & from(boat) = bank1 & to(boat) = bank2 &
+       numOnBoard(boat, missionaries) = 2 & numOnBoard(boat, cannibals) = 1.
+
+% Query 3: Successfully crossing one missionary from bank1 to bank2 (satisfiable)
+:- query
+    0: loc(boat) = bank1 &
+       numOnBank(missionaries, bank1) = 3 & numOnBank(cannibals, bank1) = 3 &
+       numOnBank(missionaries, bank2) = 0 & numOnBank(cannibals, bank2) = 0 &
+       numOnBoat(missionaries) = 0 & numOnBoat(cannibals) = 0;
+    0: cross(boat) & from(boat) = bank1 & to(boat) = bank2 &
+       numOnBoard(boat, missionaries) = 1 & numOnBoard(boat, cannibals) = 0;
+    maxstep: loc(boat) = bank2 &
+       numOnBank(missionaries, bank1) = 2 & numOnBank(cannibals, bank1) = 3 &
+       numOnBank(missionaries, bank2) = 1 & numOnBank(cannibals, bank2) = 0 &
+       numOnBoat(missionaries) = 0 & numOnBoat(cannibals) = 0.
+
+% Query 4: Attempting to have cannibals outnumber missionaries on bank1 after crossing two missionaries to bank2 (unsatisfiable)
+:- query
+    0: loc(boat) = bank1 &
+       numOnBank(missionaries, bank1) = 3 & numOnBank(cannibals, bank1) = 3 &
+       numOnBoat(missionaries) = 0 & numOnBoat(cannibals) = 0;
+    0: cross(boat) & from(boat) = bank1 & to(boat) = bank2 &
+       numOnBoard(boat, missionaries) = 2 & numOnBoard(boat, cannibals) = 0.
+
+% Query 5: Attempting to have cannibals outnumber missionaries on the boat during crossing (unsatisfiable)
+:- query
+    0: loc(boat) = bank1 &
+       numOnBank(missionaries, bank1) = 3 & numOnBank(cannibals, bank1) = 3 &
+       numOnBoat(missionaries) = 0 & numOnBoat(cannibals) = 0;
+    0: cross(boat) & from(boat) = bank1 & to(boat) = bank2 &
+       numOnBoard(boat, missionaries) = 1 & numOnBoard(boat, cannibals) = 1;
+    1: cross(boat) & from(boat) = bank2 & to(boat) = bank1 &
+       numOnBoard(boat, missionaries) = 0 & numOnBoard(boat, cannibals) = 2.

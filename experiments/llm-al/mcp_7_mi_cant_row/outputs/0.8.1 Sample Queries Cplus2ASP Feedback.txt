@@ -1,0 +1,71 @@
+% Query 1: Two cannibals cross from bank1 to bank2 (satisfiable)
+:- query
+    0: numAt(missionaries, bank1) = 3 & numAt(cannibals, bank1) = 3 & boatAt = bank1;
+    0: cross & numCrossing(cannibals) = 2 & numCrossing(missionaries) = 0.
+
+Cplus2ASP Output:
+
+ERROR: temp.bc:75:8]: Encountered undeclared identifier "cross/0".
+ERROR: temp.bc:75:16]: Encountered undeclared identifier "numCrossing/1".
+ERROR: temp.bc:75:45]: Encountered undeclared identifier "numCrossing/1".
+
+% Query 2: Two missionaries try to cross alone from bank1 to bank2 (unsatisfiable)
+:- query
+    0: numAt(missionaries, bank1) = 3 & numAt(cannibals, bank1) = 3 & boatAt = bank1;
+    0: cross & numCrossing(missionaries) = 2 & numCrossing(cannibals) = 0.
+
+Cplus2ASP Output:
+
+ERROR: temp.bc:75:8]: Encountered undeclared identifier "cross/0".
+ERROR: temp.bc:75:16]: Encountered undeclared identifier "numCrossing/1".
+ERROR: temp.bc:75:48]: Encountered undeclared identifier "numCrossing/1".
+
+% Query 3: One missionary and one cannibal cross from bank1 to bank2 (satisfiable)
+:- query
+    0: numAt(missionaries, bank1) = 3 & numAt(cannibals, bank1) = 3 & boatAt = bank1;
+    0: cross & numCrossing(missionaries) = 1 & numCrossing(cannibals) = 1.
+
+Cplus2ASP Output:
+
+ERROR: temp.bc:75:8]: Encountered undeclared identifier "cross/0".
+ERROR: temp.bc:75:16]: Encountered undeclared identifier "numCrossing/1".
+ERROR: temp.bc:75:48]: Encountered undeclared identifier "numCrossing/1".
+
+% Query 4: One missionary crosses alone from bank1 to bank2, leaving missionaries outnumbered by cannibals on bank1 (unsatisfiable)
+:- query
+    0: numAt(missionaries, bank1) = 3 & numAt(cannibals, bank1) = 3 & boatAt = bank1;
+    0: cross & numCrossing(missionaries) = 1 & numCrossing(cannibals) = 0.
+
+Cplus2ASP Output:
+
+ERROR: temp.bc:75:8]: Encountered undeclared identifier "cross/0".
+ERROR: temp.bc:75:16]: Encountered undeclared identifier "numCrossing/1".
+ERROR: temp.bc:75:48]: Encountered undeclared identifier "numCrossing/1".
+
+% Query 5: Two cannibals and one missionary try to cross from bank1 to bank2 (unsatisfiable)
+:- query
+    0: numAt(missionaries, bank1) = 3 & numAt(cannibals, bank1) = 3 & boatAt = bank1;
+    0: cross & numCrossing(missionaries) = 1 & numCrossing(cannibals) = 2.
+
+Cplus2ASP Output:
+
+ERROR: temp.bc:75:8]: Encountered undeclared identifier "cross/0".
+ERROR: temp.bc:75:16]: Encountered undeclared identifier "numCrossing/1".
+ERROR: temp.bc:75:48]: Encountered undeclared identifier "numCrossing/1".
+
+
+
+
+:- query
+    0: numAt(missionaries, bank1) = 3 & numAt(cannibals, bank1) = 3 & numAt(missionaries, bank2) = 0 & numAt(cannibals, bank2) = 0 & boatAt = bank1;
+    maxstep: numAt(missionaries, bank2) = 3 & numAt(cannibals, bank2) = 3 & numAt(missionaries, bank1) = 0 & numAt(cannibals, bank1) = 0.
+
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+

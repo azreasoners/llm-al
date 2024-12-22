@@ -1,0 +1,24 @@
+% Query 1: Set value 5 to cell (0,0) which is empty. (satisfiable)
+:- query
+    0:  % No initial values specified
+    0: setValue(0,0,5).
+
+% Query 2: Try to set value 5 to cell (0,0) when another cell in the same row already has value 5. (unsatisfiable)
+:- query
+    0: val(0,1)=5,
+    0: setValue(0,0,5).
+
+% Query 3: Try to set value 6 to cell (0,0) when another cell in the same column already has value 6. (unsatisfiable)
+:- query
+    0: val(1,0)=6,
+    0: setValue(0,0,6).
+
+% Query 4: Try to set value 7 to cell (0,0) when another cell in the same 3x3 square already has value 7. (unsatisfiable)
+:- query
+    0: val(1,1)=7,
+    0: setValue(0,0,7).
+
+% Query 5: Try to set a value to a cell that already has a value. (unsatisfiable)
+:- query
+    0: val(0,0)=4,
+    0: setValue(0,0,5).

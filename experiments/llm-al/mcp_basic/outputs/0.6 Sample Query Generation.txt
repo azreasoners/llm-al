@@ -1,0 +1,24 @@
+% Query 1: Have one missionary and one cannibal cross from bank1 to bank2 in the boat (satisfiable)
+:- query
+    0: numOnBank(bank1, missionaries) = 3 & numOnBank(bank1, cannibals) = 3 & loc(boat) = bank1 & numOnBank(bank2, missionaries) = 0 & numOnBank(bank2, cannibals) = 0;
+    0: cross(boat) & numCrossing(boat, missionaries) = 1 & numCrossing(boat, cannibals) = 1.
+
+% Query 2: Try to have two missionaries and one cannibal cross from bank1 to bank2 in the boat (unsatisfiable)
+:- query
+    0: numOnBank(bank1, missionaries) = 3 & numOnBank(bank1, cannibals) = 3 & loc(boat) = bank1 & numOnBank(bank2, missionaries) = 0 & numOnBank(bank2, cannibals) = 0;
+    0: cross(boat) & numCrossing(boat, missionaries) = 2 & numCrossing(boat, cannibals) = 1.
+
+% Query 3: Have one cannibal cross from bank1 to bank2 alone in the boat (satisfiable)
+:- query
+    0: numOnBank(bank1, missionaries) = 3 & numOnBank(bank1, cannibals) = 3 & loc(boat) = bank1 & numOnBank(bank2, missionaries) = 0 & numOnBank(bank2, cannibals) = 0;
+    0: cross(boat) & numCrossing(boat, missionaries) = 0 & numCrossing(boat, cannibals) = 1.
+
+% Query 4: Try to have one missionary cross from bank1 to bank2 alone in the boat (unsatisfiable)
+:- query
+    0: numOnBank(bank1, missionaries) = 3 & numOnBank(bank1, cannibals) = 3 & loc(boat) = bank1 & numOnBank(bank2, missionaries) = 0 & numOnBank(bank2, cannibals) = 0;
+    0: cross(boat) & numCrossing(boat, missionaries) = 1 & numCrossing(boat, cannibals) = 0.
+
+% Query 5: Try to have the boat cross from bank1 to bank2 with no people in it (unsatisfiable)
+:- query
+    0: numOnBank(bank1, missionaries) = 3 & numOnBank(bank1, cannibals) = 3 & loc(boat) = bank1 & numOnBank(bank2, missionaries) = 0 & numOnBank(bank2, cannibals) = 0;
+    0: cross(boat) & numCrossing(boat, missionaries) = 0 & numCrossing(boat, cannibals) = 0.

@@ -1,0 +1,108 @@
+:- sorts
+    integer;
+    missionary;
+    cannibal;
+    person >> missionary, cannibal;
+    vessel;
+    location.
+
+
+
+:- objects
+    boat :: vessel;
+    bank1, bank2 :: location;
+    m1, m2, m3 :: missionary;
+    c1, c2 :: cannibal;
+    bc :: cannibal;  % bc represents the big cannibal
+    0..6 :: integer.
+
+
+
+:- constants
+    loc(person) :: inertialFluent(location);
+    boatLoc :: inertialFluent(location);
+    cross :: exogenousAction;
+    onBoat(person) :: inertialFluent(boolean);
+	
+    board(person) :: exogenousAction;
+    disembark(person) :: exogenousAction.
+
+
+
+:- variables
+    P, P1, P2, P3 :: person;
+    M, M1, M2 :: missionary;
+    C, C1, C2 :: cannibal;
+    Loc, Loc1, Loc2 :: location.
+
+% Crossing causes the boat location to change to the opposite bank.
+cross causes boatLoc = bank2 if boatLoc = bank1.
+cross causes boatLoc = bank1 if boatLoc = bank2.
+
+% Crossing causes the location of people on the boat to change to the opposite bank.
+cross causes loc(P) = bank2 if onBoat(P) & boatLoc = bank1.
+cross causes loc(P) = bank1 if onBoat(P) & boatLoc = bank2.
+
+% Boarding causes P to be on the boat.
+board(P) causes onBoat(P) = true.
+
+% Disembarking causes P to not be on the boat.
+disembark(P) causes onBoat(P) = false.
+
+% Boarding is not executable if P is already on the boat.
+nonexecutable board(P) if onBoat(P).
+
+% Disembarking is not executable if P is not on the boat.
+nonexecutable disembark(P) if ~onBoat(P).
+
+% Boarding is not executable if P is not at the same location as the boat.
+nonexecutable board(P) if loc(P) \= boatLoc.
+
+% Disembarking is not executable if P is not at the same location as the boat.
+nonexecutable disembark(P) if loc(P) \= boatLoc.
+
+% The cross action is not executable if no one is on the boat.
+nonexecutable cross if
+    ~onBoat(m1) & ~onBoat(m2) & ~onBoat(m3) & ~onBoat(c1) & ~onBoat(c2) & ~onBoat(bc).
+
+% It's impossible to have more than 2 people on the boat.
+impossible
+    onBoat(P1) & onBoat(P2) & onBoat(P3) &
+    P1\=P2 & P2\=P3 & P1\=P3.
+
+% The cross action is not executable if big cannibal is on the boat with another person.
+nonexecutable cross if onBoat(bc) & (
+    onBoat(m1) | onBoat(m2) | onBoat(m3) | onBoat(c1) | onBoat(c2)
+).
+
+% Cross is not executable if any person on the boat is not at the same location as the boat.
+nonexecutable cross if onBoat(P) & loc(P) \= boatLoc.
+
+% [Constraints about cannibals outnumbering missionaries have been removed due to complexity in counting without aggregates]
+
+% disallow 3 cannibals and 2 missionaries
+impossible loc(M) = Loc & loc(M1) = Loc & loc(M2) = Loc1 & M\=M1 &
+		   loc(C) = Loc & loc(C1) = Loc & loc(C2) = Loc & C\=C1 & C\=C2 & C1\=C2 &
+		   Loc \= Loc1.
+
+%disallow 3 cannibals and 1 missionary
+impossible loc(M) = Loc & loc(M1) = Loc1 & loc(M2) = Loc1 & M1\=M2 & 
+		   loc(C) = Loc & loc(C1) = Loc & loc(C2) = Loc & C\=C1 & C\=C2 & C1\=C2 & 
+		   Loc \= Loc1.
+
+% disallow 2 cannibals and 1 missionary
+impossible loc(M) = Loc & loc(M1) = Loc1 & loc(M2) = Loc1 & M1\=M2 & 
+		   loc(C) = Loc & loc(C1) = Loc & loc(C2) = Loc1 & C\=C1 & C\=C2 & C1\=C2 & 
+		   Loc \= Loc1.
+
+noconcurrency.
+
+:- query
+    0: loc(m1) = bank1 & loc(m2) = bank1 & loc(m3) = bank1 &
+       loc(c1) = bank1 & loc(c2) = bank1 & loc(bc) = bank1 &
+       boatLoc = bank1 &
+       onBoat(m1) = false & onBoat(m2) = false & onBoat(m3) = false &
+       onBoat(c1) = false & onBoat(c2) = false & onBoat(bc) = false;
+    maxstep: loc(m1) = bank2 & loc(m2) = bank2 & loc(m3) = bank2 &
+             loc(c1) = bank2 & loc(c2) = bank2 & loc(bc) = bank2 &
+             boatLoc = bank2.

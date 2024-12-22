@@ -1,0 +1,854 @@
+Action language BC+ consists of (1) a signature, which is a finite set of propositional atoms, and (2) causal laws. An atom is true, false, or of the form c=v, where c is a constant, and v is an element in its domain. Constants c are divided into two groups: fluent constants and action constants. A formula is a propositional combination of atoms. A fluent formula is a formula such that all constants occurring in it are fluent constants. An action formula is a formula that contains at least one action constant and no fluent constants. 
+
+For example, a fluent constant "loc" which represents the location of some object, may have a value from {l1, l2, l3}. To express the location is l2, one would write:
+loc = l2.
+
+Similarly, an action constant "drive" representing driving a car, may have a value from {true, false} (though in general actions can be non-boolean). To represent this, one could write:
+drive = true.
+
+For boolean constants c, c is shorthand for c=true, and ~c is shorthand for c=false. Thus "drive = true" can be represented simply as "drive". The standard logical operators are: "-" for negation, "&" for conjunction, "|" for disjunction, and "->" for implication.
+
+Numeric values may combine with unary operators "-" (negative), "abs" (absolute value, e.g., abs(n)), and binary operators "+" (addition), "-" (subtraction), "*" (multiplication), "//" (floor division), and "mod" (modulus, e.g., n mod m). Comparison is done with "=" (equality), "\=" (inequality), "<" (less than), ">" (greater than), "<=" (less than or equal), and ">=" (greater than or equal).
+
+An action description D is a set of causal laws that define a transition system, which can be represented as a directed graph. In this graph, the vertices correspond to states of the world, while the edges signify transitions between these states.
+
+[CAUSAL LAWS: BASIC FORM]
+
+In BC+, there are three types of basic laws: (1) static law, (2) action dynamic law, and (3) fluent dynamic law:
+
+STATIC LAW:
+
+	F if G,
+
+where F and G are fluent formulas. This expresses that F is true if the formula G is true.
+
+ACTION DYNAMIC LAW:
+
+	F if G,
+
+where F is an action formula and G is a formula. This expresses that action formula F is true if G is true.
+
+FLUENT DYNAMIC LAW:
+
+	F if G after H,
+
+where F and G are fluent formulas, and H is a formula. This expresses that F is true if G is true after H is true.
+
+[CAUSAL LAWS: SOME SHORTHAND ABBREVIATIONS]
+
+BC+ allows several kinds of shorthand notation for the basic causal laws. These make it convenient to directly express commonsense knowledge.
+
+
+CAUSES:
+
+	a causes F if H,
+
+where a is an action, F is a fluent formula, H is a formula, is shorthand for the fluent dynamic law:
+
+	F after a & H.
+
+This rule intuitively expresses that an action a causes some effect F if condition H is true.
+
+IMPOSSIBLE:
+
+	impossible F,
+
+where F is a fluent formula, is shorthand for the static law:
+
+	false if F.
+
+This rule intuitively expresses that formula F should be false in every state.
+
+NONEXECUTABLE:
+
+	nonexecutable a_1 & ... & a_k if G,
+
+where a_1 & ... & a_k are action constants and G is a formula, is shorthand for the fluent dynamic law:
+
+	false if true after a_1 & ... & a_k & G.
+
+This rule intuitively expresses that actions a_1 & ... & a_k all being true is not possible if G is true.
+
+DEFAULT:
+
+	default c=v if F,
+
+where F is a fluent formula, stands for a static causal law. 
+
+This intuitively expresses that by default c=v holds when F is true in the state. If there is evidence to the contrary, then c=v may not hold. 
+
+	default c=v if F after G,
+
+where F is a fluent formula, and G is a formula, and stands for a fluent dynamic law which intuitively expresses that by default c=v holds when F is true in the state and F was true in the previous state. If there is evidence to the contrary, then c=v may not hold.
+
+ALWAYS:
+
+	always F,
+
+where F is a formula which can contain both fluent and action constants, is shorthand for the fluent dynamic law:
+
+	false if true after ~F.
+
+This rule intuitively expresses that every transition must satisfy F.
+
+[SORT/OBJECT/VARIABLE/CONSTANT DECLARATION IMPLEMENTATION]
+
+Action language BC+ is implemented in a program as follows. A BC+ program consists of a sort declaration, object declaration, variable declaration, constant declaration, along with a set of causal laws.
+
+SORT DECLARATION:
+A sort is a named set of elements which is used to specify the domain of each constant and variable. First the sort is declared
+using a sort declaration statement and, later, is defined by adding objects to it in an object declaration statement.
+
+Example:
+:- sorts
+    int;
+    box.
+
+This declares the sorts: int, and box.
+
+A sort can also be a supersort, that is, a sort s can automatically include the objects within another sort s2, denoted s >> s2.
+
+:- sorts
+    package >> box.
+This declares the sort package and box, where package is a supersort and includes the sort box.
+
+OBJECT DECLARATION:
+An object is a value in a sort which a constant can take. It is also used
+in parameter lists to construct nested objects and sets of constants. 
+
+Example:
+:- objects
+    1..3 :: int;
+    o(int, int) :: box.
+
+This declares 1,2, and 3 as objects within int, and the objects:
+o(1, 1), o(1, 2), o(1, 3),
+o(2, 1), o(2, 2), o(2, 3),
+o(3, 1), o(3, 2), and o(3, 3),
+as values within box.
+
+VARIABLE DECLARATION:
+A variable is a placeholder symbol which will be replaced with each object in its domain during grounding.
+
+Example:
+:- variables
+    I, I1, I2 :: int;
+    B, B1, B2 :: box.
+This declares the variables I, I1, and I2 over the objects within int, and variables B, B1, and B2 range over the objects within box.
+Variables are denoted as capital letters which are replaced with all possible values in the domain of their associated sort in a process called grounding.
+
+CONSTANT DECLARATION:
+Similar to object symbols, constants are defined within a constant declaration statement and have a base identifier, an optional list of parameter sort, and a sort which makes up the constant's domain. In addition, they have a constant declaration type, such as "exogenousAction" or "inertialFluent". Inertial fluents are common, and used for constants whose value persists through time unless affected otherwise.
+
+Example:
+:- constants
+    p(int) :: inertialFluent(boolean);
+    move(box) :: exogenousAction.
+This declares the inertial fluent p which takes an int argument and is a boolean value, and the action move, which takes a box argument.
+
+[CAUSAL LAWS BASIC FORM IMPLEMENTATION]
+
+STATIC LAW EXAMPLE:
+
+	F if G,
+
+where F and G are fluent formulas, is written for example:
+
+% The location of a person is the same as the car if the person is in the car.
+loc(person)=L if inCar & loc(car)=L.
+
+ACTION DYNAMIC LAW EXAMPLE:
+
+	F if G,
+
+where F is an action formula and G is a formula, is written for example:
+
+% If A is assigned to location Loc, and it is ready, then moveTo(A) is true.
+moveTo(A) if assigned(A) = Loc & ready(A),
+where moveTo(A) is an action, and assigned(A) and ready(A) are fluent constants. Here moveTo is a boolean action constant.
+
+FLUENT DYNAMIC LAW EXAMPLE:
+
+	F if G after H,
+
+where F and G are fluent formulas, and H is a formula, is written for example:
+
+% If you enter the car after the car is unlocked, then you are in the car.
+in(car) if unlocked(car) after enter(car).
+
+[CAUSAL LAW SHORTHAND ABBREVIATIONS IMPLEMENTATION]
+
+CAUSES EXAMPLE:
+
+An expression of the form
+	a causes F if H,
+
+where a is an action, F is a fluent formula, H is a formula, is written for example:
+% Driving the car to a location causes the car to be at that location of the car has gas.
+drive(car, loc) causes location(car) = loc if hasGas(car)
+
+IMPOSSIBLE EXAMPLE:
+
+An expression of the form
+
+	impossible F,
+
+where F is a fluent formula, is written for example:
+
+% The cat and mouse cannot be at the same location
+impossible loc(cat)=Loc1 & loc(mouse) = Loc2 & Loc1=Loc2.
+
+Recall that F in "impossible F" must be a fluent formula, meaning that F cannot contain action constants, including attributes.
+
+The following two examples are incorrect, where drive(car) is an action, and numPassengers(car) and numDrivers(car) are attributes:
+% The car cannot be driven if it has no fuel.
+impossible drive(car) & fuel(car) = 0.
+
+% The combined number of passengers and drivers cannot exceed 5.
+impossible N1 + N2 > 5 & N1 = numPassengers(car) & N2 = numDrivers(car).
+
+These are wrong because drive(car) is an action constant, and the attributes numPassengers and numDrivers are action constants, and they are in an impossible constraint.
+
+NONEXECUTABLE EXAMPLE:
+
+An expression of the form:
+
+	nonexecutable a1 & a2 & ... & an if G, 
+
+where a_1 & ... & a_k are action constants and G is a formula, is written for example:
+
+% It is not permissible to drive a bus and a car if they are driving to the same location. 
+nonexecutable driveCar(Loc1) & driveBus(Loc2) if Loc1=Loc2.
+
+% It is not permissible to lift an object if it is heavy.
+nonexecutable lift(object) if heavy(object).
+
+On the other hand, the following:
+
+nonexecutable lifted(object) if heavy(object),
+
+is not allowed when lifted(object) is a fluent and not an action.
+
+DEFAULT EXAMPLES:
+
+An expression of the form
+
+	default c=v if F,
+
+where F is a fluent formula, is written for example as:
+
+% By default, the power is on if the switch is turned.
+default powerOn if switchTurned.
+
+An expression of the form
+
+	default c=v if F after G,
+
+where F is a fluent formula, and G is a formula, is written for example as:
+
+% The ferry will be on the right bank if it has gas after it was on the left bank, and no evidence suggests otherwise.
+default ferry(right) if hasGas after ferry(left)
+
+ALWAYS EXAMPLE:
+
+	always F,
+
+where F is a formula which can contain both fluent and action constants, is written for example:
+
+% the number departing from a location is always less than or equal to the number at the location
+always departing(Loc) <= numAt(Loc).
+
+where departing/1 is an action constant and numAt/1 is a fluent.
+Note: There should not be an "if" in a "always" rule, instead use "&".
+
+Keep in mind that "always F" should be used for conditions which should be true for every transition.
+
+[EXTENDED CONSTANT DECLARATION]
+We can expand constant declaration to allow for attributes, additive fluents and additive actions.
+
+ATTRIBUTES:
+Attributes are types of action constants which are tied to actions, and given additional information about an action. For instance:
+
+:- constants
+    move(block) :: exogenousAction;
+    destination(block) :: attribute(location) of move(block).
+
+This declaration tells us that destination(block) is an attribute of the action of moving a block, which has value of location, representing the block's destination.
+
+Important: Attributes should have as their first arguments, the same arguments (and in the same order) as the action which they are an attribute of.
+For example, any attribute of the action "fly(airplane,location)" should have the form "attributeName(airplane,location,...)", after which the action arguments "airplane" and "location", can other arguments be listed.
+An attribute which represents the number of passengers on board of a nationality can be written as:
+onBoard(airplane,location,nationality) :: attribute(integer) of fly(airplane,location).
+
+Where the following would be incorrect:
+Incorrect: passengers(nationality) :: attribute(integer) of fly(airplane,location),
+since passengers should instead have the arguments "airplane" and "location" before "nationality".
+
+Important: If an attribute is ever declared, then the action it is an attribute of must have at least one argument.
+
+For example, the above declaration would be incorrect if it was the following:
+
+:- constants
+    move :: exogenousAction;
+    destination :: attribute(location) of move.
+
+Here, since destination is an attribute of move, but move has no argument, this is wrong.
+
+ADDITIVE FLUENTS AND ADDITIVE ACTIONS:
+
+There are special constants additive fluents and additive actions, which are useful for modeling the effects of concurrent actions.
+An additive fluent is a fluent (tied to states) with numerical values such that the effect of several concurrently executed actions on it can be computed by adding the effects of the individual actions.
+An additive action constant (tied to a transition) is similar except that it can handle numeric values of concurrent actions during transitions.
+
+With a buy and sell action, and numExchanged attribute of exchange, additive fluents and additive actions can be declared as follows:
+:- constants
+    buy(item) :: exogenousAction;
+    sell(item) :: exogenousAction;
+    exchange(item) :: exogenousAction;
+    numExchanged(item) :: attribute(integer) of exchange(item); 
+    inStock(item) :: additiveFluent(integer);
+    netChange(item) :: additiveAction(integer).
+
+inStock(item) represents the the number of an item in stock, which can be affected by both buy(item) and sell(item). netChange(item) represents the net number of an item which is exchanged or bought/sold during a given transition or event.
+
+[EXTENDED CAUSAL LAW SHORTHAND ABBREVIATIONS: INCREMENT/DECREMENT LAWS IMPLEMENTATION]
+
+INCREMENT/DECREMENT LAWS:
+Additive fluents can only be updated in increment/decrement laws, which are expressed as:
+
+    a increments c by v if G,
+
+where a is an action, c is an additive fluent, v is an integer, and G is a fluent, is used to express that some additive fluent (c), should increase by some value v if G is true and action a happens.
+
+Similarly:
+
+    a decrements c by v if G,
+
+is used to decrease the additive constant c by value v if G is true and action a happens.
+
+Examples:
+% buy(coin) increments has(coin) by N if howMany(coin,N).
+% buy(coin) decrements has(money) by N*M if howMany(coin,N) & price(coin)=M.
+
+Additive actions similarly are only updated in increment/decrement statements:
+
+    a increments c by v if G.
+    a decrements c by v if G.
+
+where c is an additive action.
+While additive fluents are used to describe state information, additive actions are about events/transitions. For example, suppose multiple actions can occur at once for a domain involving buying and selling, and the additive action netExchanged is declared:
+% buy(coin) increments netExchanged(coin) by N if howMany(coin,N).
+% sell(coin) decrements netExchanged(coin) by N if howMany(coin,N).
+
+This is useful for tracking numerical values during a transition, which may be used, e.g., if there should never be a negative amount of net coins exchanged at a given time, then netExchanged(coin) can be used to construct such a law.
+
+In general, if something causes something to increase/decrease, then we use increment/decrement. Updating the value of an additive fluent or action can only be done in an increment or decrement law (e.g., "a causes c=2" is not allowed if "c" represents an additive fluent/action).
+
+[ARITHMETIC WITH ATTRIBUTES AND ADDITIVE CONSTANTS]
+Attributes and additive actions should not occur in the operands of arithmetics such as addition, subtraction, multiplication, floor division, or modulus operators. They must be set to variables, and the variables must be used as the operands.
+
+The following two rules are incorrect, where weight(truck,...) is an attribute:
+% A truck cannot be driven if the combined weight of the cargo (C), passengers (P), and fuel (F), is greater than the truck's capacity.
+nonexecutable drive(truck, P, C) if weight(truck, C) + weight(truck, P) + weight(truck, F) > capacity(truck).
+
+% Driving the truck causes the weight of the truck's fuel to decrease by 15.
+drive(truck, P, C) causes weight(truck, fuel) = weight(truck, fuel) - 15.
+
+These are incorrect because the attributes weight(truck,...) are directly used in arithmetic.
+Instead, these rules should be written as follows:
+% A truck cannot be driven if the combined weight of the cargo (C), passengers (P), and fuel (F), is greater than the truck's capacity.
+nonexecutable drive(truck, P, C) if N1 + N2 + N3 > capacity(truck) &  weight(truck, C) = N1 & weight(truck, P) = N2 & weight(truck, F) = N3.
+
+% Driving the truck causes the weight of the truck's fuel to decrease by 15.
+drive(truck, P, C) causes weight(truck, fuel) = N1 - 15 if N1 = weight(truck, fuel) & N2.
+
+[RESTRICTION OF NESTED CONSTANTS]
+A constant cannot appear as an argument of another constant. Instead, one can introduce a variable in place of a nested constant.
+
+For example, the following is wrong since the (boolean) constant roadBlock(...), contains the nested constant loc(C):
+nonexecutable move(C) if roadBlock(loc(C)).
+
+Instead, loc(C) should be set to a variable, like the following:
+nonexecutable move(C) if roadBlock(L) & L = loc(C).
+
+[VARIABLE QUANTIFICATION]
+When using "always F", make sure to quantify over variables if needed.
+For example, say we want to express that the combined weight of passengers and the truck is less than the capacity of the truck. The following would be incorrect:
+always weight(passengers) = N1 & weight(truck) = N2 & capacity(truck) = N3 & N1 + N2 < N3.
+
+This is because of a quantification issue. This rule informally reads as "For all values N1, N2, and N3, the weight of the passengers is N1, the weight of the truck is N2, the capacity of the truck is N3, and N1 + N2 < N3." Since this will be grounded for every possible value that N1 can take it, there will be contradiction. Furthermore, the condition "N1 + N2 < N3" will obviously not hold over all possible values of the variables N1, N2, and N3.
+
+To correctly write this, first set the variables in the antecedent of an implication:
+
+always (weight(passengers) = N1 & weight(truck) = N2 & capacity(truck) = N3) -> N1 + N2 < N3.
+
+This informally reads as "If the weight of the passengers is N1, the weight of the truck is N2, and the capacity of the truck is N3, then N1 + N2 < N3", and aligns with what we want to express.
+
+
+QUERIES:
+Queries have three components: an optional label, an optional maximum step which list formulas which should be true in the last step of the plan, and a set of constraint formulas to apply, each parametrized with the step at which they should be applied.
+For example the following query represents an initial state and an action at step 0, and a set of constraints which should be met at the end of the plan.
+
+:- query
+	label :: test_query;
+	0: loc(b1)=b2 & loc(b2)=b3 & loc(b3)=a & loc(b4)=b & loc(b5)=c;
+	0: move(b1, b5);
+	maxstep: loc(b5,c) & loc(b4,b5) & loc(b3,b4) & loc(b2,b3) & loc(b1,b2).
+
+[EXAMPLE 1]
+
+Problem description:
+Blocks can be stacked on top of each other or on a table. Blocks stacked on the table are in a tower.
+
+There are two main types of things: loc and block.
+loc includes block.
+
+b1, b2, b3, and b4 are blocks.
+table is a loc.
+
+Actions
+Moving a block to a location.
+
+Query
+Initially, block b1 is on b2, b2 is on the table, b3 is on the table, and b4 is on b3. Find a plan so that block b1 is on b4, b2 is on b3, b3 is on b1, and b4 is on the table.
+
+BC+ Program:
+:- sorts
+    loc >> block.
+:- objects
+    b1, b2, b3, b4 :: block;
+    table :: loc.
+:- constants
+    loc(block) :: inertialFluent(loc);
+    in_tower(block) :: inertialFluent(boolean);
+    move(block, loc) :: exogenousAction.
+:- variables
+    B, B1, B2, B4 :: block;
+    L, L1, L2, L3 :: loc.
+
+% Two blocks cannot be at the same location. (Use loc(block). Since it is a fluent, we use impossible. Since we use impossible, we only use "&". "if" is not allowed). Use "\=" to differentiate B1 and B2.
+impossible loc(B1) = B & loc(B2) = B & B1\=B2. 
+
+% A block is in a tower if it's location is on the table. ("Static law")
+in_tower(B) if loc(B) = table.
+
+% A block is in a tower if it's location is on something that is in a tower. ("Static law")
+in_tower(B) if loc(B) = B1 & in_tower(B1).
+
+% Blocks don't float in the air. (Use in_tower(block). Since it is a fluent, we use impossible. Since we use impossible, we only use "&". "if" is not allowed)
+impossible ~in_tower(B).
+
+% Moving a block causes it's location to move to loc. ("causes" rule)
+move(B,L) causes loc(B)=L.
+
+% The move action is not permissible if something is on the location to be moved to. (Use move(block, loc). Since it is an action, we use nonexecutable.)
+nonexecutable move(B,L) if loc(B1) = B.
+
+% A block is in tower after it is in tower and it is on a block.
+in_tower(B) after in_tower(B) and loc(B)=B1.
+
+% By default, all blocks are in a tower.
+default ~in_tower(B).
+
+:- query
+	0: loc(b1) = b2 & loc(b2) = table & loc(b3) = table & loc(b4)=b3);
+	maxstep: loc(b1) = b4 & loc(b2) = b3 & loc(b3)=b1 & loc(b4) = table. 
+
+[EXAMPLE 2]
+
+Problem description:
+A monkey wants to get a bunch of bananas hanging from the ceiling. He can reach the bananas by first pushing a box to the empty place under the bananas and then climbing on top of the box.
+
+There are three main types of things: "monkey", "thing" and "location".
+"thing" includes "monkey".
+
+monkey, bananas, and box are things.
+l1, l2, and l3 are locations.
+
+Actions
+walk to a location
+push box to a location
+climb on
+climb off
+grasp bananas
+
+Query
+Initially, the monkey is at location l1, the box is at l2, and the bananas are at location l3. Generate a plan so that the monkey has the bananas.
+
+BC+ program:
+:- sorts
+    thing;
+    location.
+
+:- objects
+    monkey,bananas,box :: thing;
+    l1,l2,l3 :: location.
+
+:- variables
+    Loc, Loc1, Loc2 :: location;
+    Bool, Bool1, Bool2 :: boolean.
+
+:- constants
+    loc(thing) :: inertialFluent(location);
+    hasBananas,onBox :: inertialFluent;
+    walk(location) :: exogenousAction;
+    pushBox(location) :: exogenousAction;
+    climbOn :: exogenousAction;
+    climbOff :: exogenousAction;
+    graspBananas :: exogenousAction.
+
+% The location of the bananas is where the monkey is if the monkey has bananas.
+loc(bananas)=Loc if hasBananas & loc(monkey)=Loc.
+
+% The location of the monkey is where the box is if the monkey is on the box. 
+loc(monkey)=Loc if onBox & loc(box)=Loc.
+
+% The monkey cannot be in two places at once.
+impossible loc(monkey) = Loc1 & loc(monkey)=Loc2 & Loc1\=Loc2.
+
+% Walking to a location causes the monkey's location to change.
+walk(Loc) causes loc(monkey)=Loc.
+
+% Walking is not permissible to a location if the monkey is already in that location.
+nonexecutable walk(Loc) if loc(monkey)=Loc.
+
+% Walking is not permissible if the monkey is on the box.
+nonexecutable walk(Loc) if onBox.
+
+% Pushing the box to a location causes the location of the box to move.
+pushBox(Loc) causes loc(box)=Loc.
+
+% Pushing the box to a location causes the location of the monkey to move.
+pushBox(Loc) causes loc(monkey)=Loc.
+
+% Pushing the box is not permissible to a location if the monkey is at that location.
+nonexecutable pushBox(Loc) if loc(monkey)=Loc.
+
+% Pushing the box is not permissible if the monkey is on the box.
+nonexecutable pushBox(Loc) if onBox.
+
+% Pushing the box is not permissible if the location of the monkey is not the same as the location of the box.
+nonexecutable pushBox(Loc) if loc(monkey)\=loc(box).
+
+% Climbing on the box causes the monkey to be on the box.
+climbOn causes onBox.
+
+% Climbing on the box is not permissible if the monkey is already on the box.
+nonexecutable climbOn if onBox.
+
+% Climbing on the box is not permissible if the location of the monkey is not the same as the box.
+nonexecutable climbOn if loc(monkey)\=loc(box).
+
+% Climbing off of the box causes the monkey to not be on the box.
+climbOff causes ~onBox.
+
+% Climbing off of the box is not permissible if the monkey is not on the box.
+nonexecutable climbOff if ~onBox.
+
+% Grasping the bananas causes the monkey to have the bananas.
+graspBananas causes hasBananas.
+
+% Grasping the bananas is not permissible if the monkey already has the bananas.
+nonexecutable graspBananas if hasBananas.
+
+% Grasping the bananas is not permissible if the monkey is not on the box.
+nonexecutable graspBananas if ~onBox.
+
+% Grasping the bananas is not permissible if the location of the monkey is not the same as the location of the bananas.
+nonexecutable graspBananas if loc(monkey)\=loc(bananas).
+
+:- query
+	0: loc(monkey)=l1 & loc(box) = l2 & loc(bananas) = l3 & ~hasBananas & ~onBox;
+	maxstep: hasBananas.
+
+[EXAMPLE 3]
+
+Problem description:
+A fleet of vehicles which have some capacity can drive passengers to from locations to other locations. 
+
+There are three main types of things: vehicle, location, and integer.
+
+bus1 and bus2 are vehicles.
+stop1, stop2, and stop3 are locations.
+0..20 are integers.
+
+Actions
+Driving the vehicile is an action.
+
+Query
+Initially, 10 passengers are at stop1, 10 passengers are at stop2, and 0 passengers are at stop3. bus1 has capacity 3 and bus2 has capacity 4. Find a plan so that all 20 passengers are at stop3.
+
+BC+ program:
+:- sorts
+    vehicle;
+    location;
+    integer.
+
+:- variables
+    V, V1, V2, V3, V4 :: vehicle;
+    Loc, Loc1, Loc2, Loc3, Loc4 :: location;
+    N, N1, N2, N3, N4 :: integer.
+
+:- objects
+    bus1, bus2 :: vehicle;
+    stop1, stop2, stop3 :: location;
+    0..20 :: integer.
+
+:- constants
+    loc(vehicle) :: inertialFluent(location);
+    capacity(vehicle) :: inertialFluent(integer);
+    drive(vehicle) :: exogenousAction;
+    going(vehicle) :: attribute(location) of drive(vehicle);
+    amount(vehicle) :: attribute(integer) of drive(vehicle);
+    numAt(location) :: additiveFluent(integer);
+    departing(location) :: additiveAction(integer).
+
+% Driving a vehicle causes the location of the vehicle to change. ("causes" rule)
+drive(V) causes loc(V)=Loc if going(V)=Loc.
+
+% Driving a vehicle causes the number of passengers at the original location to decrease. ("decrement" rule. Since we use the drive action, we also use its attribute amount')
+drive(V) decrements numAt(Loc1) by N if amount(V)=N & loc(V)=Loc1.
+
+% Driving a vehicle causes the number of passengers at the destination location to increase. ("increment" rule. Since we use the drive action, we also use its attribute amount')
+drive(V) increments numAt(Loc2) by N if amount(V)=N & going(V)=Loc2.
+
+% Driving a vehicle is not executable if the number of passengers on the vehicle is greater than the capacity of the vehicle. (Use drive(vehicle). Since it is an action, we use nonexecutable.)
+nonexecutable drive(V) if amount(V) > capacity(V).
+
+% Driving a vehicle is not permissible if the amount of passengers on the vehicle is zero. (Use drive(vehicle). Since it is an action, we use nonexecutable.)
+nonexecutable drive(V) if amount(V)=0.
+
+% Driving increases the amount that are departing by the amount of passengers on board. ("increment" rule. Since we use the drive action, we also use its attribute amount')
+drive(V) increments departing(Loc) by N if loc(V)=Loc & amount(V)=N.
+
+% The amount of passengers departing must not be greater than the number of passengers at the location departing from. ("always" rule.)
+always departing(Loc) <= numAt(Loc).
+
+% The capacity of bus1 and bus2 have capacity 3 and 4.
+capacity(bus1) = 3.
+capacity(bus2) = 4.
+
+:- query
+	0: numAt(stop1) = 10 & numAt(stop2) = 10 & numAt(stop3) = 0;
+	maxstep: numAt(stop3) = 20.
+
+[CHECKLIST]
+The following is a checklist which should be considered when writing and revising a BC+ program.
+1. In general, if some conjunction of fluents cannot be true, then we use "impossible" when writing the rules, but if instead we want to assert some constant is caused to be false, then we use the negation (~). For example, if it is impossible for an object to be on the table and under it, we might write "impossible onTable(object) & underTable(object).", but express that no rain causes the ground to not be wet, we can write "~groundWet if noRain".
+2. "impossible F" can only be used with fluents and "&". Do not use attributes or action constants in laws of the form "impossible F". "nonexecutable" is about actions not being permissible if certain fluents hold and/or certain actions are performed.
+3. Additive constants can only be updated in increment/decrement laws.
+4. In "a causes G if H", "G", recall G should be a fluent formula. Therefore, it should not directly contain action constants (including attributes). If one wants to set some constant to the value of an attribute, then the fluent formula G should contain a variable represnting the attribute, rather than the attribute itself.
+
+For example, if the attribute nextDestination(Loc) is not set to a variable first, then this will be a malformed law error, since there is an action constant in G:
+drive(car) causes loc(car) = nextDestination(Loc) if loc(boat) = Loc.
+
+Instead, this should be written as:
+drive(car) causes loc(car) = Loc2 if Loc2 = nextDestination(Loc) & loc(boat) = Loc.
+
+This works because nextDestination(Loc) is first set to a variable.
+5. Only use variables which are declared, if new variables are introduced, they must be declared.
+6. In shorthand laws "default c=v if F" and "default c=v if F after G", "c" cannot be an additive constant, since this is can update the value of them, but they should only be updated in increment/decrement laws.
+7. "always" shorthand abbreviations should not contain "if", but only conjunctions ("&").
+8. In the case that a disjunction is used in the body of a rule, encapsulate it in parentheses, e.g., (loc(city1) | loc(city2)).
+9. Do not nest constants in arguments of other constants. For example, do not use the following: nonexecutable move(C) if roadBlock(loc(C)). Instead, loc(C) should be set to a variable: nonexecutable move(C) if roadBlock(L) & L = loc(C).
+10. Make sure that the query is exhaustive. For example, if the initial condition is that bus stop A has 10 people, and the goal condition is that the bus stop B has 10 people, it may need to be specified that bus stop B has 0 people in the initial condition, or the BC+ solver can just set the initial state to be the goal state.
+11. Make sure to only use constants which are declared in the constant declaration. If new constans are used, then they must be added in the declaration.
+12. Make sure when writing rules, that variables representing constants are of the correct sort, i.e., the sort of the variable is the same as the sort of the value of the constant it is representing.
+For example, if there is a constant "capacity(vehicle)" which is of type "inertialFluent(integer)", then only variables of sort "integer" should be used to represent the constant in rules.
+13. Don't use simple, or rigid fluents in the constant declaration. Use "inertialFluent" instead.
+14. Don't use non-specified fluents. For example, there should not be constant declarations like "country(location) :: country", since this will be recognized as a rigid fluent.
+15. Keep in mind that "always F" should be used for conditions which should be true for every transition and shout not be used to express conditions for a state. 
+
+For example, consider a domain about trading coins that has the action constant numExchanged(coin), which is an attribute of some trading action, and the fluent constant amount(coin). numExchanged(coin) represents the net number of coins exchanged in a transition, from possibly multiple trade actions. amount(coin) represents the number of coins in a state (before and after trades).
+
+If one wants to express that the net number of exchanged coins during an action is smaller than some limit for every trade, this can be expressed with:
+always netExchanged(coin) < limit(coin).
+
+However, if one wants to express that the amount of coins does not exceed some limit, this cannot be expressed with "always F". The following is incorrect:
+always amount(coin) <= limit(coin).
+
+This wrong because if a state does not have a transition to another state, then the condition "amount(coin) <= limit(coin)" can be false. For example, in a transition system with a single state, or the last state in a transition system.
+
+Instead, it can be expressed as:
+impossible amount(coint) > limit(coin).
+
+This enforces the following is true for every state.
+16. Attributes and additive actions should not occur in the operands of arithmetics such as addition, subtraction, multiplication, floor division, or modulus operators. They must be set to variables, and the variables must be used as the operands.
+
+[INSTRUCTIONS]
+Consider the problem and BC+ program, and simple sample queries which were ran to check the basic functionality of the program. The output of each sample query and the main query is presented. Check that the Cplus2ASP output makes sense.
+
+[Problem]
+To solve Sudoku, a 9x9 board must be completely filled with numbers that adhere to some constraints. The possible numbers are 1-9. (1) No two numbers in the same row can be the same, (2) no two numbers in the same column can be the same, and (3) no two numbers in each 3x3 square can be the same, where the 3x3 squares are made by evenly splitting the 9x9 board.
+
+BC+ Program:
+:- sorts
+    row;
+    column;
+    value;
+    integer.
+
+
+
+:- objects
+    0..8 :: row;
+    0..8 :: column;
+    1..9 :: value;
+    0..9 :: integer.
+
+
+
+:- variables
+    R, R1, R2, R3, R4 :: row;
+    C, C1, C2, C3, C4 :: column;
+    V, V1, V2, V3, V4 :: value;
+    N1, N2, N3, N4 :: integer.
+
+
+
+:- constants
+    assign(row, column, value) :: exogenousAction;
+    valueAt(row, column) :: inertialFluent(value).
+
+% constraints/rules
+
+% 1. Assigning a value to a cell causes the value at that cell to be that value.
+assign(R,C,V) causes valueAt(R,C)=V.
+
+% 2. Assigning a value to a cell is not executable if the cell already has a value assigned.
+nonexecutable assign(R,C,V) if valueAt(R,C)=V1.
+
+% 3. Assigning a value to a cell is not executable if the same value already exists in the same row.
+nonexecutable assign(R,C,V) if valueAt(R,C1)=V & C1\=C.
+
+% 4. Assigning a value to a cell is not executable if the same value already exists in the same column.
+nonexecutable assign(R,C,V) if valueAt(R1,C)=V & R1\=R.
+
+% 5. Assigning a value to a cell is not executable if the same value already exists in the same 3x3 square.
+nonexecutable assign(R,C,V) if valueAt(R1,C1)=V & (R1\=R | C1\=C) & N1=R//3 & N2=R1//3 & N3=C//3 & N4=C1//3 & N1=N2 & N3=N4.
+
+% 6. No two cells in the same row can have the same value.
+false if valueAt(R,C1)=V & valueAt(R,C2)=V & C1\=C2.
+
+% 7. No two cells in the same column can have the same value.
+false if valueAt(R1,C)=V & valueAt(R2,C)=V & R1\=R2.
+
+% 8. No two cells in the same 3x3 square can have the same value.
+false if valueAt(R1,C1)=V & valueAt(R2,C2)=V & (R1\=R2 | C1\=C2) & N1=R1//3 & N2=R2//3 & N3=C1//3 & N4=C2//3 & N1=N2 & N3=N4.
+
+
+Sample queries and outputs:
+% Query 1: Assign value 5 to cell (0,0) when the cell is empty and there are no conflicts (satisfiable)
+:- query
+    0: ;
+    0: assign(0,0,5).
+
+Cplus2ASP Output:
+
+ERROR: temp.bc:61:8]: ";": Syntax error.
+
+% Query 2: Assign value 5 to cell (0,0) when cell (0,1) already has value 5 (unsatisfiable)
+:- query
+    0: valueAt(0,1)=5;
+    0: assign(0,0,5).
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+
+
+% Query 3: Assign value 5 to cell (0,0) when cell (1,0) already has value 5 (unsatisfiable)
+:- query
+    0: valueAt(1,0)=5;
+    0: assign(0,0,5).
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+
+
+% Query 4: Assign value 5 to cell (0,0) when cell (1,1) already has value 5 in the same 3x3 square (unsatisfiable)
+:- query
+    0: valueAt(1,1)=5;
+    0: assign(0,0,5).
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+
+
+% Query 5: Assign value 6 to cell (0,0) when it already has value 5 (unsatisfiable)
+:- query
+    0: valueAt(0,0)=5;
+    0: assign(0,0,6).
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+
+
+
+
+Main query and output:
+% The element in row 0 and column 0 is 8. The element in row 1 and column 2 is 3. The element in row 1 and column 3 is 6. The element in row 2 and column 1 is 7. The element in row 2 and column 4 is 9. The element in row 2 and column 6 is 2. The element in row 3 and column 1 is 5. The element in row 3 and column 5 is 7. The element in row 4 and column 4 is 4. The element in row 4 and column 5 is 5. The element in row 4 and column 6 is 7. The element in row 5 and column 3 is 1. The element in row 5 and column 7 is 3. The element in row 6 and column 2 is 1. The element in row 6 and column 7 is 6. The element in row 6 and column 8 is 8. The element in row 7 and column 2 is 8. The element in row 7 and column 3 is 5. The element in row 7 and column 7 is 1. The element in row 8 and column 1 is 9. The element in row 8 and column 6 is 4. Find the complete solution.
+:- query
+    0: valueAt(0,0)=8 & valueAt(1,2)=3 & valueAt(1,3)=6 & valueAt(2,1)=7 & valueAt(2,4)=9 & valueAt(2,6)=2 &
+       valueAt(3,1)=5 & valueAt(3,5)=7 & valueAt(4,4)=4 & valueAt(4,5)=5 & valueAt(4,6)=7 & valueAt(5,3)=1 &
+       valueAt(5,7)=3 & valueAt(6,2)=1 & valueAt(6,7)=6 & valueAt(6,8)=8 & valueAt(7,2)=8 & valueAt(7,3)=5 &
+       valueAt(7,7)=1 & valueAt(8,1)=9 & valueAt(8,6)=4;
+    maxstep: .
+
+
+Cplus2ASP Output:
+
+ERROR: temp.bc:65:14]: ".": Syntax error.
+
+
+[INSTRUCTIONS (continued)]
+1) [FEEDBACK OUTLINE]
+Based on the feedback, if any of the following segments are incorrect, then mark them with "[CHANGED]", and revise them:
+- PROGRAM
+- MAIN QUERY
+- SAMPLE QUERIES
+
+Otherwise, if a segment is correct, mark it with "[UNCHANGED]", and simply copy their contents. 
+
+2) [SAMPLE QUERY GUIDANCE]
+Keep in mind, the outputs from running the sample queries is to help check that the program is working properly. In some cases, the sample queries themselves may be wrong (e.g., a syntax error), and can be re-written. The sample queries marked (satisfiable) should be correctly be satisfiable and the queries marked (unsatisfiable) should be unsatisfiable. There should not be apparent violations in the constraints, and the action preconditions/effects should enforced properly. If there are, then revise the main program. Overall, changes should be succint, e.g., only change relevant parts while leaving the remainder alone.
+
+3) [MAIN QUERY OUTPUT]
+IMPORTANT: Check that each action in the final plan of the main query makes sense given the state before it, and that the resulting state correctly follows.
+If something doesn't align with the common sense relative to the problem description, then update the program. Though less likely, if you suspect there is an issue with the main BC+ query, it may be changed, but the query itself should not contain actions, only the initial state and the final state (indicated with "maxstep").
+
+4) [FORMAT]
+The format should be like the following, encapsulated in 3 backticks:
+
+```% PROGRAM CHANGED? [CHANGED/UNCHANGED]
+% BC+ signature
+<Enter BC+ signature>
+
+% Generated constraints
+<Enter BC+ rules/constraints>
+
+% MAIN QUERY CHANGED? [CHANGED/UNCHANGED]
+<Enter the main query>
+
+% SAMPLE QUERIES CHANGED? [CHANGED/UNCHANGED]
+<Enter the sample queries (do NOT include the Cplus2ASP outputs)>
+```

@@ -1,0 +1,10 @@
+% Crossing the vessel causes the boat location to change to the opposite bank.
+% Crossing the vessel causes the number of people of each group at the boat's original location to decrease by the number crossing in that group.
+% Crossing the vessel causes the number of people of each group at the destination location to increase by the number crossing in that group.
+% The cross action is not executable if the total number of people crossing is zero.
+% The cross action is not executable if the total number of people crossing exceeds two.
+% The cross action is not executable if the number of people crossing in any group exceeds the number of people of that group at the boat's location.
+% The cross action is not executable if the boat is not at the location where people are crossing from.
+% The cross action is not executable if the bigCannibal is crossing and there are other people crossing.
+% At any location, if there are missionaries present, then the total number of cannibals and bigCannibals there cannot exceed the number of missionaries at that location.
+% During crossing, if missionaries are crossing, then the total number of cannibals and bigCannibals crossing cannot exceed the number of missionaries crossing.

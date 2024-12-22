@@ -1,0 +1,44 @@
+% Query 1: Can the boat cross from bank1 to bank2 with one missionary and one cannibal on board, with a missionary rowing? (satisfiable)
+:- query
+    0: numAt(missionaries, bank1) = 3 & numAt(cannibals, bank1) = 3 & boatLoc = bank1;
+    0: cross(boat) &
+       numCrossing(boat, missionaries) = 1 &
+       numCrossing(boat, cannibals) = 1 &
+       rower(boat, missionaries) = true &
+       rower(boat, cannibals) = false.
+
+% Query 2: Try to cross the boat from bank1 to bank2 with two missionaries and one cannibal on board, exceeding the boat's capacity. (unsatisfiable)
+:- query
+    0: numAt(missionaries, bank1) = 3 & numAt(cannibals, bank1) = 3 & boatLoc = bank1;
+    0: cross(boat) &
+       numCrossing(boat, missionaries) = 2 &
+       numCrossing(boat, cannibals) = 1 &
+       rower(boat, missionaries) = true &
+       rower(boat, cannibals) = false.
+
+% Query 3: Try to cross the boat from bank1 to bank2 with one cannibal on board, but with no one rowing. (unsatisfiable)
+:- query
+    0: numAt(missionaries, bank1) = 3 & numAt(cannibals, bank1) = 3 & boatLoc = bank1;
+    0: cross(boat) &
+       numCrossing(boat, missionaries) = 0 &
+       numCrossing(boat, cannibals) = 1 &
+       rower(boat, missionaries) = false &
+       rower(boat, cannibals) = false.
+
+% Query 4: Try to cross the boat empty from bank1 to bank2. (unsatisfiable)
+:- query
+    0: numAt(missionaries, bank1) = 3 & numAt(cannibals, bank1) = 3 & boatLoc = bank1;
+    0: cross(boat) &
+       numCrossing(boat, missionaries) = 0 &
+       numCrossing(boat, cannibals) = 0 &
+       rower(boat, missionaries) = false &
+       rower(boat, cannibals) = false.
+
+% Query 5: Try to cross the boat with one missionary and one cannibal on board, with both a missionary and a cannibal rowing. (unsatisfiable)
+:- query
+    0: numAt(missionaries, bank1) = 3 & numAt(cannibals, bank1) = 3 & boatLoc = bank1;
+    0: cross(boat) &
+       numCrossing(boat, missionaries) = 1 &
+       numCrossing(boat, cannibals) = 1 &
+       rower(boat, missionaries) = true &
+       rower(boat, cannibals) = true.

@@ -1,0 +1,16 @@
+% Query 0: Check satisfiability of program signature and rules (ignores other queries). (satisfiable)
+:- query = sat.
+
+Cplus2ASP Output:
+
+ERROR: temp.bc:33:11]: Encountered undeclared identifier "Side/0".
+ERROR: temp.bc:33:35]: Encountered undeclared identifier "Side/0".
+ERROR: temp.bc:36:11]: Encountered undeclared identifier "Side/0".
+ERROR: temp.bc:36:33]: Encountered undeclared identifier "Side/0".
+ERROR: temp.bc:39:25]: Encountered undeclared identifier "Side/0".
+ERROR: temp.bc:39:45]: Encountered undeclared identifier "Side/0".
+ERROR: temp.bc:78:25]: Encountered undeclared identifier "Side/0".
+ERROR: temp.bc:79:25]: Encountered undeclared identifier "Side/0".
+
+Since this fails, check the error message(s).
+

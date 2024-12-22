@@ -1,0 +1,11 @@
+% Query 0: Check satisfiability of program signature and rules (ignores other queries). (satisfiable)
+:- query = sat.
+
+Cplus2ASP Output:
+
+ERROR: temp.bc:68:26]: Encountered undeclared identifier "Loc/0".
+ERROR: temp.bc:68:54]: Encountered undeclared identifier "Loc/0".
+ERROR: temp.bc:68:81]: Encountered undeclared identifier "Loc/0".
+
+Since this fails, check the error message(s).
+

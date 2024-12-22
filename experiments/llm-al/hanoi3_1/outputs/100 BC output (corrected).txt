@@ -1,0 +1,35 @@
+Solving...
+Solution: 1
+
+
+        0:  loc(d1)=b loc(d2)=d1 loc(d3)=c heavier(d1, d2) heavier(d1, d3) heavier(d2, d3)
+
+        ACTIONS:  move(d2, a)
+
+        1:  loc(d1)=b loc(d2)=a loc(d3)=c heavier(d1, d2) heavier(d1, d3) heavier(d2, d3)
+
+        ACTIONS:  move(d3, d2)
+
+        2:  loc(d1)=b loc(d2)=a loc(d3)=d2 heavier(d1, d2) heavier(d1, d3) heavier(d2, d3)
+
+        ACTIONS:  move(d1, c)
+
+        3:  loc(d1)=c loc(d2)=a loc(d3)=d2 heavier(d1, d2) heavier(d1, d3) heavier(d2, d3)
+
+        ACTIONS:  move(d3, b)
+
+        4:  loc(d1)=c loc(d2)=a loc(d3)=b heavier(d1, d2) heavier(d1, d3) heavier(d2, d3)
+
+        ACTIONS:  move(d2, d1)
+
+        5:  loc(d1)=c loc(d2)=d1 loc(d3)=b heavier(d1, d2) heavier(d1, d3) heavier(d2, d3)
+
+        ACTIONS:  move(d3, d2)
+
+        6:  loc(d1)=c loc(d2)=d1 loc(d3)=d2 heavier(d1, d2) heavier(d1, d3) heavier(d2, d3)
+
+SATISFIABLE
+Models       : 1+
+Calls        : 1
+Time         : 0.008s (Solving: 0.00s 1st Model: 0.00s Unsat: 0.00s)
+CPU Time     : 0.008s

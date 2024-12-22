@@ -1,0 +1,106 @@
+% Sample Query 1: Move disk d3 from disk d2 to peg b. (satisfiable)
+:- query
+    0: loc(d1) = a & loc(d2) = d1 & loc(d3) = d2 &
+       weight(d1)=3 & weight(d2)=2 & weight(d3)=1;
+    0: move(d3, b).
+
+Cplus2ASP Output:
+
+Solving...
+Solution: 1
+	
+
+	0:  loc(d1)=a loc(d2)=d1 loc(d3)=d2 loc(d4)=d5 loc(d5)=c loc(d6)=d7 loc(d7)=d6 weight(d1)=3 weight(d2)=2 weight(d3)=1 weight(d4)=1 weight(d5)=4 weight(d6)=6 weight(d7)=3
+
+	ACTIONS:  move(d3, b)
+
+	1:  loc(d1)=a loc(d2)=d1 loc(d3)=b loc(d4)=d5 loc(d5)=c loc(d6)=d7 loc(d7)=d6 weight(d1)=3 weight(d2)=2 weight(d3)=1 weight(d4)=1 weight(d5)=4 weight(d6)=6 weight(d7)=3
+
+SATISFIABLE
+Models       : 1+
+
+
+% Sample Query 2: Try to move disk d2 onto disk d3, which is lighter than it. (unsatisfiable)
+:- query
+    0: loc(d1) = a & loc(d2) = d1 & loc(d3) = d2 &
+       weight(d1)=3 & weight(d2)=2 & weight(d3)=1;
+    0: move(d2, d3).
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+
+
+% Sample Query 3: Try to move disk d3 onto itself. (unsatisfiable)
+:- query
+    0: loc(d1) = a & loc(d2) = d1 & loc(d3) = d2 &
+       weight(d1)=3 & weight(d2)=2 & weight(d3)=1;
+    0: move(d3, d3).
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+
+
+% Sample Query 4: Try to move disk d2 when there is another disk (d3) on top of it. (unsatisfiable)
+:- query
+    0: loc(d1) = a & loc(d2) = d1 & loc(d3) = d2 &
+       weight(d1)=3 & weight(d2)=2 & weight(d3)=1;
+    0: move(d2, c).
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+
+
+% Sample Query 5: Move disk d2 onto peg b after moving the disk on top of it. (satisfiable)
+:- query
+    0: loc(d1) = a & loc(d2) = d1 & loc(d3) = d2 &
+       weight(d1)=3 & weight(d2)=2 & weight(d3)=1;
+    0: move(d3, c);
+    1: move(d2, b).
+
+Cplus2ASP Output:
+
+Solving...
+Solution: 1
+	
+
+	0:  loc(d1)=a loc(d2)=d1 loc(d3)=d2 loc(d4)=d5 loc(d5)=d7 loc(d6)=d6 loc(d7)=d4 weight(d1)=3 weight(d2)=2 weight(d3)=1 weight(d4)=7 weight(d5)=7 weight(d6)=1 weight(d7)=7
+
+	ACTIONS:  move(d3, c)
+
+	1:  loc(d1)=a loc(d2)=d1 loc(d3)=c loc(d4)=d5 loc(d5)=d7 loc(d6)=d6 loc(d7)=d4 weight(d1)=3 weight(d2)=2 weight(d3)=1 weight(d4)=7 weight(d5)=7 weight(d6)=1 weight(d7)=7
+
+	ACTIONS:  move(d2, b)
+
+	2:  loc(d1)=a loc(d2)=b loc(d3)=c loc(d4)=d5 loc(d5)=d7 loc(d6)=d6 loc(d7)=d4 weight(d1)=3 weight(d2)=2 weight(d3)=1 weight(d4)=7 weight(d5)=7 weight(d6)=1 weight(d7)=7
+
+SATISFIABLE
+Models       : 1+
+
+
+
+
+
+:- query
+    0:  loc(d1) = a & loc(d2) = d1 & loc(d3) = d2 & loc(d4) = d3 & loc(d5) = d4 & loc(d6) = d5 & loc(d7) = d6 &
+        weight(d1) = 7 & weight(d2) = 6 & weight(d3) = 5 & weight(d4) = 4 & weight(d5) = 3 & weight(d6) = 2 & weight(d7) = 1;
+    maxstep: loc(d1) = c & loc(d2) = d1 & loc(d3) = d2 & loc(d4) = d3 & loc(d5) = d4 & loc(d6) = d5 & loc(d7) = d6.
+
+
+Cplus2ASP Output:
+
+TIMEOUT

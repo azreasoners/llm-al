@@ -1,0 +1,18 @@
+% Crossing in a vessel causes the loc(vessel) to become toLocation(vessel).
+% Crossing in a vessel causes numAt(G, loc(vessel)) to decrease by numCrossing(vessel, G) for each group G.
+% Crossing in a vessel causes numAt(G, toLocation(vessel)) to increase by numCrossing(vessel, G) for each group G.
+% The cross(vessel) action is not executable if the sum over all groups G of numCrossing(vessel, G) is zero.
+% The cross(vessel) action is not executable if the sum over all groups G of numCrossing(vessel, G) exceeds capacity(vessel).
+% The cross(vessel) action is not executable if numCrossing(vessel, G) is greater than numAt(G, loc(vessel)) for any group G.
+% The cross(vessel) action is not executable if loc(vessel) is not equal to the location from which the crossing is initiated.
+% The capacity(boat) is two.
+% The capacity(vessel) remains the same unless explicitly changed.
+% The loc(vessel) remains the same unless changed by a crossing action.
+% The numAt(G, Loc) remains the same unless changed by a crossing action.
+% The number of people of any group at any location cannot be negative.
+% At any location Loc, if numAt(missionaries, Loc) plus numAt(strongMissionary, Loc) is greater than zero, then numAt(cannibals, Loc) cannot exceed numAt(missionaries, Loc) plus numAt(strongMissionary, Loc).
+% On the vessel during crossing, if numCrossing(vessel, missionaries) plus numCrossing(vessel, strongMissionary) is greater than zero, then numCrossing(vessel, cannibals) cannot exceed numCrossing(vessel, missionaries) plus numCrossing(vessel, strongMissionary), unless numCrossing(vessel, strongMissionary) is greater than zero.
+% The presence of the strongMissionary during crossing prevents cannibals from eating missionaries, even if cannibals outnumber missionaries on the vessel.
+% The total number of people in each group across both locations and the vessel remains constant.
+% Individuals cannot be at two locations simultaneously.
+% The cross(vessel) action is not executable if the vessel crosses the river with no one on it.

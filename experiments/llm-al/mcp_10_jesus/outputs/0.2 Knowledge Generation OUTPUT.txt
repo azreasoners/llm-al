@@ -1,0 +1,20 @@
+% Crossing the boat causes the boatLocation to change to the opposite bank.
+% Crossing the boat causes numOnBank(group, boatLocation) to decrease by loading(group) for each group.
+% Crossing the boat causes numOnBank(group, opposite bank) to increase by loading(group) for each group.
+% Crossing the boat causes jesusLocation to change to the opposite bank if jesusOnBoat is true.
+% Walking causes jesusLocation to change to the opposite bank.
+% Crossing the boat is not executable if the total number of people loaded onto the boat (sum over all groups of loading(group) plus one if jesusOnBoat is true) is less than one.
+% Crossing the boat is not executable if the total number of people loaded onto the boat exceeds capacity(boat).
+% Crossing the boat is not executable if loading(group) is greater than numOnBank(group, boatLocation) for any group.
+% Crossing the boat is not executable if cannibals loaded onto the boat exceed missionaries loaded onto the boat plus one if jesusOnBoat is true.
+% Crossing the boat is not executable if cannibals remaining on the starting bank after loading would outnumber missionaries remaining on the starting bank plus one if jesusLocation is at the starting bank and jesusOnBoat is false.
+% Walking is not executable if jesus is already on the opposite bank.
+% At any time, the total number of people in each group equals totalNum(group).
+% For any group other than jesus, totalNum(group) equals numOnBank(group, bank1) plus numOnBank(group, bank2).
+% It is not permissible for cannibals to outnumber missionaries on either bank; that is, numOnBank(cannibals, bank) must be less than or equal to numOnBank(missionaries, bank) plus one if jesusLocation is at that bank.
+% It is not permissible for cannibals to outnumber missionaries on the boat during crossing; that is, loading(cannibals) must be less than or equal to loading(missionaries) plus one if jesusOnBoat is true.
+% The number of people loaded onto the boat in a crossing action must be at least one and at most capacity(boat).
+% Loading(group) during a crossing must be between zero and numOnBank(group, boatLocation).
+% The boat cannot cross empty; at least one person must be loaded onto the boat during crossing.
+% It is impossible to cross the boat and walk at the same time.
+% The capacity of the boat is capacity(boat).

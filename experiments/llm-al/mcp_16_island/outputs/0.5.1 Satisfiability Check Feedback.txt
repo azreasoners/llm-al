@@ -1,0 +1,9 @@
+% Query 0: Check satisfiability of program signature and rules (ignores other queries). (satisfiable)
+:- query = sat.
+
+Cplus2ASP Output:
+
+ERROR: temp.bc:27:12]: "boat/0" is not a declared sort.
+
+Since this fails, check the error message(s).
+

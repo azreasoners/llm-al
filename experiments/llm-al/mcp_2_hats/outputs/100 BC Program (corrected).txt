@@ -1,0 +1,105 @@
+:- sorts
+    integer;
+    vessel;
+    location;
+    member >> missionary, cannibal;
+    hat.
+
+% Object Declarations
+
+:- objects
+    0..3 :: integer;
+    boat :: vessel;
+    bank1, bank2 :: location;
+    m1, m2, m3 :: missionary;
+    c1, c2, c3 :: cannibal;
+    hat1, hat2, hat3, hat4, hat5, hat6 :: hat.
+
+% Variable Declarations
+
+:- variables
+    V :: vessel;
+    L, L1, L2 :: location;
+    M, M1, M2, M3 :: member;
+    Ms1, Ms2, Ms3 :: missionary;
+    Cs1, Cs2, Cs3 :: cannibal;
+    Ms, Ms1, Ms2 :: missionary;
+    Cs, Cs1, Cs2 :: cannibal;
+    H, H1, H2 :: hat;
+    N, N1, N2 :: integer.
+
+% Constant Declarations
+
+:- constants
+    loc_member(member) :: inertialFluent(location);
+    loc_vessel(vessel) :: inertialFluent(location);
+    hasHat(member) :: inertialFluent(hat);
+    cross(vessel) :: exogenousAction;
+    onboard(vessel, member) :: attribute(boolean) of cross(vessel);
+	numMissionariesOnBoard(vessel) :: attribute(integer) of cross(vessel);
+	numCannibalsOnBoard(vessel) :: attribute(integer) of cross(vessel);
+    exchangeHat(member, member) :: exogenousAction;
+    numMissionariesAt(location) :: additiveFluent(integer);
+    numCannibalsAt(location) :: additiveFluent(integer).
+
+% Constraints
+
+% Crossing a vessel causes the vessel's location to change to the opposite bank.
+cross(V) causes loc_vessel(V) = bank2 if loc_vessel(V) = bank1.
+cross(V) causes loc_vessel(V) = bank1 if loc_vessel(V) = bank2.
+
+% Crossing a vessel causes the location of onboard members to change to the vessel's new location.
+cross(V) causes loc_member(M) = bank2 if onboard(V, M) & loc_member(M) = bank1 & loc_vessel(V) = bank1.
+cross(V) causes loc_member(M) = bank1 if onboard(V, M) & loc_member(M) = bank2 & loc_vessel(V) = bank2.
+
+% Crossing a vessel decrements/increments the number of missionaries and cannibals at each bank.
+
+% For missionaries:
+cross(V) decrements numMissionariesAt(L) by N if numMissionariesOnBoard(V) = N & loc_vessel(V) = L.
+cross(V) increments numMissionariesAt(L) by N if numMissionariesOnBoard(V) = N & loc_vessel(V) = L1 & L\=L1.
+
+% For cannibals:
+cross(V) decrements numCannibalsAt(L) by N if numCannibalsOnBoard(V) = N & loc_vessel(V) = L.
+cross(V) increments numCannibalsAt(L) by N if numCannibalsOnBoard(V) = N & loc_vessel(V) = L1 & L\=L1.
+
+% A member can be onboard the vessel only if they are at the same location as the vessel.
+nonexecutable cross(V) if onboard(V, M) & loc_member(M) \= loc_vessel(V).
+
+% The cannibals may never outnumber the missionaries on either bank unless there are no missionaries on that bank.
+% We formalize this with the following impossible constraints:
+
+% For any location L:
+impossible numMissionariesAt(L) > 0 & numCannibalsAt(L) > numMissionariesAt(L).
+
+% Exchanging hats between two members causes their hats to swap.
+exchangeHat(M1, M2) causes hasHat(M1) = H2 if hasHat(M2) = H2.
+exchangeHat(M1, M2) causes hasHat(M2) = H1 if hasHat(M1) = H1.
+
+% Exchanging hats is executable only if both members are at the same location.
+nonexecutable exchangeHat(M1, M2) if loc_member(M1) \= loc_member(M2).
+
+% It is not executable to both cross a vessel and exchange hats at the same time.
+nonexecutable cross(V) & exchangeHat(M1, M2).
+
+% It is not executable to exchange hats between a member and themselves.
+nonexecutable exchangeHat(M1, M2) if M1 = M2.
+
+
+nonexecutable cross(V) if numMissionariesOnBoard(V) = N &  numCannibalsOnBoard(V) = N1 & N + N1 > 2.
+nonexecutable cross(V) if numMissionariesOnBoard(V) = N &  numCannibalsOnBoard(V) = N1 & N + N1 < 1.
+
+noconcurrency.
+
+:- query
+    0: loc_member(m1) = bank1 & loc_member(m2) = bank1 & loc_member(m3) = bank1 &
+       loc_member(c1) = bank1 & loc_member(c2) = bank1 & loc_member(c3) = bank1 &
+       loc_vessel(boat) = bank1 &
+       hasHat(m1) = hat1 & hasHat(m2) = hat2 & hasHat(m3) = hat3 &
+       hasHat(c1) = hat4 & hasHat(c2) = hat5 & hasHat(c3) = hat6 &
+       numMissionariesAt(bank1) = 3 & numMissionariesAt(bank2) = 0 &
+       numCannibalsAt(bank1) = 3 & numCannibalsAt(bank2) = 0;
+
+    maxstep: loc_member(m1) = bank2 & loc_member(m2) = bank2 & loc_member(m3) = bank2 &
+             loc_member(c1) = bank2 & loc_member(c2) = bank2 & loc_member(c3) = bank2 & 
+			 numMissionariesAt(bank1) = 0 & numMissionariesAt(bank2) = 3 &
+			 numCannibalsAt(bank1) = 0 & numCannibalsAt(bank2) = 3.

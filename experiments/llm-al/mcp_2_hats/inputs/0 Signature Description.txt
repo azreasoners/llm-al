@@ -1,0 +1,11 @@
+There are five types of objects: "vessel", "location", "group", "member", "hat", and "integer".
+
+boat is a vessel.
+bank1 and bank2 are locations
+missionaries and cannibals are groups
+hat1, hat2, hat3, hat4, hat5, and hat6 are hats.
+0..10 are integers.
+
+Actions
+Crossing in a vessel is an action.
+A member exhanging a hat with another member is an action.

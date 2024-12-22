@@ -1,0 +1,14 @@
+% Query 0: Check satisfiability of program signature and rules (ignores other queries). (satisfiable)
+:- query = sat.
+
+Cplus2ASP Output:
+
+ERROR: temp.bc:44:93]: Encountered undeclared identifier "opposite/2".
+ERROR: temp.bc:47:59]: Encountered undeclared identifier "opposite/2".
+ERROR: temp.bc:53:75]: Encountered undeclared identifier "M/0".
+ERROR: temp.bc:53:99]: Encountered undeclared identifier "M/0".
+ERROR: temp.bc:78:1]: Encountered undeclared identifier "opposite/2".
+ERROR: temp.bc:80:1]: Encountered undeclared identifier "opposite/2".
+
+Since this fails, check the error message(s).
+

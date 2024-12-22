@@ -1,0 +1,107 @@
+% PROGRAM CHANGED? [UNCHANGED]
+% BC+ signature
+
+:- sorts
+    loc >> disk, peg;
+    disk;
+    peg;
+    integer.
+
+
+:- objects
+    a, b, c :: peg;
+    d1, d2, d3, d4, d5, d6, d7 :: disk;
+    1..7 :: integer.
+
+
+:- variables
+    D, D1, D2, D3, D4, DiskOnTop :: disk;
+    P, P1, P2, P3, P4 :: peg;
+    L, L1, L2, L3, L4 :: loc;
+    N, N1, N2, N3, N4 :: integer.
+
+
+:- constants
+    move(disk, loc) :: exogenousAction;
+    loc(disk) :: inertialFluent(loc);
+    weight(disk) :: inertialFluent(integer).
+
+% Generated constraints
+
+% 1. Moving a disk to a location causes the disk's location to become that location.
+move(D, L) causes loc(D) = L.
+
+% 2. A disk cannot be moved if there is another disk whose location is the disk being moved.
+nonexecutable move(D, L) if loc(DiskOnTop) = D & DiskOnTop \= D.
+
+% 3. The move action is not executable if the destination location is a disk and the disk being moved is heavier than the destination disk.
+nonexecutable move(D, L) if L = D2 & weight(D) > weight(D2).
+
+% 4. The move action is not executable if the disk being moved is the same as its destination location.
+nonexecutable move(D, L) if D = L.
+
+% 5. It is impossible for two disks to have the same location.
+impossible loc(D1) = L & loc(D2) = L & D1 \= D2.
+
+
+% MAIN QUERY CHANGED? [UNCHANGED]
+
+% Disk d1 is on peg a. Disk d2 is on disk d1. Disk d3 is on disk d2. Disk d4 is on disk d3.
+% Disk d5 is on disk d4. Disk d6 is on disk d5. Disk d7 is on disk d6.
+% From heaviest to lightest, the disks are d1, d2, d3, d4, d5, d6, and d7.
+% Find a plan to stack all disks on peg c.
+:- query
+    0:  loc(d1) = a & loc(d2) = d1 & loc(d3) = d2 & loc(d4) = d3 &
+        loc(d5) = d4 & loc(d6) = d5 & loc(d7) = d6 &
+        weight(d1) = 7 & weight(d2) = 6 & weight(d3) = 5 & weight(d4) = 4 &
+        weight(d5) = 3 & weight(d6) = 2 & weight(d7) = 1;
+    maxstep: loc(d1) = c & loc(d2) = d1 & loc(d3) = d2 & loc(d4) = d3 &
+        loc(d5) = d4 & loc(d6) = d5 & loc(d7) = d6.
+
+
+% SAMPLE QUERIES CHANGED? [UNCHANGED]
+
+% Query 1: Move disk d7 from disk d6 to peg b. (satisfiable)
+:- query
+    0:  loc(d1) = a & loc(d2) = d1 & loc(d3) = d2 & loc(d4) = d3 &
+        loc(d5) = d4 & loc(d6) = d5 & loc(d7) = d6 &
+        weight(d1) = 7 & weight(d2) = 6 & weight(d3) = 5 &
+        weight(d4) = 4 & weight(d5) = 3 & weight(d6) = 2 &
+        weight(d7) = 1;
+    0: move(d7, b).
+
+% Query 2: Try to move disk d3 from under disks d4, d5, d6, and d7 to peg b. (unsatisfiable)
+:- query
+    0:  loc(d1) = a & loc(d2) = d1 & loc(d3) = d2 & loc(d4) = d3 &
+        loc(d5) = d4 & loc(d6) = d5 & loc(d7) = d6 &
+        weight(d1) = 7 & weight(d2) = 6 & weight(d3) = 5 &
+        weight(d4) = 4 & weight(d5) = 3 & weight(d6) = 2 &
+        weight(d7) = 1;
+    0: move(d3, b).
+
+% Query 3: Try to move disk d2 onto disk d7, which is lighter than it. (unsatisfiable)
+:- query
+    0:  loc(d1) = a & loc(d2) = d1 & loc(d3) = d2 & loc(d4) = d3 &
+        loc(d5) = d4 & loc(d6) = d5 & loc(d7) = d6 &
+        weight(d1) = 7 & weight(d2) = 6 & weight(d3) = 5 &
+        weight(d4) = 4 & weight(d5) = 3 & weight(d6) = 2 &
+        weight(d7) = 1;
+    0: move(d2, d7).
+
+% Query 4: Try to move disk d7 onto itself. (unsatisfiable)
+:- query
+    0:  loc(d1) = a & loc(d2) = d1 & loc(d3) = d2 & loc(d4) = d3 &
+        loc(d5) = d4 & loc(d6) = d5 & loc(d7) = d6 &
+        weight(d1) = 7 & weight(d2) = 6 & weight(d3) = 5 &
+        weight(d4) = 4 & weight(d5) = 3 & weight(d6) = 2 &
+        weight(d7) = 1;
+    0: move(d7, d7).
+
+% Query 5: Try to move disk d7 from disk d6 onto disk d2. (unsatisfiable)
+:- query
+    0:  loc(d1) = a & loc(d2) = d1 & loc(d3) = d2 & loc(d4) = b &
+        loc(d5) = d4 & loc(d6) = d5 & loc(d7) = d6 &
+        weight(d1) = 7 & weight(d2) = 6 & weight(d3) = 5 &
+        weight(d4) = 4 & weight(d5) = 3 & weight(d6) = 2 &
+        weight(d7) = 1;
+    0: move(d7, d2).

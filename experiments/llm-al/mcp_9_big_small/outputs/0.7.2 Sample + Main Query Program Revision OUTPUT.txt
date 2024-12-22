@@ -1,0 +1,121 @@
+% PROGRAM CHANGED? [CHANGED]
+% BC+ signature
+
+:- sorts
+    missionary >> person;
+    cannibal >> person;
+    vessel;
+    thing >> person, vessel;
+    location;
+    integer.
+
+:- objects
+    small_missionary, missionary1, missionary2 :: missionary;
+    big_cannibal, cannibal1, cannibal2 :: cannibal;
+    boat :: vessel;
+    bank1, bank2 :: location;
+    0..10 :: integer.
+
+:- variables
+    M, M1, M2, M3 :: missionary;
+    C, C1, C2, C3 :: cannibal;
+    P, P1, P2 :: person;
+    V :: vessel;
+    Loc, Loc1, Loc2, NewLoc :: location;
+    N_m, N_c :: integer.
+
+:- constants
+    cross(person, person) :: exogenousAction;
+    loc(thing) :: inertialFluent(location);
+    capacity(vessel) :: inertialFluent(integer);
+    num_missionaries(location) :: additiveFluent(integer);
+    num_cannibals(location) :: additiveFluent(integer).
+
+% constraints/rules
+
+% 1. The capacity of the boat is 2.
+capacity(boat) = 2.
+
+% 2. Crossing the boat causes the boat and the people to move to NewLoc.
+cross(P1, P2) causes loc(boat) = NewLoc & loc(P1) = NewLoc & loc(P2) = NewLoc
+    if loc(boat) = Loc & NewLoc \= Loc & loc(P1) = Loc & loc(P2) = Loc.
+
+% 3. The crossing action is not executable if P1 and P2 are not at the same location as the boat.
+nonexecutable cross(P1, P2) if loc(P1) \= loc(boat).
+nonexecutable cross(P1, P2) if loc(P2) \= loc(boat).
+
+% 4. It is impossible for a person to be at two different locations at the same time.
+impossible loc(P) = Loc1 & loc(P) = Loc2 & Loc1 \= Loc2.
+
+% 5. The boat cannot cross with no people.
+nonexecutable cross(P1, P2) if P1\=P2 & P1\=P1.
+
+% 6. The counts of missionaries and cannibals are updated when people move.
+
+% For P1
+cross(P1, P2) increments num_missionaries(NewLoc) by 1 if P1 = M & M :: missionary & loc(M) = Loc & NewLoc \= Loc.
+cross(P1, P2) decrements num_missionaries(Loc) by 1 if P1 = M & M :: missionary & loc(M) = Loc & NewLoc \= Loc.
+cross(P1, P2) increments num_cannibals(NewLoc) by 1 if P1 = C & C :: cannibal & loc(C) = Loc & NewLoc \= Loc.
+cross(P1, P2) decrements num_cannibals(Loc) by 1 if P1 = C & C :: cannibal & loc(C) = Loc & NewLoc \= Loc.
+
+% For P2
+cross(P1, P2) increments num_missionaries(NewLoc) by 1 if P2 = M & M :: missionary & loc(M) = Loc & NewLoc \= Loc.
+cross(P1, P2) decrements num_missionaries(Loc) by 1 if P2 = M & M :: missionary & loc(M) = Loc & NewLoc \= Loc.
+cross(P1, P2) increments num_cannibals(NewLoc) by 1 if P2 = C & C :: cannibal & loc(C) = Loc & NewLoc \= Loc.
+cross(P1, P2) decrements num_cannibals(Loc) by 1 if P2 = C & C :: cannibal & loc(C) = Loc & NewLoc \= Loc.
+
+% 7. It is impossible for the number of cannibals to be greater than the number of missionaries at a location where there is at least one missionary.
+impossible N_c > N_m & N_m > 0 & num_cannibals(Loc) = N_c & num_missionaries(Loc) = N_m.
+
+% 8. The cannibals may never outnumber the missionaries on the boat.
+% We consider the boat's location separately.
+impossible N_c > N_m & N_m > 0 & num_cannibals(boat) = N_c & num_missionaries(boat) = N_m.
+
+% 9. The large cannibal cannot be left alone with the small missionary.
+impossible loc(big_cannibal) = Loc & loc(small_missionary) = Loc & loc(missionary1) \= Loc & loc(missionary2) \= Loc.
+
+% 10. The boat cannot carry more people than its capacity.
+nonexecutable cross(P1, P2) if P1 \= P2 & capacity(boat) < 2.
+nonexecutable cross(P1, P2) if P1 = P2 & capacity(boat) < 1.
+
+% MAIN QUERY CHANGED? [CHANGED]
+:- query
+    0: loc(small_missionary) = bank1 & loc(missionary1) = bank1 & loc(missionary2) = bank1 &
+       loc(big_cannibal) = bank1 & loc(cannibal1) = bank1 & loc(cannibal2) = bank1 & loc(boat) = bank1 &
+       num_missionaries(bank1) = 3 & num_cannibals(bank1) = 3 &
+       num_missionaries(bank2) = 0 & num_cannibals(bank2) = 0;
+    maxstep: loc(small_missionary) = bank2 & loc(missionary1) = bank2 & loc(missionary2) = bank2 &
+             loc(big_cannibal) = bank2 & loc(cannibal1) = bank2 & loc(cannibal2) = bank2 &
+             num_missionaries(bank2) = 3 & num_cannibals(bank2) = 3 &
+             num_missionaries(bank1) = 0 & num_cannibals(bank1) = 0.
+
+% SAMPLE QUERIES CHANGED? [CHANGED]
+% Query 1: Two people at the same location as the boat cross to the other bank (satisfiable)
+:- query
+    0: loc(missionary1) = bank1 & loc(cannibal1) = bank1 & loc(boat) = bank1 & 
+       num_missionaries(bank1)=1 & num_cannibals(bank1)=1 & num_missionaries(bank2)=0 & num_cannibals(bank2)=0 ;
+    0: cross(missionary1, cannibal1).
+
+% Query 2: Attempt to cross two people when one of them is not at the same location as the boat (unsatisfiable)
+:- query
+    0: loc(missionary1) = bank1 & loc(cannibal1) = bank2 & loc(boat) = bank1 & 
+       num_missionaries(bank1)=1 & num_cannibals(bank1)=0 & num_missionaries(bank2)=0 & num_cannibals(bank2)=1;
+    0: cross(missionary1, cannibal1).
+
+% Query 3: Attempt to cross when the boat is at a different location than the people (unsatisfiable)
+:- query
+    0: loc(missionary1) = bank1 & loc(cannibal1) = bank1 & loc(boat) = bank2 & 
+       num_missionaries(bank1)=1 & num_cannibals(bank1)=1 & num_missionaries(bank2)=0 & num_cannibals(bank2)=0;
+    0: cross(missionary1, cannibal1).
+
+% Query 4: One person crosses alone by having both positions as the same person (satisfiable)
+:- query
+    0: loc(cannibal2) = bank1 & loc(boat) = bank1 & num_cannibals(bank1)=1 & num_missionaries(bank1)=0 &
+       num_cannibals(bank2)=0 & num_missionaries(bank2)=0;
+    0: cross(cannibal2, cannibal2).
+
+% Query 5: Attempt to cross when neither person is at the boat's location (unsatisfiable)
+:- query
+    0: loc(missionary2) = bank2 & loc(cannibal2) = bank2 & loc(boat) = bank1 & 
+       num_missionaries(bank2)=1 & num_cannibals(bank2)=1 & num_missionaries(bank1)=0 & num_cannibals(bank1)=0;
+    0: cross(missionary2, cannibal2).

@@ -1,0 +1,81 @@
+% BC+ signature
+:- sorts
+    vessel;
+    location;
+    group;
+    integer.
+
+
+:- objects
+    rowboat :: vessel;
+    bank1, bank2 :: location;
+    missionaries, cannibals :: group;
+    0..3 :: integer.
+
+
+:- constants
+    cross(vessel) :: exogenousAction;
+    numMissCrossing(vessel) :: attribute(integer) of cross(vessel);
+    numCannCrossing(vessel) :: attribute(integer) of cross(vessel);
+    loc(vessel) :: inertialFluent(location);
+    numMissAt(location) :: additiveFluent(integer);
+    numCannAt(location) :: additiveFluent(integer).
+
+
+:- variables
+    V :: vessel;
+    Loc, Loc1, Loc2 :: location;
+    N, N1, N2 :: integer.
+
+% Generated constraints
+
+% 1. Crossing action causes vessel to move to opposite bank.
+cross(V) causes loc(V) = bank2 if loc(V) = bank1.
+cross(V) causes loc(V) = bank1 if loc(V) = bank2.
+
+% 2. Crossing action decrements the number of missionaries at starting location.
+cross(V) decrements numMissAt(loc(V)) by numMissCrossing(V).
+
+% 3. Crossing action increments the number of missionaries at destination location.
+cross(V) increments numMissAt(Loc2) by numMissCrossing(V) if loc(V)=Loc1 & ((Loc1=bank1 & Loc2=bank2) | (Loc1=bank2 & Loc2=bank1)).
+
+% 4. Crossing action decrements the number of cannibals at starting location.
+cross(V) decrements numCannAt(loc(V)) by numCannCrossing(V).
+
+% 5. Crossing action increments the number of cannibals at destination location.
+cross(V) increments numCannAt(Loc2) by numCannCrossing(V) if loc(V)=Loc1 & ((Loc1=bank1 & Loc2=bank2) | (Loc1=bank2 & Loc2=bank1)).
+
+% 6. Cannot cross if numMissCrossing + numCannCrossing > 2.
+nonexecutable cross(V) if N1 + N2 > 2 & N1 = numMissCrossing(V) & N2 = numCannCrossing(V).
+
+% 7. Cannot cross if numMissCrossing + numCannCrossing < 1.
+nonexecutable cross(V) if N1 + N2 < 1 & N1 = numMissCrossing(V) & N2 = numCannCrossing(V).
+
+% 8. Cannot cross if numMissCrossing(V) < 0 or numMissCrossing(V) > numMissAt(loc(V)).
+nonexecutable cross(V) if N1 < 0 & N1 = numMissCrossing(V).
+nonexecutable cross(V) if N1 > N2 & N1 = numMissCrossing(V) & N2 = numMissAt(Loc) & Loc = loc(V).
+
+% 9. Cannot cross if numCannCrossing(V) < 0 or numCannCrossing(V) > numCannAt(loc(V)).
+nonexecutable cross(V) if N1 < 0 & N1 = numCannCrossing(V).
+nonexecutable cross(V) if N1 > N2 & N1 = numCannCrossing(V) & N2 = numCannAt(Loc) & Loc = loc(V).
+
+% 10. Cannot cross if cannibals on boat outnumber missionaries on boat when there's at least one missionary.
+nonexecutable cross(V) if N1 > N2 & N2 >= 1 & N1 = numCannCrossing(V) & N2 = numMissCrossing(V).
+
+% 11. Cannibals cannot outnumber missionaries at any location where there is at least one missionary.
+impossible N1 > N2 & N2 >= 1 & N1 = numCannAt(Loc) & N2 = numMissAt(Loc).
+
+% 12. Number of missionaries and cannibals at any location cannot be negative.
+impossible numMissAt(Loc) < 0.
+impossible numCannAt(Loc) < 0.
+
+% 13. Total number of missionaries and cannibals at both banks must sum to 3.
+impossible numMissAt(bank1) + numMissAt(bank2) != 3.
+impossible numCannAt(bank1) + numCannAt(bank2) != 3.
+
+
+% Main query:
+% Three missionaries and three cannibals are at location bank1. The rowboat is at location bank1. Find a plan so that all missionaries and all cannibals are at location bank2.
+:- query
+    0: numMissAt(bank1) = 3 & numCannAt(bank1) = 3 & numMissAt(bank2) = 0 & numCannAt(bank2) = 0 & loc(rowboat) = bank1;
+    maxstep: numMissAt(bank2) = 3 & numCannAt(bank2) = 3 & loc(rowboat) = bank2.

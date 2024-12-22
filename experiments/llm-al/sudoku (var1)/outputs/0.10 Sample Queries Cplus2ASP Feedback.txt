@@ -1,0 +1,26 @@
+% Query 0: Check satisfiability of program signature and rules (ignores other queries). (satisfiable)
+:- query = sat.
+
+Cplus2ASP Output:
+
+ERROR: temp.bc:11:6]: "..": Syntax error.
+
+Since this fails, check the error message(s).
+
+
+
+query
+    0: val(0, 2) = 9 & val(0, 4) = 2 & val(0, 5) = 8 & val(0, 6) = 7 &
+       val(1, 0) = 8 & val(1, 2) = 6 & val(1, 5) = 4 & val(1, 8) = 5 &
+       val(2, 2) = 3 & val(2, 8) = 4 &
+       val(3, 0) = 6 &
+       val(4, 1) = 2 & val(4, 3) = 7 & val(4, 4) = 1 & val(4, 5) = 3 & val(4, 6) = 4 & val(4, 7) = 5 &
+       val(5, 8) = 2 &
+       val(6, 0) = 3 & val(6, 6) = 5 &
+       val(7, 0) = 9 & val(7, 3) = 4 & val(7, 6) = 8 & val(7, 8) = 7 &
+       val(8, 2) = 1 & val(8, 3) = 2 & val(8, 4) = 5 & val(8, 6) = 3.
+
+
+Cplus2ASP Output:
+
+ERROR: temp.bc:11:6]: "..": Syntax error.

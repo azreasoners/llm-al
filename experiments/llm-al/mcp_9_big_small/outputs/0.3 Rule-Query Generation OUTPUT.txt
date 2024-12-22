@@ -1,0 +1,21 @@
+% constraints/rules
+
+% 1. Crossing the boat with two people causes the boat and the people to change to the other bank.
+cross(P1, P2) causes loc(boat) = NewLoc & loc(P1) = NewLoc & loc(P2) = NewLoc if loc(boat) = Loc & NewLoc \= Loc.
+
+% 2. The capacity of the boat is 2.
+capacity(boat) = 2.
+
+% 3. The action of crossing the boat is not executable unless P1 and P2 are at the same location as the boat.
+nonexecutable cross(P1, P2) if loc(P1) \= loc(boat).
+nonexecutable cross(P1, P2) if loc(P2) \= loc(boat).
+
+% 4. It is impossible for a person to be at two different locations at the same time.
+impossible loc(P) = Loc1 & loc(P) = Loc2 & Loc1 \= Loc2.
+
+% query
+:- query
+    0: loc(small_missionary) = bank1 & loc(missionary1) = bank1 & loc(missionary2) = bank1 &
+       loc(big_cannibal) = bank1 & loc(cannibal1) = bank1 & loc(cannibal2) = bank1 & loc(boat) = bank1;
+    maxstep: loc(small_missionary) = bank2 & loc(missionary1) = bank2 & loc(missionary2) = bank2 &
+             loc(big_cannibal) = bank2 & loc(cannibal1) = bank2 & loc(cannibal2) = bank2.

@@ -1,0 +1,55 @@
+Solving...
+Solution: 1
+	
+
+	0:  boatLoc=bank1 capacity(boat)=2 numAt(cannibals, bank1)=3 numAt(cannibals, bank2)=0 numAt(missionaries, bank1)=3 numAt(missionaries, bank2)=0
+
+	ACTIONS:  cross(boat) numCrossing(boat, cannibals)=2 numCrossing(boat, missionaries)=0 rower(boat, cannibals)
+
+	1:  boatLoc=bank2 capacity(boat)=2 numAt(cannibals, bank1)=1 numAt(cannibals, bank2)=2 numAt(missionaries, bank1)=3 numAt(missionaries, bank2)=0
+
+	ACTIONS:  cross(boat) numCrossing(boat, cannibals)=1 numCrossing(boat, missionaries)=0 rower(boat, cannibals)
+
+	2:  boatLoc=bank1 capacity(boat)=2 numAt(cannibals, bank1)=2 numAt(cannibals, bank2)=1 numAt(missionaries, bank1)=3 numAt(missionaries, bank2)=0
+
+	ACTIONS:  cross(boat) numCrossing(boat, cannibals)=2 numCrossing(boat, missionaries)=0 rower(boat, cannibals)
+
+	3:  boatLoc=bank2 capacity(boat)=2 numAt(cannibals, bank1)=0 numAt(cannibals, bank2)=3 numAt(missionaries, bank1)=3 numAt(missionaries, bank2)=0
+
+	ACTIONS:  cross(boat) numCrossing(boat, cannibals)=1 numCrossing(boat, missionaries)=0 rower(boat, cannibals)
+
+	4:  boatLoc=bank1 capacity(boat)=2 numAt(cannibals, bank1)=1 numAt(cannibals, bank2)=2 numAt(missionaries, bank1)=3 numAt(missionaries, bank2)=0
+
+	ACTIONS:  cross(boat) numCrossing(boat, cannibals)=0 numCrossing(boat, missionaries)=2 rower(boat, missionaries)
+
+	5:  boatLoc=bank2 capacity(boat)=2 numAt(cannibals, bank1)=1 numAt(cannibals, bank2)=2 numAt(missionaries, bank1)=1 numAt(missionaries, bank2)=2
+
+	ACTIONS:  cross(boat) numCrossing(boat, cannibals)=1 numCrossing(boat, missionaries)=1 rower(boat, cannibals)
+
+	6:  boatLoc=bank1 capacity(boat)=2 numAt(cannibals, bank1)=2 numAt(cannibals, bank2)=1 numAt(missionaries, bank1)=2 numAt(missionaries, bank2)=1
+
+	ACTIONS:  cross(boat) numCrossing(boat, cannibals)=0 numCrossing(boat, missionaries)=2 rower(boat, missionaries)
+
+	7:  boatLoc=bank2 capacity(boat)=2 numAt(cannibals, bank1)=2 numAt(cannibals, bank2)=1 numAt(missionaries, bank1)=0 numAt(missionaries, bank2)=3
+
+	ACTIONS:  cross(boat) numCrossing(boat, cannibals)=1 numCrossing(boat, missionaries)=0 rower(boat, cannibals)
+
+	8:  boatLoc=bank1 capacity(boat)=2 numAt(cannibals, bank1)=3 numAt(cannibals, bank2)=0 numAt(missionaries, bank1)=0 numAt(missionaries, bank2)=3
+
+	ACTIONS:  cross(boat) numCrossing(boat, cannibals)=2 numCrossing(boat, missionaries)=0 rower(boat, cannibals)
+
+	9:  boatLoc=bank2 capacity(boat)=2 numAt(cannibals, bank1)=1 numAt(cannibals, bank2)=2 numAt(missionaries, bank1)=0 numAt(missionaries, bank2)=3
+
+	ACTIONS:  cross(boat) numCrossing(boat, cannibals)=1 numCrossing(boat, missionaries)=0 rower(boat, cannibals)
+
+	10:  boatLoc=bank1 capacity(boat)=2 numAt(cannibals, bank1)=2 numAt(cannibals, bank2)=1 numAt(missionaries, bank1)=0 numAt(missionaries, bank2)=3
+
+	ACTIONS:  cross(boat) numCrossing(boat, cannibals)=2 numCrossing(boat, missionaries)=0 rower(boat, cannibals)
+
+	11:  boatLoc=bank2 capacity(boat)=2 numAt(cannibals, bank1)=0 numAt(cannibals, bank2)=3 numAt(missionaries, bank1)=0 numAt(missionaries, bank2)=3
+
+SATISFIABLE
+Models       : 1+
+Calls        : 12
+Time         : 0.371s (Solving: 0.26s 1st Model: 0.10s Unsat: 0.16s)
+CPU Time     : 0.371s

@@ -1,0 +1,63 @@
+Solving...
+Solution: 1
+	
+
+	0:  loc(boat)=RightBank loc(cheese)=LeftBank loc(mouse)=RightBank loc(snake)=LeftBank
+
+	ACTIONS:  moveBoat(LeftBank)
+
+	1:  loc(boat)=LeftBank loc(cheese)=LeftBank loc(mouse)=RightBank loc(snake)=LeftBank
+
+	ACTIONS:  boardBoat(cheese)
+
+	2:  loc(boat)=LeftBank loc(cheese)=LeftBank loc(mouse)=RightBank loc(snake)=LeftBank onBoat(cheese)
+
+	ACTIONS:  moveBoat(RightBank)
+
+	3:  loc(boat)=RightBank loc(cheese)=RightBank loc(mouse)=RightBank loc(snake)=LeftBank onBoat(cheese)
+
+	ACTIONS:  unboardBoat(cheese)
+
+	4:  loc(boat)=RightBank loc(cheese)=RightBank loc(mouse)=RightBank loc(snake)=LeftBank
+
+	ACTIONS:  boardBoat(mouse)
+
+	5:  loc(boat)=RightBank loc(cheese)=RightBank loc(mouse)=RightBank loc(snake)=LeftBank onBoat(mouse)
+
+	ACTIONS:  moveBoat(LeftBank)
+
+	6:  loc(boat)=LeftBank loc(cheese)=RightBank loc(mouse)=LeftBank loc(snake)=LeftBank onBoat(mouse)
+
+	ACTIONS:  unboardBoat(mouse)
+
+	7:  loc(boat)=LeftBank loc(cheese)=RightBank loc(mouse)=LeftBank loc(snake)=LeftBank
+
+	ACTIONS:  boardBoat(snake)
+
+	8:  loc(boat)=LeftBank loc(cheese)=RightBank loc(mouse)=LeftBank loc(snake)=LeftBank onBoat(snake)
+
+	ACTIONS:  moveBoat(RightBank)
+
+	9:  loc(boat)=RightBank loc(cheese)=RightBank loc(mouse)=LeftBank loc(snake)=RightBank onBoat(snake)
+
+	ACTIONS:  unboardBoat(snake)
+
+	10:  loc(boat)=RightBank loc(cheese)=RightBank loc(mouse)=LeftBank loc(snake)=RightBank
+
+	ACTIONS:  moveBoat(LeftBank)
+
+	11:  loc(boat)=LeftBank loc(cheese)=RightBank loc(mouse)=LeftBank loc(snake)=RightBank
+
+	ACTIONS:  boardBoat(mouse)
+
+	12:  loc(boat)=LeftBank loc(cheese)=RightBank loc(mouse)=LeftBank loc(snake)=RightBank onBoat(mouse)
+
+	ACTIONS:  moveBoat(RightBank)
+
+	13:  loc(boat)=RightBank loc(cheese)=RightBank loc(mouse)=RightBank loc(snake)=RightBank onBoat(mouse)
+
+SATISFIABLE
+Models       : 1+
+Calls        : 14
+Time         : 0.026s (Solving: 0.00s 1st Model: 0.00s Unsat: 0.00s)
+CPU Time     : 0.026s

@@ -1,0 +1,9 @@
+There are three types of objects: "loc", "disk", and "peg".
+"loc" includes "disk".
+"loc" includes "peg".
+
+a,b, and c are pegs.
+d1, d2, d3, d4, and d5 are disks. 
+
+Actions
+Moving a disk to a loc is an action.
