@@ -1,3 +1,5 @@
+This is an implementation of "LLM + AL: Briding Large Language Models and Action Languages for Complex Reasoning about Actions".
+
 ## Set up
 Run the following commands to set up the environment with Conda.
 conda create --name llm-al -c conda-forge python=3.11
