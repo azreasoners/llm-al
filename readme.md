@@ -1,4 +1,4 @@
-This is an implementation of "LLM + AL: Briding Large Language Models and Action Languages for Complex Reasoning about Actions".
+This is an implementation of "LLM + AL: Briding Large Language Models and Action Languages for Complex Reasoning about Actions" (AAAI 2025).
 
 ## Set up
 Run the following commands to set up the environment with Conda.
