@@ -16,7 +16,7 @@ This repository contains the implementation of the paper **"LLM + AL: Bridging L
 
 ---
 
-To run the code, skip to the [How to Use](#how-to-use) section.
+To run the code, skip to the [Running LLM-AL](#running-llm-al) section.
 
 ## Manual Installation
 
@@ -36,7 +36,7 @@ To run the code, skip to the [How to Use](#how-to-use) section.
 ---
 
 
-## How to Use
+## Running LLM-AL
 
 ### API Keys
 Place your OpenAI API keys in a `keys.py` file in the following format:
@@ -44,7 +44,7 @@ Place your OpenAI API keys in a `keys.py` file in the following format:
 OPENAI_API_KEY = "your_openai_api_key"
 ```
 
-### Running the Code
+### Running a Task
 Navigate to the `apps` folder and execute the main script with the desired task name:
 ```bash
 python main.py --task <TASK NAME>
