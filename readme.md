@@ -2,16 +2,21 @@
 
 This repository contains the implementation of the paper **"LLM + AL: Bridging Large Language Models and Action Languages for Complex Reasoning about Actions"** (AAAI 2025).
 
+0. Clone the repo:
+   ```bash
+   git clone https://github.com/azreasoners/llm-al.git
+   cd llm-al
+   ```
 
 ## Docker Setup
 
-From the `llm-al` directory, do the following.
 
-2. Build the Docker image:
+
+1. Build the Docker image:
    ```bash
    docker build -t llm-al .
    ```
-3. Then run a container:
+2. Then run a container:
    ```bash
    docker run -it llm-al
    ```
