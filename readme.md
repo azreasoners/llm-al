@@ -1,6 +1,15 @@
 This is an implementation of "LLM + AL: Briding Large Language Models and Action Languages for Complex Reasoning about Actions" (AAAI 2025).
 
-## Set up
+
+## Running with Docker
+The simplest way to run the code is to use Docker. In order to run, first build the image:
+`docker build -t llm-al .`
+Then run a container:
+`docker run -it llm-al`
+
+To run the code, skip to the "Run" section".
+
+## Manual Installation
 Run the following commands to set up the environment with Conda.
 conda create --name llm-al -c conda-forge python=3.11
 conda activate llm-al
@@ -8,11 +17,11 @@ pip install openai==0.27.7
 
 Install Cplus2ASP from https://github.com/azreasoners/Cplus2ASP. 
 
-Put OpenAI API keys in the `keys.py` file.
-
 ## Run
 
-From the root folder run:
+Important: Put OpenAI API keys in the `keys.py` file.
+
+From the `apps` folder run:
 `python main.py --task <TASK NAME>`
 
 For example:
