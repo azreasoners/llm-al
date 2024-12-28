@@ -16,6 +16,8 @@ This repository contains the implementation of the paper **"LLM + AL: Bridging L
 
 ---
 
+To run the code, skip to the [Run](#run) section.
+
 ## Manual Installation
 
 1. Create and activate a Conda environment:
