@@ -5,11 +5,13 @@ This repository contains the implementation of the paper **"LLM + AL: Bridging L
 
 ## Docker Setup
 
-1. Build the Docker image:
+From the `llm-al` directory, do the following.
+
+2. Build the Docker image:
    ```bash
    docker build -t llm-al .
    ```
-2. Then run a container:
+3. Then run a container:
    ```bash
    docker run -it llm-al
    ```
@@ -39,7 +41,7 @@ To run the code, skip to the [Running LLM-AL](#running-llm-al) section.
 ## Running LLM-AL
 
 ### API Keys
-Place your OpenAI API keys in a `keys.py` file in the following format:
+Place your OpenAI API keys in `app/keys.py` file in the following format:
 ```python
 OPENAI_API_KEY = "your_openai_api_key"
 ```
