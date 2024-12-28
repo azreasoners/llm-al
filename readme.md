@@ -1,6 +1,6 @@
 # LLM + AL: Bridging Large Language Models and Action Languages for Complex Reasoning about Actions (AAAI 2025)
 
-This repository contains the implementation of the paper **"LLM + AL: Bridging Large Language Models and Action Languages for Complex Reasoning about Actions"** (AAAI 2025)..
+This repository contains the implementation of the paper **"LLM + AL: Bridging Large Language Models and Action Languages for Complex Reasoning about Actions"** (AAAI 2025).
 
 
 ## Docker Setup
@@ -16,7 +16,7 @@ This repository contains the implementation of the paper **"LLM + AL: Bridging L
 
 ---
 
-To run the code, skip to the [Run](#run) section.
+To run the code, skip to the [Run](#how-to-use) section.
 
 ## Manual Installation
 
