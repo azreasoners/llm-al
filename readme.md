@@ -3,7 +3,7 @@
 This repository contains the implementation of the paper **"LLM + AL: Bridging Large Language Models and Action Languages for Complex Reasoning about Actions"** (AAAI 2025)..
 
 
-## Running with Docker
+## Docker
 
 1. Build the Docker image:
    ```bash
@@ -36,7 +36,7 @@ To run the code, skip to the [Run](#run) section.
 ---
 
 
-## Run
+## How to Use
 
 ### API Keys
 Place your OpenAI API keys in a `keys.py` file in the following format:
