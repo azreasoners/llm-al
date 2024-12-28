@@ -43,13 +43,13 @@ RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -
     && bash /miniconda.sh -b -p /opt/conda \
     && rm /miniconda.sh \
     && /opt/conda/bin/conda config --add channels potassco \
-    && /opt/conda/bin/conda create -y --name cplus2asp python=3.11 \
-    && /opt/conda/bin/conda run -n cplus2asp conda install -y -c potassco clingo \
-    && /opt/conda/bin/conda run -n cplus2asp conda install -y numpy \
+    && /opt/conda/bin/conda create -y --name llm-al python=3.11 \
+    && /opt/conda/bin/conda run -n llm-al conda install -y -c potassco clingo \
+    && /opt/conda/bin/conda run -n llm-al conda install -y numpy \
     && /opt/conda/bin/conda init bash
 
-# Automatically activate cplus2asp environment on container start
-RUN echo "source /opt/conda/etc/profile.d/conda.sh && conda activate cplus2asp" >> ~/.bashrc
+# Automatically activate llm-al environment on container start
+RUN echo "source /opt/conda/etc/profile.d/conda.sh && conda activate llm-al" >> ~/.bashrc
 
 # Set environment variable for Boost
 ENV boost_cv_lib_version=1_65_1
@@ -66,7 +66,7 @@ RUN git clone https://github.com/azreasoners/Cplus2ASP.git /Cplus2ASP \
 
 # Install Python dependencies
 #RUN python3.11 -m pip install --no-cache-dir openai==0.27
-RUN /opt/conda/bin/conda run -n cplus2asp pip install openai==0.27
+RUN /opt/conda/bin/conda run -n llm-al pip install openai==0.27
 
 
 # Set working directory
