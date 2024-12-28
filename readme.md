@@ -3,7 +3,7 @@
 This repository contains the implementation of the paper **"LLM + AL: Bridging Large Language Models and Action Languages for Complex Reasoning about Actions"** (AAAI 2025)..
 
 
-## Docker
+## Docker Setup
 
 1. Build the Docker image:
    ```bash
@@ -13,8 +13,6 @@ This repository contains the implementation of the paper **"LLM + AL: Bridging L
    ```bash
    docker run -it llm-al
    ```
-
-To run the code, skip to the [Run](#run) section.
 
 ---
 
