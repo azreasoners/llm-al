@@ -16,7 +16,7 @@ This repository contains the implementation of the paper **"LLM + AL: Bridging L
 
 ---
 
-To run the code, skip to the [Run](#how-to-use) section.
+To run the code, skip to the [How to Use](#how-to-use) section.
 
 ## Manual Installation
 
