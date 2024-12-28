@@ -1771,7 +1771,7 @@ files_list = [['bc+_description', bc_description],
               ['sample_query_generation', sq]]
 import os
 for (fname, text) in files_list:
-    print(fname)
+    #print(fname)
     
     with open(os.path.join('prompts',fname+'.txt'), 'w') as f:
         f.write(text)
