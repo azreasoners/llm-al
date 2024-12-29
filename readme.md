@@ -7,15 +7,14 @@ This repository contains the implementation of the paper **"LLM + AL: Bridging L
 Below is an overview of the directory structure and the purpose of each folder and file:
 ```
 llm-al/
-├── app/                           # Main application folder.
-│   ├── envs/                      # Contains files for running domains.
-│   ├── experiments/               # Contains outputs from baseline and llm-al experiments.
-│   ├── prompts/                   # Prompts used in the pipeline separated in .txt files for viewing.
-│   ├── keys.py                    # OpenAI API keys (should be filled in).
-│   ├── main.py                    # Main file which runs the llm-al pipeline.
-│   ├── prompts.py                 # Prompts used in the pipeline.
-│   ├── utils.py                   # Useful functions used in the pipeline.
-│   ├── utils_cplus2asp.py         # Useful functions related to the Cplus2ASP integration.
+├── envs/                      # Contains files for running domains.
+├── experiments/               # Contains outputs from baseline and llm-al experiments.
+├── prompts/                   # Prompts used in the pipeline separated in .txt files for viewing.
+├── keys.py                    # OpenAI API keys (should be filled in).
+├── main.py                    # Main file which runs the llm-al pipeline.
+├── prompts.py                 # Prompts used in the pipeline.
+├── utils.py                   # Useful functions used in the pipeline.
+├── utils_cplus2asp.py         # Useful functions related to the Cplus2ASP integration.
 ├── Dockerfile                     # Dockerfile for containerizing the application.
 ├── README.md                      # Description of the repository and instructions for usage.
 ├── appendix.pdf                   # Appendix for the paper.
@@ -26,7 +25,7 @@ llm-al/
 ## Setup
 
 ### API Keys
-Place your OpenAI API keys in `app/keys.py` file in the following format:
+Place your OpenAI API keys in `keys.py` file in the following format:
 ```python
 API_KEY = "your_openai_api_key"
 ```
@@ -83,7 +82,7 @@ There are two ways to set up the environment for running llm-al. The first optio
 ## Running LLM-AL
 
 ### Running a Task
-Navigate to the `apps` folder and execute the main script with the desired task name:
+Execute the main script with the desired task name:
 ```bash
 python main.py --task <TASK NAME>
 ```
