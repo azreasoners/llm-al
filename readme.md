@@ -24,7 +24,18 @@ llm-al/
 ---
 
 ## Setup
+
+### API Keys
+Place your OpenAI API keys in `app/keys.py` file in the following format:
+```python
+API_KEY = "your_openai_api_key"
+```
+
+
 There are two ways to set up the environment for running llm-al. The first option is to use Docker, which is most convenient. Alternatively you can choose the second option and manually install all dependencies.
+
+
+
 
 ### Option 1: Docker
 
@@ -42,8 +53,7 @@ There are two ways to set up the environment for running llm-al. The first optio
    ```bash
    docker run -it llm-al
    ```
-
-To run the code, skip to the [Running LLM-AL](#running-llm-al) section.
+<!--- To run the code, skip to the [Running LLM-AL](#running-llm-al) section. -->
 
 ### Option 2: Manual Installation
 
@@ -71,12 +81,6 @@ To run the code, skip to the [Running LLM-AL](#running-llm-al) section.
 
 
 ## Running LLM-AL
-
-### API Keys
-Place your OpenAI API keys in `app/keys.py` file in the following format:
-```python
-API_KEY = "your_openai_api_key"
-```
 
 ### Running a Task
 Navigate to the `apps` folder and execute the main script with the desired task name:
