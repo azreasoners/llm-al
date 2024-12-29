@@ -94,6 +94,16 @@ python main.py --task river
 - **`--max_updates <MAX LLM REVISIONS>`**: Maximum number of revisions from the LLM (default: 8).
 - **`--concurrency`**: Enables concurrent actions when running Cplus2ASP.
 
+For example, to run Tower of Hanoi with `gpt-4o` as the underlying LLM, use:
+```bash
+python main.py --task hanoi3 --model gpt-4o
+```
+
+To run MCP #13 (There is a bridge), which allows concurrency (crossing the river on boat and on the bridge are possibly concurrent actions), with `o1-preview` as the underlying LLM, use:
+```bash
+python main.py --task mcp_13_bridge --model o1-preview --concurrency
+```
+
 ---
 
 ## Outputs
