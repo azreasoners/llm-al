@@ -70,11 +70,14 @@ RUN /opt/conda/bin/conda run -n llm-al pip install openai==0.27
 
 
 # Set working directory
-WORKDIR /app
+#WORKDIR /app
+
+# Set the working directory to the root directory inside the container
+WORKDIR /usr/src/
+
 
 # Copy the Python code into the container
-#COPY . /app
-COPY ./app /app
+COPY . .
 
 # Default command to keep the container running interactively
 CMD ["bash", "-l"]
