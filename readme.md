@@ -1,16 +1,38 @@
 # LLM + AL: Bridging Large Language Models and Action Languages for Complex Reasoning about Actions (AAAI 2025)
 
-This repository contains the implementation of the paper **"LLM + AL: Bridging Large Language Models and Action Languages for Complex Reasoning about Actions"** (AAAI 2025).
+This repository contains the implementation of the paper **"LLM + AL: Bridging Large Language Models and Action Languages for Complex Reasoning about Actions"** (AAAI 2025). 
+
+
+## Repository Structure
+Below is an overview of the directory structure and the purpose of each folder and file:
+```
+llm-al/
+├── app/                           # Main application folder.
+│   ├── envs/                      # Contains files for running domains.
+│   ├── experiments/               # Contains outputs from baseline and llm-al experiments.
+│   ├── prompts/                   # Prompts used in the pipeline separated in .txt files for viewing.
+│   ├── keys.py                    # OpenAI API keys (should be filled in).
+│   ├── main.py                    # Main file which runs the llm-al pipeline.
+│   ├── prompts.py                 # Prompts used in the pipeline.
+│   ├── utils.py                   # Useful functions used in the pipeline.
+│   ├── utils_cplus2asp.py         # Useful functions related to the Cplus2ASP integration.
+├── Dockerfile                     # Dockerfile for containerizing the application.
+├── README.md                      # Description of the repository and instructions for usage.
+├── appendix.pdf                   # Appendix for the paper.
+```
+
+---
+
+## Setup
+There are two ways to set up the environment for running llm-al. The first option is to use Docker, which is most convenient. Alternatively you can choose the second option and manually install all dependencies.
+
+### Option 1: Docker
 
 0. Clone the repo:
    ```bash
-   git clone https://github.com/azreasoners/llm-al.git
+   git clone https://github.com/azreasoners/llm-al.git \
    cd llm-al
    ```
-
-## Docker Setup
-
-
 
 1. Build the Docker image:
    ```bash
@@ -21,20 +43,25 @@ This repository contains the implementation of the paper **"LLM + AL: Bridging L
    docker run -it llm-al
    ```
 
----
-
 To run the code, skip to the [Running LLM-AL](#running-llm-al) section.
 
-## Manual Installation
+### Option 2: Manual Installation
 
+0. Clone the repo:
+   ```bash
+   git clone https://github.com/azreasoners/llm-al.git \
+   cd llm-al
+   ```
+   
 1. Create and activate a Conda environment:
    ```bash
-   conda create --name llm-al -c conda-forge python=3.11
+   conda create --name llm-al -c conda-forge python=3.11 \
    conda activate llm-al
    ```
 
 2. Install dependencies:
    ```bash
+   conda install numpy \
    pip install openai==0.27.7
    ```
 
@@ -48,7 +75,7 @@ To run the code, skip to the [Running LLM-AL](#running-llm-al) section.
 ### API Keys
 Place your OpenAI API keys in `app/keys.py` file in the following format:
 ```python
-OPENAI_API_KEY = "your_openai_api_key"
+API_KEY = "your_openai_api_key"
 ```
 
 ### Running a Task
