@@ -10,14 +10,14 @@ llm-al/
 ├── envs/                      # Contains files for running domains.
 ├── experiments/               # Contains outputs from baseline and llm-al experiments.
 ├── prompts/                   # Prompts used in the pipeline separated in .txt files for viewing.
+├── Dockerfile                 # Dockerfile for containerizing the application.
+├── appendix.pdf               # Appendix for the paper.
 ├── keys.py                    # OpenAI API keys (should be filled in).
 ├── main.py                    # Main file which runs the llm-al pipeline.
 ├── prompts.py                 # Prompts used in the pipeline.
+├── README.md                  # Description of the repository and instructions for usage.
 ├── utils.py                   # Useful functions used in the pipeline.
 ├── utils_cplus2asp.py         # Useful functions related to the Cplus2ASP integration.
-├── Dockerfile                 # Dockerfile for containerizing the application.
-├── README.md                  # Description of the repository and instructions for usage.
-├── appendix.pdf               # Appendix for the paper.
 ```
 
 ---
