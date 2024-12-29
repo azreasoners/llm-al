@@ -44,10 +44,18 @@ There are two ways to set up the environment for running llm-al. The first optio
    ```bash
    docker build -t llm-al .
    ```
-4. Then run a container:
+4. Then run a container (named `instance1` in this case):
    ```bash
-   docker run -it llm-al
+   docker run -it --name instance1 llm-al
    ```
+To exit, use the command CTRL+D.
+
+To return to the container, run the following:
+   ```bash
+   docker start instance1 \
+   && docker attach instance1
+   ```
+
 <!--- To run the code, skip to the [Running LLM-AL](#running-llm-al) section. -->
 
 ### Option 2: Manual Installation
