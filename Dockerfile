@@ -2,8 +2,8 @@
 FROM ubuntu:18.04
 
 # Set environment variables
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -68,9 +68,9 @@ RUN git clone https://github.com/azreasoners/Cplus2ASP.git /Cplus2ASP \
 #RUN python3.11 -m pip install --no-cache-dir openai==0.27
 RUN /opt/conda/bin/conda run -n llm-al pip install openai==0.27
 
-
-# Set working directory
-#WORKDIR /app
+# Install nano, vi, and vim text editors
+RUN apt-get update && apt-get install -y nano vim-tiny vim && \
+    rm -rf /var/lib/apt/lists/*
 
 # Set the working directory to the root directory inside the container
 WORKDIR /usr/src/
