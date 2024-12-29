@@ -15,9 +15,9 @@ llm-al/
 ├── prompts.py                 # Prompts used in the pipeline.
 ├── utils.py                   # Useful functions used in the pipeline.
 ├── utils_cplus2asp.py         # Useful functions related to the Cplus2ASP integration.
-├── Dockerfile                     # Dockerfile for containerizing the application.
-├── README.md                      # Description of the repository and instructions for usage.
-├── appendix.pdf                   # Appendix for the paper.
+├── Dockerfile                 # Dockerfile for containerizing the application.
+├── README.md                  # Description of the repository and instructions for usage.
+├── appendix.pdf               # Appendix for the paper.
 ```
 
 ---
