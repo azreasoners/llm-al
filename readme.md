@@ -24,17 +24,7 @@ llm-al/
 
 ## Setup
 
-### API Keys
-Place your OpenAI API keys in `keys.py` file in the following format:
-```python
-API_KEY = "your_openai_api_key"
-```
-
-
 There are two ways to set up the environment for running llm-al. The first option is to use Docker, which is most convenient. Alternatively you can choose the second option and manually install all dependencies.
-
-
-
 
 ### Option 1: Docker
 
@@ -43,12 +33,15 @@ There are two ways to set up the environment for running llm-al. The first optio
    git clone https://github.com/azreasoners/llm-al.git \
    && cd llm-al
    ```
-
-1. Build the Docker image:
+2. Place your OpenAI API keys in `keys.py` file in the following format:
+   ```python
+   API_KEY = "your_openai_api_key"
+   ```
+3. Build the Docker image:
    ```bash
    docker build -t llm-al .
    ```
-2. Then run a container:
+4. Then run a container:
    ```bash
    docker run -it llm-al
    ```
@@ -61,14 +54,17 @@ There are two ways to set up the environment for running llm-al. The first optio
    git clone https://github.com/azreasoners/llm-al.git \
    && cd llm-al
    ```
-   
-1. Create and activate a Conda environment:
+2. Place your OpenAI API keys in `keys.py` file in the following format:
+   ```python
+   API_KEY = "your_openai_api_key"
+   ```
+3. Create and activate a Conda environment:
    ```bash
    conda create --name llm-al -c conda-forge python=3.11 \
    && conda activate llm-al
    ```
 
-2. Install dependencies:
+4. Install dependencies:
    ```bash
    conda install numpy \
    && pip install openai==0.27.7
