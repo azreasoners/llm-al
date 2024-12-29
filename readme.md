@@ -41,7 +41,7 @@ There are two ways to set up the environment for running llm-al. The first optio
 0. Clone the repo:
    ```bash
    git clone https://github.com/azreasoners/llm-al.git \
-   cd llm-al
+   && cd llm-al
    ```
 
 1. Build the Docker image:
@@ -59,19 +59,19 @@ There are two ways to set up the environment for running llm-al. The first optio
 0. Clone the repo:
    ```bash
    git clone https://github.com/azreasoners/llm-al.git \
-   cd llm-al
+   && cd llm-al
    ```
    
 1. Create and activate a Conda environment:
    ```bash
    conda create --name llm-al -c conda-forge python=3.11 \
-   conda activate llm-al
+   && conda activate llm-al
    ```
 
 2. Install dependencies:
    ```bash
    conda install numpy \
-   pip install openai==0.27.7
+   && pip install openai==0.27.7
    ```
 
 3. Install **Cplus2ASP** from its [GitHub repository](https://github.com/azreasoners/Cplus2ASP).
