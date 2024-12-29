@@ -94,23 +94,23 @@ Execute the main script with the desired task name:
 python main.py --task <TASK NAME>
 ```
 
-#### Example:
-```bash
-python main.py --task river
-```
-
 ### Additional Parameters
 - **`--o <OUTPUT FOLDER NAME>`**: Output folder name (default: same as the task name).
 - **`--model <LLM MODEL>`**: LLM model to use (default: `"o1-preview"`. Options: `"gpt-4o"`, `"o1-preview"`).
 - **`--max_updates <MAX LLM REVISIONS>`**: Maximum number of revisions from the LLM (default: 8).
 - **`--concurrency`**: Enables concurrent actions when running Cplus2ASP.
+### Examples:
+To run on the river task with default parameters, use:
+```bash
+python main.py --task river
+```
 
-For example, to run Tower of Hanoi with `gpt-4o` as the underlying LLM, with at most 15 updates, use:
+To run on Tower of Hanoi (3-disk) with `gpt-4o` as the underlying LLM, with at most 15 updates, use:
 ```bash
 python main.py --task hanoi3 --model gpt-4o --max_updates 15
 ```
 
-To run MCP #13 (There is a bridge), which allows concurrency (crossing the river on boat and on the bridge are possibly concurrent actions), with `o1-preview` as the underlying LLM, use:
+To run on MCP #13 (There is a bridge), which allows concurrency (crossing the river on boat and on the bridge are possibly concurrent actions), with `o1-preview` as the underlying LLM, use:
 ```bash
 python main.py --task mcp_13_bridge --model o1-preview --concurrency
 ```
