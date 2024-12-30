@@ -1,4 +1,0 @@
-:- query
-        label :: stack;
-        0: loc(d1)=c & loc(d2)=d1 & loc(d3)=d2 & loc(d4)=a & loc(d5)= b & loc(d6) = d4 & loc(d7)= d5 & heavier(d1,d2) & heavier(d2,d3) & heavier(d3,d4) & heavier(d4,d5) & heavier(d5,d6)& heavier(d6,d7);
-        maxstep: loc(d1)=c & loc(d2)=d1 & loc(d3)=c & loc(d4)=a & loc(d5)=d4.
