@@ -28,45 +28,45 @@ llm-al/
 ### Missionaries and Cannibals Elaborations
 | Problem                                             | Optimal Length    | Chat GPT4 | Claude 3 Opus | Gemini 1 Ultra | ChatGPT4 Code  | o1 (preview)  | LLM +AL          |
 |:----------------------------------------------------|:-------------:|:---------:|:-------------:|:--------------:|:-------------:|:-------------:|:----------------:|
-| MCP (basic)                                         | 11            | ❌         | ❌            | ❌            | ✔️ (1)         | ✔️           | ✔️              |
-| 1 (the boat is a rowboat)                           | 11            | ❌         | ❌            | ❌            | ✔️ (1)         | ✔️           | ✔️              |
-| 2 (missionaries and cannibals can exchange hats)    | 11            | ✔️         | ❌            | ❌            | ✔️ (2)         | ❌           | ▲(1)            |
-| 3 (there are 4 missionaries and 4 cannibals)        | (unsolvable)  | ❌         | ❌            | ❌            | Δ (6)         | ✔️           | ▲(2)            |
-| 4 (the boat can carry three)                        | (unsolvable)  | ❌         | ❌            | ❌            | ❌ (2)         | ✔️           | ✔️              |
-| 5 (an oar on each bank)                             | 13            | ❌         | ❌            | ❌            | ❌ (1)         | ❌           | ▲(2)            |
-| 6 (only one missionary and one cannibal can row)    | 13            | ❌         | ❌            | ❌            | ❌ (1)         | ❌           | ▲(4)            |
-| 7 (missionaries cannot row)                         | (unsolvable)  | ❌         | ❌            | ❌            | Δ (6)         | ✔️           | ✔️              |
-| 8 (a very big cannibal must cross alone)            | 15            | ❌         | ❌            | ❌            | ❌ (2)         | ❌           | ▲(2)            |
-| 9 (big cannibal and small missionary)               | 11            | ❌         | ❌            | ❌            | ❌ (1)         | ❌           | ▲(6)            |
-| 10 (a missionary can walk on water)                 | 7             | ❌         | ❌            | ❌            | ✔️† (1)       | ❌           | ▲(7)            |
-| 11 (missionaries can convert cannibals)             | 9             | ❌         | ❌            | ❌            | ✔️† (2)       | ❌           | ✔️†             |
-| 13 (there is bridge that can cross two)             | 4             | ❌         | ❌            | ❌            | ❌ (6)         | ✔️†          | ✔️†             |
-| 14 (the boat leaks with two people on it)           | 11            | ✔️         | ❌            | ❌            | ❌ (1)         | ❌           | ▲(3)            |
-| 16 (there is an island)                             | 19            | ❌         | ❌            | ❌            | ❌ (4)         | ❌           | ✔️              |
-| 17 (cannibals can become hungry)                    | 13            | ❌         | ❌            | ❌            | ❌ (4)         | ❌           | ▲(3)            |
-| 19 (there are two sets of groups)                   | 22            | ✔️         | ❌            | ❌            | ❌ (1)         | ✔️           | ▲(1)            |
+| [MCP (basic)](envs/mcp_basic)                                         | 11            | ❌         | ❌            | ❌            | ✔️ (1)         | ✔️           | ✔️              |
+| [1 (the boat is a rowboat)](envs/mcp_1_rowboat)                           | 11            | ❌         | ❌            | ❌            | ✔️ (1)         | ✔️           | ✔️              |
+| [2 (missionaries and cannibals can exchange hats)](envs/mcp_2_hats)    | 11            | ✔️         | ❌            | ❌            | ✔️ (2)         | ❌           | ▲(1)            |
+| [3 (there are 4 missionaries and 4 cannibals)](envs/mcp_3_4each)        | (unsolvable)  | ❌         | ❌            | ❌            | Δ (6)         | ✔️           | ▲(2)            |
+| [4 (the boat can carry three)](envs/mcp_4_carry3)                        | (unsolvable)  | ❌         | ❌            | ❌            | ❌ (2)         | ✔️           | ✔️              |
+| [5 (an oar on each bank)](envs/mcp_5_oars)                             | 13            | ❌         | ❌            | ❌            | ❌ (1)         | ❌           | ▲(2)            |
+| [6 (only one missionary and one cannibal can row)](envs/mcp_6_notEveryone)    | 13            | ❌         | ❌            | ❌            | ❌ (1)         | ❌           | ▲(4)            |
+| [7 (missionaries cannot row)](envs/mcp_7_mi_cant_row)                         | (unsolvable)  | ❌         | ❌            | ❌            | Δ (6)         | ✔️           | ✔️              |
+| [8 (a very big cannibal must cross alone)](envs/mcp_8_bigcannibal)            | 15            | ❌         | ❌            | ❌            | ❌ (2)         | ❌           | ▲(2)            |
+| [9 (big cannibal and small missionary)](envs/mcp_9_big_small)               | 11            | ❌         | ❌            | ❌            | ❌ (1)         | ❌           | ▲(6)            |
+| [10 (a missionary can walk on water)](envs/mcp_10_jesus)                 | 7             | ❌         | ❌            | ❌            | ✔️† (1)       | ❌           | ▲(7)            |
+| [11 (missionaries can convert cannibals)](envs/mcp_11_convert)             | 9             | ❌         | ❌            | ❌            | ✔️† (2)       | ❌           | ✔️†             |
+| [13 (there is bridge that can cross two)](envs/mcp_13_bridge)             | 4             | ❌         | ❌            | ❌            | ❌ (6)         | ✔️†          | ✔️†             |
+| [14 (the boat leaks with two people on it)](envs/mcp_14_leaks)           | 11            | ✔️         | ❌            | ❌            | ❌ (1)         | ❌           | ▲(3)            |
+| [16 (there is an island)](envs/mcp_16_island)                             | 19            | ❌         | ❌            | ❌            | ❌ (4)         | ❌           | ✔️              |
+| [17 (cannibals can become hungry)](envs/mcp_17_fast_rower)                    | 13            | ❌         | ❌            | ❌            | ❌ (4)         | ❌           | ▲(3)            |
+| [19 (there are two sets of groups)](envs/mcp_19_two_sets)                   | 22            | ✔️         | ❌            | ❌            | ❌ (1)         | ✔️           | ▲(1)            |
 | **Total**                                           |               | 3          | 0             | 0              | 5             | 7             | 7                |
 
 ### Puzzles and Variations
 | Problem                              | Optimal Length | Chat GPT4 | Claude 3 Opus | Gem. 1.0 Ultra | ChatGPT-4 +Code | o1 (preview) | LLM +AL       |
 |:-------------------------------------|:-----------:|:---------:|:-------------:|:--------------:|:---------------:|:------------:|:-------------:|
-| River Cross (basic)                  | 7           | ✔️        | ✔️            | ✔️             | ✔️ (5)          | ✔️           | ✔️            |
-| River Cross (var1)                   | 6           | ❌        | ❌            | ❌             | ❌ (3)          | ✔️           | ✔️            |
-| Tower of Hanoi (3-disk, basic)       | 7           | ❌        | ❌            | ❌             | ✔️ (1)          | ✔️           | ✔️            |
-| Tower of Hanoi (3-disk, var1)        | 6           | ❌        | ❌            | ❌             | ❌ (1)          | ✔️           | ▲(1)          |
-| Tower of Hanoi (5-disk, basic)       | 31          | ✔️*       | ❌            | ❌             | ✔️ (1)          | ✔️           | ✔️            |
-| Tower of Hanoi (5-disk, var1)        | 27          | ❌        | ❌            | ❌             | ❌ (4)          | ❌           | ✔️            |
-| Tower of Hanoi (7-disk, basic)       | 127         | ❌        | ❌            | ❌             | ✔️ (1)          | ❌           | ✔️            |
-| Tower of Hanoi (7-disk, var1)        | 11          | ❌        | ❌            | ❌             | ❌ (2)          | ❌           | ▲(1)          |
-| Sudoku1                              | 0           | ✔️*       | ❌            | ❌             | ✔️ (1)          | ❌           | ▲(2)          |
-| Sudoku2                              | 0           | ✔️*       | ❌            | ❌             | ✔️ (1)          | ❌           | ✔️            |
-| Sudoku3                              | 0           | ❌*       | ❌            | ❌             | ✔️ (3)          | ❌           | ✔️            |
-| Sudoku (var1)                        | (unsolvable)| ✔️*       | ❌            | ❌             | Δ (3)           | ❌           | ▲(1)          |
-| Sudoku (var2)                        | (unsolvable)| ❌*       | ❌            | ❌             | ✔️ (0)          | ❌           | ▲(6)          |
+| [River Cross (basic)](envs/river)                  | 7           | ✔️        | ✔️            | ✔️             | ✔️ (5)          | ✔️           | ✔️            |
+| [River Cross (var1)](envs/river_1)                   | 6           | ❌        | ❌            | ❌             | ❌ (3)          | ✔️           | ✔️            |
+| [Tower of Hanoi (3-disk, basic)](envs/hanoi3)       | 7           | ❌        | ❌            | ❌             | ✔️ (1)          | ✔️           | ✔️            |
+| [Tower of Hanoi (3-disk, var1)](envs/hanoi3_1)        | 6           | ❌        | ❌            | ❌             | ❌ (1)          | ✔️           | ▲(1)          |
+| [Tower of Hanoi (5-disk, basic)](envs/hanoi5)       | 31          | ✔️*       | ❌            | ❌             | ✔️ (1)          | ✔️           | ✔️            |
+| [Tower of Hanoi (5-disk, var1)](envs/hanoi5_1)        | 27          | ❌        | ❌            | ❌             | ❌ (4)          | ❌           | ✔️            |
+| [Tower of Hanoi (7-disk, basic)](envs/hanoi7)       | 127         | ❌        | ❌            | ❌             | ✔️ (1)          | ❌           | ✔️            |
+| [Tower of Hanoi (7-disk, var1)](envs/hanoi7_1)        | 11          | ❌        | ❌            | ❌             | ❌ (2)          | ❌           | ▲(1)          |
+| [Sudoku1](envs/sudoku1)                              | 0           | ✔️*       | ❌            | ❌             | ✔️ (1)          | ❌           | ▲(2)          |
+| [Sudoku2](envs/sudoku2)                              | 0           | ✔️*       | ❌            | ❌             | ✔️ (1)          | ❌           | ✔️            |
+| [Sudoku3](envs/sudoku3)                              | 0           | ❌*       | ❌            | ❌             | ✔️ (3)          | ❌           | ✔️            |
+| [Sudoku (var1)](envs/sudoku%20(var1))                        | (unsolvable)| ✔️*       | ❌            | ❌             | Δ (3)           | ❌           | ▲(1)          |
+| [Sudoku (var2)](envs/sudoku%20(var2))                        | (unsolvable)| ❌*       | ❌            | ❌             | ✔️ (0)          | ❌           | ▲(6)          |
 | **Total**                            |             | 5         | 1             | 1              | 8               | 5            | 8             |
 
 
-❌ indicates failure to produce a solution, ✔️ indicates an optimal solution was found, Δ indicates human intervention was used to produce a correct result, (n) indicates the number of attempts ChatGPT-4+Code makes at writing a program, and the number of manual corrections required for LLM+AL. † indicates that the solution found was not optimal and * indicates that the LLM generated Python code though it was not instructed to. 
+❌ indicates failure to produce a solution, ✔️ indicates an optimal solution was found, Δ indicates human intervention was used to produce a correct result, (n) indicates the number of attempts ChatGPT-4+Code makes at writing a program, and the number of manual corrections required for LLM+AL. † indicates that the solution found was not optimal and * indicates that the LLM generated Python code though it was not instructed to. All baseline experiments except o1-preview were done in May 2024. o1-preview and LLM + AL were done in September 2024.
 
 
 ---
