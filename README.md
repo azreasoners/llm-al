@@ -101,7 +101,7 @@ To return to the container, run the following:
    docker start instance1 \
    && docker attach instance1
    ```
-**Note**: If running Docker with WSL, make sure [Docker Desktop](https://www.docker.com/products/docker-desktop/) is installed, and under Settings > Resources > WSL integration, the distro you wish to use Docker on is enabled. More details are found [here](https://docs.docker.com/desktop/features/wsl/). Otherwise the `docker build` will not work properly.
+**Note**: If running Docker with WSL, make sure [Docker Desktop](https://www.docker.com/products/docker-desktop/) is installed, and under Settings > Resources > WSL integration, the distro you wish to use Docker on is enabled (you may need to restart Docker Desktop and wsl after doing so). More details are found [here](https://docs.docker.com/desktop/features/wsl/). Otherwise the `docker build` will not work properly.
 <!--- To run the code, skip to the [Running LLM-AL](#running-llm-al) section. -->
 
 ### Option 2: Manual Installation
