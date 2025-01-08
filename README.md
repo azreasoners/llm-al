@@ -30,30 +30,31 @@ llm-al/
 All baseline experiments except o1-preview were done in May 2024. o1-preview and LLM + AL were done in September 2024. For baseline experiments, the input to the LLM is a concatenation of the problem description, signature description, and query, in the domain folders in [envs](envs).
 
 ### Missionaries and Cannibals Elaborations
-| Problem                                             | Optimal Length    | LLM +AL          | Chat GPT4 | Claude 3 Opus | Gemini 1 Ultra | ChatGPT4 Code  | o1 (preview)  | o1   | Gemini 2.0 Flash | QwQ-32B-preview | 
-|:----------------------------------------------------|:-------------:|:---------:|:-------------:|:--------------:|:-------------:|:-------------:|:----:|:----:|:----:|:----------------:|
-| [MCP (basic)](envs/mcp_basic)                                              | 11            | ✔️   |  ❌         | ❌            | ❌            | ✔️ (1)         | ✔️           |  ❌  | ✔️   | ❌   |           
-| [1 (the boat is a rowboat)](envs/mcp_1_rowboat)                            | 11            | ✔️   |  ❌         | ❌            | ❌            | ✔️ (1)         | ✔️           | ✔️   |  ❌  |  ❌  |           
-| [2 (missionaries and cannibals can exchange hats)](envs/mcp_2_hats)        | 11            | Δ(1)  |  ✔️         | ❌            | ❌            | ✔️ (2)         | ❌           |  ❌  |  ❌  | ❌   |           
-| [3 (there are 4 missionaries and 4 cannibals)](envs/mcp_3_4each)           | (unsolvable)  | Δ(2) |   ❌         | ❌            | ❌            | Δ (6)          | ✔️           |  ✔️  |  ❌  | ✔️   |           
-| [4 (the boat can carry three)](envs/mcp_4_carry3)                          | (unsolvable)  | ✔️   |  ❌         | ❌            | ❌            | ❌ (2)         | ✔️           | ✔️   |  ❌  | ✔️   |           
-| [5 (an oar on each bank)](envs/mcp_5_oars)                                 | 13            | Δ(2)  |  ❌         | ❌            | ❌            | ❌ (1)         | ❌           | ✔️   |  ❌  | ❌   |           
-| [6 (only one missionary and one cannibal can row)](envs/mcp_6_notEveryone) | 13            | Δ(4)  |  ❌         | ❌            | ❌            | ❌ (1)         | ❌           |  ❌  | ❌   | ❌   |           
-| [7 (missionaries cannot row)](envs/mcp_7_mi_cant_row)                      | (unsolvable)  | ✔️   |  ❌         | ❌            | ❌            | Δ (6)          | ✔️           | ✔️   |  ❌  |  ✔️  |           
-| [8 (a very big cannibal must cross alone)](envs/mcp_8_bigcannibal)         | 15            | Δ(2)  |  ❌         | ❌            | ❌            | ❌ (2)         | ❌           | ✔️†  | ❌   | ❌   |           
-| [9 (big cannibal and small missionary)](envs/mcp_9_big_small)              | 11            | Δ(6)  |  ❌         | ❌            | ❌            | ❌ (1)         | ❌           | ✔️   | ❌   | ❌   |           
-| [10 (a missionary can walk on water)](envs/mcp_10_jesus)                   | 7             | Δ(7)  |  ❌         | ❌            | ❌            | ✔️† (1)        | ❌           |  ❌  |  ❌  | ❌   |           
-| [11 (missionaries can convert cannibals)](envs/mcp_11_convert)             | 9             | ✔️†  |  ❌         | ❌            | ❌            | ✔️† (2)        | ❌           | ✔️†  | ❌   | ❌   |           
-| [13 (there is bridge that can cross two)](envs/mcp_13_bridge)              | 4             | ✔️†  |  ❌         | ❌            | ❌            | ❌ (6)         | ✔️†          |  ❌  |  ❌  | ❌   |           
-| [14 (the boat leaks with two people on it)](envs/mcp_14_leaks)             | 11            | Δ(3)  |  ✔️         | ❌            | ❌            | ❌ (1)         | ❌           | ✔️   |  ✔️  | ❌   |           
-| [16 (there is an island)](envs/mcp_16_island)                              | 19            | ✔️   |  ❌         | ❌            | ❌            | ❌ (4)         | ❌           |  ❌  |  ❌  |  ❌  |           
-| [17 (cannibals can become hungry)](envs/mcp_17_fast_rower)                 | 13            | Δ(3)  |  ❌         | ❌            | ❌            | ❌ (4)         | ❌           |  ❌  | ❌   | ✔️   |           
-| [19 (there are two sets of groups)](envs/mcp_19_two_sets)                  | 22            | Δ(1)  |  ✔️         | ❌            | ❌            | ❌ (1)         | ✔️           | ✔️   |  ❌  | ❌   |           
-| **Total**                                                                  |               | 7      |  3          | 0             | 0              | 5              | 7             | 10    | 2    |  4    |           
+| Problem                                             | Optimal Length    | LLM +AL          | Chat GPT4 | Chat GPT4o |Claude 3 Opus | Gemini 1 Ultra | ChatGPT4 Code  | o1 (preview) | o1-mini | o1   | Gemini 2.0 Flash | QwQ-32B-preview | DeepSeek-V3 | DeepSeek-R1-Lite-Preview 
+|:----------------------------------------------------|:-------------:|:---------:|:-------------:|:--------------:|:-------------:|:-------------:|:----:|:----:|:----:|:----------------:|:----------------:|:----------------:|:----------------:|:----------------:|
+| **Total**                                                                  |               | 7    |  3        |   0     | 0             | 0              | 5           |   7   | 7             | 10    | 2    |  4    |  2      | 3      |
+| [MCP (basic)](envs/mcp_basic)                                              | 11            | ✔️   |   ❌     |  ❌    | ❌            | ❌            | ✔️ (1)    | ✔️    | ✔️           |  ❌  | ✔️   | ❌   |  ❌      | ✔️      |   
+| [1 (the boat is a rowboat)](envs/mcp_1_rowboat)                            | 11            | ✔️   |   ❌     |  ❌    | ❌            | ❌            | ✔️ (1)    | ✔️    | ✔️           | ✔️   |  ❌  |  ❌  |  ❌      | ❌      |   
+| [2 (missionaries and cannibals can exchange hats)](envs/mcp_2_hats)        | 11            | Δ(1) |  ✔️       |   ❌  | ❌            | ❌            | ✔️ (2)     | ✔️      | ❌           |  ❌  |  ❌  | ❌   |  ❌      | ❌      |   
+| [3 (there are 4 missionaries and 4 cannibals)](envs/mcp_3_4each)           | (unsolvable)  | Δ(2) |   ❌      |   ❌  | ❌           | ❌            | Δ (6)     |  ✔️     | ✔️           |  ✔️  |  ❌  | ✔️   |  ✔️      | ❌      |   
+| [4 (the boat can carry three)](envs/mcp_4_carry3)                          | (unsolvable)  | ✔️   |   ❌     |  ❌    | ❌            | ❌            | ❌ (2)    | ✔️    | ✔️           | ✔️   |  ❌  | ✔️   |  ❌      | ✔️      |   
+| [5 (an oar on each bank)](envs/mcp_5_oars)                                 | 13            | Δ(2) |  ❌       |   ❌*  | ❌            | ❌            | ❌ (1)     | ❌      | ❌           | ✔️   |  ❌  | ❌   |  ❌      | ❌      |   
+| [6 (only one missionary and one cannibal can row)](envs/mcp_6_notEveryone) | 13            | Δ(4) |  ❌       |   ❌   | ❌            | ❌            | ❌ (1)     | ❌      | ❌           |  ❌  | ❌   | ❌   |  ❌      | ❌      |   
+| [7 (missionaries cannot row)](envs/mcp_7_mi_cant_row)                      | (unsolvable)  | ✔️   |   ❌     |  ❌    | ❌            | ❌            | Δ (6)      | ❌    | ✔️           | ✔️   |  ❌  |  ✔️  |  ❌      | ❌      |   
+| [8 (a very big cannibal must cross alone)](envs/mcp_8_bigcannibal)         | 15            | Δ(2) |  ❌       |   ❌   | ❌            | ❌            | ❌ (2)     | ❌      | ❌           | ✔️†  | ❌   | ❌   |  ❌      | ❌      |   
+| [9 (big cannibal and small missionary)](envs/mcp_9_big_small)              | 11            | Δ(6) |  ❌       |   ❌   | ❌            | ❌            | ❌ (1)     | ❌      | ❌           | ✔️   | ❌   | ❌   |  ❌      | ❌      |   
+| [10 (a missionary can walk on water)](envs/mcp_10_jesus)                   | 7             | Δ(7) |  ❌       |   ❌   | ❌            | ❌            | ✔️† (1)    | ❌      | ❌           |  ❌  |  ❌  | ❌   |  ❌      | ❌      |   
+| [11 (missionaries can convert cannibals)](envs/mcp_11_convert)             | 9             | ✔️†  |   ❌      |  ❌*  | ❌            | ❌            | ✔️† (2)   | ✔️†    | ❌           | ✔️†  | ❌   | ❌   |  ❌      | ❌      |   
+| [13 (there is bridge that can cross two)](envs/mcp_13_bridge)              | 4             | ✔️†  |   ❌      |  ❌   | ❌            | ❌            | ❌ (6)    | ❌    | ✔️†          |  ❌  |  ❌  | ❌   |  ❌      | ❌      |   
+| [14 (the boat leaks with two people on it)](envs/mcp_14_leaks)             | 11            | Δ(3) |  ✔️       |   ❌   | ❌            | ❌            | ❌ (1)     | ❌      | ❌           | ✔️   |  ✔️  | ❌   |  ✔️      | ❌      |   
+| [16 (there is an island)](envs/mcp_16_island)                              | 19            | ✔️   |   ❌      |  ❌   | ❌            | ❌            | ❌ (4)    | ❌    | ❌           |  ❌  |  ❌  |  ❌  |  ❌      | ❌      |   
+| [17 (cannibals can become hungry)](envs/mcp_17_fast_rower)                 | 13            | Δ(3) |  ❌       |   ❌   | ❌            | ❌            | ❌ (4)     | ❌      | ❌           |  ❌  | ❌   | ✔️   |  ❌      | ✔️      |   
+| [19 (there are two sets of groups)](envs/mcp_19_two_sets)                  | 22            | Δ(1) |  ✔️       |   ❌   | ❌            | ❌            | ❌ (1)     | ❌      | ✔️           | ✔️   |  ❌  | ❌   |  ❌      | ❌      |      
 
 ### Puzzles and Variations
 | Problem                              | Optimal Length | LLM +AL       |Chat GPT4 | Claude 3 Opus | Gem. 1.0 Ultra | ChatGPT-4 +Code | o1 (preview) | o1 | Gemini 2.0 Flash | QwQ-32B-preview | 
 |:-------------------------------------|:-----------:|:---------:|:-------------:|:--------------:|:---------------:|:------------:|:----:|:----:|:----:|:-------------:|
+| **Total**                                          |             | 8             | 5           | 1              | 1              | 8               | 5             |  9   |   1   | 1         |
 | [River Cross (basic)](envs/river)                  | 7           | ✔️            | ✔️          | ✔️            | ✔️             | ✔️ (5)          | ✔️           | ✔️   | ✔️   |  ❌      |
 | [River Cross (var1)](envs/river_1)                 | 6           | ✔️            | ❌          | ❌            | ❌             | ❌ (3)          | ✔️           |  ✔️† | ❌   |  ❌      |
 | [Tower of Hanoi (3-disk, basic)](envs/hanoi3)      | 7           | ✔️            | ❌          | ❌            | ❌             | ✔️ (1)          | ✔️           |  ✔️  | ❌   |  ✔️      |
@@ -67,7 +68,6 @@ All baseline experiments except o1-preview were done in May 2024. o1-preview and
 | [Sudoku3](envs/sudoku3)                            | 0           | ✔️            | ❌*         | ❌            | ❌             | ✔️ (3)          | ❌           |  ❌  | ❌   | ❌       |
 | [Sudoku (var1)](envs/sudoku%20(var1))              | (unsolvable)| Δ(1)          | ✔️*         | ❌            | ❌             | Δ (3)           | ❌           |  ✔️  |  ❌  |  ❌      |
 | [Sudoku (var2)](envs/sudoku%20(var2))              | (unsolvable)| Δ(6)          | ❌*         | ❌            | ❌             | ✔️ (0)         | ❌            |  ✔️  | ❌   |  ❌      |
-| **Total**                                          |             | 8             | 5           | 1              | 1              | 8               | 5             |  9   |   1   | 1         |
 
 
 
