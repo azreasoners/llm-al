@@ -27,7 +27,7 @@ llm-al/
 ❌ indicates failure to produce a solution, ✔️ indicates an optimal solution was found, Δ indicates human intervention was used to produce a correct result, (n) indicates the number of attempts ChatGPT-4+Code makes at writing a program, and the number of manual corrections required for LLM+AL. † indicates that the solution found was not optimal and * indicates that the LLM generated Python code though it was not instructed to. 
 
 
-All baseline experiments except o1-preview were done in May 2024. o1-preview and LLM + AL were done in September 2024. For baseline experiments, the input to the LLM is a concatenation of the problem description, signature description, and query, in the domain folders in [envs](envs).
+The experiments were done at the following times: May, 2024: ChatGPT-4, Claude 3 Opus, Gemini 1.0 Ultra, ChatGPT-4 Code; Sept., 2024: o1-preview; Nov., 2024: QwQ-32B-preview; Jan., 2024: GPT-4o, o1-mini, o1, DeepSeek V3, Gemini 2.0 Flash, DeepSeek r1-lite-preview. For baseline experiments, the input to the LLM is a concatenation of the problem description, signature description, and query, in the domain folders in [envs](envs).
 
 ### Missionaries and Cannibals Elaborations
 | Problem                                             | Optimal Length    | LLM +AL          | Chat GPT4 | Chat GPT4o |Claude 3 Opus | Gemini 1 Ultra | ChatGPT4 Code  | o1 (preview) | o1-mini | o1   | Gemini 2.0 Flash | QwQ-32B-preview | DeepSeek-V3 | DeepSeek-R1-Lite-Preview 
