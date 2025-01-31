@@ -30,7 +30,7 @@ For baseline experiments, the input to the LLM is a concatenation of the problem
 ### Missionaries and Cannibals Elaborations
 | Problem                                             | Optimal Length    | LLM +AL          | Chat GPT4 (04/26/24) | Chat GPT4o (01/08/25) |Claude 3 Opus (04/22/24) | Gemini 1 Ultra (04/22/24) | ChatGPT4 Code (04/22/24) | o1-mini (01/08/25) | o1 (preview) (09/24) | o1 (12/22/24)  | Gemini 2.0 Flash (12/22/24)| QwQ-32B-preview (11/29/24) | DeepSeek-V3 (01/08/25) | DeepSeek-R1-Lite-Preview (01/08/25) | DeepSeek R1 (01/21/25)
 |:----------------------------------------------------|:-------------:|:---------:|:-------------:|:--------------:|:-------------:|:-------------:|:----:|:----:|:----:|:----------------:|:----------------:|:----------------:|:----------------:|:----------------:|:--------------:|
-| **Total**                                                                  |               | 7    |  3        |   0     | 0             | 0              | 5           |   6   | 7             | 10    | 2    |  4    |  2      | 3      |    5    |
+| **Total**                                                                  |               | 7+10Δ    |  3        |   0     | 0             | 0              | 5+2Δ           |   6   | 7             | 10    | 2    |  4    |  2      | 3      |    5    |
 | [MCP (basic)](envs/mcp_basic)                                              | 11            | ✔️   |   ❌     |  ❌    | ❌            | ❌            | ✔️ (1)     | ✔️     | ✔️           |  ❌  | ✔️   | ❌   |  ❌      | ✔️      |  ✔️   |  
 | [1 (the boat is a rowboat)](envs/mcp_1_rowboat)                            | 11            | ✔️   |   ❌     |  ❌    | ❌            | ❌            | ✔️ (1)     | ✔️     | ✔️           | ✔️   |  ❌  |  ❌  |  ❌      | ❌      |  ✔️   |  
 | [2 (missionaries and cannibals can exchange hats)](envs/mcp_2_hats)        | 11            | Δ(1) |  ✔️       |   ❌  | ❌            | ❌            | ✔️ (2)     | ✔️      | ❌           |  ❌  |  ❌  | ❌   |  ❌      | ❌      | ✔️    |    
@@ -52,7 +52,7 @@ For baseline experiments, the input to the LLM is a concatenation of the problem
 ### Puzzles and Variations
 | Problem                              | Optimal Length | LLM +AL       |Chat GPT4 | Claude 3 Opus | Gem. 1.0 Ultra | ChatGPT-4 +Code | o1 (preview) | o1 | Gemini 2.0 Flash | QwQ-32B-preview | 
 |:-------------------------------------|:-----------:|:---------:|:-------------:|:--------------:|:---------------:|:------------:|:----:|:----:|:----:|:-------------:|
-| **Total**                                          |             | 8             | 5           | 1              | 1              | 8               | 5             |  9   |   1   | 1         |
+| **Total**                                          |             | 8+5Δ             | 5           | 1              | 1              | 8+1Δ               | 5             |  9   |   1   | 1         |
 | [River Cross (basic)](envs/river)                  | 7           | ✔️            | ✔️          | ✔️            | ✔️             | ✔️ (5)          | ✔️           | ✔️   | ✔️   |  ❌      |
 | [River Cross (var1)](envs/river_1)                 | 6           | ✔️            | ❌          | ❌            | ❌             | ❌ (3)          | ✔️           |  ✔️† | ❌   |  ❌      |
 | [Tower of Hanoi (3-disk, basic)](envs/hanoi3)      | 7           | ✔️            | ❌          | ❌            | ❌             | ✔️ (1)          | ✔️           |  ✔️  | ❌   |  ✔️      |
