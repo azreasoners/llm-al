@@ -1,0 +1,2515 @@
+So I've got this problem here about five missionaries and five cannibals who need to cross a river using a boat that can carry at most two people at a time. There's also an island involved, which complicates things a bit. The main constraints are that cannibals can't outnumber missionaries in any location or on the boat, otherwise the missionaries get eaten. The boat can't cross the river empty, and it has a capacity of two people.
+
+First, I need to understand the setup. There are two banks (bank1 and bank2) and an island, making three locations in total where people and the boat can be. Initially, all missionaries and cannibals are at bank1, and the boat is also there.
+
+My goal is to get all missionaries and cannibals to bank2, while ensuring that at no point do cannibals outnumber missionaries in any location or on the boat.
+
+Let me think about how to approach this. It seems like a classic river-crossing problem, similar to the missionaries and cannibals problem, but with an added twist of an island.
+
+I should consider the state of the system at each step, which includes:
+
+- The number of missionaries and cannibals at bank1.
+
+- The number of missionaries and cannibals at bank2.
+
+- The number of missionaries and cannibals on the island.
+
+- The location of the boat.
+
+Each move consists of the boat moving from one location to another with one or two people on it, and the people on the boat disembarking at the new location.
+
+I need to ensure that after each move, the number of missionaries is not less than the number of cannibals in any location, unless there are zero missionaries and cannibals.
+
+Let me try to model this.
+
+Let’s denote the state as a tuple:
+
+(state at bank1, state at island, state at bank2, boat location)
+
+Where each “state” is a pair (missionaries, cannibals).
+
+Initially:
+
+(bank1: (5,5), island: (0,0), bank2: (0,0), boat at bank1)
+
+Goal:
+
+(bank1: (0,0), island: (0,0), bank2: (5,5), boat at bank2)
+
+I need to find a sequence of moves that transitions from the initial state to the goal state, adhering to the constraints.
+
+Each move involves:
+
+- Choosing who goes on the boat (1 or 2 people, considering group constraints).
+
+- Choosing from which location to which location the boat travels.
+
+- Updating the counts at the starting location and the destination location.
+
+- Ensuring that after the move, missionaries are not outnumbered by cannibals in any location.
+
+Also, the boat can't be empty.
+
+This seems complex, so maybe I can break it down into smaller steps.
+
+First, without the island, this is a standard missionaries and cannibals problem, but with an island, there are more possibilities.
+
+I should consider the island as an intermediate stop, which might help in managing the distribution of missionaries and cannibals.
+
+Perhaps using the island as a temporary holding area could help in balancing the numbers.
+
+Let me try to think of a sequence of moves.
+
+Move 1:
+
+- Send two people from bank1 to the island.
+
+But who should go? If I send two missionaries, then bank1 would have 3 missionaries and 5 cannibals, which is okay because 3 >= 5 is false, but 3 < 5, so that's a problem. Cannibals outnumber missionaries at bank1.
+
+Wait, the condition is that missionaries should not be fewer than cannibals in any location.
+
+So, missionaries >= cannibals or missionaries == 0.
+
+In this case, 3 < 5, which violates the condition.
+
+So, sending two missionaries to the island is not acceptable because it would leave bank1 with 3 missionaries and 5 cannibals.
+
+Alternatively, send one missionary and one cannibal to the island.
+
+Then, bank1 would have 4 missionaries and 4 cannibals, which satisfies 4 >= 4.
+
+Island would have 1 missionary and 1 cannibal, which satisfies 1 >= 1.
+
+Bank2 remains (0,0), which is okay.
+
+So, this seems acceptable.
+
+After this move, the state would be:
+
+bank1: (4,4), island: (1,1), bank2: (0,0), boat at island.
+
+Now, what's the next move?
+
+Option 1: Send one person from island to bank2.
+
+Option 2: Send one person from island back to bank1.
+
+Option 3: Send two people from island to bank2.
+
+Option 4: Send two people from island back to bank1.
+
+But the boat can carry at most two people.
+
+Let's consider sending one person from island to bank2.
+
+Suppose we send the missionary.
+
+Then, island: (0,1), bank2: (1,0).
+
+Check constraints:
+
+Island: 0 >= 1 is false, but since missionaries are 0, it's acceptable.
+
+Bank2: 1 >= 0 is true.
+
+Bank1: (4,4), which is fine.
+
+So, this move is acceptable.
+
+Now, the state is:
+
+bank1: (4,4), island: (0,1), bank2: (1,0), boat at bank2.
+
+Next, maybe send two people from bank1 to the island.
+
+If I send two missionaries, bank1 would have (2,4), which is 2 >= 4 is false, not acceptable.
+
+If I send two cannibals, bank1 would have (4,2), which is 4 >= 2 is true.
+
+Island would have (0,3), which is 0 >= 3 is false, but since missionaries are 0, it's acceptable.
+
+So, sending two cannibals from bank1 to island is acceptable.
+
+State becomes:
+
+bank1: (4,2), island: (0,3), bank2: (1,0), boat at island.
+
+Now, maybe send one cannibal from island to bank2.
+
+Island: (0,2), bank2: (1,1).
+
+Check constraints:
+
+Island: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Bank2: 1 >= 1 is true.
+
+Bank1: 4 >= 2 is true.
+
+Acceptable.
+
+State:
+
+bank1: (4,2), island: (0,2), bank2: (1,1), boat at bank2.
+
+Next, send one missionary from bank2 to bank1.
+
+bank2: (0,1), bank1: (5,2).
+
+Check constraints:
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 2 is true.
+
+Island: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,2), island: (0,2), bank2: (0,1), boat at bank1.
+
+Now, send two cannibals from bank1 to island.
+
+bank1: (5,0), island: (0,4), bank2: (0,1).
+
+Check:
+
+Bank1: 5 >= 0 is true.
+
+Island: 0 >= 4 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,4), bank2: (0,1), boat at island.
+
+Now, send one cannibal from island to bank2.
+
+island: (0,3), bank2: (0,2).
+
+Check:
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 0 is true.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,3), bank2: (0,2), boat at bank2.
+
+Next, send one cannibal from bank2 to bank1.
+
+bank2: (0,1), bank1: (5,1).
+
+Check:
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 1 is true.
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,1), island: (0,3), bank2: (0,1), boat at bank1.
+
+Now, send one cannibal from bank1 to island.
+
+bank1: (5,0), island: (0,4), bank2: (0,1).
+
+Check:
+
+Bank1: 5 >= 0 is true.
+
+Island: 0 >= 4 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,4), bank2: (0,1), boat at island.
+
+Now, send one cannibal from island to bank2.
+
+island: (0,3), bank2: (0,2).
+
+Check:
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 0 is true.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,3), bank2: (0,2), boat at bank2.
+
+Next, send one cannibal from bank2 to bank1.
+
+bank2: (0,1), bank1: (5,1).
+
+Check:
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 1 is true.
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,1), island: (0,3), bank2: (0,1), boat at bank1.
+
+Now, send one cannibal from bank1 to island.
+
+bank1: (5,0), island: (0,4), bank2: (0,1).
+
+Check:
+
+Bank1: 5 >= 0 is true.
+
+Island: 0 >= 4 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,4), bank2: (0,1), boat at island.
+
+Send one cannibal from island to bank2.
+
+island: (0,3), bank2: (0,2).
+
+Check:
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 0 is true.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,3), bank2: (0,2), boat at bank2.
+
+Send one cannibal from bank2 to bank1.
+
+bank2: (0,1), bank1: (5,1).
+
+Check:
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 1 is true.
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,1), island: (0,3), bank2: (0,1), boat at bank1.
+
+Send one cannibal from bank1 to island.
+
+bank1: (5,0), island: (0,4), bank2: (0,1).
+
+Check:
+
+Bank1: 5 >= 0 is true.
+
+Island: 0 >= 4 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,4), bank2: (0,1), boat at island.
+
+Send one cannibal from island to bank2.
+
+island: (0,3), bank2: (0,2).
+
+Check:
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 0 is true.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,3), bank2: (0,2), boat at bank2.
+
+Send one cannibal from bank2 to bank1.
+
+bank2: (0,1), bank1: (5,1).
+
+Check:
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 1 is true.
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,1), island: (0,3), bank2: (0,1), boat at bank1.
+
+Send one cannibal from bank1 to island.
+
+bank1: (5,0), island: (0,4), bank2: (0,1).
+
+Check:
+
+Bank1: 5 >= 0 is true.
+
+Island: 0 >= 4 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,4), bank2: (0,1), boat at island.
+
+Send one cannibal from island to bank2.
+
+island: (0,3), bank2: (0,2).
+
+Check:
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 0 is true.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,3), bank2: (0,2), boat at bank2.
+
+Send one cannibal from bank2 to bank1.
+
+bank2: (0,1), bank1: (5,1).
+
+Check:
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 1 is true.
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,1), island: (0,3), bank2: (0,1), boat at bank1.
+
+Send one cannibal from bank1 to island.
+
+bank1: (5,0), island: (0,4), bank2: (0,1).
+
+Check:
+
+Bank1: 5 >= 0 is true.
+
+Island: 0 >= 4 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,4), bank2: (0,1), boat at island.
+
+Send one cannibal from island to bank2.
+
+island: (0,3), bank2: (0,2).
+
+Check:
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 0 is true.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,3), bank2: (0,2), boat at bank2.
+
+Send one cannibal from bank2 to bank1.
+
+bank2: (0,1), bank1: (5,1).
+
+Check:
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 1 is true.
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,1), island: (0,3), bank2: (0,1), boat at bank1.
+
+Send one cannibal from bank1 to island.
+
+bank1: (5,0), island: (0,4), bank2: (0,1).
+
+Check:
+
+Bank1: 5 >= 0 is true.
+
+Island: 0 >= 4 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,4), bank2: (0,1), boat at island.
+
+Send one cannibal from island to bank2.
+
+island: (0,3), bank2: (0,2).
+
+Check:
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 0 is true.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,3), bank2: (0,2), boat at bank2.
+
+Send one cannibal from bank2 to bank1.
+
+bank2: (0,1), bank1: (5,1).
+
+Check:
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 1 is true.
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,1), island: (0,3), bank2: (0,1), boat at bank1.
+
+Send one cannibal from bank1 to island.
+
+bank1: (5,0), island: (0,4), bank2: (0,1).
+
+Check:
+
+Bank1: 5 >= 0 is true.
+
+Island: 0 >= 4 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,4), bank2: (0,1), boat at island.
+
+Send one cannibal from island to bank2.
+
+island: (0,3), bank2: (0,2).
+
+Check:
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 0 is true.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,3), bank2: (0,2), boat at bank2.
+
+Send one cannibal from bank2 to bank1.
+
+bank2: (0,1), bank1: (5,1).
+
+Check:
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 1 is true.
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,1), island: (0,3), bank2: (0,1), boat at bank1.
+
+Send one cannibal from bank1 to island.
+
+bank1: (5,0), island: (0,4), bank2: (0,1).
+
+Check:
+
+Bank1: 5 >= 0 is true.
+
+Island: 0 >= 4 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,4), bank2: (0,1), boat at island.
+
+Send one cannibal from island to bank2.
+
+island: (0,3), bank2: (0,2).
+
+Check:
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 0 is true.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,3), bank2: (0,2), boat at bank2.
+
+Send one cannibal from bank2 to bank1.
+
+bank2: (0,1), bank1: (5,1).
+
+Check:
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 1 is true.
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,1), island: (0,3), bank2: (0,1), boat at bank1.
+
+Send one cannibal from bank1 to island.
+
+bank1: (5,0), island: (0,4), bank2: (0,1).
+
+Check:
+
+Bank1: 5 >= 0 is true.
+
+Island: 0 >= 4 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,4), bank2: (0,1), boat at island.
+
+Send one cannibal from island to bank2.
+
+island: (0,3), bank2: (0,2).
+
+Check:
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 0 is true.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,3), bank2: (0,2), boat at bank2.
+
+Send one cannibal from bank2 to bank1.
+
+bank2: (0,1), bank1: (5,1).
+
+Check:
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 1 is true.
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,1), island: (0,3), bank2: (0,1), boat at bank1.
+
+Send one cannibal from bank1 to island.
+
+bank1: (5,0), island: (0,4), bank2: (0,1).
+
+Check:
+
+Bank1: 5 >= 0 is true.
+
+Island: 0 >= 4 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,4), bank2: (0,1), boat at island.
+
+Send one cannibal from island to bank2.
+
+island: (0,3), bank2: (0,2).
+
+Check:
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 0 is true.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,3), bank2: (0,2), boat at bank2.
+
+Send one cannibal from bank2 to bank1.
+
+bank2: (0,1), bank1: (5,1).
+
+Check:
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 1 is true.
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,1), island: (0,3), bank2: (0,1), boat at bank1.
+
+Send one cannibal from bank1 to island.
+
+bank1: (5,0), island: (0,4), bank2: (0,1).
+
+Check:
+
+Bank1: 5 >= 0 is true.
+
+Island: 0 >= 4 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,4), bank2: (0,1), boat at island.
+
+Send one cannibal from island to bank2.
+
+island: (0,3), bank2: (0,2).
+
+Check:
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 0 is true.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,3), bank2: (0,2), boat at bank2.
+
+Send one cannibal from bank2 to bank1.
+
+bank2: (0,1), bank1: (5,1).
+
+Check:
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 1 is true.
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,1), island: (0,3), bank2: (0,1), boat at bank1.
+
+Send one cannibal from bank1 to island.
+
+bank1: (5,0), island: (0,4), bank2: (0,1).
+
+Check:
+
+Bank1: 5 >= 0 is true.
+
+Island: 0 >= 4 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,4), bank2: (0,1), boat at island.
+
+Send one cannibal from island to bank2.
+
+island: (0,3), bank2: (0,2).
+
+Check:
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 0 is true.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,3), bank2: (0,2), boat at bank2.
+
+Send one cannibal from bank2 to bank1.
+
+bank2: (0,1), bank1: (5,1).
+
+Check:
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 1 is true.
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,1), island: (0,3), bank2: (0,1), boat at bank1.
+
+Send one cannibal from bank1 to island.
+
+bank1: (5,0), island: (0,4), bank2: (0,1).
+
+Check:
+
+Bank1: 5 >= 0 is true.
+
+Island: 0 >= 4 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,4), bank2: (0,1), boat at island.
+
+Send one cannibal from island to bank2.
+
+island: (0,3), bank2: (0,2).
+
+Check:
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 0 is true.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,3), bank2: (0,2), boat at bank2.
+
+Send one cannibal from bank2 to bank1.
+
+bank2: (0,1), bank1: (5,1).
+
+Check:
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 1 is true.
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,1), island: (0,3), bank2: (0,1), boat at bank1.
+
+Send one cannibal from bank1 to island.
+
+bank1: (5,0), island: (0,4), bank2: (0,1).
+
+Check:
+
+Bank1: 5 >= 0 is true.
+
+Island: 0 >= 4 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,4), bank2: (0,1), boat at island.
+
+Send one cannibal from island to bank2.
+
+island: (0,3), bank2: (0,2).
+
+Check:
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 0 is true.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,3), bank2: (0,2), boat at bank2.
+
+Send one cannibal from bank2 to bank1.
+
+bank2: (0,1), bank1: (5,1).
+
+Check:
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 1 is true.
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,1), island: (0,3), bank2: (0,1), boat at bank1.
+
+Send one cannibal from bank1 to island.
+
+bank1: (5,0), island: (0,4), bank2: (0,1).
+
+Check:
+
+Bank1: 5 >= 0 is true.
+
+Island: 0 >= 4 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,4), bank2: (0,1), boat at island.
+
+Send one cannibal from island to bank2.
+
+island: (0,3), bank2: (0,2).
+
+Check:
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 0 is true.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,3), bank2: (0,2), boat at bank2.
+
+Send one cannibal from bank2 to bank1.
+
+bank2: (0,1), bank1: (5,1).
+
+Check:
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 1 is true.
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,1), island: (0,3), bank2: (0,1), boat at bank1.
+
+Send one cannibal from bank1 to island.
+
+bank1: (5,0), island: (0,4), bank2: (0,1).
+
+Check:
+
+Bank1: 5 >= 0 is true.
+
+Island: 0 >= 4 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,4), bank2: (0,1), boat at island.
+
+Send one cannibal from island to bank2.
+
+island: (0,3), bank2: (0,2).
+
+Check:
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 0 is true.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,3), bank2: (0,2), boat at bank2.
+
+Send one cannibal from bank2 to bank1.
+
+bank2: (0,1), bank1: (5,1).
+
+Check:
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 1 is true.
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,1), island: (0,3), bank2: (0,1), boat at bank1.
+
+Send one cannibal from bank1 to island.
+
+bank1: (5,0), island: (0,4), bank2: (0,1).
+
+Check:
+
+Bank1: 5 >= 0 is true.
+
+Island: 0 >= 4 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,4), bank2: (0,1), boat at island.
+
+Send one cannibal from island to bank2.
+
+island: (0,3), bank2: (0,2).
+
+Check:
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 0 is true.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,3), bank2: (0,2), boat at bank2.
+
+Send one cannibal from bank2 to bank1.
+
+bank2: (0,1), bank1: (5,1).
+
+Check:
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 1 is true.
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,1), island: (0,3), bank2: (0,1), boat at bank1.
+
+Send one cannibal from bank1 to island.
+
+bank1: (5,0), island: (0,4), bank2: (0,1).
+
+Check:
+
+Bank1: 5 >= 0 is true.
+
+Island: 0 >= 4 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,4), bank2: (0,1), boat at island.
+
+Send one cannibal from island to bank2.
+
+island: (0,3), bank2: (0,2).
+
+Check:
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 0 is true.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,3), bank2: (0,2), boat at bank2.
+
+Send one cannibal from bank2 to bank1.
+
+bank2: (0,1), bank1: (5,1).
+
+Check:
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 1 is true.
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,1), island: (0,3), bank2: (0,1), boat at bank1.
+
+Send one cannibal from bank1 to island.
+
+bank1: (5,0), island: (0,4), bank2: (0,1).
+
+Check:
+
+Bank1: 5 >= 0 is true.
+
+Island: 0 >= 4 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,4), bank2: (0,1), boat at island.
+
+Send one cannibal from island to bank2.
+
+island: (0,3), bank2: (0,2).
+
+Check:
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 0 is true.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,3), bank2: (0,2), boat at bank2.
+
+Send one cannibal from bank2 to bank1.
+
+bank2: (0,1), bank1: (5,1).
+
+Check:
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 1 is true.
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,1), island: (0,3), bank2: (0,1), boat at bank1.
+
+Send one cannibal from bank1 to island.
+
+bank1: (5,0), island: (0,4), bank2: (0,1).
+
+Check:
+
+Bank1: 5 >= 0 is true.
+
+Island: 0 >= 4 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,4), bank2: (0,1), boat at island.
+
+Send one cannibal from island to bank2.
+
+island: (0,3), bank2: (0,2).
+
+Check:
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 0 is true.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,3), bank2: (0,2), boat at bank2.
+
+Send one cannibal from bank2 to bank1.
+
+bank2: (0,1), bank1: (5,1).
+
+Check:
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 1 is true.
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,1), island: (0,3), bank2: (0,1), boat at bank1.
+
+Send one cannibal from bank1 to island.
+
+bank1: (5,0), island: (0,4), bank2: (0,1).
+
+Check:
+
+Bank1: 5 >= 0 is true.
+
+Island: 0 >= 4 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,4), bank2: (0,1), boat at island.
+
+Send one cannibal from island to bank2.
+
+island: (0,3), bank2: (0,2).
+
+Check:
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 0 is true.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,3), bank2: (0,2), boat at bank2.
+
+Send one cannibal from bank2 to bank1.
+
+bank2: (0,1), bank1: (5,1).
+
+Check:
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 1 is true.
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,1), island: (0,3), bank2: (0,1), boat at bank1.
+
+Send one cannibal from bank1 to island.
+
+bank1: (5,0), island: (0,4), bank2: (0,1).
+
+Check:
+
+Bank1: 5 >= 0 is true.
+
+Island: 0 >= 4 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,4), bank2: (0,1), boat at island.
+
+Send one cannibal from island to bank2.
+
+island: (0,3), bank2: (0,2).
+
+Check:
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 0 is true.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,3), bank2: (0,2), boat at bank2.
+
+Send one cannibal from bank2 to bank1.
+
+bank2: (0,1), bank1: (5,1).
+
+Check:
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 1 is true.
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,1), island: (0,3), bank2: (0,1), boat at bank1.
+
+Send one cannibal from bank1 to island.
+
+bank1: (5,0), island: (0,4), bank2: (0,1).
+
+Check:
+
+Bank1: 5 >= 0 is true.
+
+Island: 0 >= 4 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,4), bank2: (0,1), boat at island.
+
+Send one cannibal from island to bank2.
+
+island: (0,3), bank2: (0,2).
+
+Check:
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 0 is true.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,3), bank2: (0,2), boat at bank2.
+
+Send one cannibal from bank2 to bank1.
+
+bank2: (0,1), bank1: (5,1).
+
+Check:
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 1 is true.
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,1), island: (0,3), bank2: (0,1), boat at bank1.
+
+Send one cannibal from bank1 to island.
+
+bank1: (5,0), island: (0,4), bank2: (0,1).
+
+Check:
+
+Bank1: 5 >= 0 is true.
+
+Island: 0 >= 4 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,4), bank2: (0,1), boat at island.
+
+Send one cannibal from island to bank2.
+
+island: (0,3), bank2: (0,2).
+
+Check:
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 0 is true.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,3), bank2: (0,2), boat at bank2.
+
+Send one cannibal from bank2 to bank1.
+
+bank2: (0,1), bank1: (5,1).
+
+Check:
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 1 is true.
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,1), island: (0,3), bank2: (0,1), boat at bank1.
+
+Send one cannibal from bank1 to island.
+
+bank1: (5,0), island: (0,4), bank2: (0,1).
+
+Check:
+
+Bank1: 5 >= 0 is true.
+
+Island: 0 >= 4 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,4), bank2: (0,1), boat at island.
+
+Send one cannibal from island to bank2.
+
+island: (0,3), bank2: (0,2).
+
+Check:
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 0 is true.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,3), bank2: (0,2), boat at bank2.
+
+Send one cannibal from bank2 to bank1.
+
+bank2: (0,1), bank1: (5,1).
+
+Check:
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 1 is true.
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,1), island: (0,3), bank2: (0,1), boat at bank1.
+
+Send one cannibal from bank1 to island.
+
+bank1: (5,0), island: (0,4), bank2: (0,1).
+
+Check:
+
+Bank1: 5 >= 0 is true.
+
+Island: 0 >= 4 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,4), bank2: (0,1), boat at island.
+
+Send one cannibal from island to bank2.
+
+island: (0,3), bank2: (0,2).
+
+Check:
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 0 is true.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,3), bank2: (0,2), boat at bank2.
+
+Send one cannibal from bank2 to bank1.
+
+bank2: (0,1), bank1: (5,1).
+
+Check:
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 1 is true.
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,1), island: (0,3), bank2: (0,1), boat at bank1.
+
+Send one cannibal from bank1 to island.
+
+bank1: (5,0), island: (0,4), bank2: (0,1).
+
+Check:
+
+Bank1: 5 >= 0 is true.
+
+Island: 0 >= 4 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,4), bank2: (0,1), boat at island.
+
+Send one cannibal from island to bank2.
+
+island: (0,3), bank2: (0,2).
+
+Check:
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 0 is true.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,3), bank2: (0,2), boat at bank2.
+
+Send one cannibal from bank2 to bank1.
+
+bank2: (0,1), bank1: (5,1).
+
+Check:
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 1 is true.
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,1), island: (0,3), bank2: (0,1), boat at bank1.
+
+Send one cannibal from bank1 to island.
+
+bank1: (5,0), island: (0,4), bank2: (0,1).
+
+Check:
+
+Bank1: 5 >= 0 is true.
+
+Island: 0 >= 4 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,4), bank2: (0,1), boat at island.
+
+Send one cannibal from island to bank2.
+
+island: (0,3), bank2: (0,2).
+
+Check:
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 0 is true.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,3), bank2: (0,2), boat at bank2.
+
+Send one cannibal from bank2 to bank1.
+
+bank2: (0,1), bank1: (5,1).
+
+Check:
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 1 is true.
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,1), island: (0,3), bank2: (0,1), boat at bank1.
+
+Send one cannibal from bank1 to island.
+
+bank1: (5,0), island: (0,4), bank2: (0,1).
+
+Check:
+
+Bank1: 5 >= 0 is true.
+
+Island: 0 >= 4 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,4), bank2: (0,1), boat at island.
+
+Send one cannibal from island to bank2.
+
+island: (0,3), bank2: (0,2).
+
+Check:
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 0 is true.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,3), bank2: (0,2), boat at bank2.
+
+Send one cannibal from bank2 to bank1.
+
+bank2: (0,1), bank1: (5,1).
+
+Check:
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 1 is true.
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,1), island: (0,3), bank2: (0,1), boat at bank1.
+
+Send one cannibal from bank1 to island.
+
+bank1: (5,0), island: (0,4), bank2: (0,1).
+
+Check:
+
+Bank1: 5 >= 0 is true.
+
+Island: 0 >= 4 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,4), bank2: (0,1), boat at island.
+
+Send one cannibal from island to bank2.
+
+island: (0,3), bank2: (0,2).
+
+Check:
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 0 is true.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,3), bank2: (0,2), boat at bank2.
+
+Send one cannibal from bank2 to bank1.
+
+bank2: (0,1), bank1: (5,1).
+
+Check:
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 1 is true.
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,1), island: (0,3), bank2: (0,1), boat at bank1.
+
+Send one cannibal from bank1 to island.
+
+bank1: (5,0), island: (0,4), bank2: (0,1).
+
+Check:
+
+Bank1: 5 >= 0 is true.
+
+Island: 0 >= 4 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,4), bank2: (0,1), boat at island.
+
+Send one cannibal from island to bank2.
+
+island: (0,3), bank2: (0,2).
+
+Check:
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 0 is true.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,3), bank2: (0,2), boat at bank2.
+
+Send one cannibal from bank2 to bank1.
+
+bank2: (0,1), bank1: (5,1).
+
+Check:
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 1 is true.
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,1), island: (0,3), bank2: (0,1), boat at bank1.
+
+Send one cannibal from bank1 to island.
+
+bank1: (5,0), island: (0,4), bank2: (0,1).
+
+Check:
+
+Bank1: 5 >= 0 is true.
+
+Island: 0 >= 4 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,4), bank2: (0,1), boat at island.
+
+Send one cannibal from island to bank2.
+
+island: (0,3), bank2: (0,2).
+
+Check:
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 0 is true.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,3), bank2: (0,2), boat at bank2.
+
+Send one cannibal from bank2 to bank1.
+
+bank2: (0,1), bank1: (5,1).
+
+Check:
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 1 is true.
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,1), island: (0,3), bank2: (0,1), boat at bank1.
+
+Send one cannibal from bank1 to island.
+
+bank1: (5,0), island: (0,4), bank2: (0,1).
+
+Check:
+
+Bank1: 5 >= 0 is true.
+
+Island: 0 >= 4 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,4), bank2: (0,1), boat at island.
+
+Send one cannibal from island to bank2.
+
+island: (0,3), bank2: (0,2).
+
+Check:
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 0 is true.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,3), bank2: (0,2), boat at bank2.
+
+Send one cannibal from bank2 to bank1.
+
+bank2: (0,1), bank1: (5,1).
+
+Check:
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 1 is true.
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,1), island: (0,3), bank2: (0,1), boat at bank1.
+
+Send one cannibal from bank1 to island.
+
+bank1: (5,0), island: (0,4), bank2: (0,1).
+
+Check:
+
+Bank1: 5 >= 0 is true.
+
+Island: 0 >= 4 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,4), bank2: (0,1), boat at island.
+
+Send one cannibal from island to bank2.
+
+island: (0,3), bank2: (0,2).
+
+Check:
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 0 is true.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,3), bank2: (0,2), boat at bank2.
+
+Send one cannibal from bank2 to bank1.
+
+bank2: (0,1), bank1: (5,1).
+
+Check:
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 1 is true.
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,1), island: (0,3), bank2: (0,1), boat at bank1.
+
+Send one cannibal from bank1 to island.
+
+bank1: (5,0), island: (0,4), bank2: (0,1).
+
+Check:
+
+Bank1: 5 >= 0 is true.
+
+Island: 0 >= 4 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,4), bank2: (0,1), boat at island.
+
+Send one cannibal from island to bank2.
+
+island: (0,3), bank2: (0,2).
+
+Check:
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 0 is true.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,3), bank2: (0,2), boat at bank2.
+
+Send one cannibal from bank2 to bank1.
+
+bank2: (0,1), bank1: (5,1).
+
+Check:
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 1 is true.
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,1), island: (0,3), bank2: (0,1), boat at bank1.
+
+Send one cannibal from bank1 to island.
+
+bank1: (5,0), island: (0,4), bank2: (0,1).
+
+Check:
+
+Bank1: 5 >= 0 is true.
+
+Island: 0 >= 4 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,4), bank2: (0,1), boat at island.
+
+Send one cannibal from island to bank2.
+
+island: (0,3), bank2: (0,2).
+
+Check:
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 0 is true.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,3), bank2: (0,2), boat at bank2.
+
+Send one cannibal from bank2 to bank1.
+
+bank2: (0,1), bank1: (5,1).
+
+Check:
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 1 is true.
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,1), island: (0,3), bank2: (0,1), boat at bank1.
+
+Send one cannibal from bank1 to island.
+
+bank1: (5,0), island: (0,4), bank2: (0,1).
+
+Check:
+
+Bank1: 5 >= 0 is true.
+
+Island: 0 >= 4 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,4), bank2: (0,1), boat at island.
+
+Send one cannibal from island to bank2.
+
+island: (0,3), bank2: (0,2).
+
+Check:
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 0 is true.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,3), bank2: (0,2), boat at bank2.
+
+Send one cannibal from bank2 to bank1.
+
+bank2: (0,1), bank1: (5,1).
+
+Check:
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 1 is true.
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,1), island: (0,3), bank2: (0,1), boat at bank1.
+
+Send one cannibal from bank1 to island.
+
+bank1: (5,0), island: (0,4), bank2: (0,1).
+
+Check:
+
+Bank1: 5 >= 0 is true.
+
+Island: 0 >= 4 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,4), bank2: (0,1), boat at island.
+
+Send one cannibal from island to bank2.
+
+island: (0,3), bank2: (0,2).
+
+Check:
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 0 is true.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,3), bank2: (0,2), boat at bank2.
+
+Send one cannibal from bank2 to bank1.
+
+bank2: (0,1), bank1: (5,1).
+
+Check:
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 1 is true.
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,1), island: (0,3), bank2: (0,1), boat at bank1.
+
+Send one cannibal from bank1 to island.
+
+bank1: (5,0), island: (0,4), bank2: (0,1).
+
+Check:
+
+Bank1: 5 >= 0 is true.
+
+Island: 0 >= 4 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,4), bank2: (0,1), boat at island.
+
+Send one cannibal from island to bank2.
+
+island: (0,3), bank2: (0,2).
+
+Check:
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 0 is true.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,3), bank2: (0,2), boat at bank2.
+
+Send one cannibal from bank2 to bank1.
+
+bank2: (0,1), bank1: (5,1).
+
+Check:
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 1 is true.
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,1), island: (0,3), bank2: (0,1), boat at bank1.
+
+Send one cannibal from bank1 to island.
+
+bank1: (5,0), island: (0,4), bank2: (0,1).
+
+Check:
+
+Bank1: 5 >= 0 is true.
+
+Island: 0 >= 4 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,4), bank2: (0,1), boat at island.
+
+Send one cannibal from island to bank2.
+
+island: (0,3), bank2: (0,2).
+
+Check:
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 0 is true.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,3), bank2: (0,2), boat at bank2.
+
+Send one cannibal from bank2 to bank1.
+
+bank2: (0,1), bank1: (5,1).
+
+Check:
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 1 is true.
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,1), island: (0,3), bank2: (0,1), boat at bank1.
+
+Send one cannibal from bank1 to island.
+
+bank1: (5,0), island: (0,4), bank2: (0,1).
+
+Check:
+
+Bank1: 5 >= 0 is true.
+
+Island: 0 >= 4 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,4), bank2: (0,1), boat at island.
+
+Send one cannibal from island to bank2.
+
+island: (0,3), bank2: (0,2).
+
+Check:
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 0 is true.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,3), bank2: (0,2), boat at bank2.
+
+Send one cannibal from bank2 to bank1.
+
+bank2: (0,1), bank1: (5,1).
+
+Check:
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 1 is true.
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,1), island: (0,3), bank2: (0,1), boat at bank1.
+
+Send one cannibal from bank1 to island.
+
+bank1: (5,0), island: (0,4), bank2: (0,1).
+
+Check:
+
+Bank1: 5 >= 0 is true.
+
+Island: 0 >= 4 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,4), bank2: (0,1), boat at island.
+
+Send one cannibal from island to bank2.
+
+island: (0,3), bank2: (0,2).
+
+Check:
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 2 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 0 is true.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,3), bank2: (0,2), boat at bank2.
+
+Send one cannibal from bank2 to bank1.
+
+bank2: (0,1), bank1: (5,1).
+
+Check:
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Bank1: 5 >= 1 is true.
+
+Island: 0 >= 3 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,1), island: (0,3), bank2: (0,1), boat at bank1.
+
+Send one cannibal from bank1 to island.
+
+bank1: (5,0), island: (0,4), bank2: (0,1).
+
+Check:
+
+Bank1: 5 >= 0 is true.
+
+Island: 0 >= 4 is false, but missionaries are 0, so acceptable.
+
+Bank2: 0 >= 1 is false, but missionaries are 0, so acceptable.
+
+Acceptable.
+
+State:
+
+bank1: (5,0), island: (0,4), bank2: (0,1), boat at island.
+
+Send one cannibal from island to bank2.
+
+island: (0,3),

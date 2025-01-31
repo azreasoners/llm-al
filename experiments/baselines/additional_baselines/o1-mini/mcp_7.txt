@@ -1,0 +1,72 @@
+There are four types of things: vessel, location, group, and integer.
+
+Problem Description:
+Three missionaries and three cannibals shall cross a river in a boat which carries at most two people at once. The boat cannot cross the river with nothing on it. On either side, the cannibals may never outnumber the missionaries or the missionaries will be eaten. Also, the cannibals may never outnumber the missionaries on the boat or the missionaries will be eaten. Missionaries cannot row.
+
+boat is a vessel. bank1 and bank2 are locations. missionaries and cannibals are groups. 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, and 10 are integers.
+
+Three missionaries and three cannibals are at location bank1. The boat is at location bank1. Find a plan so that all missionaries and all cannibals are at location bank2. 
+
+ChatGPT
+
+Thought for 8 seconds
+Piecing together the puzzle
+
+I'm noting the classic Missionaries and Cannibals problem, ensuring the boat always carries at least one rower, and monitoring the balance between missionaries and cannibals on each bank and the boat.
+
+Mapping the plan
+
+I'm working through a sequence of moves to transport all missionaries and cannibals to bank2, ensuring no bank or boat has more cannibals than missionaries unless no missionaries are present.
+
+Transferring individuals
+
+I’m detailing a revised transportation sequence for missionaries and cannibals, ensuring safety and balance on both banks and on the boat, with adjustments for returning trips.
+
+Finalizing the route
+
+I’m wrapping up the transportation plan, ensuring all missionaries and cannibals safely reach bank2. This completes the sequence of steps, with a final move to balance the final groups.
+
+Mapping out next steps
+
+I’m setting up to simulate the progression based on the steps provided. It’s interesting to see how each action ensures the safe transfer of all participants.
+
+Transferring to bank2
+
+OK, let me see. I’m detailing the step-by-step process of moving all participants from bank1 to bank2, ensuring each leg of the journey maintains safety and balance on both sides.
+
+Certainly! Below is a step-by-step plan to safely transport all three missionaries and three cannibals from bank1 to bank2 without violating any constraints.
+
+Initial State:
+Bank1: 3 Missionaries (M), 3 Cannibals (C)
+Bank2: 0 Missionaries, 0 Cannibals
+Boat: At bank1
+Step-by-Step Plan:
+Step	Action	Bank1	Bank2	Boat Location
+1	Two Cannibals (C) cross from bank1 to bank2.	3M, 1C	0M, 2C	bank2
+2	One Cannibal (C) returns from bank2 to bank1.	3M, 2C	0M, 1C	bank1
+3	Two Cannibals (C) cross to bank2.	3M, 0C	0M, 3C	bank2
+4	One Cannibal (C) returns to bank1.	3M, 1C	0M, 2C	bank1
+5	Two Missionaries (M) cross to bank2.	1M, 1C	2M, 2C	bank2
+6	One Missionary (M) and one Cannibal (C) return to bank1.	2M, 2C	1M, 1C	bank1
+7	Two Missionaries (M) cross to bank2.	0M, 2C	3M, 1C	bank2
+8	One Cannibal (C) returns to bank1.	0M, 3C	3M, 0C	bank1
+9	Two Cannibals (C) cross to bank2.	0M, 1C	3M, 2C	bank2
+10	One Cannibal (C) returns to bank1.	0M, 2C	3M, 1C	bank1
+11	Two Cannibals (C) cross to bank2.	0M, 0C	3M, 3C	bank2
+Explanation of Each Step:
+Step 1: Two cannibals cross to bank2. This ensures that the number of cannibals does not outnumber missionaries on bank1.
+Step 2: One cannibal returns to bank1 to pilot the boat for the next crossing.
+Step 3: Two cannibals cross again to bank2, reducing cannibals on bank1.
+Step 4: One cannibal returns to bank1 to allow missionaries to start crossing.
+Step 5: Two missionaries cross to bank2, increasing the number of missionaries there.
+Step 6: One missionary and one cannibal return to bank1 to maintain balance and prepare for further crossings.
+Step 7: Two missionaries cross to bank2, leaving no missionaries on bank1.
+Step 8: One cannibal returns to bank1 to assist in the final crossings.
+Step 9: Two cannibals cross to bank2, bringing most groups to the destination bank.
+Step 10: One cannibal returns to bank1 to facilitate the final crossing.
+Step 11: The last two cannibals cross to bank2, completing the mission.
+Final State:
+Bank1: 0 Missionaries, 0 Cannibals
+Bank2: 3 Missionaries, 3 Cannibals
+Boat: At bank2
+All missionaries and cannibals have successfully crossed to bank2 without any missionaries being outnumbered at any location or on the boat.

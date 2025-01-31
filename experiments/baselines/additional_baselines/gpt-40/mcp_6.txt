@@ -1,0 +1,81 @@
+There are five types of things: vessel, location, group, basicGroup, and integer.
+
+Problem Description:
+Three missionaries and three cannibals shall cross a river in a boat which carries at most two people at once. The boat cannot cross the river with nothing on it. On either side, the cannibals may never outnumber the missionaries or the missionaries will be eaten. Also, the cannibals may never outnumber the missionaries on the boat or the missionaries will be eaten. The boat's capacity is 2. Additionally, someone must row on the boat, and only one missionary and one cannibal can row.
+
+boat is a vessel. bank1 and bank2 are locations. missionaries and cannibals are basicGroups. rowers is a basic group. 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, and 10 are integers.
+
+Three missionaries and three cannibals are at location bank1. The boat is at location bank1. Find a plan so that all missionaries and all cannibals are at location bank2. 
+ChatGPT said:
+ChatGPT
+This is a classic problem known as the Missionaries and Cannibals problem. Solving it involves finding a sequence of moves that transfers all individuals to the opposite bank while adhering to the constraints.
+
+Here's a step-by-step logical plan:
+
+Problem Variables
+Vessel:
+
+Boat: Capacity of 2 people.
+Locations:
+
+Bank1: Initial location of all individuals and the boat.
+Bank2: Goal location for all individuals.
+Groups:
+
+Missionaries: Initially, 3 at bank1.
+Cannibals: Initially, 3 at bank1.
+Rowers: Must consist of at least 1 person (either a missionary or a cannibal).
+Integers:
+
+Represent counts of missionaries and cannibals.
+Constraints
+Boat cannot cross empty: It must carry at least one person.
+Capacity: Maximum 2 people per crossing.
+Safety Rule:
+Cannibals ≤ Missionaries on either bank (if Missionaries > 0 on that bank).
+Cannibals ≤ Missionaries on the boat during crossing (if Missionaries > 0 on the boat).
+Initial State
+Bank1: 3 Missionaries, 3 Cannibals, Boat.
+Bank2: 0 Missionaries, 0 Cannibals.
+Goal State
+Bank1: 0 Missionaries, 0 Cannibals.
+Bank2: 3 Missionaries, 3 Cannibals, Boat.
+Plan (Step-by-Step)
+Crossing 1: 1 Cannibal and 1 Missionary row to bank2.
+
+Bank1: 2 Missionaries, 2 Cannibals.
+Bank2: 1 Missionary, 1 Cannibal.
+Return 1: 1 Cannibal returns to bank1.
+
+Bank1: 2 Missionaries, 3 Cannibals.
+Bank2: 1 Missionary.
+Crossing 2: 2 Cannibals row to bank2.
+
+Bank1: 2 Missionaries, 1 Cannibal.
+Bank2: 1 Missionary, 2 Cannibals.
+Return 2: 1 Cannibal returns to bank1.
+
+Bank1: 2 Missionaries, 2 Cannibals.
+Bank2: 1 Missionary, 1 Cannibal.
+Crossing 3: 1 Missionary and 1 Cannibal row to bank2.
+
+Bank1: 1 Missionary, 1 Cannibal.
+Bank2: 2 Missionaries, 2 Cannibals.
+Return 3: 1 Cannibal returns to bank1.
+
+Bank1: 1 Missionary, 2 Cannibals.
+Bank2: 2 Missionaries, 1 Cannibal.
+Crossing 4: 2 Cannibals row to bank2.
+
+Bank1: 1 Missionary, 0 Cannibals.
+Bank2: 2 Missionaries, 3 Cannibals.
+Return 4: 1 Cannibal returns to bank1.
+
+Bank1: 1 Missionary, 1 Cannibal.
+Bank2: 2 Missionaries, 2 Cannibals.
+Final Crossing: 1 Missionary and 1 Cannibal row to bank2.
+
+Bank1: 0 Missionaries, 0 Cannibals.
+Bank2: 3 Missionaries, 3 Cannibals.
+Solution Summary
+This sequence ensures that at no point are missionaries outnumbered by cannibals on either bank or in the boat.

@@ -1,0 +1,44 @@
+There are four types of things: vessel, location, group, and integer.
+
+Problem Description:
+Four missionaries and four cannibals shall cross a river in a boat which carries at most two people at once. The boat cannot cross the river with nothing on it. On either side, the cannibals may never outnumber the missionaries or the missionaries will be eaten. Also, the cannibals may never outnumber the missionaries on the boat or the missionaries will be eaten. However, there is one strong missionary which can row fast. As long as the strong missionary rows, then the cannibals won't become so hungry that they will eat the missionaries. 
+
+boat is a vessel. bank1 and bank2 are locations. missionaries and cannibals are groups. 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, and 10 are integers.
+
+Four missionaries and four cannibals are at location bank1. The boat is at location bank1. Find a plan so that all missionaries and all cannibals are at location bank2. 
+ChatGPT said:
+ChatGPT
+This is a classic problem in logic and AI planning, but with the additional element of the "strong missionary." The solution involves generating a valid sequence of moves where the constraints are respected at every step.
+
+Representation of the Problem
+State Representation: A state can be represented as (M1, C1, B, M2, C2), where:
+M1 and C1 are the number of missionaries and cannibals at bank1.
+M2 and C2 are the number of missionaries and cannibals at bank2.
+B represents the boat's location (1 for bank1 and 2 for bank2).
+Constraints
+On each bank, the number of cannibals must not exceed the number of missionaries, unless there are no missionaries.
+The boat can carry at most two people.
+The boat cannot cross the river empty.
+The strong missionary (if on the boat) ensures safety.
+Approach
+Start with the initial state (4, 4, 1, 0, 0).
+Define valid actions for moving people between the banks.
+Generate successor states based on valid actions.
+Use a search algorithm (like BFS or DFS) to find a sequence of states leading to the goal (0, 0, 2, 4, 4).
+Plan Generation
+Here is a pseudocode plan for solving the problem:
+
+Move 1 strong missionary + 1 cannibal to bank2.
+Move 1 strong missionary back to bank1.
+Move 2 cannibals to bank2.
+Move 1 cannibal back to bank1.
+Move 1 strong missionary + 1 cannibal to bank2.
+Move 1 strong missionary back to bank1.
+Move 2 missionaries to bank2.
+Move 1 cannibal back to bank1.
+Move 2 cannibals to bank2.
+Move 1 strong missionary back to bank1.
+Move 1 strong missionary + 1 cannibal to bank2.
+This sequence satisfies the constraints and moves all missionaries and cannibals to bank2.
+
+Would you like a detailed step-by-step explanation for each state and action?

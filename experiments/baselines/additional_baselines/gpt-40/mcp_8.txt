@@ -1,0 +1,180 @@
+There are four types of things: vessel, location, group, and integer.
+
+Problem Description:
+Three missionaries and three cannibals shall cross a river in a boat which carries at most two people at once. The boat cannot cross the river with nothing on it. On either side, the cannibals may never outnumber the missionaries or the missionaries will be eaten. Also, the cannibals may never outnumber the missionaries on the boat or the missionaries will be eaten. The boat's capacity is 2. There is a large cannibal which cannot fit in the boat with another person.
+
+Instance: 
+boat is a vessel. bank1 and bank2 are locations. missionaries, cannibals and big cannibals are groups. 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, and 10 are integers.
+
+Three missionaries and three cannibals are at location bank1. The boat is at location bank1. Find a plan so that all missionaries and all cannibals are at location bank2. 
+ChatGPT said:
+ChatGPT
+This problem can be solved using a systematic approach like state-space search or an AI planning algorithm, such as breadth-first search (BFS). Here's a formalized version of the problem:
+
+Problem Definition
+Entities
+Vessel: boat (capacity: 2)
+Locations: bank1, bank2
+Groups: missionaries, cannibals, big_cannibal
+Integers: Represent counts of missionaries, cannibals, and big cannibals on each bank.
+Initial State
+bank1: 3 missionaries, 2 cannibals, 1 big cannibal, and the boat.
+bank2: 0 missionaries, 0 cannibals, 0 big cannibals.
+Goal State
+bank2: 3 missionaries, 2 cannibals, and 1 big cannibal.
+bank1: Empty.
+Rules and Constraints
+The boat can carry a maximum of 2 people.
+The boat cannot cross empty.
+The missionaries on either bank (or in the boat) must not be outnumbered by the cannibals.
+missionaries
+≥
+cannibals (if missionaries > 0)
+missionaries≥cannibals (if missionaries > 0)
+The big cannibal cannot share the boat with another person.
+All transitions must be valid under these constraints.
+Formal Representation of a State
+A state can be represented as:
+
+(
+𝑆
+𝑚
+1
+,
+𝑆
+𝑐
+1
+,
+𝑆
+𝑏
+1
+,
+𝑆
+𝑚
+2
+,
+𝑆
+𝑐
+2
+,
+𝑆
+𝑏
+2
+,
+𝐵
+)
+(S 
+m1
+​
+ ,S 
+c1
+​
+ ,S 
+b1
+​
+ ,S 
+m2
+​
+ ,S 
+c2
+​
+ ,S 
+b2
+​
+ ,B)
+Where:
+
+𝑆
+𝑚
+1
+,
+𝑆
+𝑐
+1
+,
+𝑆
+𝑏
+1
+S 
+m1
+​
+ ,S 
+c1
+​
+ ,S 
+b1
+​
+ : Number of missionaries, cannibals, and big cannibals on bank1.
+𝑆
+𝑚
+2
+,
+𝑆
+𝑐
+2
+,
+𝑆
+𝑏
+2
+S 
+m2
+​
+ ,S 
+c2
+​
+ ,S 
+b2
+​
+ : Number of missionaries, cannibals, and big cannibals on bank2.
+𝐵
+B: Location of the boat (bank1 or bank2).
+Initial State
+(
+3
+,
+2
+,
+1
+,
+0
+,
+0
+,
+0
+,
+bank1
+)
+(3,2,1,0,0,0,bank1)
+Goal State
+(
+0
+,
+0
+,
+0
+,
+3
+,
+2
+,
+1
+,
+bank2
+)
+(0,0,0,3,2,1,bank2)
+Valid Moves
+The boat can carry:
+
+One missionary.
+One cannibal.
+One big cannibal.
+Two missionaries.
+Two cannibals.
+Moves must satisfy the constraints mentioned above.
+
+Plan Search (Algorithm Outline)
+State Exploration: Use BFS to explore all possible transitions starting from the initial state.
+Check Validity: Ensure each move satisfies the constraints.
+Mark Visited States: Avoid revisiting states to reduce computation.
+Reach Goal State: Stop when the goal state is achieved.
+Would you like to see Python code to compute the solution using BFS?

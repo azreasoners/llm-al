@@ -1,0 +1,116 @@
+There are four types of things: vessel, location, group, and integer.
+
+Problem Description:
+Three missionaries and three cannibals shall cross a river in a rowboat which carries at most two people at once. The rowboat cannot cross the river with nothing on it. On either side, the cannibals may never outnumber the missionaries or the missionaries will be eaten. Also, the cannibals may never outnumber the missionaries on the rowboat or the missionaries will be eaten. The rowboat's capacity is 2.
+
+rowboat is a vessel. bank1 and bank2 are locations. missionaries and cannibals are groups. 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, and 10 are integers.
+
+Three missionaries and three cannibals are at location bank1. The rowboat is at location bank1. Find a plan so that all missionaries and all cannibals are at location bank2. 
+ChatGPT
+
+Thought for 10 seconds
+Tackling the dilemma
+
+I’m thinking through the problem of moving 3 missionaries and 3 cannibals across a river, with the constraints of the rowboat and cannibal-missionary balance.
+
+Crafting the plan
+
+I'm piecing together a sequence of river crossings, ensuring Missionaries and Cannibals never outnumber each other on either bank or in the boat, using a balanced approach for optimal safety.
+
+Charting the course
+
+I’m detailing the journey, ensuring safety trips are completed by alternately sending two or one person, making sure Missionaries and Cannibals stay balanced.
+
+Laying out the options
+
+Offering a standard 11-step solution for ferrying Missionaries and Cannibals across the river, with each move carefully noted to ensure all constraints are met.
+
+Charting the journey
+
+OK, let me see. The answer should list each step, showing which group crosses and the state of missionaries, cannibals, and the boat's location on each bank.
+
+Mapping the journey
+
+I’m outlining each step to ensure the safe crossing of Missionaries and Cannibals, detailing the state of the banks and the boat's position for every transition.
+
+Certainly! Below is a step-by-step plan to safely transport all three missionaries and three cannibals from bank1 to bank2 using the rowboat, adhering to all the specified constraints.
+
+Initial State:
+bank1: 3 Missionaries (M), 3 Cannibals (C)
+bank2: 0 Missionaries, 0 Cannibals
+Rowboat Location: bank1
+Plan:
+Two Cannibals cross from bank1 to bank2.
+
+bank1: 3M, 1C
+bank2: 0M, 2C
+Rowboat Location: bank2
+One Cannibal returns from bank2 to bank1.
+
+bank1: 3M, 2C
+bank2: 0M, 1C
+Rowboat Location: bank1
+Two Cannibals cross from bank1 to bank2.
+
+bank1: 3M, 0C
+bank2: 0M, 3C
+Rowboat Location: bank2
+One Cannibal returns from bank2 to bank1.
+
+bank1: 3M, 1C
+bank2: 0M, 2C
+Rowboat Location: bank1
+Two Missionaries cross from bank1 to bank2.
+
+bank1: 1M, 1C
+bank2: 2M, 2C
+Rowboat Location: bank2
+One Missionary and One Cannibal return from bank2 to bank1.
+
+bank1: 2M, 2C
+bank2: 1M, 1C
+Rowboat Location: bank1
+Two Missionaries cross from bank1 to bank2.
+
+bank1: 0M, 2C
+bank2: 3M, 1C
+Rowboat Location: bank2
+One Cannibal returns from bank2 to bank1.
+
+bank1: 0M, 3C
+bank2: 3M, 0C
+Rowboat Location: bank1
+Two Cannibals cross from bank1 to bank2.
+
+bank1: 0M, 1C
+bank2: 3M, 2C
+Rowboat Location: bank2
+One Cannibal returns from bank2 to bank1.
+
+bank1: 0M, 2C
+bank2: 3M, 1C
+Rowboat Location: bank1
+Two Cannibals cross from bank1 to bank2.
+
+bank1: 0M, 0C
+bank2: 3M, 3C
+Rowboat Location: bank2
+Final State:
+bank1: 0 Missionaries, 0 Cannibals
+bank2: 3 Missionaries, 3 Cannibals
+Rowboat Location: bank2
+Summary of Moves:
+C + C →
+C ←
+C + C →
+C ←
+M + M →
+M + C ←
+M + M →
+C ←
+C + C →
+C ←
+C + C →
+Where "→" indicates crossing from bank1 to bank2, and "←" indicates returning from bank2 to bank1. "M" stands for Missionary and "C" stands for Cannibal.
+
+This sequence ensures that at no point do the cannibals outnumber the missionaries on either bank or on the rowboat, thereby preventing any missionaries from being eaten.
