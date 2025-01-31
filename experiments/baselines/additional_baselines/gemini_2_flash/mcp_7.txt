@@ -1,0 +1,88 @@
+There are four types of things: vessel, location, group, and integer.
+
+
+
+Problem Description:
+
+Three missionaries and three cannibals shall cross a river in a boat which carries at most two people at once. The boat cannot cross the river with nothing on it. On either side, the cannibals may never outnumber the missionaries or the missionaries will be eaten. Also, the cannibals may never outnumber the missionaries on the boat or the missionaries will be eaten. Missionaries cannot row.
+
+
+
+boat is a vessel. bank1 and bank2 are locations. missionaries and cannibals are groups. 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, and 10 are integers.
+
+
+
+Three missionaries and three cannibals are at location bank1. The boat is at location bank1. Find a plan so that all missionaries and all cannibals are at location bank2. 
+
+
+
+Here's a solution to the classic Missionaries and Cannibals problem, expressed using your defined types:
+
+Initial State:
+
+boat: at bank1
+bank1: 3 missionaries, 3 cannibals
+bank2: 0 missionaries, 0 cannibals
+Moves (expressed as who is in the boat crossing from one bank to the other):
+
+Move 1: 2 cannibals (from bank1 to bank2)
+
+boat: at bank2
+bank1: 3 missionaries, 1 cannibal
+bank2: 0 missionaries, 2 cannibals
+Move 2: 1 cannibal (from bank2 to bank1)
+
+boat: at bank1
+bank1: 3 missionaries, 2 cannibals
+bank2: 0 missionaries, 1 cannibal
+Move 3: 2 cannibals (from bank1 to bank2)
+
+boat: at bank2
+bank1: 3 missionaries, 0 cannibals
+bank2: 0 missionaries, 3 cannibals
+Move 4: 1 cannibal (from bank2 to bank1)
+
+boat: at bank1
+bank1: 3 missionaries, 1 cannibal
+bank2: 0 missionaries, 2 cannibals
+Move 5: 2 missionaries (from bank1 to bank2)
+
+boat: at bank2
+bank1: 1 missionary, 1 cannibal
+bank2: 2 missionaries, 2 cannibals
+Move 6: 1 missionary, 1 cannibal (from bank2 to bank1)
+
+boat: at bank1
+bank1: 2 missionaries, 2 cannibals
+bank2: 1 missionary, 1 cannibal
+Move 7: 2 missionaries (from bank1 to bank2)
+
+boat: at bank2
+bank1: 0 missionaries, 2 cannibals
+bank2: 3 missionaries, 1 cannibal
+Move 8: 1 cannibal (from bank2 to bank1)
+
+boat: at bank1
+bank1: 0 missionaries, 3 cannibals
+bank2: 3 missionaries, 0 cannibals
+Move 9: 2 cannibals (from bank1 to bank2)
+
+boat: at bank2
+bank1: 0 missionaries, 1 cannibal
+bank2: 3 missionaries, 2 cannibals
+Move 10: 1 cannibal (from bank2 to bank1)
+
+boat: at bank1
+bank1: 0 missionaries, 2 cannibals
+bank2: 3 missionaries, 1 cannibal
+Move 11: 2 cannibals (from bank1 to bank2)
+
+boat: at bank2
+bank1: 0 missionaries, 0 cannibals
+bank2: 3 missionaries, 3 cannibals
+Final State:
+
+boat: at bank2
+bank1: 0 missionaries, 0 cannibals
+bank2: 3 missionaries, 3 cannibals
+This sequence of moves ensures that at no point do the cannibals outnumber the missionaries on either bank or in the boat.

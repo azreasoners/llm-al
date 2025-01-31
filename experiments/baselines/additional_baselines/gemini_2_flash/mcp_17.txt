@@ -1,0 +1,52 @@
+There are four types of things: vessel, location, group, and integer.
+
+
+
+Problem Description:
+
+Four missionaries and four cannibals shall cross a river in a boat which carries at most two people at once. The boat cannot cross the river with nothing on it. On either side, the cannibals may never outnumber the missionaries or the missionaries will be eaten. Also, the cannibals may never outnumber the missionaries on the boat or the missionaries will be eaten. However, there is one strong missionary which can row fast. As long as the strong missionary rows, then the cannibals won't become so hungry that they will eat the missionaries. 
+
+
+
+boat is a vessel. bank1 and bank2 are locations. missionaries and cannibals are groups. 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, and 10 are integers.
+
+
+
+Four missionaries and four cannibals are at location bank1. The boat is at location bank1. Find a plan so that all missionaries and all cannibals are at location bank2. 
+
+
+
+Here's a solution to the Missionaries and Cannibals problem, considering the added rule about the strong missionary:
+
+Initial State:
+
+Bank 1: 4 Missionaries, 4 Cannibals, Boat
+Bank 2: 0 Missionaries, 0 Cannibals
+Moves (M = Missionary, C = Cannibal, S = Strong Missionary):
+
+(Bank 1 to Bank 2): 1 S, 1 C. (Bank 1: 3M, 3C. Bank 2: 1S, 1C, Boat)
+(Bank 2 to Bank 1): 1 S. (Bank 1: 4M, 3C, Boat. Bank 2: 0M, 1C)
+(Bank 1 to Bank 2): 2 C. (Bank 1: 4M, 1C. Bank 2: 0M, 3C, Boat)
+(Bank 2 to Bank 1): 1 C. (Bank 1: 4M, 2C, Boat. Bank 2: 0M, 2C)
+(Bank 1 to Bank 2): 2 M. (Bank 1: 2M, 2C. Bank 2: 2M, 2C, Boat)
+(Bank 2 to Bank 1): 1 M, 1 C. (Bank 1: 3M, 3C, Boat. Bank 2: 1M, 1C)
+(Bank 1 to Bank 2): 2 M. (Bank 1: 1M, 3C. Bank 2: 3M, 1C, Boat)
+(Bank 2 to Bank 1): 1 C. (Bank 1: 1M, 4C, Boat. Bank 2: 3M, 0C)
+(Bank 1 to Bank 2): 2 C. (Bank 1: 1M, 2C. Bank 2: 3M, 2C, Boat)
+(Bank 2 to Bank 1): 1 C. (Bank 1: 1M, 3C, Boat. Bank 2: 3M, 1C)
+(Bank 1 to Bank 2): 2 M. (Bank 1: -1M, 3C. Bank 2: 4M, 1C, Boat)
+(Bank 2 to Bank 1): 1 S. (Bank 1: 0M, 3C, Boat. Bank 2: 4M, 0C)
+(Bank 1 to Bank 2): 2 C. (Bank 1: 0M, 1C. Bank 2: 4M, 2C, Boat)
+(Bank 2 to Bank 1): 1 C. (Bank 1: 0M, 2C, Boat. Bank 2: 4M, 1C)
+(Bank 1 to Bank 2): 2 C. (Bank 1: 0M, 0C. Bank 2: 4M, 4C, Boat)
+Final State:
+
+Bank 1: 0 Missionaries, 0 Cannibals
+Bank 2: 4 Missionaries, 4 Cannibals, Boat
+Explanation of Safety:
+
+The crucial aspect is maintaining a safe ratio of missionaries to cannibals on both banks and in the boat during each crossing. The strong missionary rule ensures safety only while the strong missionary is rowing. Thus, we need to ensure no dangerous situation arises on either bank while the boat is away.
+
+This solution carefully manages the transfers to prevent any instance where cannibals outnumber missionaries on either bank. The presence of the strong missionary in the boat during crossings where cannibals could potentially outnumber missionaries ensures the safety of the missionaries during the boat trip itself.
+
+Important Note: The solution assumes that the strong missionary can row with anyone, including other missionaries or cannibals. This is implied by the problem statement saying the cannibals won't eat anyone while the strong missionary is rowing.

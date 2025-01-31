@@ -1,0 +1,82 @@
+There are five types of things: vessel, location, group, set, and integer.
+
+
+
+Problem Description:
+
+Consider the following. Three missionaries and three cannibals shall cross a river in a boat which carries at most two people at once. The boat cannot cross the river with nothing on it. On either side, the cannibals may never outnumber the missionaries or the missionaries will be eaten. Also, the cannibals may never outnumber the missionaries on the boat or the missionaries will be eaten. The boat's capacity is 2. The problem just described is doubled to have two separate occurrences at once, which don't interact with each other. That is, there are two sets, each with their respective set of three missionaries and three cannibals, a boat, and so on.
+
+
+
+Instance:
+
+boat1 is a vessel vessels. bank1 and bank2 are locations. missionaries and cannibals are groups. 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, and 10 are integers.
+
+
+
+For each set, three missionaries and three cannibals are at location bank1, the boat is at location bank1. Find a plan so that all missionaries and all cannibals are at location bank2 for both sets.
+
+
+
+Here's a plan to solve the doubled missionaries and cannibals problem. Because the two sets are independent, we can solve the standard missionaries and cannibals problem twice. Here's a solution for one set, which you can then apply to the second set simultaneously:
+
+Key:
+
+M = Missionary
+C = Cannibal
+B = Boat
+Bank 1 = Starting side
+Bank 2 = Destination side
+Steps (for one set):
+
+Bank 1: MMMCCC B
+Bank 2:
+Boat: 2C
+
+Bank 1: MMM C
+Bank 2: CC B
+Boat: 1C
+
+Bank 1: MMM CC
+Bank 2: C B
+Boat: 2M
+
+Bank 1: M CC
+Bank 2: MMM B
+Boat: 1M
+
+Bank 1: MM CC B
+Bank 2: MM
+Boat: 2C
+
+Bank 1: MM
+Bank 2: MM CC B
+Boat: 1C
+
+Bank 1: M C
+Bank 2: MMM C B
+Boat: 2M
+
+Bank 1: C
+Bank 2: MMM CC B
+Boat: 1C
+
+Bank 1: CC B
+Bank 2: MMM
+Boat: 2C
+
+Bank 1:
+Bank 2: MMMCCC B
+
+Explanation and Application to the Doubled Problem:
+
+Safety: At no point on either bank or in the boat do the cannibals outnumber the missionaries.
+Boat Capacity: The boat never carries more than two people.
+Simultaneous Solution: Because the two sets don't interact, you perform these exact steps simultaneously for both sets. So, in step 1, both boats carry two cannibals across. In step 2, both boats bring one cannibal back, and so on.
+Representing with your defined types:
+
+Vessel: boat1 (and boat2 for the second set, though the solution is the same)
+Locations: bank1, bank2
+Groups: missionaries, cannibals
+Integers: These represent the number of missionaries and cannibals. You start with 3 missionaries and 3 cannibals on bank1 for each set. The steps above implicitly show the changing integers at each location. For example, after step 1, bank1 has 3 missionaries and 1 cannibal (integers 3 and 1), while bank2 has 0 missionaries and 2 cannibals (integers 0 and 2).
+Therefore, by applying the above 10 steps to both sets concurrently, you successfully move all missionaries and cannibals from bank1 to bank2 for both sets without any missionaries being eaten.
