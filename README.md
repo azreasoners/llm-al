@@ -24,7 +24,7 @@ llm-al/
 ```
 
 ---
-❌ indicates failure to produce a solution, ✔️ indicates an optimal solution was found, Δ indicates human intervention was used to produce a correct result, (n) indicates the number of attempts ChatGPT-4+Code makes at writing a program, and the number of manual corrections required for LLM+AL. † indicates that the solution found was not optimal and * indicates that the LLM generated Python code though it was not instructed to. 
+❌ indicates failure to produce a solution, ✔️ indicates an optimal solution was found, Δ indicates human intervention was used to produce a correct result, (n) indicates the number of attempts ChatGPT-4+Code makes at writing a program, and the number of manual corrections required for LLM+AL. † indicates that the solution found was not optimal and * indicates that the LLM generated Python code though it was not instructed to. (n) indicates the number of attempts that ChatGPT-4+Code makes writing a program, and the number of manual corrections required for LLM+AL.
 For baseline experiments, the input to the LLM is a concatenation of the problem description, signature description, and query, in the domain folders in [envs](envs).
 
 
