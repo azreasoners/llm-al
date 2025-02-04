@@ -1,0 +1,36 @@
+
+To solve this problem, we need to find a sequence of boat trips that will safely transport all the missionaries and cannibals from bank1 to bank2 for both sets. Let's represent the missionaries as "M" and the cannibals as "C". We'll solve the problem for one set first, and then apply the same solution to the other set.
+
+Solution for one set:
+
+MM cross from bank1 to bank2 (bank1: MCCC, bank2: MM)
+M returns from bank2 to bank1 (bank1: MCCCM, bank2: M)
+CC cross from bank1 to bank2 (bank1: MCCM, bank2: MCC)
+C returns from bank2 to bank1 (bank1: MCCMC, bank2: MC)
+MM cross from bank1 to bank2 (bank1: CCMC, bank2: MMC)
+MC return from bank2 to bank1 (bank1: CCMCMC, bank2: MM)
+CC cross from bank1 to bank2 (bank1: MMMM, bank2: MMCC)
+M returns from bank2 to bank1 (bank1: MMMMM, bank2: MCC)
+MM cross from bank1 to bank2 (bank1: MMM, bank2: MMMCC)
+M returns from bank2 to bank1 (bank1: MMMM, bank2: MMCC)
+CC cross from bank1 to bank2 (bank1: MM, bank2: MMCCCC)
+C returns from bank2 to bank1 (bank1: MMC, bank2: MMCCC)
+MM cross from bank1 to bank2 (bank1: C, bank2: MMMMCCC)
+M returns from bank2 to bank1 (bank1: CM, bank2: MMMMCC)
+CC cross from bank1 to bank2 (bank1: , bank2: MMMMCCCC)
+Now, we can apply the same solution to the other set. The total number of boat trips required is 30 (15 for each set).
+
+In PDDL:
+
+
+Copy code
+(:action cross
+  :parameters (?m1 ?m2 - missionary ?c1 ?c2 - cannibal ?b - boat ?l1 ?l2 - location)
+  :precondition (and (at ?m1 ?l1) (at ?m2 ?l1) (at ?b ?l1) (not (= ?m1 ?m2)))
+  :effect (and (not (at ?m1 ?l1)) (not (at ?m2 ?l1)) (at ?m1 ?l2) (at ?m2 ?l2) (not (at ?b ?l1)) (at ?b ?l2)))
+
+(:action return
+  :parameters (?m - missionary ?c - cannibal ?b - boat ?l1 ?l2 - location)
+  :precondition (and (at ?m ?l2) (at ?c ?l2) (at ?b ?l2))
+  :effect (and (not (at ?m ?l2)) (not (at ?c ?l2)) (at ?m ?l1) (at ?c ?l1) (not (at ?b ?l2)) (at ?b ?l1)))
+This solution ensures that the cannibals never outnumber the missionaries on either side of the river or on the boat, and that all missionaries and cannibals are safely transported to bank2 for both sets.

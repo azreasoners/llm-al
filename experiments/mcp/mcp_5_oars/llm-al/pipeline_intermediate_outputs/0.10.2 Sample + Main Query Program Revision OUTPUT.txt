@@ -1,0 +1,144 @@
+% PROGRAM CHANGED? [CHANGED]
+% BC+ signature
+:- sorts
+    vessel;
+    location;
+    group;
+    integer.
+
+
+:- objects
+    boat :: vessel;
+    bank1, bank2 :: location;
+    missionaries, cannibals, oars :: group;
+    0..10 :: integer.
+
+
+:- variables
+    V, V1, V2, V3, V4 :: vessel;
+    L, L1, L2, L3, L4 :: location;
+    G, G1, G2, G3, G4 :: group;
+    N, N1, N2, N3, N4, N0 :: integer.
+
+
+:- constants
+    cross(vessel) :: exogenousAction;
+    loc(vessel) :: inertialFluent(location);
+    capacity(vessel) :: inertialFluent(integer);
+    numMissionariesAt(location) :: inertialFluent(integer);
+    numCannibalsAt(location) :: inertialFluent(integer);
+    numOarsAt(location) :: inertialFluent(integer);
+    numMissionariesOn(vessel) :: attribute(integer) of cross(vessel);
+    numCannibalsOn(vessel) :: attribute(integer) of cross(vessel);
+    numOarsOn(vessel) :: attribute(integer) of cross(vessel).
+
+
+% Generated constraints
+% 1. The capacity of the boat is 2.
+capacity(boat) = 2.
+
+% 2. The boat cannot cross the river unless there is at least one person on the boat.
+nonexecutable cross(boat) if N1 + N2 < 1 & N1 = numMissionariesOn(boat) & N2 = numCannibalsOn(boat).
+
+% 3. The boat cannot carry more people than its capacity allows.
+nonexecutable cross(boat) if N1 + N2 > N3 & N1 = numMissionariesOn(boat) & N2 = numCannibalsOn(boat) & N3 = capacity(boat).
+
+% 4. The number of oars on the boat must be at least one.
+nonexecutable cross(boat) if N1 < 1 & N1 = numOarsOn(boat).
+
+% 5. For the boat to cross with two people, the boat must have two oars on it.
+nonexecutable cross(boat) if N1 + N2 = 2 & N3 < 2 & N1 = numMissionariesOn(boat) & N2 = numCannibalsOn(boat) & N3 = numOarsOn(boat).
+
+% 6. The number of oars on the boat must be equal to the number of people on the boat during crossing.
+nonexecutable cross(boat) if N1 = numMissionariesOn(boat) & N2 = numCannibalsOn(boat) & N3 = numOarsOn(boat) & N1 + N2 \= N3.
+
+% 7. The number of oars on the boat cannot exceed the number of oars at the location of the boat.
+nonexecutable cross(boat) if N1 = numOarsOn(boat) & N2 = numOarsAt(L) & L = loc(boat) & N1 > N2.
+
+% 8. It is not allowed for the number of cannibals on the boat to exceed the number of missionaries on the boat if there are missionaries on the boat.
+nonexecutable cross(boat) if N1 > 0 & N2 > N1 & N1 = numMissionariesOn(boat) & N2 = numCannibalsOn(boat).
+
+% 9. It is not allowed for the number of cannibals at any location to exceed the number of missionaries at that location if there are missionaries at that location.
+impossible numCannibalsAt(L) > numMissionariesAt(L) & numMissionariesAt(L) > 0.
+
+% 10. Crossing the boat causes the location of the boat to change to the other bank.
+cross(boat) causes loc(boat) = bank2 if loc(boat) = bank1.
+cross(boat) causes loc(boat) = bank1 if loc(boat) = bank2.
+
+% 11. Crossing the boat decreases the number of missionaries at the original location by the number of missionaries on the boat.
+cross(boat) causes numMissionariesAt(L) = N0 - N1 if N0 = numMissionariesAt(L) & N1 = numMissionariesOn(boat) & L = loc(boat).
+
+% 12. Crossing the boat increases the number of missionaries at the other bank by the number of missionaries on the boat.
+% From bank1 to bank2
+cross(boat) causes numMissionariesAt(bank2) = N2 + N1 if loc(boat) = bank1 & N1 = numMissionariesOn(boat) & N2 = numMissionariesAt(bank2).
+% From bank2 to bank1
+cross(boat) causes numMissionariesAt(bank1) = N2 + N1 if loc(boat) = bank2 & N1 = numMissionariesOn(boat) & N2 = numMissionariesAt(bank1).
+
+% 13. Crossing the boat decreases the number of cannibals at the original location by the number of cannibals on the boat.
+cross(boat) causes numCannibalsAt(L) = N0 - N1 if N0 = numCannibalsAt(L) & N1 = numCannibalsOn(boat) & L = loc(boat).
+
+% 14. Crossing the boat increases the number of cannibals at the other bank by the number of cannibals on the boat.
+% From bank1 to bank2
+cross(boat) causes numCannibalsAt(bank2) = N2 + N1 if loc(boat) = bank1 & N1 = numCannibalsOn(boat) & N2 = numCannibalsAt(bank2).
+% From bank2 to bank1
+cross(boat) causes numCannibalsAt(bank1) = N2 + N1 if loc(boat) = bank2 & N1 = numCannibalsOn(boat) & N2 = numCannibalsAt(bank1).
+
+% 15. Crossing the boat decreases the number of oars at the original location by the number of oars on the boat.
+cross(boat) causes numOarsAt(L) = N0 - N1 if N0 = numOarsAt(L) & N1 = numOarsOn(boat) & L = loc(boat).
+
+% 16. Crossing the boat increases the number of oars at the other bank by the number of oars on the boat.
+% From bank1 to bank2
+cross(boat) causes numOarsAt(bank2) = N2 + N1 if loc(boat) = bank1 & N1 = numOarsOn(boat) & N2 = numOarsAt(bank2).
+% From bank2 to bank1
+cross(boat) causes numOarsAt(bank1) = N2 + N1 if loc(boat) = bank2 & N1 = numOarsOn(boat) & N2 = numOarsAt(bank1).
+
+% 17. It is impossible for the number of missionaries at a location to be negative.
+impossible numMissionariesAt(L) < 0.
+
+% 18. It is impossible for the number of cannibals at a location to be negative.
+impossible numCannibalsAt(L) < 0.
+
+% 19. It is impossible for the number of oars at a location to be negative.
+impossible numOarsAt(L) < 0.
+
+% 20. The boat cannot have more oars than are available at its current location.
+nonexecutable cross(boat) if N1 = numOarsOn(boat) & N2 = numOarsAt(L) & L = loc(boat) & N1 > N2.
+
+
+% MAIN QUERY CHANGED? [UNCHANGED]
+% Original natural language query: Three missionaries and three cannibals are at location bank1. There is an oar on bank1 and an oar on bank2. The boat is at location bank1. Find a plan so that all missionaries and all cannibals are at location bank2. 
+:- query
+    0: numMissionariesAt(bank1) = 3 & numCannibalsAt(bank1) = 3 & numMissionariesAt(bank2) = 0 & numCannibalsAt(bank2) = 0 & numOarsAt(bank1) = 1 & numOarsAt(bank2) = 1 & loc(boat) = bank1;
+    maxstep: numMissionariesAt(bank2) = 3 & numCannibalsAt(bank2) = 3.
+
+% SAMPLE QUERIES CHANGED? [UNCHANGED]
+% Query 1: Attempting to cross the boat with no one on board. Should be unsatisfiable.
+:- query
+    0: numMissionariesAt(bank1) = 3 & numCannibalsAt(bank1) = 3 & numOarsAt(bank1) = 1 & numOarsAt(bank2) = 1 & loc(boat) = bank1;
+    1: cross(boat);
+    1: numMissionariesOn(boat) = 0 & numCannibalsOn(boat) = 0 & numOarsOn(boat) = 1.
+
+% Query 2: Attempting to cross the boat with three people on board. Should be unsatisfiable.
+:- query
+    0: numMissionariesAt(bank1) = 3 & numCannibalsAt(bank1) = 3 & numOarsAt(bank1) = 2 & numOarsAt(bank2) = 0 & loc(boat) = bank1;
+    1: cross(boat);
+    1: numMissionariesOn(boat) = 2 & numCannibalsOn(boat) = 1 & numOarsOn(boat) = 2.
+
+% Query 3: Attempting to cross the boat with one person but zero oars on the boat. Should be unsatisfiable.
+:- query
+    0: numMissionariesAt(bank1) = 3 & numCannibalsAt(bank1) = 3 & numOarsAt(bank1) = 1 & numOarsAt(bank2) = 1 & loc(boat) = bank1;
+    1: cross(boat);
+    1: numMissionariesOn(boat) = 1 & numCannibalsOn(boat) = 0 & numOarsOn(boat) = 0.
+
+% Query 4: Attempting to cross the boat with two people but only one oar on the boat. Should be unsatisfiable.
+:- query
+    0: numMissionariesAt(bank1) = 3 & numCannibalsAt(bank1) = 3 & numOarsAt(bank1) = 2 & numOarsAt(bank2) = 0 & loc(boat) = bank1;
+    1: cross(boat);
+    1: numMissionariesOn(boat) = 1 & numCannibalsOn(boat) = 1 & numOarsOn(boat) = 1.
+
+% Query 5: Successfully crossing the boat with one missionary and one oar on board from bank1 to bank2. Should be satisfiable.
+:- query
+    0: numMissionariesAt(bank1) = 3 & numCannibalsAt(bank1) = 3 & numOarsAt(bank1) = 1 & numOarsAt(bank2) = 1 & loc(boat) = bank1;
+    1: cross(boat);
+    1: numMissionariesOn(boat) = 1 & numCannibalsOn(boat) = 0 & numOarsOn(boat) = 1;
+    maxstep: numMissionariesAt(bank2) = 1 & numCannibalsAt(bank2) = 0 & numOarsAt(bank2) = 2 & loc(boat) = bank2.

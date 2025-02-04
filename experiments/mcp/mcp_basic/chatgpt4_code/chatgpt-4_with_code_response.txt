@@ -1,0 +1,106 @@
+
+ChatGPT
+
+Analyzed
+
+python
+Always show details
+
+Copy code
+def is_safe(m, c):
+    # Safe if there are no missionaries or missionaries are not outnumbered by cannibals
+    return m == 0 or m >= c
+
+def solve_missionaries_cannibals():
+    from collections import deque
+    
+    # Initial state: 3 missionaries and 3 cannibals on the left bank, 0 on the right bank, boat on left bank
+    initial_state = (3, 3, 0, 0, 0)  # (missionaries_left, cannibals_left, missionaries_right, cannibals_right, boat_position)
+    # End state: all missionaries and cannibals are on the right bank
+    goal_state = (0, 0, 3, 3, 1)
+    
+    queue = deque([initial_state])
+    visited = set()
+    visited.add(initial_state)
+    
+    # Map to trace back the solution
+    parent_map = {initial_state: None}
+    
+    while queue:
+        current = queue.popleft()
+        m_left, c_left, m_right, c_right, boat = current
+        
+        if current == goal_state:
+            # Reconstruct the path to reach the goal state
+            path = []
+            while current:
+                path.append(current)
+                current = parent_map[current]
+            return path[::-1]
+        
+        # Generate all possible moves
+        # Boat moves can be 1 or 2 people; can be MM, CC, MC
+        next_states = []
+        if boat == 0:  # boat is on the left bank
+            if m_left >= 2:
+                next_states.append((m_left - 2, c_left, m_right + 2, c_right, 1))
+            if m_left >= 1:
+                next_states.append((m_left - 1, c_left, m_right + 1, c_right, 1))
+            if c_left >= 2:
+                next_states.append((m_left, c_left - 2, m_right, c_right + 2, 1))
+            if c_left >= 1:
+                next_states.append((m_left, c_left - 1, m_right, c_right + 1, 1))
+            if m_left >= 1 and c_left >= 1:
+                next_states.append((m_left - 1, c_left - 1, m_right + 1, c_right + 1, 1))
+        else:  # boat is on the right bank
+            if m_right >= 2:
+                next_states.append((m_left + 2, c_left, m_right - 2, c_right, 0))
+            if m_right >= 1:
+                next_states.append((m_left + 1, c_left, m_right - 1, c_right, 0))
+            if c_right >= 2:
+                next_states.append((m_left, c_left + 2, m_right, c_right - 2, 0))
+            if c_right >= 1:
+                next_states.append((m_left, c_left + 1, m_right, c_right - 1, 0))
+            if m_right >= 1 and c_right >= 1:
+                next_states.append((m_left + 1, c_left + 1, m_right - 1, c_right - 1, 0))
+        
+        # Check and add safe states
+        for state in next_states:
+            m_left, c_left, m_right, c_right, boat = state
+            if state not in visited and is_safe(m_left, c_left) and is_safe(m_right, c_right):
+                queue.append(state)
+                visited.add(state)
+                parent_map[state] = current
+
+    return None
+
+# Solve the problem
+solve_missionaries_cannibals()
+Result
+[(3, 3, 0, 0, 0),
+ (3, 1, 0, 2, 1),
+ (3, 2, 0, 1, 0),
+ (3, 0, 0, 3, 1),
+ (3, 1, 0, 2, 0),
+ (1, 1, 2, 2, 1),
+ (2, 2, 1, 1, 0),
+ (0, 2, 3, 1, 1),
+ (0, 3, 3, 0, 0),
+ (0, 1, 3, 2, 1),
+ (1, 1, 2, 2, 0),
+ (0, 0, 3, 3, 1)]
+Here is a solution to the problem of transferring three missionaries and three cannibals across a river with a boat that holds at most two people, ensuring at no point do cannibals outnumber the missionaries on either side of the river or in the boat:
+
+(3, 3, 0, 0, 0) - Begin with all three missionaries and cannibals on the left bank.
+(3, 1, 0, 2, 1) - Two cannibals cross to the right bank.
+(3, 2, 0, 1, 0) - One cannibal returns to the left bank.
+(3, 0, 0, 3, 1) - Two cannibals cross to the right bank again.
+(3, 1, 0, 2, 0) - One cannibal returns to the left bank.
+(1, 1, 2, 2, 1) - One missionary and one cannibal cross to the right bank.
+(2, 2, 1, 1, 0) - One missionary and one cannibal return to the left bank.
+(0, 2, 3, 1, 1) - Two missionaries cross to the right bank.
+(0, 3, 3, 0, 0) - One cannibal returns to the left bank.
+(0, 1, 3, 2, 1) - Two cannibals cross to the right bank.
+(1, 1, 2, 2, 0) - One missionary and one cannibal return to the left bank.
+(0, 0, 3, 3, 1) - One missionary and one cannibal cross to the right bank, completing the transfer.
+In each state, the format is (missionaries_left, cannibals_left, missionaries_right, cannibals_right, boat_position) where 0 indicates the boat is on the left bank and 1 indicates it's on the right bank. ​

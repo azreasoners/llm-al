@@ -1,0 +1,60 @@
+from collections import deque
+
+def is_valid(state):
+    m1, c1, m2, c2, _ = state
+    # Valid if cannibals never outnumber missionaries on both banks
+    if (m1 >= c1 or m1 == 0) and (m2 >= c2 or m2 == 0):
+        return True
+    return False
+
+def get_successors(state):
+    m1, c1, m2, c2, boat = state
+    transitions = []
+    # Boat movement options: (missionaries, cannibals)
+    options = [(1, 0), (0, 1), (1, 1), (2, 0), (0, 2)]
+    if boat == 1:  # boat at bank1
+        for m, c in options:
+            if m <= m1 and c <= c1:
+                new_state = (m1-m, c1-c, m2+m, c2+c, 2)
+                if is_valid(new_state):
+                    transitions.append(new_state)
+    else:  # boat at bank2
+        for m, c in options:
+            if m <= m2 and c <= c2:
+                new_state = (m1+m, c1+c, m2-m, c2-c, 1)
+                if is_valid(new_state):
+                    transitions.append(new_state)
+    return transitions
+
+def bfs(start, goal):
+    queue = deque([start])
+    visited = set()
+    visited.add(start)
+    parent_map = {start: None}
+    
+    while queue:
+        current = queue.popleft()
+        if current == goal:
+            return reconstruct_path(parent_map, goal)
+        for successor in get_successors(current):
+            if successor not in visited:
+                visited.add(successor)
+                parent_map[successor] = current
+                queue.append(successor)
+    return None
+
+def reconstruct_path(parent_map, state):
+    path = []
+    while state:
+        path.append(state)
+        state = parent_map[state]
+    path.reverse()
+    return path
+
+# Initial and goal states
+initial_state = (3, 3, 0, 0, 1)  # (M1, C1, M2, C2, boat location)
+goal_state = (0, 0, 3, 3, 2)
+
+# Solve the problem
+solution_path = bfs(initial_state, goal_state)
+solution_path

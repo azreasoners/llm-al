@@ -1,0 +1,3 @@
+Move disk from b to a
+Move disk from b to c
+Move disk from a to c

@@ -1,0 +1,38 @@
+from collections import deque
+
+def safe(m, c):
+    # Check if missionaries are not outnumbered by cannibals on both sides
+    return (m == 0 or m >= c) and (3 - m == 0 or 3 - m >= 3 - c)
+
+def bfs(initial_state):
+    queue = deque([(initial_state, [])])
+    visited = set([initial_state])
+
+    while queue:
+        (m, c, b), path = queue.popleft()
+
+        # Goal state: all missionaries and cannibals are safely on bank2
+        if (m, c, b) == (0, 0, 1):
+            return path
+
+        # Possible moves based on boat capacity and rules
+        moves = [(1, 0), (0, 1), (1, 1), (2, 0), (0, 2)]
+        for move in moves:
+            if b == 1:  # Boat going from bank1 to bank2
+                new_m, new_c = m - move[0], c - move[1]
+                new_b = 0
+            else:  # Boat returning from bank2 to bank1
+                new_m, new_c = m + move[0], c + move[1]
+                new_b = 1
+
+            new_state = (new_m, new_c, new_b)
+            # Ensure the new state is within bounds, not visited, and safe
+            if 0 <= new_m <= 3 and 0 <= new_c <= 3 and new_state not in visited and safe(new_m, new_c):
+                visited.add(new_state)
+                queue.append((new_state, path + [move]))
+
+    return None
+
+initial_state = (3, 3, 1)  # Initial state: 3 missionaries, 3 cannibals, boat on bank1
+solution = bfs(initial_state)
+solution

@@ -1,0 +1,27 @@
+
+Instance:
+boat is a vessel. bank1 and bank2 are locations. missionaries and cannibals are groups. 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, and 10 are integers.
+Three missionaries and three cannibals are at location bank1. The boat is at location bank1. Find a plan so that all missionaries and all cannibals are at location bank2.Here is a plan to get all the missionaries and cannibals safely across the river from bank1 to bank2:
+
+Jesus (1 missionary) walks across the river to bank2.
+(bank1: 2 missionaries, 3 cannibals; boat at bank1; bank2: 1 missionary)
+2 cannibals take the boat from bank1 to bank2.
+(bank1: 2 missionaries, 1 cannibal; boat at bank2; bank2: 1 missionary, 2 cannibals)
+1 cannibal takes the boat back from bank2 to bank1.
+(bank1: 2 missionaries, 2 cannibals; boat at bank1; bank2: 1 missionary, 1 cannibal)
+2 missionaries take the boat from bank1 to bank2.
+(bank1: 2 cannibals; boat at bank2; bank2: 3 missionaries, 1 cannibal)
+1 missionary and 1 cannibal take the boat back from bank2 to bank1.
+(bank1: 1 missionary, 3 cannibals; boat at bank1; bank2: 2 missionaries)
+2 cannibals take the boat from bank1 to bank2.
+(bank1: 1 missionary, 1 cannibal; boat at bank2; bank2: 2 missionaries, 2 cannibals)
+1 missionary takes the boat back from bank2 to bank1.
+(bank1: 2 missionaries, 1 cannibal; boat at bank1; bank2: 1 missionary, 2 cannibals)
+2 missionaries take the boat from bank1 to bank2.
+(bank1: 1 cannibal; boat at bank2; bank2: 3 missionaries, 2 cannibals)
+1 cannibal takes the boat back from bank2 to bank1.
+(bank1: 2 cannibals; boat at bank1; bank2: 3 missionaries, 1 cannibal)
+2 cannibals take the boat from bank1 to bank2.
+(bank1: none; boat at bank2; bank2: 3 missionaries, 3 cannibals)
+
+All missionaries and cannibals are now safely at bank2. The key steps are having Jesus walk across first to avoid the cannibals outnumbering the missionaries on bank2, and carefully shuttling people back and forth to maintain safe ratios on both banks and the boat throughout.

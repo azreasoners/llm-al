@@ -1,0 +1,54 @@
+def is_valid(state):
+    # State is represented as (missionaries on left, cannibals on left, boat position)
+    # boat position is 0 for left bank, 1 for right bank
+    m_left, c_left, boat = state
+    m_right, c_right = 3 - m_left, 3 - c_left  # total missionaries and cannibals are 3 each
+    
+    # Check if cannibals outnumber missionaries on either side
+    if (m_left < c_left and m_left > 0) or (m_right < c_right and m_right > 0):
+        return False
+    return True
+
+def generate_possible_moves(state):
+    m_left, c_left, boat = state
+    possible_moves = []
+    
+    # Possible movements: (missionaries, cannibals)
+    for m in range(3):
+        for c in range(3):
+            if 1 <= m + c <= 2:  # Ensure boat has 1 or 2 people
+                if boat == 0:  # Boat on the left bank
+                    if m <= m_left and c <= c_left:
+                        new_state = (m_left - m, c_left - c, 1)
+                        possible_moves.append((new_state, (m, c)))
+                else:  # Boat on the right bank
+                    if m <= (3 - m_left) and c <= (3 - c_left):
+                        new_state = (m_left + m, c_left + c, 0)
+                        possible_moves.append((new_state, (m, c)))
+    
+    return possible_moves
+
+def solve_missionaries_and_cannibals():
+    initial_state = (3, 3, 0)  # 3 missionaries, 3 cannibals, boat on the left bank
+    goal_state = (0, 0, 1)  # All should be on the right bank
+    
+    from collections import deque
+    queue = deque([initial_state])
+    visited = set([initial_state])
+    paths = {initial_state: []}
+    
+    while queue:
+        current_state = queue.popleft()
+        
+        if current_state == goal_state:
+            return paths[current_state]
+        
+        for new_state, move in generate_possible_moves(current_state):
+            if new_state not in visited and is_valid(new_state):
+                visited.add(new_state)
+                queue.append(new_state)
+                paths[new_state] = paths[current_state] + [move]
+                
+    return None  # If no solution is found
+
+solve_missionaries_and_cannibals()

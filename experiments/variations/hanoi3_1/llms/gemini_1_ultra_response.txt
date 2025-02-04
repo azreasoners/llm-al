@@ -1,0 +1,28 @@
+
+Here's how you can solve the problem of stacking all disks on peg 'c' and the steps involved:
+
+Understanding the Rules:
+
+One Move at a Time: You can only move one disk at a time.
+Top Disk Only: You can only move the disk that is at the top of a stack (peg or disk).
+Size Restriction: You cannot place a larger (heavier) disk on top of a smaller one.
+Initial Setup:
+
+Peg a: Empty
+Peg b: d1 (bottom), d2 (top)
+Peg c: d3
+Goal:
+
+Peg a: Empty
+Peg b: Empty
+Peg c: d1 (bottom), d2, d3 (top)
+Plan:
+
+Move d2 from b to a: Now you can access d1.
+Move d1 from b to c: Now you can build the final tower.
+Move d2 from a to c: Smaller disk d2 is on top of d1.
+Move d3 from c to b: This temporarily frees peg c.
+Move d1 from c to a: Move d1 out of the way.
+Move d3 from b to c: Place the largest disk at its final position.
+Move d1 from a to c: Complete the tower on peg c.
+Let me know if you'd like a visual representation of these steps!

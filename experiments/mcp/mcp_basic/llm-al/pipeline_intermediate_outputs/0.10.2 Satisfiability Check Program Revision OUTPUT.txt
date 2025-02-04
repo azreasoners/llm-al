@@ -1,0 +1,65 @@
+% BC+ signature
+
+:- sorts
+    vessel;
+    location;
+    group;
+    integer.
+
+
+:- objects
+    boat :: vessel;
+    bank1, bank2 :: location;
+    missionaries, cannibals :: group;
+    0..3 :: integer.
+
+
+:- variables
+    N, N1, N2, NOnBank :: integer;
+    G :: group;
+    Loc, LocDep, LocArr :: location.
+
+
+:- constants
+    cross(vessel) :: exogenousAction;
+    numCrossing(vessel, group) :: attribute(integer) of cross(vessel);
+    loc(vessel) :: inertialFluent(location);
+    numOnBank(location, group) :: additiveFluent(integer).
+
+% Updated constraints
+
+% Rule 1: Crossing the river in the boat causes the location of the boat to change to the other bank.
+cross(boat) causes loc(boat) = LocArr if loc(boat) = LocDep & LocDep \= LocArr.
+
+% Rule 2: Crossing the river in the boat causes the number of people of each group on the departure bank to decrease by the number of people of that group crossing in the boat.
+cross(boat) decrements numOnBank(LocDep, G) by N if numCrossing(boat, G) = N & loc(boat) = LocDep.
+
+% Rule 3: Crossing the river in the boat causes the number of people of each group on the arrival bank to increase by the number of people of that group crossing in the boat.
+cross(boat) increments numOnBank(LocArr, G) by N if numCrossing(boat, G) = N & loc(boat) = LocDep & LocArr \= LocDep.
+
+% Rule 4: The boat cannot cross the river with zero people on it.
+nonexecutable cross(boat) if N1 + N2 = 0 & N1 = numCrossing(boat, missionaries) & N2 = numCrossing(boat, cannibals).
+
+% Rule 5: The boat cannot carry more than two people at once.
+nonexecutable cross(boat) if N1 + N2 > 2 & N1 = numCrossing(boat, missionaries) & N2 = numCrossing(boat, cannibals).
+
+% Rule 6: The number of people of each group crossing in the boat cannot exceed the number of people of that group on the bank where the boat is located.
+nonexecutable cross(boat) if N > NOnBank & N = numCrossing(boat, G) & NOnBank = numOnBank(LocDep, G) & loc(boat) = LocDep.
+
+% Rule 7: The number of people of each group crossing in the boat cannot be negative.
+nonexecutable cross(boat) if N < 0 & N = numCrossing(boat, G).
+
+% Rule 8: Cannibals cannot outnumber missionaries on any bank unless there are no missionaries on that bank.
+always numOnBank(Loc, cannibals) <= numOnBank(Loc, missionaries) | numOnBank(Loc, missionaries) = 0.
+
+% Rule 9: During crossing, cannibals cannot outnumber missionaries on the boat unless there are no missionaries on the boat.
+nonexecutable cross(boat) if N2 > N1 & N1 > 0 & N1 = numCrossing(boat, missionaries) & N2 = numCrossing(boat, cannibals).
+
+% Rule 10: The number of people of each group on either bank cannot be negative or exceed three.
+always numOnBank(Loc, G) >= 0.
+always numOnBank(Loc, G) <= 3.
+
+% Main query
+:- query
+    0: numOnBank(bank1, missionaries) = 3 & numOnBank(bank1, cannibals) = 3 & numOnBank(bank2, missionaries) = 0 & numOnBank(bank2, cannibals) = 0 & loc(boat) = bank1;
+    maxstep: numOnBank(bank2, missionaries) = 3 & numOnBank(bank2, cannibals) = 3 & numOnBank(bank1, missionaries) = 0 & numOnBank(bank1, cannibals) = 0.

@@ -1,0 +1,55 @@
+```
+Actions:
+cross(vessel)
+   - Cross a vessel.
+
+exchangeHat(member, member)
+   - A member exchanges a hat with another member.
+
+Constants:
+location(member)
+   - The location of a member (missionary or cannibal).
+
+location(vessel)
+   - The location of a vessel.
+
+hasHat(member)
+   - The hat that a member has.
+
+onboard(vessel, member)
+   - A member is onboard a vessel during a crossing.
+
+BC+ Signature:
+
+:- sorts
+    vessel;
+    location;
+    member >> missionary, cannibal;
+    hat;
+    integer.
+
+:- objects
+    boat :: vessel;
+    bank1, bank2 :: location;
+    m1, m2, m3 :: missionary;
+    c1, c2, c3 :: cannibal;
+    hat1, hat2, hat3, hat4, hat5, hat6 :: hat;
+    0..10 :: integer.
+
+:- variables
+    V, V1, V2 :: vessel;
+    Loc, Loc1, Loc2 :: location;
+    M, M1, M2, M3, M4, M5 :: member;
+    Ms, Ms1, Ms2 :: missionary;
+    Cs, Cs1, Cs2 :: cannibal;
+    H, H1, H2, H3, H4 :: hat;
+    N, N1, N2, N3, N4 :: integer.
+
+:- constants
+    location(member) :: inertialFluent(location);
+    location(vessel) :: inertialFluent(location);
+    hasHat(member) :: inertialFluent(hat);
+    cross(vessel) :: exogenousAction;
+    onboard(vessel, member) :: attribute(boolean) of cross(vessel);
+    exchangeHat(member, member) :: exogenousAction.
+```

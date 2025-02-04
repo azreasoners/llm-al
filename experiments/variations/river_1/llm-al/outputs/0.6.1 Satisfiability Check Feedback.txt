@@ -1,0 +1,69 @@
+% Query 0: Check satisfiability of program signature and rules (ignores other queries). (satisfiable)
+:- query = sat.
+
+Cplus2ASP Output:
+
+ERROR: temp.bc:16:5]: Encountered undeclared identifier "T/0".
+ERROR: temp.bc:16:10]: Encountered undeclared identifier "thing/0".
+ERROR: temp.bc:17:5]: Encountered undeclared identifier "T1/0".
+ERROR: temp.bc:17:9]: Encountered undeclared identifier "T2/0".
+ERROR: temp.bc:17:13]: Encountered undeclared identifier "T3/0".
+ERROR: temp.bc:17:17]: Encountered undeclared identifier "T4/0".
+ERROR: temp.bc:17:23]: Encountered undeclared identifier "item/0".
+ERROR: temp.bc:18:5]: Encountered undeclared identifier "S/0".
+ERROR: temp.bc:18:8]: Encountered undeclared identifier "S1/0".
+ERROR: temp.bc:18:12]: Encountered undeclared identifier "S2/0".
+ERROR: temp.bc:18:16]: Encountered undeclared identifier "S3/0".
+ERROR: temp.bc:18:20]: Encountered undeclared identifier "S4/0".
+ERROR: temp.bc:18:26]: Encountered undeclared identifier "side/0".
+ERROR: temp.bc:19:5]: Encountered undeclared identifier "Bool/0".
+ERROR: temp.bc:19:11]: Encountered undeclared identifier "Bool1/0".
+ERROR: temp.bc:19:18]: Encountered undeclared identifier "Bool2/0".
+ERROR: temp.bc:19:25]: Encountered undeclared identifier "Bool3/0".
+ERROR: temp.bc:19:32]: Encountered undeclared identifier "Bool4/0".
+ERROR: temp.bc:19:41]: Encountered undeclared identifier "boolean/0".
+ERROR: temp.bc:33:11]: Encountered undeclared identifier "S/0".
+ERROR: temp.bc:33:32]: Encountered undeclared identifier "S/0".
+ERROR: temp.bc:36:11]: Encountered undeclared identifier "S/0".
+ERROR: temp.bc:36:25]: Encountered undeclared identifier "T1/0".
+ERROR: temp.bc:36:30]: Encountered undeclared identifier "S/0".
+ERROR: temp.bc:36:43]: Encountered undeclared identifier "T1/0".
+ERROR: temp.bc:39:25]: Encountered undeclared identifier "S/0".
+ERROR: temp.bc:39:42]: Encountered undeclared identifier "S/0".
+ERROR: temp.bc:42:12]: Encountered undeclared identifier "T1/0".
+ERROR: temp.bc:42:30]: Encountered undeclared identifier "T1/0".
+ERROR: temp.bc:45:12]: Encountered undeclared identifier "T1/0".
+ERROR: temp.bc:45:27]: Encountered undeclared identifier "T1/0".
+ERROR: temp.bc:48:26]: Encountered undeclared identifier "T1/0".
+ERROR: temp.bc:48:40]: Encountered undeclared identifier "T1/0".
+ERROR: temp.bc:51:26]: Encountered undeclared identifier "T1/0".
+ERROR: temp.bc:51:37]: Encountered undeclared identifier "T1/0".
+ERROR: temp.bc:54:26]: Encountered undeclared identifier "T1/0".
+ERROR: temp.bc:54:40]: Encountered undeclared identifier "T2/0".
+ERROR: temp.bc:54:45]: Encountered undeclared identifier "T1/0".
+ERROR: temp.bc:54:51]: Encountered undeclared identifier "T2/0".
+ERROR: temp.bc:57:14]: Encountered undeclared identifier "T1/0".
+ERROR: temp.bc:57:33]: Encountered undeclared identifier "T1/0".
+ERROR: temp.bc:60:14]: Encountered undeclared identifier "T1/0".
+ERROR: temp.bc:60:29]: Encountered undeclared identifier "T1/0".
+ERROR: temp.bc:63:28]: Encountered undeclared identifier "T1/0".
+ERROR: temp.bc:63:43]: Encountered undeclared identifier "T1/0".
+ERROR: temp.bc:66:20]: Encountered undeclared identifier "T1/0".
+ERROR: temp.bc:66:33]: Encountered undeclared identifier "T2/0".
+ERROR: temp.bc:66:38]: Encountered undeclared identifier "T1/0".
+ERROR: temp.bc:66:44]: Encountered undeclared identifier "T2/0".
+ERROR: temp.bc:69:25]: Encountered undeclared identifier "S/0".
+ERROR: temp.bc:69:42]: Encountered undeclared identifier "S/0".
+ERROR: temp.bc:69:59]: Encountered undeclared identifier "S/0".
+ERROR: temp.bc:72:25]: Encountered undeclared identifier "S/0".
+ERROR: temp.bc:72:43]: Encountered undeclared identifier "S/0".
+ERROR: temp.bc:72:60]: Encountered undeclared identifier "S/0".
+ERROR: temp.bc:75:6]: Encountered undeclared identifier "T1/0".
+ERROR: temp.bc:75:32]: Encountered undeclared identifier "T1/0".
+ERROR: temp.bc:78:25]: Encountered undeclared identifier "S/0".
+ERROR: temp.bc:78:40]: Encountered undeclared identifier "T1/0".
+ERROR: temp.bc:79:25]: Encountered undeclared identifier "S/0".
+ERROR: temp.bc:79:42]: Encountered undeclared identifier "T1/0".
+
+Since this fails, check the error message(s).
+

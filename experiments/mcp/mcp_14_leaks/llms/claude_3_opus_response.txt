@@ -1,0 +1,57 @@
+
+
+Here's a plan to safely transport all three missionaries and three cannibals from bank1 to bank2 while adhering to the problem constraints:
+
+Two cannibals take the boat from bank1 to bank2.
+Boat at bank2: 2 cannibals
+Bank1: 3 missionaries, 1 cannibal
+Bank2: 2 cannibals
+One cannibal returns in the boat from bank2 to bank1.
+Boat at bank1: 1 cannibal
+Bank1: 3 missionaries, 2 cannibals
+Bank2: 1 cannibal
+Two missionaries take the boat from bank1 to bank2.
+Boat at bank2: 2 missionaries
+Bank1: 1 missionary, 2 cannibals
+Bank2: 2 missionaries, 1 cannibal
+One missionary and one cannibal return in the boat from bank2 to bank1.
+Boat at bank1: 1 missionary, 1 cannibal
+Bank1: 2 missionaries, 3 cannibals
+Bank2: 1 missionary
+Two cannibals take the boat from bank1 to bank2.
+Boat at bank2: 2 cannibals
+Bank1: 2 missionaries, 1 cannibal
+Bank2: 1 missionary, 3 cannibals
+One cannibal returns in the boat from bank2 to bank1.
+Boat at bank1: 1 cannibal
+Bank1: 2 missionaries, 2 cannibals
+Bank2: 1 missionary, 2 cannibals
+Two missionaries take the boat from bank1 to bank2.
+Boat at bank2: 2 missionaries
+Bank1: 2 cannibals
+Bank2: 3 missionaries, 2 cannibals
+One missionary and one cannibal return in the boat from bank2 to bank1.
+Boat at bank1: 1 missionary, 1 cannibal
+Bank1: 1 missionary, 3 cannibals
+Bank2: 2 missionaries, 1 cannibal
+Two cannibals take the boat from bank1 to bank2.
+Boat at bank2: 2 cannibals
+Bank1: 1 missionary, 1 cannibal
+Bank2: 2 missionaries, 3 cannibals
+One cannibal returns in the boat from bank2 to bank1.
+Boat at bank1: 1 cannibal
+Bank1: 1 missionary, 2 cannibals
+Bank2: 2 missionaries, 2 cannibals
+Two cannibals take the boat from bank1 to bank2.
+Boat at bank2: 2 cannibals
+Bank1: 1 missionary
+Bank2: 2 missionaries, 4 cannibals
+The boat returns empty from bank2 to bank1.
+Boat at bank1: empty
+Bank1: 1 missionary
+Bank2: 2 missionaries, 4 cannibals
+One missionary takes the boat from bank1 to bank2.
+Boat at bank2: 1 missionary
+Bank1: empty
+Bank2: 3 missionaries, 4 cannibals
+At the end of this plan, all three missionaries and all three cannibals are safely at bank2, and the constraints are maintained throughout the process.

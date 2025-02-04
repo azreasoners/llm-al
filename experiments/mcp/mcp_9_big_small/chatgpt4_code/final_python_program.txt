@@ -1,0 +1,49 @@
+def safe(m, c, sm, bc):
+    # sm: small missionary, bc: big cannibal
+    if sm > m:
+        return False
+    if bc > c:
+        return False
+    if m < 0 or c < 0 or sm < 0 or bc < 0:
+        return False
+    if m > 3 or c > 3 or sm > 1 or bc > 1:
+        return False
+    # Check for the general safety on the shore
+    if (m > 0 and m < c) or (3 - m > 0 and 3 - m < 3 - c):
+        return False
+    # Check for the safety involving small missionary and big cannibal
+    if sm == 1 and bc == 1 and (m == 0 or c == 3):
+        return False
+    return True
+
+def dfs(m, c, sm, bc, boat, path):
+    # m: missionaries, c: cannibals, sm: small missionary, bc: big cannibal
+    # boat: 1 if boat is at the starting bank, -1 if at the destination
+    if (m, c, sm, bc, boat) in path:
+        return False
+    path.append((m, c, sm, bc, boat))
+    # Base case: All have crossed to the other side
+    if m == 0 and c == 0 and sm == 0 and bc == 0:
+        return True
+    
+    # Generate possible moves
+    for dm, dc, dsm, dbc in [(1, 0, 0, 0), (0, 1, 0, 0), (1, 1, 0, 0), (2, 0, 0, 0), (0, 2, 0, 0),
+                             (0, 0, 1, 0), (0, 0, 0, 1), (0, 0, 1, 1)]:
+        # Calculate new states depending on the boat's direction
+        nm, nc, nsm, nbc = m - boat * dm, c - boat * dc, sm - boat * dsm, bc - boat * dbc
+        if safe(nm, nc, nsm, nbc):
+            if dfs(nm, nc, nsm, nbc, -boat, path):
+                return True
+    path.pop()
+    return False
+
+# Initial conditions
+m, c, sm, bc = 3, 3, 1, 1
+boat = 1  # 1 means boat starts at bank1, -1 at bank2
+path = []
+if dfs(m, c, sm, bc, boat, path):
+    result = path
+else:
+    result = "No solution found"
+
+result

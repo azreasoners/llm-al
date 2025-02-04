@@ -1,0 +1,66 @@
+def is_valid(state):
+    # Check if missionaries are not outnumbered by cannibals at any location if there are missionaries present
+    (m_left, c_left, m_island, c_island, m_right, c_right) = state
+    if (m_left < c_left and m_left > 0) or (m_island < c_island and m_island > 0) or (m_right < c_right and m_right > 0):
+        return False
+    return True
+
+def is_final(state):
+    # Check if all missionaries and cannibals are on the right bank
+    return state == (0, 0, 0, 0, 5, 5)
+
+def find_moves(state):
+    # Generate possible moves based on current state
+    (m_left, c_left, m_island, c_island, m_right, c_right) = state
+    moves = []
+
+    # Locations: bank1, island, bank2 with their indices 0, 1, 2
+    locations = [(m_left, c_left), (m_island, c_island), (m_right, c_right)]
+
+    # Generate moves between locations
+    for i, (mi, ci) in enumerate(locations):
+        for j, (mj, cj) in enumerate(locations):
+            if i != j:  # can't move within the same location
+                for m in range(min(mi, 2) + 1):  # up to 2 missionaries
+                    for c in range(min(ci, 2 - m) + 1):  # remaining space for cannibals
+                        if m + c > 0:  # at least one person moves
+                            new_locations = [list(loc) for loc in locations]
+                            new_locations[i][0] -= m
+                            new_locations[i][1] -= c
+                            new_locations[j][0] += m
+                            new_locations[j][1] += c
+                            new_state = tuple(new_locations[0] + new_locations[1] + new_locations[2])
+                            if is_valid(new_state):
+                                moves.append(new_state)
+    return moves
+
+def solve_missionaries_cannibals():
+    # Use BFS to find the shortest path to the goal
+    from collections import deque
+    
+    initial_state = (5, 5, 0, 0, 0, 0)  # (m_left, c_left, m_island, c_island, m_right, c_right)
+    frontier = deque([initial_state])
+    explored = set()
+    parent_map = {initial_state: None}
+    
+    while frontier:
+        current_state = frontier.popleft()
+        
+        if is_final(current_state):
+            # Reconstruct the solution path
+            path = []
+            while current_state:
+                path.append(current_state)
+                current_state = parent_map[current_state]
+            return path[::-1]
+        
+        for next_state in find_moves(current_state):
+            if next_state not in explored:
+                explored.add(next_state)
+                frontier.append(next_state)
+                parent_map[next_state] = current_state
+
+    return None
+
+# Try to find a solution to the problem
+solve_missionaries_cannibals()

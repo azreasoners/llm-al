@@ -1,0 +1,58 @@
+def is_valid(board, row, col, num):
+    # Check if the number is not already placed in the current row
+    for x in range(9):
+        if board[row][x] == num:
+            return False
+
+    # Check if the number is not already placed in the current column
+    for x in range(9):
+        if board[x][col] == num:
+            return False
+
+    # Check if the number is not already placed in the current 3x3 box
+    start_row = row - row % 3
+    start_col = col - col % 3
+    for i in range(3):
+        for j in range(3):
+            if board[i + start_row][j + start_col] == num:
+                return False
+
+    return True
+
+def solve_sudoku(board):
+    empty = find_empty_location(board)
+    if not empty:
+        return True  # Puzzle solved
+    row, col = empty
+
+    for num in range(9):
+        if is_valid(board, row, col, num):
+            board[row][col] = num
+            if solve_sudoku(board):
+                return True
+            board[row][col] = -1  # Reset on failure
+
+    return False
+
+def find_empty_location(board):
+    for i in range(9):
+        for j in range(9):
+            if board[i][j] == -1:  # Use -1 as placeholder for empty cells
+                return (i, j)
+    return None
+
+# Initial Sudoku board setup with predefined values
+sudoku_board = [
+    [-1,  3, -1,  0, -1, -1, -1,  4, -1],
+    [ 0, -1,  6, -1, -1,  2,  8,  5, -1],
+    [ 4,  1, -1, -1, -1,  7, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1,  0,  6],
+    [-1, -1, -1,  8, -1,  5,  7, -1, -1],
+    [ 7, -1,  2, -1,  4, -1,  5,  1, -1],
+    [-1,  8, -1, -1,  5, -1,  4,  3,  2],
+    [ 5, -1, -1, -1,  7, -1,  6, -1, -1],
+    [ 1,  4, -1, -1,  8,  6,  0, -1, -1]
+]
+
+solve_sudoku(sudoku_board)
+sudoku_board

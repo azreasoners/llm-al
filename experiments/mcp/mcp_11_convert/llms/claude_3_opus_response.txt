@@ -1,0 +1,35 @@
+
+To solve this problem, we need to find a sequence of actions that will transport all missionaries and cannibals from bank1 to bank2 while adhering to the given constraints. Here's a step-by-step plan:
+
+Two cannibals cross from bank1 to bank2 in the boat.
+(bank1: 3 missionaries, 1 cannibal; bank2: 2 cannibals; boat at bank2)
+One cannibal returns from bank2 to bank1 in the boat.
+(bank1: 3 missionaries, 2 cannibals; bank2: 1 cannibal; boat at bank1)
+Two missionaries cross from bank1 to bank2 in the boat.
+(bank1: 1 missionary, 2 cannibals; bank2: 2 missionaries, 1 cannibal; boat at bank2)
+One missionary and one cannibal return from bank2 to bank1 in the boat.
+(bank1: 2 missionaries, 3 cannibals; bank2: 1 missionary; boat at bank1)
+Two cannibals cross from bank1 to bank2 in the boat.
+(bank1: 2 missionaries, 1 cannibal; bank2: 1 missionary, 2 cannibals; boat at bank2)
+One cannibal returns from bank2 to bank1 in the boat.
+(bank1: 2 missionaries, 2 cannibals; bank2: 1 missionary, 1 cannibal; boat at bank1)
+Two missionaries cross from bank1 to bank2 in the boat.
+(bank1: 2 cannibals; bank2: 3 missionaries, 1 cannibal; boat at bank2)
+The three missionaries at bank2 convert the one cannibal into a missionary.
+(bank1: 2 cannibals; bank2: 4 missionaries; boat at bank2)
+One missionary and one cannibal return from bank2 to bank1 in the boat.
+(bank1: 1 missionary, 3 cannibals; bank2: 3 missionaries; boat at bank1)
+Two cannibals cross from bank1 to bank2 in the boat.
+(bank1: 1 missionary, 1 cannibal; bank2: 3 missionaries, 2 cannibals; boat at bank2)
+One missionary returns from bank2 to bank1 in the boat.
+(bank1: 2 missionaries, 1 cannibal; bank2: 2 missionaries, 2 cannibals; boat at bank1)
+Two missionaries cross from bank1 to bank2 in the boat.
+(bank1: 1 cannibal; bank2: 4 missionaries, 2 cannibals; boat at bank2)
+One cannibal returns from bank2 to bank1 in the boat.
+(bank1: 2 cannibals; bank2: 4 missionaries, 1 cannibal; boat at bank1)
+Two cannibals cross from bank1 to bank2 in the boat.
+(bank1: empty; bank2: 4 missionaries, 3 cannibals; boat at bank2)
+The four missionaries at bank2 convert the three cannibals into missionaries.
+(bank1: empty; bank2: 7 missionaries; boat at bank2)
+
+At the end of this plan, all missionaries and cannibals are at bank2, and the constraints are satisfied throughout the process.

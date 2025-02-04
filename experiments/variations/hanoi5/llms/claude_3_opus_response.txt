@@ -1,0 +1,263 @@
+
+Here is a plan to stack all disks on peg c, moving them from peg a:
+
+move(d5, a, b)
+Move disk d5 from peg a to peg b
+move(d4, a, c)
+Move disk d4 from peg a to peg c
+move(d5, b, c)
+Move disk d5 from peg b to peg c, on top of d4
+move(d3, a, b)
+Move disk d3 from peg a to peg b
+move(d5, c, a)
+Move disk d5 from peg c to peg a
+move(d4, c, b)
+Move disk d4 from peg c to peg b, on top of d3
+move(d5, a, b)
+Move disk d5 from peg a to peg b, on top of d4
+move(d2, a, c)
+Move disk d2 from peg a to peg c
+move(d5, b, c)
+Move disk d5 from peg b to peg c, on top of d2
+move(d4, b, a)
+Move disk d4 from peg b to peg a
+move(d5, c, a)
+Move disk d5 from peg c to peg a, on top of d4
+move(d3, b, c)
+Move disk d3 from peg b to peg c, on top of d5
+move(d5, a, b)
+Move disk d5 from peg a to peg b
+move(d4, a, c)
+Move disk d4 from peg a to peg c, on top of d3
+move(d5, b, c)
+Move disk d5 from peg b to peg c, on top of d4
+move(d1, a, b)
+Move disk d1 from peg a to peg b
+move(d5, c, a)
+Move disk d5 from peg c to peg a
+move(d4, c, b)
+Move disk d4 from peg c to peg b, on top of d1
+move(d5, a, b)
+Move disk d5 from peg a to peg b, on top of d4
+move(d3, c, a)
+Move disk d3 from peg c to peg a
+move(d5, b, c)
+Move disk d5 from peg b to peg c
+move(d4, b, a)
+Move disk d4 from peg b to peg a, on top of d3
+move(d5, c, a)
+Move disk d5 from peg c to peg a, on top of d4
+move(d2, c, b)
+Move disk d2 from peg c to peg b, on top of d1
+move(d5, a, b)
+Move disk d5 from peg a to peg b, on top of d2
+move(d4, a, c)
+Move disk d4 from peg a to peg c
+move(d5, b, c)
+Move disk d5 from peg b to peg c, on top of d4
+move(d3, a, b)
+Move disk d3 from peg a to peg b, on top of d5
+move(d5, c, a)
+Move disk d5 from peg c to peg a
+move(d4, c, b)
+Move disk d4 from peg c to peg b, on top of d3
+move(d5, a, b)
+Move disk d5 from peg a to peg b, on top of d4
+move(d1, b, c)
+Move disk d1 from peg b to peg c
+move(d5, b, a)
+Move disk d5 from peg b to peg a
+move(d4, b, c)
+Move disk d4 from peg b to peg c, on top of d1
+move(d5, a, c)
+Move disk d5 from peg a to peg c, on top of d4
+move(d3, b, a)
+Move disk d3 from peg b to peg a
+move(d5, c, b)
+Move disk d5 from peg c to peg b
+move(d4, c, a)
+Move disk d4 from peg c to peg a, on top of d3
+move(d5, b, a)
+Move disk d5 from peg b to peg a, on top of d4
+move(d2, b, c)
+Move disk d2 from peg b to peg c, on top of d1
+move(d5, a, b)
+Move disk d5 from peg a to peg b
+move(d4, a, c)
+Move disk d4 from peg a to peg c, on top of d2
+move(d5, b, c)
+Move disk d5 from peg b to peg c, on top of d4
+move(d3, a, b)
+Move disk d3 from peg a to peg b
+move(d5, c, a)
+Move disk d5 from peg c to peg a
+move(d4, c, b)
+Move disk d4 from peg c to peg b, on top of d3
+move(d5, a, b)
+Move disk d5 from peg a to peg b, on top of d4
+move(d1, c, a)
+Move disk d1 from peg c to peg a
+move(d5, b, c)
+Move disk d5 from peg b to peg c
+move(d4, b, a)
+Move disk d4 from peg b to peg a, on top of d1
+move(d5, c, a)
+Move disk d5 from peg c to peg a, on top of d4
+move(d3, b, c)
+Move disk d3 from peg b to peg c, on top of d2
+move(d5, a, b)
+Move disk d5 from peg a to peg b
+move(d4, a, c)
+Move disk d4 from peg a to peg c, on top of d3
+move(d5, b, c)
+Move disk d5 from peg b to peg c, on top of d4
+move(d2, c, b)
+Move disk d2 from peg c to peg b
+move(d5, c, a)
+Move disk d5 from peg c to peg a
+move(d4, c, b)
+Move disk d4 from peg c to peg b, on top of d2
+move(d5, a, b)
+Move disk d5 from peg a to peg b, on top of d4
+move(d3, c, a)
+Move disk d3 from peg c to peg a
+move(d5, b, c)
+Move disk d5 from peg b to peg c
+move(d4, b, a)
+Move disk d4 from peg b to peg a, on top of d3
+move(d5, c, a)
+Move disk d5 from peg c to peg a, on top of d4
+move(d1, a, c)
+Move disk d1 from peg a to peg c
+move(d5, a, b)
+Move disk d5 from peg a to peg b
+move(d4, a, c)
+Move disk d4 from peg a to peg c, on top of d1
+move(d5, b, c)
+Move disk d5 from peg b to peg c, on top of d4
+move(d3, a, b)
+Move disk d3 from peg a to peg b
+move(d5, c, a)
+Move disk d5 from peg c to peg a
+move(d4, c, b)
+Move disk d4 from peg c to peg b, on top of d3
+move(d5, a, b)
+Move disk d5 from peg a to peg b, on top of d4
+move(d2, b, a)
+Move disk d2 from peg b to peg a
+move(d5, b, c)
+Move disk d5 from peg b to peg c
+move(d4, b, a)
+Move disk d4 from peg b to peg a, on top of d2
+move(d5, c, a)
+Move disk d5 from peg c to peg a, on top of d4
+move(d3, b, c)
+Move disk d3 from peg b to peg c, on top of d1
+move(d5, a, b)
+Move disk d5 from peg a to peg b
+move(d4, a, c)
+Move disk d4 from peg a to peg c, on top of d3
+move(d5, b, c)
+Move disk d5 from peg b to peg c, on top of d4
+move(d2, a, b)
+Move disk d2 from peg a to peg b
+move(d5, c, a)
+Move disk d5 from peg c to peg a
+move(d4, c, b)
+Move disk d4 from peg c to peg b, on top of d2
+move(d5, a, b)
+Move disk d5 from peg a to peg b, on top of d4
+move(d1, c, a)
+Move disk d1 from peg c to peg a
+move(d5, b, c)
+Move disk d5 from peg b to peg c
+move(d4, b, a)
+Move disk d4 from peg b to peg a, on top of d1
+move(d5, c, a)
+Move disk d5 from peg c to peg a, on top of d4
+move(d3, c, b)
+Move disk d3 from peg c to peg b
+move(d5, a, c)
+Move disk d5 from peg a to peg c
+move(d4, a, b)
+Move disk d4 from peg a to peg b, on top of d3
+move(d5, c, b)
+Move disk d5 from peg c to peg b, on top of d4
+move(d2, b, c)
+Move disk d2 from peg b to peg c
+move(d5, b, a)
+Move disk d5 from peg b to peg a
+move(d4, b, c)
+Move disk d4 from peg b to peg c, on top of d2
+move(d5, a, c)
+Move disk d5 from peg a to peg c, on top of d4
+move(d3, b, a)
+Move disk d3 from peg b to peg a
+move(d5, c, b)
+Move disk d5 from peg c to peg b
+move(d4, c, a)
+Move disk d4 from peg c to peg a, on top of d3
+move(d5, b, a)
+Move disk d5 from peg b to peg a, on top of d4
+move(d1, a, c)
+Move disk d1 from peg a to peg c
+move(d5, a, b)
+Move disk d5 from peg a to peg b
+move(d4, a, c)
+Move disk d4 from peg a to peg c, on top of d1
+move(d5, b, c)
+Move disk d5 from peg b to peg c, on top of d4
+move(d3, a, b)
+Move disk d3 from peg a to peg b
+move(d5, c, a)
+Move disk d5 from peg c to peg a
+move(d4, c, b)
+Move disk d4 from peg c to peg b, on top of d3
+move(d5, a, b)
+Move disk d5 from peg a to peg b, on top of d4
+move(d2, c, a)
+Move disk d2 from peg c to peg a
+move(d5, b, c)
+Move disk d5 from peg b to peg c
+move(d4, b, a)
+Move disk d4 from peg b to peg a, on top of d2
+move(d5, c, a)
+Move disk d5 from peg c to peg a, on top of d4
+move(d3, b, c)
+Move disk d3 from peg b to peg c, on top of d1
+move(d5, a, b)
+Move disk d5 from peg a to peg b
+move(d4, a, c)
+Move disk d4 from peg a to peg c, on top of d3
+move(d5, b, c)
+Move disk d5 from peg b to peg c, on top of d4
+move(d2, a, b)
+Move disk d2 from peg a to peg b
+move(d5, c, a)
+Move disk d5 from peg c to peg a
+move(d4, c, b)
+Move disk d4 from peg c to peg b, on top of d2
+move(d5, a, b)
+Move disk d5 from peg a to peg b, on top of d4
+move(d1, c, a)
+Move disk d1 from peg c to peg a
+move(d5, b, c)
+Move disk d5 from peg b to peg c
+move(d4, b, a)
+Move disk d4 from peg b to peg a, on top of d1
+move(d5, c, a)
+Move disk d5 from peg c to peg a, on top of d4
+move(d3, c, b)
+Move disk d3 from peg c to peg b
+move(d5, a, c)
+Move disk d5 from peg a to peg c
+move(d4, a, b)
+Move disk d4 from peg a to peg b, on top of d3
+move(d5, c, b)
+Move disk d5 from peg c to peg b, on top of d4
+move(d2, b, c)
+Move disk d2 from peg b to peg c, on top of d1
+move(d5, b, a)
+Move disk d5 from peg b to peg a
+move(d4, b, c)
+Move disk d4 from

@@ -1,0 +1,107 @@
+:- sorts
+    missionary >> person;
+    cannibal >> person;
+    vessel;
+    location;
+    place >> location, vessel;
+    thing >> person, vessel;
+    integer.
+
+
+:- objects
+    small_missionary, missionary1, missionary2 :: missionary;
+    big_cannibal, cannibal1, cannibal2 :: cannibal;
+    boat :: vessel;
+    bank1, bank2 :: location;
+    0..10 :: integer.
+
+
+:- variables
+    M, M1, M2, M3 :: missionary;
+    C, C1, C2, C3 :: cannibal;
+    P, P1, P2 :: person;
+    Loc, Loc1, Loc2, NewLoc :: place;
+    N_m, N_c, N :: integer.
+
+
+:- constants
+    cross1(person) :: exogenousAction;
+    cross2(person, person) :: exogenousAction;
+    loc(thing) :: inertialFluent(place);
+    capacity(vessel) :: rigid(integer);
+    num_missionaries(place) :: additiveFluent(integer);
+    num_cannibals(place) :: additiveFluent(integer).
+
+% Constraints and rules
+
+% 1. The capacity of the boat is 2.
+capacity(boat) = 2.
+
+% 2. Action cross1(P): P crosses alone.
+cross1(P) causes loc(boat) = NewLoc & loc(P) = NewLoc
+    if loc(boat) = Loc & NewLoc \= Loc & loc(P) = Loc.
+
+% 3. Action cross2(P1, P2): P1 and P2 cross together.
+cross2(P1, P2) causes loc(boat) = NewLoc & loc(P1) = NewLoc & loc(P2) = NewLoc
+    if loc(boat) = Loc & NewLoc \= Loc & loc(P1) = Loc & loc(P2) = Loc & P1 \= P2.
+
+% 4. The crossing actions are not executable if any person is not at the same location as the boat.
+nonexecutable cross1(P) if loc(P) \= loc(boat).
+nonexecutable cross2(P1, P2) if loc(P1) \= loc(boat) | loc(P2) \= loc(boat).
+
+% 5. The crossing action is not executable if the boat capacity is exceeded.
+% For cross1(P), N = 1
+nonexecutable cross1(P) if capacity(boat) < 1.
+
+% For cross2(P1, P2), N = 2
+nonexecutable cross2(P1, P2) if capacity(boat) < 2.
+
+% 6. It is impossible for a person to be at two different places at the same time.
+impossible loc(P) = Loc1 & loc(P) = Loc2 & Loc1 \= Loc2.
+
+% 7. The counts of missionaries and cannibals are updated when people move.
+% Updated counts: Simplify to adjust counts only after moving.
+
+% For cross1(P)
+cross1(P) decrements num_missionaries(Loc) by 1 if P = M & loc(P) = Loc.
+cross1(P) decrements num_cannibals(Loc) by 1 if P = C & loc(P) = Loc.
+cross1(P) increments num_missionaries(NewLoc) by 1 if P = M & NewLoc \= Loc.
+cross1(P) increments num_cannibals(NewLoc) by 1 if P = C & NewLoc \= Loc.
+
+% For cross2(P1, P2)
+cross2(P1, P2) decrements num_missionaries(Loc) by L1 if L1 = N1 + N2 & N1 = 1 if P1 = M else N1 = 0 & N2 = 1 if P2 = M else N2 = 0 & loc(P1) = Loc & loc(P2) = Loc.
+cross2(P1, P2) decrements num_cannibals(Loc) by L2 if L2 = N1 + N2 & N1 = 1 if P1 = C else N1 = 0 & N2 = 1 if P2 = C else N2 = 0 & loc(P1) = Loc & loc(P2) = Loc.
+cross2(P1, P2) increments num_missionaries(NewLoc) by L1 if L1 = N1 + N2 & N1 = 1 if P1 = M else N1 = 0 & N2 = 1 if P2 = M else N2 = 0 & NewLoc \= Loc & loc(P1) = Loc & loc(P2) = Loc.
+cross2(P1, P2) increments num_cannibals(NewLoc) by L2 if L2 = N1 + N2 & N1 = 1 if P1 = C else N1 = 0 & N2 = 1 if P2 = C else N2 = 0 & NewLoc \= Loc & loc(P1) = Loc & loc(P2) = Loc.
+
+% 8. It is impossible for the number of cannibals to be greater than the number of missionaries at a place where there is at least one missionary.
+impossible num_cannibals(Loc) > num_missionaries(Loc) & num_missionaries(Loc) > 0.
+
+% 9. It is impossible for the number of cannibals to be greater than the number of missionaries on the boat during crossing, where there is at least one missionary on the boat.
+impossible num_cannibals(boat) > num_missionaries(boat) & num_missionaries(boat) > 0.
+
+% 10. The boat cannot cross the river with nothing on it.
+nonexecutable cross1(P) if num_missionaries(loc(boat)) = 0 & num_cannibals(loc(boat)) = 0.
+nonexecutable cross2(P1, P2) if num_missionaries(loc(boat)) = 0 & num_cannibals(loc(boat)) = 0.
+
+% 11. The large cannibal cannot be left alone with the small missionary.
+impossible loc(big_cannibal) = Loc & loc(small_missionary) = Loc & num_missionaries(Loc) = 1.
+
+% Initialize counts in the initial state.
+% These counts need to be specified in the initial state of the query.
+
+
+
+% Original natural language query: Three missionaries and three cannibals are at location bank1. The boat is at location bank1. Find a plan so that all missionaries and all cannibals are at location bank2.
+:- query
+    0: loc(small_missionary) = bank1 & loc(missionary1) = bank1 & loc(missionary2) = bank1 &
+       loc(big_cannibal) = bank1 & loc(cannibal1) = bank1 & loc(cannibal2) = bank1 & loc(boat) = bank1 &
+       num_missionaries(bank1) = 3 & num_cannibals(bank1) = 3 &
+       num_missionaries(bank2) = 0 & num_cannibals(bank2) = 0 & 
+       num_missionaries(boat) = 0 & num_cannibals(boat) = 0;
+    maxstep: loc(small_missionary) = bank2 & loc(missionary1) = bank2 & loc(missionary2) = bank2 &
+             loc(big_cannibal) = bank2 & loc(cannibal1) = bank2 & loc(cannibal2) = bank2 &
+             num_missionaries(bank2) = 3 & num_cannibals(bank2) = 3 &
+             num_missionaries(bank1) = 0 & num_cannibals(bank1) = 0 &
+             num_missionaries(boat) = 0 & num_cannibals(boat) = 0 &
+             loc(boat) = bank2.

@@ -1,0 +1,11 @@
+Solving...
+Solution: 1
+
+
+        0:  valueAt(0, 0)=8 valueAt(0, 1)=1 valueAt(0, 2)=2 valueAt(0, 3)=7 valueAt(0, 4)=5 valueAt(0, 5)=3 valueAt(0, 6)=6 valueAt(0, 7)=4 valueAt(0, 8)=9 valueAt(1, 0)=9 valueAt(1, 1)=4 valueAt(1, 2)=3 valueAt(1, 3)=6 valueAt(1, 4)=8 valueAt(1, 5)=2 valueAt(1, 6)=1 valueAt(1, 7)=7 valueAt(1, 8)=5 valueAt(2, 0)=6 valueAt(2, 1)=7 valueAt(2, 2)=5 valueAt(2, 3)=4 valueAt(2, 4)=9 valueAt(2, 5)=1 valueAt(2, 6)=2 valueAt(2, 7)=8 valueAt(2, 8)=3 valueAt(3, 0)=1 valueAt(3, 1)=5 valueAt(3, 2)=4 valueAt(3, 3)=2 valueAt(3, 4)=3 valueAt(3, 5)=7 valueAt(3, 6)=8 valueAt(3, 7)=9 valueAt(3, 8)=6 valueAt(4, 0)=3 valueAt(4, 1)=6 valueAt(4, 2)=9 valueAt(4, 3)=8 valueAt(4, 4)=4 valueAt(4, 5)=5 valueAt(4, 6)=7 valueAt(4, 7)=2 valueAt(4, 8)=1 valueAt(5, 0)=2 valueAt(5, 1)=8 valueAt(5, 2)=7 valueAt(5, 3)=1 valueAt(5, 4)=6 valueAt(5, 5)=9 valueAt(5, 6)=5 valueAt(5, 7)=3 valueAt(5, 8)=4 valueAt(6, 0)=5 valueAt(6, 1)=2 valueAt(6, 2)=1 valueAt(6, 3)=9 valueAt(6, 4)=7 valueAt(6, 5)=4 valueAt(6, 6)=3 valueAt(6, 7)=6 valueAt(6, 8)=8 valueAt(7, 0)=4 valueAt(7, 1)=3 valueAt(7, 2)=8 valueAt(7, 3)=5 valueAt(7, 4)=2 valueAt(7, 5)=6 valueAt(7, 6)=9 valueAt(7, 7)=1 valueAt(7, 8)=7 valueAt(8, 0)=7 valueAt(8, 1)=9 valueAt(8, 2)=6 valueAt(8, 3)=3 valueAt(8, 4)=1 valueAt(8, 5)=8 valueAt(8, 6)=4 valueAt(8, 7)=5 valueAt(8, 8)=2
+
+SATISFIABLE
+Models       : 1+
+Calls        : 1
+Time         : 0.047s (Solving: 0.00s 1st Model: 0.00s Unsat: 0.00s)
+CPU Time     : 0.047s

@@ -1,0 +1,23 @@
+
+
+
+:- query
+    0: val(r0, c2) = v9 & val(r0, c4) = v2 & val(r0, c5) = v8 & val(r0, c6) = v7 &
+       val(r1, c0) = v8 & val(r1, c2) = v6 & val(r1, c5) = v4 & val(r1, c8) = v5 &
+       val(r2, c2) = v3 & val(r2, c8) = v4 &
+       val(r3, c0) = v6 &
+       val(r4, c1) = v2 & val(r4, c3) = v7 & val(r4, c4) = v1 & val(r4, c5) = v3 & val(r4, c6) = v4 & val(r4, c7) = v5 &
+       val(r5, c8) = v2 &
+       val(r6, c0) = v3 & val(r6, c6) = v5 &
+       val(r7, c0) = v9 & val(r7, c3) = v4 & val(r7, c6) = v8 & val(r7, c8) = v7 &
+       val(r8, c2) = v1 & val(r8, c3) = v2 & val(r8, c4) = v5 & val(r8, c6) = v3.
+
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+

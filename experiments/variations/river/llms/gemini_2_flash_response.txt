@@ -1,0 +1,41 @@
+Here's the solution to the classic river crossing puzzle:
+
+Initial State:
+
+Left Bank: Mouse, Snake, Cheese, Boat
+Right Bank: (Empty)
+Steps:
+
+Take the Mouse across:
+
+Left Bank: Snake, Cheese
+Right Bank: Mouse, Boat
+Return alone:
+
+Left Bank: Snake, Cheese, Boat
+Right Bank: Mouse
+Take the Snake across:
+
+Left Bank: Cheese
+Right Bank: Mouse, Snake, Boat
+Bring the Mouse back:
+
+Left Bank: Mouse, Cheese, Boat
+Right Bank: Snake
+Take the Cheese across:
+
+Left Bank:
+Right Bank: Snake, Cheese, Boat, Mouse
+Return alone:
+
+Left Bank: Boat
+Right Bank: Snake, Cheese, Mouse
+Take the Mouse across:
+
+Left Bank:
+Right Bank: Mouse, Snake, Cheese, Boat
+Final State:
+
+Left Bank: (Empty)
+Right Bank: Mouse, Snake, Cheese, Boat
+Therefore, you have successfully transported the mouse, snake, and cheese to the right bank without any unfortunate incidents.

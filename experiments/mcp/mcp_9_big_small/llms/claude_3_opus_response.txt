@@ -1,0 +1,21 @@
+Here's a plan to safely transport all the missionaries and cannibals across the river:
+
+1 missionary and 1 cannibal cross from bank1 to bank2 in the boat.
+The missionary returns alone to bank1.
+2 cannibals cross from bank1 to bank2 in the boat.
+1 cannibal returns alone to bank1.
+2 missionaries (including the small missionary) cross from bank1 to bank2 in the boat.
+1 missionary and 1 cannibal return to bank1 in the boat.
+2 missionaries cross from bank1 to bank2 in the boat.
+1 missionary returns alone to bank1.
+The remaining 2 cannibals (including the large cannibal) cross from bank1 to bank2 in the boat.
+1 cannibal returns alone to bank1.
+The remaining missionary and cannibal cross from bank1 to bank2 in the boat.
+
+At the end of this process, all 3 missionaries and 3 cannibals will be on bank2, with the boat also on bank2. The constraints are satisfied throughout:
+
+The boat never crosses with more than 2 people.
+Whenever missionaries and cannibals are together, the cannibals never outnumber the missionaries.
+The small missionary is never left alone with the large cannibal.
+
+Let me know if you have any other questions!

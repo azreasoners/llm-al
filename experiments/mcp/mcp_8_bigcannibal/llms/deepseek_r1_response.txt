@@ -1,0 +1,604 @@
+
+Okay, let's see. The problem is the classic missionaries and cannibals puzzle, but there's a twist here. Oh right, there's a big cannibal who can't be in the boat with another person. Hmm, so normally, without the big cannibal, the solution involves moving people back and forth without letting the cannibals outnumber the missionaries on either bank. But this big cannibal complicates things because he can't share the boat with anyone else. Wait, so the boat's capacity is 2, but if the big cannibal is in the boat, it can only carry him alone? Or does it mean that the boat can take two people unless one of them is the big cannibal? The problem says "the boat's capacity is 2. There is a large cannibal which cannot fit in the boat with another person." So, if the big cannibal is in the boat, there can't be anyone else. So, when transporting the big cannibal, the boat can only take him alone each time. That's a significant constraint.
+
+So, the initial setup is three missionaries, three cannibals (including the big one) at bank1. The boat is at bank1. We need to get all to bank2. The constraints are:
+
+1. On both banks, cannibals (including the big one) must not outnumber missionaries if there are any missionaries present.
+
+2. In the boat, cannibals (including the big one) must not outnumber the missionaries.
+
+3. The boat can carry up to two people, but the big cannibal can't be with another person. So, if the big cannibal is in the boat, it's only him.
+
+Let me break down the problem. Let's denote the three missionaries as M and the three cannibals as C (two regular, one big, but maybe we should treat the big one as a separate entity). Wait, the problem mentions three cannibals, one of which is a "big cannibal". So, three cannibals total: 1 big and 2 regular. The big one can't be in the boat with another person. So, whenever the big cannibal is moving, it's solo. The regular ones can go in pairs or with a missionary, as long as the boat's cannibals don't outnumber the missionaries.
+
+Wait, the boat's cannibal count (including big?) must not exceed the missionaries in the boat. So, if the boat has one cannibal (big or regular) and one missionary, that's okay because they're equal. If the boat has two cannibals (but the big one can't be with another), so two regular cannibals could go together? But the problem says the boat's capacity is 2. So, two regular cannibals can go together, but the big one can't be with anyone else.
+
+So, possible boat moves:
+
+- 1 missionary and 1 regular cannibal.
+
+- 2 missionaries.
+
+- 2 regular cannibals.
+
+- 1 missionary.
+
+- 1 regular cannibal.
+
+- 1 big cannibal (solo trip).
+
+But when the big cannibal is moving, it's only him each time.
+
+Now, the challenge is to move all six (3M, 3C) across without violating the constraints. Let's think step by step.
+
+First, the initial state: bank1 has 3M, 3C (including big), boat at bank1. Bank2 has 0M, 0C.
+
+Goal: all at bank2.
+
+Constraints after each move:
+
+- On both banks, if there are missionaries, the number of cannibals (regular + big) must not exceed the number of missionaries.
+
+- In the boat, the number of cannibals (including big) must not exceed the number of missionaries (if any are present).
+
+Additionally, the boat can't cross empty.
+
+The big cannibal can't be in the boat with another person, so any trip involving him is solo.
+
+Let me try to model this. Let's denote the state as (M1, C1, B1; M2, C2, B2; boat_position), where M is missionaries, C is regular cannibals, B is big cannibal. But maybe it's better to track each group. Alternatively, since the big cannibal is a separate entity, maybe we need to track him separately. Let me structure the state as:
+
+Left bank: M (0-3), C_regular (0-2), C_big (0-1)
+
+Right bank: M (3 - left M), C_regular (2 - left C_regular), C_big (1 - left C_big)
+
+Boat position: left or right.
+
+Each move involves moving some combination of people from the current boat position's bank to the other, adhering to the constraints.
+
+But considering that the big cannibal can't be with another in the boat, any move that includes the big cannibal must be him alone. Also, when moving other people, we can take 1 or 2 (but not with the big cannibal).
+
+Let's start trying possible moves.
+
+Initial state: left (3M, 2C regular, 1C big), right (0,0,0), boat at left.
+
+Possible moves from left:
+
+1. Send two missionaries. Then left becomes 1M, 2C, 1C big. Right has 2M, 0C, 0 big. Boat at right. But then on the left, the cannibals (2+1=3) outnumber the 1 missionary. So this is invalid.
+
+2. Send one missionary and one regular cannibal. Left becomes 2M, 1C, 1 big. Right: 1M, 1C, 0 big. Boat at right. Check left: 2M vs 2C (1 regular +1 big), so cannibals equal to missionaries. That's okay. On right: 1M vs 1C. Also okay. Boat had 1M and 1C, which is equal, so okay. So this move is valid.
+
+Then, next step: boat is at right. Need to return someone. Let's see. From right bank: 1M,1C. Possible return trips:
+
+- Send back 1M. Then right becomes 0M,1C. Left becomes 3M,1C,1 big. Boat at left. Then on left, 3M vs 2C (1+1) => okay. On right: 0M,1C: okay. But the boat is back to left, but we need to make progress. Alternatively, send back 1C. Then right becomes 1M,0C. Left becomes 2M, 2C (1+1). On left, 2M vs 2C: equal, okay. On right: 1M,0C: okay. Then boat is at left. Then possible next moves:
+
+From left (2M, 2C, 1 big), boat at left. Maybe send two missionaries again. But that would leave 0M, 2C,1 big on left, which is bad. Or send two regular cannibals. But they can go together. Let's try that. Send two regular cannibals. Then left becomes 2M,0C,1 big. Right becomes 1M, 2C, 0 big. Boat at right. Check left: 2M vs 1 big (cannibal count is 1, which is less than 2M: okay). Right: 1M vs 2C: cannibals outnumber missionaries. So invalid. So that's not allowed.
+
+Alternatively, send one missionary and one regular cannibal again. But from left, 2M,2C. Sending 1M and 1C: left becomes 1M,1C,1 big. Right becomes 2M,1C. Boat at right. Then on left: 1M vs 2C (1 regular +1 big) => cannibals outnumber. Invalid.
+
+Hmm. Maybe the first move isn't the best. Let's try a different initial move.
+
+Alternative first move: send two regular cannibals. Then left becomes 3M,0C,1 big. Right has 0M,2C,0 big. Boat at right. On left: 3M vs 1 big (cannibal count 1, which is less than 3: okay). On right: 0M,2C: okay. Then return trip: from right, must send at least one. But right has only two regular cannibals. So send one back. So boat goes from right to left with 1C. Then left becomes 3M,1C,1 big. Right becomes 0M,1C. Boat at left. Now, possible moves: send two missionaries. Left becomes 1M,1C,1 big. Right becomes 2M,1C. Check left: 1M vs 2C (1+1) which is equal. Okay. Right: 2M vs 1C: okay. Then boat at right. Then return trip: send 1M and 1C back. But right has 2M,1C. Sending 1M and 1C would leave 1M on right. Left becomes 2M,2C,1 big. But then on the next move... Hmm, this might not be leading anywhere. Maybe this path isn't working.
+
+Alternatively, after the initial move of sending two regular cannibals to the right and bringing one back, maybe another approach. Let's see:
+
+After initial move: left 3M,0C,1 big; right 0M,2C. Boat at right. Return 1C to left. Now left is 3M,1C,1 big; right 0M,1C. Boat at left.
+
+Next possible moves from left: maybe send 3M? But boat can take two at a time. So first send two M. Left becomes 1M,1C,1 big. Right becomes 2M,1C. Check left: 1M vs 2C (1+1). Equal, okay. Then boat at right. Now, send one M back. Right becomes 1M,1C. Left becomes 2M,1C,1 big. Boat at left. Now, send two M again. Left becomes 0M,1C,1 big. Right becomes 3M,1C. Boat at right. Now, send one C back. Right becomes 3M,0C. Left becomes 0M,2C,1 big. But on left, 0 missionaries, so cannibals are okay. Boat at left. Now, send two C (but only two regular C are at left: 2C. Wait, left has 2C and 1 big. But the big can't go with others. So send two regular C. But left has 2C (regular). So send them both. Then left becomes 0M,0C,1 big. Right becomes 3M,2C. Boat at right. Now, send one C back. Right becomes 3M,1C. Left becomes 0M,1C,1 big. Boat at left. Now, send the big cannibal solo. Then left has 0M,1C,0 big. Right has 3M,1C,1 big. Boat at right. Then send the remaining C from left (1 regular). So two trips: but wait, the boat is at right. So to get the last regular C, need to send someone back. Hmm. This is getting complicated. Maybe this approach isn't working.
+
+Alternative initial move: send one missionary and one regular cannibal. Left becomes 2M,1C,1 big. Right 1M,1C. Boat at right. Then return with the missionary. Right becomes 0M,1C. Left 3M,1C,1 big. Boat at left. Then send two missionaries over. Left becomes 1M,1C,1 big. Right 2M,1C. Boat at right. Then return with one missionary and one cannibal. Right becomes 1M,0C. Left 2M,2C,1 big. Now, left has 2M vs 3C (2 regular +1 big) → cannibals outnumber. Invalid.
+
+Hmm. Maybe I need to consider moving the big cannibal early. Let's try that. Since the big cannibal can't be with others, perhaps moving him first would help. But moving him solo would require the boat to go back with someone else.
+
+So initial move: send big cannibal alone. Left has 3M,2C,0 big. Right has 0M,0C,1 big. Boat at right. Now, to get the boat back, someone needs to come back. But right has only the big cannibal. So he has to come back, which undoes the move. So that's not helpful.
+
+Alternatively, after sending the big cannibal over, someone else must bring the boat back. But since the big cannibal can't be in the boat with others, he can't come back. So if he's on the right, he can't come back alone. Wait, the boat is at the right, so to return, someone has to take it back. But the right side has only the big cannibal. So he has to come back, but that's a valid move. But that just undoes the previous step, so it's a loop. So moving the big cannibal first isn't helpful.
+
+Alternatively, maybe move the big cannibal later. Let's think of the standard solution without the big cannibal and see where the big cannibal complicates things.
+
+Standard solution for 3M and 3C (without big cannibal):
+
+1. Send 1M and 1C to right.
+
+2. Bring back the M.
+
+3. Send 2C to right.
+
+4. Bring back 1C.
+
+5. Send 2M to right.
+
+6. Bring back 1M and 1C.
+
+7. Send 2M to right.
+
+8. Bring back 1C.
+
+9. Send 2C to right.
+
+10. Bring back 1C.
+
+11. Send 2C to right.
+
+But with the big cannibal, this approach might not work because transporting two cannibals is possible only if they are regular, but the big one complicates the counts on the banks.
+
+Wait, but in our problem, there are three cannibals: two regular and one big. So total of three. The standard problem has three cannibals. The difference here is that one of them can't be in the boat with others. So maybe we need to adjust the steps to account for that.
+
+Let me try modifying the standard solution. Suppose we first move the two regular cannibals and the big one, but considering the boat constraints.
+
+Alternatively, perhaps the big cannibal needs to be moved last. Let's see.
+
+Let's try steps similar to the standard solution but adjust for the big cannibal.
+
+Step 1: Send 1M and 1C (regular) to right. Left: 2M, 1C (regular), 1 big. Right: 1M,1C. Boat at right.
+
+Check constraints: left has 2M vs 2C (1 regular +1 big) → equal, okay. Right: 1M vs 1C → okay.
+
+Step 2: Bring back the M. Boat goes left. Right: 0M,1C. Left: 3M,1C,1 big. Boat at left.
+
+Step 3: Send 2C (regular) to right. Left: 3M, 0C,1 big. Right: 0M,3C (including big? Wait, no. The big cannibal is still on the left. So right has 0M, 2 regular C (from step 1 and step 3). Wait, step 1: sent 1 regular C and step 3 sends 2 regular C. But initial regular C are two. Wait, in the initial setup, there are two regular C and one big. So step 1 sends one regular C, step 3 sends two regular C. But there are only two regular C. So step 3 would send both regular C, leaving left with 3M, 0 regular C, 1 big. Right has 1M (from step 1, then returned) and 1 regular C (from step 1), then step 3 sends two regular C: but there's only one regular C left on the left? Wait, no. After step 1, the left has 2M,1 regular C,1 big. Then step 2 brings back the M, so left has 3M,1 regular C,1 big. So step 3: sending two regular C. But there's only one regular C on the left. That's impossible. So this approach isn't valid.
+
+Ah, so the problem arises because with the big cannibal, the regular cannibals are only two. So we can't send two regular C in step 3 because there's only one left. So the standard solution's step 3 (sending two C) is not possible here. Hence, the big cannibal complicates the usual approach.
+
+Therefore, we need a different approach.
+
+Alternative idea: use the big cannibal's solo trips to help balance the counts.
+
+Let's try:
+
+Step 1: Send 1M and 1 regular C to right. Left: 2M,1 regular C,1 big. Right:1M,1C. Boat at right.
+
+Step 2: Return the M. Now left:3M,1C,1 big. Right:0M,1C. Boat at left.
+
+Step 3: Send 2Ms to right. Left:1M,1C,1 big. Right:2M,1C. Boat at right.
+
+Check left:1M vs 2C (1 regular +1 big) → equal, okay. Right:2M vs1C → okay.
+
+Step4: Return 1M and 1C. Now boat at left. Right:1M,0C. Left:2M,2C (1 regular +1 big). Wait, but the left has 2M and 2C (1 regular and 1 big). So cannibals are 2 (1+1) vs 2M: equal, okay.
+
+Step5: Send 2Ms to right. Left:0M,2C,1 big. Right:3M,0C. Boat at right. Now left has 0M, so cannibals are fine. Right has 3M, okay.
+
+Step6: Now, need to get the cannibals across. The boat is at right. So send one C (but right has 0C). Wait, right has 3M and 0C. The cannibals are all on the left: 2 regular and 1 big. So the boat is at right. To bring someone back, we need to send from right to left. But right has only missionaries. So send one M back. But that might not help.
+
+Step6: Send 1M back to left. Right:2M. Left:1M,2C,1 big. Boat at left.
+
+Now, left has 1M and 3C (2 regular +1 big). That's bad because cannibals (3) outnumber missionary (1). So this is invalid.
+
+Hmm, this approach isn't working. Let's try a different path.
+
+Alternative approach: Focus on moving the big cannibal first. Since he can only go alone, perhaps moving him early when there are more missionaries on the starting bank.
+
+Step1: Send big cannibal alone to right. Left:3M,2C. Right:0M,0C,1 big. Boat at right.
+
+Step2: Bring back the boat. But the only one on the right is the big cannibal. He can come back, but that just undoes step1. So not helpful. Alternatively, send someone else back. But right has only the big cannibal. So he has to come back. So this isn't helpful.
+
+Alternative idea: Maybe send the big cannibal later when it's safer.
+
+Let's try combining steps where the big cannibal is moved when possible.
+
+Step1: Send 1M and 1 regular C to right. Left:2M,1C,1 big. Right:1M,1C. Boat at right.
+
+Step2: Return the M. Left:3M,1C,1 big. Right:0M,1C. Boat at left.
+
+Step3: Send two regular C to right. But left has only 1 regular C (since initially two, step1 sent one). So can't send two. Only one regular C left. So send that one. Left:3M,0C,1 big. Right:0M,2C (1 from step1 and 1 from step3). Boat at right.
+
+Step4: Return one C. Right:0M,1C. Left:3M,1C,1 big. Boat at left.
+
+Step5: Send two Ms to right. Left:1M,1C,1 big. Right:2M,1C. Boat at right.
+
+Step6: Return one M and one C. Right:1M,0C. Left:2M,2C,1 big. Now, left has 2M vs 3C (2 regular +1 big). Cannibals outnumber, invalid.
+
+Another dead end. Maybe need to adjust step5.
+
+After step3: left has 3M,0C,1 big. Right has 0M,2C. Boat at right.
+
+Step4: Return one C. Right becomes 0M,1C. Left becomes 3M,1C,1 big. Boat at left.
+
+Step5: Now, send 3M and 1C across? But boat capacity is 2. Can't. Alternatively, send 2Ms and 1C. No, boat can't take 3. So send 2Ms. Left:1M,1C,1 big. Right:2M,1C. Boat at right.
+
+Then step6: Now, right has 2M,1C. Need to bring someone back. Send 1M back. Right:1M,1C. Left:2M,1C,1 big. Boat at left.
+
+Now, left has 2M vs 2C (1 regular +1 big) → equal. Right:1M vs1C → equal.
+
+Step7: Send 1M and 1C (regular) to right. Left:1M,0C,1 big. Right:2M,2C. Boat at right.
+
+Check left:1M vs1 big (cannibal count 1). Okay. Right:2M vs2C → equal.
+
+Step8: Return 1C. Right:2M,1C. Left:1M,1C,1 big. Boat at left.
+
+Step9: Send the big cannibal alone to right. Left:1M,1C. Right:2M,1C,1 big. Boat at right.
+
+Check left:1M vs1C → equal. Right:2M vs2C (1 regular +1 big) → equal.
+
+Step10: Now, return 1C (regular) from right to left. Right:2M,0C,1 big. Left:1M,2C. Boat at left.
+
+Step11: Send 2C (regular) from left to right. Left:1M,0C. Right:2M,2C,1 big. Boat at right.
+
+Check left:1M vs0C → okay. Right:2M vs3C (2 regular +1 big). Cannibals outnumber. Invalid.
+
+Hmm, stuck again.
+
+Alternative idea: Perhaps we need to move the big cannibal when the other side has enough missionaries to balance.
+
+Let's try:
+
+Step1: Send 1M and 1 regular C to right. Left:2M,1C,1 big. Right:1M,1C. Boat at right.
+
+Step2: Return the M. Left:3M,1C,1 big. Right:0M,1C. Boat at left.
+
+Step3: Send 2Ms to right. Left:1M,1C,1 big. Right:2M,1C. Boat at right.
+
+Step4: Return 1M and 1C. Left:2M,2C,1 big. Right:1M,0C. Boat at left.
+
+Left now has 2M and 3C (2 regular +1 big). Cannibals outnumber. Invalid.
+
+No good. Another approach: Use the big cannibal's solo trips strategically.
+
+Suppose after step3 (left:1M,1C,1 big; right:2M,1C), instead of returning 1M and 1C, send the big cannibal to the right.
+
+Step4: Send the big cannibal solo from left to right. Left:1M,1C. Right:2M,1C,1 big. Boat at right.
+
+Check left:1M vs1C → equal. Right:2M vs2C (1 regular +1 big) → equal.
+
+Step5: Return 1 regular C from right to left. Right:2M,0C,1 big. Left:1M,2C. Boat at left.
+
+Step6: Send 2 regular C to right. Left:1M,0C. Right:2M,2C,1 big. Boat at right.
+
+Check right:2M vs3C → cannibals outnumber. Invalid.
+
+No luck. Maybe step5: Instead of returning a C, return a M.
+
+Step5: Return 1M from right to left. Right:1M,1C,1 big. Left:2M,1C. Boat at left.
+
+Step6: Send 2M to right. Left:0M,1C. Right:3M,1C,1 big. Boat at right.
+
+Check left:0M,1C → okay. Right:3M vs2C → okay.
+
+Step7: Now, send the big cannibal back to left. Right:3M,1C. Left:0M,1C,1 big. Boat at left.
+
+Step8: Send the regular C from left to right. Left:0M,0C,1 big. Right:3M,2C. Boat at right.
+
+Step9: Send the big cannibal from left to right. Left:0M,0C. Right:3M,2C,1 big. All on right. Done?
+
+Wait, this seems possible. Let's check each step:
+
+Step1: 1M and 1C (regular) cross to right. Left:2M,1C,1 big. Right:1M,1C. Valid.
+
+Step2: Return M. Left:3M,1C,1 big. Right:0M,1C. Valid.
+
+Step3: Send 2Ms to right. Left:1M,1C,1 big. Right:2M,1C. Valid.
+
+Step4: Send big cannibal solo to right. Left:1M,1C. Right:2M,1C,1 big. Check right:2M vs2C (1 regular +1 big). Equal. Valid.
+
+Step5: Return 1M from right to left. Right:1M,1C,1 big. Left:2M,1C. Valid.
+
+Step6: Send 2Ms to right. Left:0M,1C. Right:3M,1C,1 big. Valid.
+
+Step7: Send big cannibal back to left. Right:3M,1C. Left:0M,1C,1 big. Valid.
+
+Step8: Send regular C from left to right. Left:0M,0C,1 big. Right:3M,2C. Valid.
+
+Step9: Send big cannibal solo to right. All at right. Done.
+
+Yes! This works. Let's verify each step's constraints:
+
+After step1: left has 2M,1C,1 big. Cannibals on left: 1 regular +1 big = 2. Missionaries 2. Equal. Okay.
+
+Right has 1M,1C. Equal. Okay.
+
+Boat: 1M and 1C. Equal. Okay.
+
+Step2: return M. Left has 3M,1C,1 big. Cannibals 2. 3M vs 2C. Okay.
+
+Right has 0M,1C. Okay.
+
+Step3: send 2M. Left has 1M,1C,1 big. Cannibals 2. 1M vs 2C. Wait, this is a problem. Because on the left, after step3, there's 1M and 2C (1 regular +1 big). Cannibals outnumber the missionary. This is invalid.
+
+Oh no! This approach fails at step3. Because after sending 2Ms, left has 1M,1C (regular), and 1 big cannibal. So total cannibals on left: 1 +1 =2, which outnumber the 1 missionary. So this step is invalid.
+
+So this path is invalid. Back to the drawing board.
+
+Alternative idea: Maybe we need to adjust step3 to avoid leaving one missionary with two cannibals.
+
+Let's try:
+
+Step1: Send 1M and 1C (regular) to right. Left:2M,1C,1 big. Right:1M,1C. Valid.
+
+Step2: Return the C (not the M). So left becomes 2M,2C,1 big. Right:1M,0C. Boat at left.
+
+But now left has 2M vs3C (2 regular +1 big). Cannibals outnumber. Invalid.
+
+Can't return the C.
+
+Step2 must return the M.
+
+So after step2, left has 3M,1C,1 big. Right:0M,1C.
+
+Step3: Send two regular C. But left has only 1 regular C. Can't send two. So step3 impossible.
+
+Alternative step3: Send 1 regular C and the big C. But big C can't go with others. So can't.
+
+So step3: send 1 regular C. Left:3M,0C,1 big. Right:0M,2C. Boat at right.
+
+Step4: Return 1C. Right:0M,1C. Left:3M,1C,1 big. Boat at left.
+
+Step5: Send two Ms. Left:1M,1C,1 big. Right:2M,1C. Boat at right.
+
+Again, left has 1M vs 2C. Invalid.
+
+Hmm. This seems like a recurring issue. Maybe we need to find a way to move the big cannibal when there are more missionaries on the right.
+
+Let me try another approach where the big cannibal is moved after some missionaries are on the right.
+
+Step1: Send 1M and 1 regular C to right. Left:2M,1C,1 big. Right:1M,1C. Valid.
+
+Step2: Return the M. Left:3M,1C,1 big. Right:0M,1C. Valid.
+
+Step3: Send 2Ms to right. Left:1M,1C,1 big. Right:2M,1C. Boat at right. Now left has 1M vs 2C (1 regular +1 big). Invalid. So this step is invalid.
+
+Alternative step3: Send 1M and 1 big C. But big C can't go with others. Can't.
+
+Alternative step3: Send the big C alone. Left:3M,1C. Right:0M,1C,1 big. Boat at right.
+
+Step4: Return a regular C from right to left. But right has only 1 regular C and 1 big C. So send the regular C back. Right:0M,0C,1 big. Left:3M,2C. Boat at left.
+
+Step5: Send 2 regular C to right. Left:3M,0C. Right:0M,2C,1 big. Boat at right.
+
+Step6: Return 1 regular C. Right:0M,1C,1 big. Left:3M,1C. Boat at left.
+
+Step7: Send 2Ms to right. Left:1M,1C. Right:2M,1C,1 big. Boat at right.
+
+Step8: Return 1M and 1C. Right:1M,0C,1 big. Left:2M,2C. Boat at left.
+
+Left has 2M vs2C. Okay.
+
+Step9: Send 2Ms to right. Left:0M,2C. Right:3M,0C,1 big. Boat at right.
+
+Step10: Return 1C. Right:3M,0C,1 big. Left:0M,3C. Boat at left.
+
+Step11: Send 2C to right. Left:0M,1C. Right:3M,2C,1 big. Boat at right.
+
+Step12: Return 1C. Right:3M,1C,1 big. Left:0M,2C. Boat at left.
+
+Step13: Send 2C to right. All on right. Done.
+
+Wait, but step13: sending 2C from left (which has 2 regular C). But the big C is already on the right. So sending the last two regular C. But the boat is at left. So step13: send 2 regular C to right. Left becomes 0M,0C. Right:3M,3C. Done.
+
+But wait, in step5, after sending two regular C to right, right has 0M,2C,1 big. But left has 3M,0C. So on the right, 0M and 3C (2 regular +1 big). That's allowed because there are no missionaries. So that's okay.
+
+But let's verify each step:
+
+Step1: Valid.
+
+Step2: Valid.
+
+Step3: Send big C alone. Left:3M,1C. Right:0M,1C,1 big. Valid.
+
+Step4: Return regular C. Right:0M,0C,1 big. Left:3M,2C. Valid.
+
+Step5: Send two regular C to right. Left:3M,0C. Right:0M,2C,1 big. Valid.
+
+Step6: Return 1 regular C. Right:0M,1C,1 big. Left:3M,1C. Valid.
+
+Step7: Send two Ms to right. Left:1M,1C. Right:2M,1C,1 big. Valid.
+
+Step8: Return 1M and 1C. Right:1M,0C,1 big. Left:2M,2C. Valid.
+
+Step9: Send two Ms to right. Left:0M,2C. Right:3M,0C,1 big. Valid.
+
+Step10: Return 1C. Right:3M,0C,1 big. Left:0M,3C. Valid.
+
+Step11: Send two C (regular) to right. Left:0M,1C. Right:3M,2C,1 big. Valid.
+
+Step12: Return 1C. Right:3M,1C,1 big. Left:0M,2C. Valid.
+
+Step13: Send two C to right. Left:0M,0C. Right:3M,3C. Valid.
+
+But wait, the problem states that the missionaries and cannibals must all be at bank2. So this works. But in step13, the big cannibal was already on the right since step3. So the final state is all 3M and 3C (including big) on bank2. This seems to work. But let's check each step for the cannibal counts and boat constraints.
+
+In step3, sending big C alone is allowed. Boat capacity is 1, which is okay since the big C takes up the boat alone.
+
+In step5, sending two regular C is allowed as the boat's capacity is 2, and they are regular.
+
+In step7, sending two Ms is okay.
+
+In step8, sending back 1M and 1C: boat has 2, which is okay, and cannibals (1) equal to missionaries (1) in the boat.
+
+Step9: sending two Ms, okay.
+
+Step10: sending 1C back, okay.
+
+Step11: sending two regular C, okay.
+
+Step12: sending 1C back, okay.
+
+Step13: sending two regular C, okay.
+
+Yes, this seems to work. But let me check each step's left and right banks for validity.
+
+Step1:
+
+Left: 2M,1C,1 big → cannibals: 2 (1+1) vs 2M → okay.
+
+Right: 1M,1C → okay.
+
+Step2:
+
+Left:3M,1C,1 big → cannibals:2 vs3M → okay.
+
+Right:0M,1C → okay.
+
+Step3:
+
+Left:3M,1C → cannibals:1 vs3M → okay.
+
+Right:0M,1C,1 big → okay (no missionaries).
+
+Step4:
+
+Left:3M,2C → cannibals:2 vs3M → okay.
+
+Right:0M,0C,1 big → okay.
+
+Step5:
+
+Left:3M,0C → okay.
+
+Right:0M,2C,1 big → okay.
+
+Step6:
+
+Left:3M,1C → cannibals:1 vs3M → okay.
+
+Right:0M,1C,1 big → okay.
+
+Step7:
+
+Left:1M,1C → cannibals:1 vs1M → okay.
+
+Right:2M,1C,1 big → cannibals:2 (1+1) vs2M → okay.
+
+Step8:
+
+Left:2M,2C → cannibals:2 vs2M → okay.
+
+Right:1M,0C,1 big → okay.
+
+Step9:
+
+Left:0M,2C → okay.
+
+Right:3M,0C,1 big → okay.
+
+Step10:
+
+Left:0M,3C → okay.
+
+Right:3M,0C,1 big → okay.
+
+Step11:
+
+Left:0M,1C → okay.
+
+Right:3M,2C,1 big → cannibals:3 vs3M → equal, okay.
+
+Step12:
+
+Left:0M,2C → okay.
+
+Right:3M,1C,1 big → cannibals:2 vs3M → okay.
+
+Step13:
+
+Left:0M,0C → okay.
+
+Right:3M,3C → okay.
+
+Yes, this works! Each step maintains the constraints. The key was to move the big cannibal early when possible and adjust the steps to ensure cannibals never outnumber missionaries on either side. The big cannibal's solo trips are used strategically to balance the counts without violating the boat's constraints.
+
+Here's a valid plan to solve the problem while adhering to all constraints:
+
+Send one missionary and one regular cannibal to bank2.
+
+Boat moves to bank2.
+
+bank1: 2M, 1C (regular), 1 bigC
+
+bank2: 1M, 1C
+
+Return the missionary to bank1.
+
+Boat moves to bank1.
+
+bank1: 3M, 1C, 1 bigC
+
+bank2: 0M, 1C
+
+Send the big cannibal alone to bank2.
+
+Boat moves to bank2.
+
+bank1: 3M, 1C
+
+bank2: 0M, 1C, 1 bigC
+
+Return one regular cannibal to bank1.
+
+Boat moves to bank1.
+
+bank1: 3M, 2C
+
+bank2: 0M, 0C, 1 bigC
+
+Send two regular cannibals to bank2.
+
+Boat moves to bank2.
+
+bank1: 3M, 0C
+
+bank2: 0M, 2C, 1 bigC
+
+Return one regular cannibal to bank1.
+
+Boat moves to bank1.
+
+bank1: 3M, 1C
+
+bank2: 0M, 1C, 1 bigC
+
+Send two missionaries to bank2.
+
+Boat moves to bank2.
+
+bank1: 1M, 1C
+
+bank2: 2M, 1C, 1 bigC
+
+Return one missionary and one regular cannibal to bank1.
+
+Boat moves to bank1.
+
+bank1: 2M, 2C
+
+bank2: 1M, 0C, 1 bigC
+
+Send two missionaries to bank2.
+
+Boat moves to bank2.
+
+bank1: 0M, 2C
+
+bank2: 3M, 0C, 1 bigC
+
+Return one regular cannibal to bank1.
+
+Boat moves to bank1.
+
+bank1: 0M, 3C
+
+bank2: 3M, 0C, 1 bigC
+
+Send two regular cannibals to bank2.
+
+Boat moves to bank2.
+
+bank1: 0M, 1C
+
+bank2: 3M, 2C, 1 bigC
+
+Return one regular cannibal to bank1.
+
+Boat moves to bank1.
+
+bank1: 0M, 2C
+
+bank2: 3M, 1C, 1 bigC
+
+Send the last two regular cannibals to bank2.
+
+Boat moves to bank2.
+
+bank1: 0M, 0C
+
+bank2: 3M, 3C (all missionaries and cannibals, including the big one)
+
+Final State: All missionaries and cannibals are safely at bank2. Each step maintains the constraints that cannibals never outnumber missionaries on either bank or in the boat. The big cannibal's solo trips ensure compliance with the boat's capacity rule when he is aboard.

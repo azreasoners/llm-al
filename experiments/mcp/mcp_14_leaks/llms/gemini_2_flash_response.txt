@@ -1,0 +1,69 @@
+
+Here's a solution to the Missionaries and Cannibals problem, considering the added complexity of bailing:
+
+Initial State:
+
+Bank 1: 3 Missionaries, 3 Cannibals, Boat
+Bank 2: 0 Missionaries, 0 Cannibals
+Moves (M = Missionary, C = Cannibal):
+
+Move 1: Two Cannibals cross from Bank 1 to Bank 2. (2C)
+
+Bank 1: 3M, 1C
+Bank 2: 0M, 2C, Boat
+Bailing Required
+Move 2: One Cannibal returns from Bank 2 to Bank 1. (1C)
+
+Bank 1: 3M, 2C, Boat
+Bank 2: 0M, 1C
+Bailing Not Required
+Move 3: Two Cannibals cross from Bank 1 to Bank 2. (2C)
+
+Bank 1: 3M, 0C
+Bank 2: 0M, 3C, Boat
+Bailing Required
+Move 4: One Cannibal returns from Bank 2 to Bank 1. (1C)
+
+Bank 1: 3M, 1C, Boat
+Bank 2: 0M, 2C
+Bailing Not Required
+Move 5: Two Missionaries cross from Bank 1 to Bank 2. (2M)
+
+Bank 1: 1M, 1C
+Bank 2: 2M, 2C, Boat
+Bailing Required
+Move 6: One Missionary and One Cannibal return from Bank 2 to Bank 1. (1M, 1C)
+
+Bank 1: 2M, 2C, Boat
+Bank 2: 1M, 1C
+Bailing Required
+Move 7: Two Missionaries cross from Bank 1 to Bank 2. (2M)
+
+Bank 1: 0M, 2C
+Bank 2: 3M, 1C, Boat
+Bailing Required
+Move 8: One Cannibal returns from Bank 2 to Bank 1. (1C)
+
+Bank 1: 0M, 3C, Boat
+Bank 2: 3M, 0C
+Bailing Not Required
+Move 9: Two Cannibals cross from Bank 1 to Bank 2. (2C)
+
+Bank 1: 0M, 1C
+Bank 2: 3M, 2C, Boat
+Bailing Required
+Move 10: One Cannibal returns from Bank 2 to Bank 1. (1C)
+
+Bank 1: 0M, 2C, Boat
+Bank 2: 3M, 1C
+Bailing Not Required
+Move 11: The final two Cannibals cross from Bank 1 to Bank 2. (2C)
+
+Bank 1: 0M, 0C
+Bank 2: 3M, 3C, Boat
+Bailing Required
+Final State:
+
+Bank 1: 0 Missionaries, 0 Cannibals
+Bank 2: 3 Missionaries, 3 Cannibals, Boat
+This solution ensures that at no point do the cannibals outnumber the missionaries on either bank or in the boat, and it explicitly notes when bailing is required.

@@ -1,0 +1,12 @@
+To solve Sudoku, a 9x9 board must be completely filled with numbers that adhere to some constraints. The possible numbers are 1-9. (1) No two numbers in the same row can be the same, (2) no two numbers in the same column can be the same, and (3) no two numbers in each 3x3 square can be the same, where the 3x3 squares are made by evenly splitting the 9x9 board.
+
+There are three types of things: "row", "column", and "value".
+
+0..8 are rows.
+0..8 are columns.
+1,2,3,4,5,6,7,8,9 are values.
+
+Fluents
+An element (row,column) having a value is an inertial fluent(int).
+
+The element in row 0 and column 1 is 4. The element in row 0 and column 3 is 1. The element in row 0 and column 7 is 5. The element in row 1 and column 0 is 1. The element in row 1 and column 2 is 7. The element in row 1 and column 5 is 3. The element in row 1 and column 6 is 9. The element in row 1 and column 7 is 6. The element in row 2 and column 0 is 5. The element in row 2 and column 1 is 2. The element in row 2 and column 5 is 8. The element in row 3 and column 7 is 1. The element in row 3 and column 8 is 7. The element in row 4 and column 3 is 9. The element in row 4 and column 5 is 6. The element in row 4 and column 6 is 8. The element in row 5 and column 0 is 8. The element in row 5 and column 2 is 3. The element in row 5 and column 4 is 5. The element in row 5 and column 6 is 6. The element in row 5 and column 7 is 2. The element in row 6 and column 1 is 9. The element in row 6 and column 4 is 6. The element in row 6 and column 6 is 5. The element in row 6 and column 7 is 4. The element in row 6 and column 8 is 3. The element in row 7 and column 0 is 6. The element in row 7 and column 4 is 8. The element in row 7 and column 6 is 7. The element in row 8 and column 0 is 2. The element in row 8 and column 1 is 5. The element in row 8 and column 4 is 9. The element in row 8 and column 5 is 7. The element in row 8 and column 6 is 1. Find the complete solution.

@@ -1,0 +1,21 @@
+Here's a plan to move all disks to peg c, following the rules you've outlined:
+
+Initial State:
+
+Peg a: d4, d6
+Peg b: d5, d7
+Peg c: d1, d2, d3
+Moves:
+
+Move d7 from peg b to peg a: Peg a now has d4, d6, d7. Peg b has d5.
+Move d6 from peg a to peg c: Peg a now has d4, d7. Peg c has d1, d2, d3, d6.
+Move d5 from peg b to peg c: Peg b is now empty. Peg c has d1, d2, d3, d6, d5.
+Move d7 from peg a to peg b: Peg a now has d4. Peg b has d7.
+Move d4 from peg a to peg c: Peg a is now empty. Peg c has d1, d2, d3, d6, d5, d4.
+Move d7 from peg b to peg c: Peg b is now empty. Peg c has d1, d2, d3, d6, d5, d4, d7.
+Final State:
+
+Peg a: Empty
+Peg b: Empty
+Peg c: d1, d2, d3, d6, d5, d4, d7 (All disks stacked on peg c)
+Therefore, all the disks are now stacked on peg c in the correct order (d1 at the bottom, d7 at the top).

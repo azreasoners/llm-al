@@ -1,0 +1,71 @@
+% Query 1: Set value 5 to cell (0,0) which is empty. (satisfiable)
+:- query
+    0:  % No initial values specified
+    0: setValue(0,0,5).
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+
+
+% Query 2: Try to set value 5 to cell (0,0) when another cell in the same row already has value 5. (unsatisfiable)
+:- query
+    0: val(0,1)=5,
+    0: setValue(0,0,5).
+
+Cplus2ASP Output:
+
+ERROR: temp.bc:56:18]: ",": Syntax error.
+
+% Query 3: Try to set value 6 to cell (0,0) when another cell in the same column already has value 6. (unsatisfiable)
+:- query
+    0: val(1,0)=6,
+    0: setValue(0,0,6).
+
+Cplus2ASP Output:
+
+ERROR: temp.bc:56:18]: ",": Syntax error.
+
+% Query 4: Try to set value 7 to cell (0,0) when another cell in the same 3x3 square already has value 7. (unsatisfiable)
+:- query
+    0: val(1,1)=7,
+    0: setValue(0,0,7).
+
+Cplus2ASP Output:
+
+ERROR: temp.bc:56:18]: ",": Syntax error.
+
+% Query 5: Try to set a value to a cell that already has a value. (unsatisfiable)
+:- query
+    0: val(0,0)=4,
+    0: setValue(0,0,5).
+
+Cplus2ASP Output:
+
+ERROR: temp.bc:56:18]: ",": Syntax error.
+
+
+
+:- query
+    0: val(0,1) = 9 & val(0,3) = 3 & val(0,8) = 1 &
+       val(1,4) = 8 & val(1,7) = 4 & val(1,8) = 6 &
+       val(2,6) = 8 &
+       val(3,0) = 4 & val(3,2) = 5 & val(3,4) = 6 & val(3,7) = 3 &
+       val(4,2) = 3 & val(4,3) = 2 & val(4,4) = 7 & val(4,5) = 5 & val(4,6) = 6 &
+       val(5,1) = 6 & val(5,4) = 1 & val(5,6) = 9 & val(5,8) = 4 &
+       val(6,2) = 1 &
+       val(7,0) = 5 & val(7,1) = 8 & val(7,4) = 2 &
+       val(8,0) = 2 & val(8,5) = 7 & val(8,7) = 6.
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+

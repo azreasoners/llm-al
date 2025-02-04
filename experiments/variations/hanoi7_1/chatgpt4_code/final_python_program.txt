@@ -1,0 +1,35 @@
+def valid_move(state, from_peg, to_peg):
+    """ Check if the move is valid: No disk on top and not moving onto a smaller disk. """
+    if not state[from_peg]:
+        return False  # No disk to move
+    if state[to_peg] and state[from_peg][-1] > state[to_peg][-1]:
+        return False  # Cannot place larger disk on smaller disk
+    return True
+
+def move_disk(n, source, target, auxiliary, state, moves):
+    """ Recursive function to move disks following the rules of the problem. """
+    if n == 0:
+        return
+    
+    # Move n-1 disks from source to auxiliary, so they are out of the way
+    move_disk(n-1, source, auxiliary, target, state, moves)
+
+    # Move the nth disk to the target if it's a valid move
+    if valid_move(state, source, target):
+        moves.append(f"Move disk {state[source][-1]} from {source} to {target}")
+        state[target].append(state[source].pop())
+
+    # Move the n-1 disks from auxiliary to target
+    move_disk(n-1, auxiliary, target, source, state, moves)
+
+# Setup initial state reflecting the correct disk locations
+state = {
+    'a': [6, 4],   # Disks 6 and 4 on peg a
+    'b': [7, 5],   # Disks 7 and 5 on peg b
+    'c': [3, 2, 1] # Disks 3, 2, and 1 on peg c
+}
+
+moves = []
+# The goal is to move all disks to peg 'c'. We identify the total number of disks and use peg 'b' as an auxiliary.
+move_disk(7, 'a', 'c', 'b', state, moves)
+moves

@@ -1,0 +1,17 @@
+
+Here's a plan to safely transport all six missionaries and six cannibals across the river from bank1 to bank2, ensuring that the cannibals never outnumber the missionaries on either bank or in the boat:
+
+2 cannibals cross from bank1 to bank2 in the boat.
+1 cannibal returns from bank2 to bank1 in the boat.
+2 cannibals cross from bank1 to bank2 in the boat.
+1 cannibal returns from bank2 to bank1 in the boat.
+2 missionaries cross from bank1 to bank2 in the boat.
+1 missionary and 1 cannibal return from bank2 to bank1 in the boat.
+2 missionaries cross from bank1 to bank2 in the boat.
+1 cannibal returns from bank2 to bank1 in the boat.
+2 missionaries cross from bank1 to bank2 in the boat.
+1 missionary returns from bank2 to bank1 in the boat.
+2 missionaries cross from bank1 to bank2 in the boat.
+1 cannibal returns from bank2 to bank1 in the boat.
+2 cannibals cross from bank1 to bank2 in the boat.
+At this point, all six missionaries and six cannibals have safely crossed from bank1 to bank2 without the cannibals ever outnumbering the missionaries on either bank or in the boat during the process.

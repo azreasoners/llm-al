@@ -1,0 +1,1 @@
+Disk d1 is on peg a. Disk d2 is on disk d1. Disk d3 is on disk d2. In order of heaviest to lightest, the disks are d1, d2, and d3. Find a plan to stack all disks on peg c.

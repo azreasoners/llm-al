@@ -1,0 +1,18 @@
+% Query 0: Check satisfiability of program signature and rules (ignores other queries). (satisfiable)
+:- query = sat.
+
+Cplus2ASP Output:
+
+ERROR: temp.bc:72:12]: Encountered undeclared identifier "N_c/0".
+ERROR: temp.bc:72:18]: Encountered undeclared identifier "N_m/0".
+ERROR: temp.bc:72:24]: Encountered undeclared identifier "N_m/0".
+ERROR: temp.bc:72:59]: Encountered undeclared identifier "N_m/0".
+ERROR: temp.bc:72:87]: Encountered undeclared identifier "N_c/0".
+ERROR: temp.bc:75:30]: Encountered undeclared identifier "N_c/0".
+ERROR: temp.bc:75:36]: Encountered undeclared identifier "N_m/0".
+ERROR: temp.bc:75:42]: Encountered undeclared identifier "N_m/0".
+ERROR: temp.bc:75:86]: Encountered undeclared identifier "N_m/0".
+ERROR: temp.bc:75:123]: Encountered undeclared identifier "N_c/0".
+
+Since this fails, check the error message(s).
+

@@ -1,0 +1,32 @@
+% Query 0: Check satisfiability of program signature and rules (ignores other queries). (satisfiable)
+:- query = sat.
+
+Cplus2ASP Output:
+
+ERROR: temp.bc:32:1]: Encountered undeclared identifier "opposite/2".
+ERROR: temp.bc:33:1]: Encountered undeclared identifier "opposite/2".
+ERROR: temp.bc:36:52]: Encountered undeclared identifier "opposite/2".
+ERROR: temp.bc:42:85]: Encountered undeclared identifier "opposite/2".
+ERROR: temp.bc:45:27]: Encountered undeclared identifier "NTotal/0".
+ERROR: temp.bc:45:51]: Encountered undeclared identifier "NTotal/0".
+ERROR: temp.bc:48:27]: Encountered undeclared identifier "NTotal/0".
+ERROR: temp.bc:48:51]: Encountered undeclared identifier "NTotal/0".
+ERROR: temp.bc:69:61]: Encountered undeclared identifier "NTotal/0".
+ERROR: temp.bc:69:74]: Encountered undeclared identifier "NTotal/0".
+ERROR: temp.bc:72:37]: Encountered undeclared identifier "N_m/0".
+ERROR: temp.bc:72:43]: Encountered undeclared identifier "N_m/0".
+ERROR: temp.bc:72:76]: Encountered undeclared identifier "N_c/0".
+ERROR: temp.bc:72:108]: Encountered undeclared identifier "N_bc/0".
+ERROR: temp.bc:72:115]: Encountered undeclared identifier "N_c/0".
+ERROR: temp.bc:72:121]: Encountered undeclared identifier "N_bc/0".
+ERROR: temp.bc:72:128]: Encountered undeclared identifier "N_m/0".
+ERROR: temp.bc:75:56]: Encountered undeclared identifier "N_m/0".
+ERROR: temp.bc:75:62]: Encountered undeclared identifier "N_m/0".
+ERROR: temp.bc:75:99]: Encountered undeclared identifier "N_c/0".
+ERROR: temp.bc:75:135]: Encountered undeclared identifier "N_bc/0".
+ERROR: temp.bc:75:142]: Encountered undeclared identifier "N_c/0".
+ERROR: temp.bc:75:148]: Encountered undeclared identifier "N_bc/0".
+ERROR: temp.bc:75:155]: Encountered undeclared identifier "N_m/0".
+
+Since this fails, check the error message(s).
+

@@ -1,0 +1,66 @@
+
+Here is a plan to stack all disks on peg c, moving from the initial state to the goal state:
+
+Initial state:
+
+Peg a: d4, d5
+Peg b: d1, d2
+Peg c: d3
+Step 1: Move d5 from d4 (on peg a) to peg c
+
+Peg a: d4
+Peg b: d1, d2
+Peg c: d3, d5
+Step 2: Move d2 from d1 (on peg b) to peg a
+
+Peg a: d4, d2
+Peg b: d1
+Peg c: d3, d5
+Step 3: Move d5 from peg c to d2 (on peg a)
+
+Peg a: d4, d2, d5
+Peg b: d1
+Peg c: d3
+Step 4: Move d3 from peg c to d1 (on peg b)
+
+Peg a: d4, d2, d5
+Peg b: d1, d3
+Peg c: (empty)
+Step 5: Move d5 from d2 (on peg a) to peg c
+
+Peg a: d4, d2
+Peg b: d1, d3
+Peg c: d5
+Step 6: Move d2 from d4 (on peg a) to peg c
+
+Peg a: d4
+Peg b: d1, d3
+Peg c: d5, d2
+Step 7: Move d3 from d1 (on peg b) to peg a
+
+Peg a: d4, d3
+Peg b: d1
+Peg c: d5, d2
+Step 8: Move d1 from peg b to peg c
+
+Peg a: d4, d3
+Peg b: (empty)
+Peg c: d5, d2, d1
+Step 9: Move d3 from peg a to peg b
+
+Peg a: d4
+Peg b: d3
+Peg c: d5, d2, d1
+Step 10: Move d4 from peg a to peg c
+
+Peg a: (empty)
+Peg b: d3
+Peg c: d5, d2, d1, d4
+Step 11: Move d3 from peg b to peg c
+
+Goal state:
+
+Peg a: (empty)
+Peg b: (empty)
+Peg c: d5, d2, d1, d4, d3
+This plan moves the disks following the constraints, never placing a heavier disk on top of a lighter one, to stack all disks on peg c.

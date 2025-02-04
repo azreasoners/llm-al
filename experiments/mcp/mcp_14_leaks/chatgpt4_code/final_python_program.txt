@@ -1,0 +1,59 @@
+def safe(m, c):
+    """Check if the missionaries are not outnumbered by cannibals."""
+    return (m == 0 or m >= c) and (3-m == 0 or 3-m >= 3-c)
+
+def solve_missionaries_and_cannibals():
+    """Solve the missionaries and cannibals problem using DFS."""
+    # Initial conditions: (missionaries, cannibals, boat location)
+    initial_state = (3, 3, 1)
+    goal_state = (0, 0, 0)
+    stack = [(initial_state, [])]  # (state, path)
+    visited = set()
+
+    while stack:
+        (m, c, b), path = stack.pop()
+        if (m, c, b) == goal_state:
+            return path
+        
+        if (m, c, b) in visited:
+            continue
+        visited.add((m, c, b))
+        
+        # Possible movements
+        movements = []
+        if b:  # boat is at bank1
+            if m > 1:
+                movements.append((2, 0))
+            if m > 0:
+                movements.append((1, 0))
+            if c > 1:
+                movements.append((0, 2))
+            if c > 0:
+                movements.append((0, 1))
+            if m > 0 and c > 0:
+                movements.append((1, 1))
+        else:  # boat is at bank2
+            if (3-m) > 1:
+                movements.append((-2, 0))
+            if (3-m) > 0:
+                movements.append((-1, 0))
+            if (3-c) > 1:
+                movements.append((0, -2))
+            if (3-c) > 0:
+                movements.append((0, -1))
+            if (3-m) > 0 and (3-c) > 0:
+                movements.append((-1, -1))
+        
+        # Explore each movement
+        for dm, dc in movements:
+            new_m, new_c = m-dm, c-dc
+            new_b = 1 - b  # toggle boat location
+            if safe(new_m, new_c) and safe(3-new_m, 3-new_c):
+                new_path = path + [(dm, dc, new_b)]
+                stack.append(((new_m, new_c, new_b), new_path))
+
+    return None
+
+# Invoke the function and print the solution
+solution = solve_missionaries_and_cannibals()
+solution

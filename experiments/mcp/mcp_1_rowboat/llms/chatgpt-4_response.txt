@@ -1,0 +1,52 @@
+
+ChatGPT
+To solve the problem of transferring three missionaries and three cannibals from bank1 to bank2 using a rowboat that carries at most two people, we need to devise a sequence of moves that ensures the cannibals never outnumber the missionaries at any location at any time. Here’s a step-by-step plan:
+
+Start:
+Bank1: 3 missionaries, 3 cannibals, rowboat
+Bank2: 0 missionaries, 0 cannibals
+Move 1:
+Take 1 missionary and 1 cannibal across to bank2.
+Bank1: 2 missionaries, 2 cannibals
+Bank2: 1 missionary, 1 cannibal, rowboat
+Move 2:
+Return 1 cannibal to bank1.
+Bank1: 2 missionaries, 3 cannibals, rowboat
+Bank2: 1 missionary, 0 cannibals
+Move 3:
+Take 2 cannibals across to bank2.
+Bank1: 2 missionaries, 1 cannibal
+Bank2: 1 missionary, 2 cannibals, rowboat
+Move 4:
+Return 1 missionary and 1 cannibal to bank1.
+Bank1: 3 missionaries, 2 cannibals, rowboat
+Bank2: 0 missionaries, 1 cannibal
+Move 5:
+Take 2 missionaries across to bank2.
+Bank1: 1 missionary, 2 cannibals
+Bank2: 2 missionaries, 1 cannibal, rowboat
+Move 6:
+Return 1 missionary and 1 cannibal to bank1.
+Bank1: 2 missionaries, 3 cannibals, rowboat
+Bank2: 1 missionary, 0 cannibals
+Move 7:
+Take 2 missionaries across to bank2.
+Bank1: 0 missionaries, 3 cannibals
+Bank2: 3 missionaries, 0 cannibals, rowboat
+Move 8:
+Return 1 cannibal to bank1.
+Bank1: 0 missionaries, 4 cannibals, rowboat
+Bank2: 3 missionaries, 0 cannibals
+Move 9:
+Take 2 cannibals across to bank2.
+Bank1: 0 missionaries, 2 cannibals
+Bank2: 3 missionaries, 2 cannibals, rowboat
+Move 10:
+Return 1 cannibal to bank1.
+Bank1: 0 missionaries, 3 cannibals, rowboat
+Bank2: 3 missionaries, 1 cannibal
+Move 11:
+Take 2 cannibals across to bank2.
+Bank1: 0 missionaries, 1 cannibal
+Bank2: 3 missionaries, 3 cannibals, rowboat
+This sequence safely transfers all three missionaries and three cannibals from bank1 to bank2 without ever allowing the cannibals to outnumber the missionaries on either bank or on the rowboat.

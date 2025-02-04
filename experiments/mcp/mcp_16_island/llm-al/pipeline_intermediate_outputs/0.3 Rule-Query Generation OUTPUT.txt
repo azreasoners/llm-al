@@ -1,0 +1,55 @@
+% constraints/rules
+
+% 1. Crossing the boat causes the location of the boat to become the destination location.
+cross(boat) causes loc(boat) = Loc if dest(boat) = Loc.
+
+% 2. Crossing the boat causes the number of missionaries at the boat's current location to decrease by the number of missionaries on the boat during crossing.
+cross(boat) decrements numM(Loc) by N if loc(boat) = Loc & numM_on(boat) = N.
+
+% 3. Crossing the boat causes the number of cannibals at the boat's current location to decrease by the number of cannibals on the boat during crossing.
+cross(boat) decrements numC(Loc) by N if loc(boat) = Loc & numC_on(boat) = N.
+
+% 4. Crossing the boat causes the number of missionaries at the destination location to increase by the number of missionaries on the boat during crossing.
+cross(boat) increments numM(Loc) by N if dest(boat) = Loc & numM_on(boat) = N.
+
+% 5. Crossing the boat causes the number of cannibals at the destination location to increase by the number of cannibals on the boat during crossing.
+cross(boat) increments numC(Loc) by N if dest(boat) = Loc & numC_on(boat) = N.
+
+% 6. The action 'cross(boat)' is not executable if the number of missionaries on the boat during crossing plus the number of cannibals on the boat during crossing is zero.
+nonexecutable cross(boat) if N1 + N2 = 0 & N1 = numM_on(boat) & N2 = numC_on(boat).
+
+% 7. The action 'cross(boat)' is not executable if the number of missionaries on the boat during crossing plus the number of cannibals on the boat during crossing exceeds the capacity of the boat.
+nonexecutable cross(boat) if N1 + N2 > N3 & N1 = numM_on(boat) & N2 = numC_on(boat) & N3 = capacity(boat).
+
+% 8. The number of missionaries on the boat during crossing cannot exceed the number of missionaries at the boat's current location.
+nonexecutable cross(boat) if N1 > N2 & N1 = numM_on(boat) & N2 = numM(Loc) & Loc = loc(boat).
+
+% 9. The number of cannibals on the boat during crossing cannot exceed the number of cannibals at the boat's current location.
+nonexecutable cross(boat) if N1 > N2 & N1 = numC_on(boat) & N2 = numC(Loc) & Loc = loc(boat).
+
+% 10. The action 'cross(boat)' is not executable if the number of cannibals on the boat during crossing is greater than the number of missionaries on the boat during crossing and the number of missionaries on the boat during crossing is greater than zero.
+nonexecutable cross(boat) if N1 > 0 & N2 > N1 & N1 = numM_on(boat) & N2 = numC_on(boat).
+
+% 11. It is impossible for the number of cannibals at any place to be greater than the number of missionaries at that place when the number of missionaries at that place is greater than zero.
+impossible numM(P) > 0 & numC(P) > numM(P).
+
+% 12. The action 'cross(boat)' is not executable if the destination is the same as the boat's current location.
+nonexecutable cross(boat) if Loc1 = Loc2 & Loc1 = loc(boat) & Loc2 = dest(boat).
+
+% 13. The capacity of the boat is 2.
+capacity(boat) = 2.
+
+% 14. It is impossible for the number of missionaries or cannibals at any place to be negative.
+impossible numM(P) < 0.
+impossible numC(P) < 0.
+
+% 15. The total number of missionaries at bank1, bank2, and island must sum to five.
+always (numM(bank1) = N1 & numM(bank2) = N2 & numM(island) = N3) -> N1 + N2 + N3 = 5.
+
+% 16. The total number of cannibals at bank1, bank2, and island must sum to five.
+always (numC(bank1) = N1 & numC(bank2) = N2 & numC(island) = N3) -> N1 + N2 + N3 = 5.
+
+% query
+:- query
+    0: numM(bank1) = 5 & numC(bank1) = 5 & numM(bank2) = 0 & numC(bank2) = 0 & numM(island) = 0 & numC(island) = 0 & loc(boat) = bank1;
+    maxstep: numM(bank2) = 5 & numC(bank2) = 5.

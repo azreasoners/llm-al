@@ -1,0 +1,86 @@
+% Query 1: Set value 5 to cell (1,1) which is empty. (satisfiable)
+:- query
+    0: val(1,1)=5.
+
+Cplus2ASP Output:
+
+Solving...
+Solution: 1
+	
+
+	0:  val(1, 1)=5 val(1, 2)=6 val(1, 3)=9 val(1, 4)=1 val(1, 5)=2 val(1, 6)=4 val(1, 7)=3 val(1, 8)=8 val(1, 9)=7 val(2, 1)=2 val(2, 2)=4 val(2, 3)=7 val(2, 4)=8 val(2, 5)=3 val(2, 6)=5 val(2, 7)=6 val(2, 8)=1 val(2, 9)=9 val(3, 1)=3 val(3, 2)=8 val(3, 3)=1 val(3, 4)=9 val(3, 5)=7 val(3, 6)=6 val(3, 7)=2 val(3, 8)=5 val(3, 9)=4 val(4, 1)=1 val(4, 2)=3 val(4, 3)=4 val(4, 4)=2 val(4, 5)=5 val(4, 6)=9 val(4, 7)=8 val(4, 8)=7 val(4, 9)=6 val(5, 1)=9 val(5, 2)=5 val(5, 3)=2 val(5, 4)=6 val(5, 5)=8 val(5, 6)=7 val(5, 7)=4 val(5, 8)=3 val(5, 9)=1 val(6, 1)=6 val(6, 2)=7 val(6, 3)=8 val(6, 4)=4 val(6, 5)=1 val(6, 6)=3 val(6, 7)=9 val(6, 8)=2 val(6, 9)=5 val(7, 1)=7 val(7, 2)=2 val(7, 3)=6 val(7, 4)=3 val(7, 5)=4 val(7, 6)=1 val(7, 7)=5 val(7, 8)=9 val(7, 9)=8 val(8, 1)=4 val(8, 2)=1 val(8, 3)=3 val(8, 4)=5 val(8, 5)=9 val(8, 6)=8 val(8, 7)=7 val(8, 8)=6 val(8, 9)=2 val(9, 1)=8 val(9, 2)=9 val(9, 3)=5 val(9, 4)=7 val(9, 5)=6 val(9, 6)=2 val(9, 7)=1 val(9, 8)=4 val(9, 9)=3
+
+SATISFIABLE
+Models       : 1+
+
+
+% Query 2: Try to set value 5 to cell (1,1) when another cell in the same row already has value 5. (unsatisfiable)
+:- query
+    0: val(1,2)=5 & val(1,1)=5.
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+
+
+% Query 3: Try to set value 6 to cell (1,1) when another cell in the same column already has value 6. (unsatisfiable)
+:- query
+    0: val(2,1)=6 & val(1,1)=6.
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+
+
+% Query 4: Try to set value 7 to cell (1,1) when another cell in the same 3x3 block already has value 7. (unsatisfiable)
+:- query
+    0: val(2,2)=7 & val(1,1)=7.
+
+Cplus2ASP Output:
+
+TIMEOUT
+
+% Query 5: Try to set a value to a cell that already has a value. (unsatisfiable)
+:- query
+    0: val(1,1)=4 & val(1,1)=5.
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+
+
+
+
+:- query
+    0:
+        val(1,2)=9 & val(1,4)=3 & val(1,9)=1 &
+        val(2,5)=8 & val(2,8)=4 & val(2,9)=6 &
+        val(3,7)=8 &
+        val(4,1)=4 & val(4,3)=5 & val(4,5)=6 & val(4,8)=3 &
+        val(5,3)=3 & val(5,4)=2 & val(5,5)=7 & val(5,6)=5 & val(5,7)=6 &
+        val(6,2)=6 & val(6,5)=1 & val(6,7)=9 & val(6,9)=4 &
+        val(7,3)=1 &
+        val(8,1)=5 & val(8,2)=8 & val(8,5)=2 &
+        val(9,1)=2 & val(9,6)=7 & val(9,8)=6.
+
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+

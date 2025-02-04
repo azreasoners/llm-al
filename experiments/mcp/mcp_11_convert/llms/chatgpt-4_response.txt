@@ -1,0 +1,56 @@
+
+ChatGPT
+To solve this problem of transporting three missionaries and three cannibals from bank1 to bank2 using a boat that carries at most two people, we need to ensure at all times that cannibals never outnumber missionaries either in the boat or on any bank. Here's a step-by-step plan:
+
+Initial Setup:
+Bank1: 3 Missionaries (M), 3 Cannibals (C)
+Bank2: 0 M, 0 C
+Boat: at Bank1
+Objective:
+Move all individuals from Bank1 to Bank2 without ever having more cannibals than missionaries in one place.
+
+Step-by-Step Plan:
+Move 1 M and 1 C from Bank1 to Bank2
+Bank1: 2 M, 2 C
+Bank2: 1 M, 1 C
+One M and one C cross the river. Safe on both banks.
+Return 1 C to Bank1
+Bank1: 2 M, 3 C
+Bank2: 1 M, 0 C
+One C returns alone. Bank1 still safe as numbers are equal.
+Move 2 M from Bank1 to Bank2
+Bank1: 0 M, 3 C
+Bank2: 3 M, 0 C
+Two M cross the river. Bank2 is safe, Bank1 has only C.
+Return 1 M and 1 C to Bank1
+Bank1: 1 M, 4 C (conversion of one C to M during the trip back)
+Bank2: 2 M, 0 C
+One M and one C return. Conversion during the trip makes numbers safe.
+Move 2 M from Bank1 to Bank2
+Bank1: 0 M, 3 C
+Bank2: 4 M, 0 C
+Two M cross the river. Bank2 remains safe, Bank1 has only C.
+Return 1 C to Bank1
+Bank1: 0 M, 4 C
+Bank2: 4 M, 0 C
+One C returns alone.
+Move 2 C from Bank1 to Bank2
+Bank1: 0 M, 2 C
+Bank2: 4 M, 2 C
+Two C cross the river. Both banks are safe.
+Return 1 M and 1 C to Bank1
+Bank1: 1 M, 3 C (conversion during trip)
+Bank2: 3 M, 1 C
+One M and one C return, with a conversion during the trip.
+Move 2 M from Bank1 to Bank2
+Bank1: 0 M, 3 C
+Bank2: 5 M, 1 C
+Two M cross the river. Both banks remain safe.
+Move 1 M and 1 C from Bank1 to Bank2
+Bank1: 0 M, 2 C
+Bank2: 6 M, 2 C (final conversion during the trip)
+Last M and C cross the river, with a conversion during the trip.
+Final State:
+Bank1: 0 M, 0 C
+Bank2: 6 M, 0 C
+This sequence ensures the safety of the missionaries at every step, utilizing the rule of conversion when a single C is outnumbered by M during a crossing.

@@ -1,0 +1,41 @@
+def is_safe(m, c):
+    """ Check if missionaries are not outnumbered by cannibals. """
+    return (m == 0 or m >= c) and (5 - m == 0 or 5 - m >= 5 - c)
+
+def solve_missionaries_cannibals():
+    from collections import deque
+    initial_state = (5, 5, 0, 0, 1)  # (M_left, C_left, M_right, C_right, boat_position)
+    goal_state = (0, 0, 5, 5, 0)
+    visited = set()
+    queue = deque([(initial_state, [])])
+    
+    while queue:
+        (m_left, c_left, m_right, c_right, boat), path = queue.popleft()
+        visited.add((m_left, c_left, m_right, c_right, boat))
+        
+        # Determine possible moves based on the boat's position
+        moves = [(1, 0), (2, 0), (0, 1), (0, 2), (1, 1)]
+        if boat == 0:  # Boat on the right bank
+            moves = [(-dm, -dc) for dm, dc in moves]
+
+        for m_move, c_move in moves:
+            new_m_left = m_left - m_move
+            new_c_left = c_left - c_move
+            new_m_right = m_right + m_move
+            new_c_right = c_right + c_move
+            new_boat = 0 if boat == 1 else 1
+
+            if 0 <= new_m_left <= 5 and 0 <= new_c_left <= 5 and 0 <= new_m_right <= 5 and 0 <= new_c_right <= 5:
+                if is_safe(new_m_left, new_c_left) and is_safe(new_m_right, new_c_right):
+                    new_state = (new_m_left, new_c_left, new_m_right, new_c_right, new_boat)
+                    if new_state not in visited:
+                        new_path = path + [(m_move, c_move, boat)]
+                        if (new_m_left, new_c_left, new_m_right, new_c_right) == goal_state[:4] and new_boat == goal_state[4]:
+                            return new_path  # Return the path if goal is reached
+                        queue.append((new_state, new_path))
+    
+    return []
+
+# Run the corrected solution
+corrected_solution = solve_missionaries_cannibals()
+corrected_solution

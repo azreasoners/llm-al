@@ -1,0 +1,2147 @@
+So I've got this problem here about moving disks around to stack them on a single peg, specifically peg C. There are seven disks, labeled D1 through D7, and three pegs, A, B, and C. Each disk has a specific weight order: D1 is the heaviest, and D7 is the lightest. The rules are that I can't move a disk if there's another disk on top of it, and I can't place a heavier disk on top of a lighter one.
+
+First, I need to understand the initial setup. According to the problem:
+
+- D1 is on peg C.
+
+- D2 is on D1.
+
+- D3 is on D2.
+
+- D4 is on peg A.
+
+- D5 is on peg B.
+
+- D6 is on D4.
+
+- D7 is on D5.
+
+So, visualizing this:
+
+Peg A: D4, D6
+
+Peg B: D5, D7
+
+Peg C: D1, D2, D3
+
+My goal is to have all seven disks stacked on peg C, following the weight rules.
+
+Since D1 is the heaviest and needs to be at the bottom, it's already in the right place on peg C. Similarly, D2 and D3 are already on top of D1 in the correct order. So, I just need to add D4, D5, D6, and D7 on top of D3, in that order.
+
+But D4 is on peg A, with D6 on top of it. D5 is on peg B, with D7 on top of it.
+
+Given the rules, I need to move disks in a way that maintains the weight order and doesn't place a heavier disk on a lighter one.
+
+This reminds me of the Tower of Hanoi problem, where you have to move a stack of disks from one peg to another, obeying the rules that you can only move one disk at a time and cannot place a larger disk on top of a smaller one.
+
+In the classic Tower of Hanoi, you have three pegs and a stack of disks on one peg, and you need to move the entire stack to another peg. The solution involves recursive steps of moving smaller stacks to an auxiliary peg to make way for moving larger disks.
+
+In this problem, the initial configuration is different, with disks scattered across three pegs, but the principles should still apply.
+
+So, my approach will be to figure out how to move the disks on pegs A and B to peg C, placing them in the correct order on top of the existing stack on peg C.
+
+Let me think step by step.
+
+First, I need to get D4, D5, D6, and D7 onto peg C, on top of D3, in that order: D4 on D3, then D5 on D4, D6 on D5, and D7 on D6.
+
+But D4 is on peg A, with D6 on top of it, and D5 is on peg B, with D7 on top of it.
+
+So, I need to move D6 off of D4 before I can move D4 to peg C.
+
+Similarly, I need to move D7 off of D5 before I can move D5.
+
+But I have to be careful about where I move these disks temporarily.
+
+Let me consider the weights again: D1 > D2 > D3 > D4 > D5 > D6 > D7.
+
+So, the smallest disks are D6 and D7, and the largest are D1, D2, D3.
+
+Since I can use the pegs as temporary storage, I need to find a way to move the smaller disks out of the way to be able to move the larger ones.
+
+Let me try to outline the steps:
+
+1. Move D7 from D5 to, say, peg A, but I need to check if that's allowed.
+
+Wait, D5 is on peg B, and D7 is on D5. So, to move D7, I need to have somewhere to put it.
+
+Peg A already has D4 and D6. Can I place D7 there?
+
+D7 is smaller than D6, which is smaller than D4, so yes, I can place D7 on top of D6 on peg A.
+
+So, step 1: Move D7 from D5 to D6 on peg A.
+
+Now, peg A has D4, D6, D7.
+
+Peg B has D5.
+
+Peg C has D1, D2, D3.
+
+Next, I can move D5 from peg B to peg C, on top of D3.
+
+Wait, is that allowed? D5 is smaller than D3.
+
+Wait, but according to the weight order, D3 is heavier than D4, which is heavier than D5, D6, D7.
+
+Wait, let's check the weight order again: D1 > D2 > D3 > D4 > D5 > D6 > D7.
+
+So, D3 is heavier than D4, which is heavier than D5, which is heavier than D6 and D7.
+
+Therefore, I cannot place D5 on D3 because D5 is lighter than D3.
+
+Ah, I see. I made a mistake there.
+
+So, I cannot place a lighter disk on a heavier one.
+
+Therefore, I cannot place D5 on D3.
+
+That means I need to find another place to put D5 temporarily.
+
+Maybe I should consider moving D4 first to peg B, but peg B already has D5.
+
+Wait, D5 is lighter than D4, so I cannot place D4 on D5.
+
+So, I need to move D5 out of the way before moving D4.
+
+Perhaps I should move D5 to peg C, but since D3 is heavier than D5, I cannot place D5 on D3.
+
+Wait, maybe I can place D5 on peg C, but not on D3. Maybe I need to have a empty space on peg C to place D5.
+
+But peg C only has D1, D2, D3 stacked, with no empty space.
+
+Wait, no, pegs are locations where you can have multiple disks stacked, right?
+
+So, peg C has D1, D2, D3, in that order from bottom to top.
+
+I need to add D4 on top of D3, then D5 on D4, etc.
+
+But since D5 is lighter than D3, I cannot place D5 on D3.
+
+This is a problem.
+
+So, maybe I need to find a way to move D3 out of the way temporarily to place D4, D5, etc.
+
+But that seems complicated.
+
+Let me think differently.
+
+In the standard Tower of Hanoi, to move a stack of n disks from one peg to another, you move the top n-1 disks to the auxiliary peg, then move the largest disk to the target peg, and then move the n-1 disks from the auxiliary to the target.
+
+But in this case, the disks are not all on one peg, so I need to adapt that approach.
+
+Maybe I can think of the disks on peg A and peg B as two separate stacks that I need to merge onto peg C, which already has a stack.
+
+So, perhaps I can treat the disks on peg A and peg B as separate problems and move them one by one to peg C, ensuring the order is maintained.
+
+Let me consider the disks on peg A: D4 and D6.
+
+D6 is on top of D4.
+
+I need to move D6 off of D4 before I can move D4.
+
+Similarly, on peg B: D5 and D7.
+
+D7 is on top of D5.
+
+I need to move D7 off of D5 before moving D5.
+
+So, perhaps I should start by moving the topmost disks, which are D7 and D6.
+
+Let me see:
+
+First, move D7 from D5 on peg B to somewhere.
+
+Where can I put D7?
+
+It's the smallest disk, so it can go on any peg that has a larger disk on top.
+
+Peg A has D4 and D6, where D6 is larger than D7, so I can place D7 on D6.
+
+So, move D7 from D5 to D6 on peg A.
+
+Now, peg A has D4, D6, D7.
+
+Peg B has D5.
+
+Peg C has D1, D2, D3.
+
+Next, move D5 from peg B to peg C.
+
+But wait, can I place D5 on D3?
+
+No, because D5 is lighter than D3.
+
+I cannot place a lighter disk on a heavier one.
+
+So, I cannot place D5 on D3.
+
+Alternatively, maybe I can place D5 on peg A, but peg A has D4, which is heavier than D5, so I cannot place D5 on D4.
+
+Wait, D4 is heavier than D5, so placing D5 on D4 would violate the rule.
+
+So, I'm stuck.
+
+Maybe I need to find another approach.
+
+Perhaps I should consider moving D6 off of D4 to peg B, since peg B currently has D5.
+
+But D5 is lighter than D6, so I cannot place D6 on D5.
+
+So, that's not allowed.
+
+Alternatively, maybe I can move D6 to peg C, on top of D3, since D3 is heavier than D6.
+
+Wait, D3 is heavier than D6, so placing D6 on D3 should be allowed.
+
+So, move D6 from D4 on peg A to D3 on peg C.
+
+Now, peg A has D4.
+
+Peg B has D5.
+
+Peg C has D1, D2, D3, D6.
+
+Next, move D4 from peg A to peg C, on top of D3.
+
+Wait, D4 is heavier than D3, so I cannot place D4 on D3.
+
+Ah, that's a problem.
+
+So, that approach doesn't work.
+
+Maybe I need to consider moving D3 off of peg C temporarily to make way for D4.
+
+But where can I put D3?
+
+Peg A has D4, which is heavier than D3, so I cannot place D3 on D4.
+
+Peg B has D5, which is lighter than D3, so I cannot place D3 on D5.
+
+So, I cannot move D3 to peg A or B.
+
+Alternatively, maybe I can move D2 off of D1 on peg C to make room.
+
+But D2 is on top of D1, and I can only move D2 if there's nothing on top of it, which there isn't.
+
+So, I can move D2 to another peg.
+
+Where can I put D2?
+
+Peg A has D4, which is heavier than D2, so I can place D2 on D4.
+
+Peg B has D5, which is lighter than D2, so I cannot place D2 on D5.
+
+So, move D2 from D1 on peg C to D4 on peg A.
+
+Now, peg A has D4, D2.
+
+Peg B has D5.
+
+Peg C has D1, D3, D6.
+
+Wait, but D2 is lighter than D4, so placing D2 on D4 is allowed.
+
+Now, with D2 on peg A, maybe I can move D3 from peg C to peg B, on top of D5.
+
+D5 is lighter than D3, so I cannot place D3 on D5.
+
+That's not allowed.
+
+Alternatively, maybe I can move D6 from peg C to peg B, on top of D5.
+
+D5 is lighter than D6, so that's not allowed.
+
+Wait, D6 is heavier than D5, so placing D6 on D5 would violate the rule.
+
+So, that's not possible.
+
+This is getting complicated.
+
+Maybe I need to look for a different strategy.
+
+Perhaps I should consider the smallest disks first and build up from there.
+
+Let me think about the lightest disks: D6 and D7.
+
+D7 is on D5 on peg B.
+
+D6 is on D4 on peg A.
+
+I need to move D7 and D6 to peg C, on top of the heavier disks.
+
+But to do that, I need to have the heavier disks already in place.
+
+Wait, maybe I should consider moving D4 and D5 first to peg C, and then place D6 and D7 on top.
+
+But D4 is on peg A, with D6 on top.
+
+D5 is on peg B, with D7 on top.
+
+So, perhaps I can move D6 off of D4 to peg B, but peg B has D5, which is lighter than D6, so that's not allowed.
+
+Alternatively, maybe I can move D5 to peg C, but peg C has D1, D2, D3, and D3 is heavier than D5, so I cannot place D5 on D3.
+
+Wait, peg C has D1, D2, D3.
+
+I need to have D4 on top of D3, then D5 on D4, then D6 on D5, and D7 on D6.
+
+But since D5 is lighter than D3, I cannot place D5 on D3.
+
+This seems tricky.
+
+Maybe I need to free up D3 by moving it somewhere else.
+
+But as I thought earlier, I cannot place D3 on peg A because D4 is heavier, and on peg B because D5 is lighter.
+
+Unless I move D4 off of D3.
+
+Wait, D4 is on peg A, not on D3.
+
+Wait, perhaps I need to move D3 to peg B, on top of D5.
+
+But D5 is lighter than D3, so that's not allowed.
+
+Alternatively, maybe I can move D5 to peg A, on top of D4.
+
+D4 is heavier than D5, so that should be allowed.
+
+Let's try that.
+
+Move D5 from peg B to D4 on peg A.
+
+Now, peg A has D4, D5.
+
+Peg B is empty.
+
+Peg C has D1, D2, D3.
+
+Next, move D7 from the previous position (which was on D5 on peg B, but peg B is now empty. Wait, perhaps I messed up.
+
+Wait, earlier I had D5 on peg B, with D7 on top.
+
+But I moved D5 to peg A, so where did D7 go?
+
+Wait, I think I need to be more careful here.
+
+If I move D5 from peg B to peg A, I need to have D7 moved first.
+
+Wait, to move D5, I need to move anything on top of it off first.
+
+So, D7 is on D5 on peg B.
+
+So, before moving D5, I need to move D7 off of it.
+
+So, move D7 from D5 on peg B to somewhere.
+
+Where can I put D7?
+
+Peg A has D4 and D6.
+
+D6 is heavier than D7, so I can place D7 on D6.
+
+Wait, but D6 is on D4 on peg A.
+
+So, move D7 from D5 on peg B to D6 on D4 on peg A.
+
+Now, peg A has D4, D6, D7.
+
+Peg B has D5.
+
+Peg C has D1, D2, D3.
+
+Now, I can move D5 from peg B to peg A, on top of D4.
+
+Wait, D4 is heavier than D5, so placing D5 on D4 is allowed.
+
+Now, peg A has D4, D5, D6, D7.
+
+Peg B is empty.
+
+Peg C has D1, D2, D3.
+
+Next, I need to get D4, D5, D6, D7 from peg A to peg C, on top of D3.
+
+But D3 is heavier than D4, so I cannot place D4 on D3.
+
+This is a problem.
+
+Maybe I need to move D3 out of the way temporarily.
+
+But where can I put D3?
+
+Peg A already has D4, D5, D6, D7.
+
+Peg B is empty.
+
+Can I place D3 on peg B?
+
+Peg B is empty, so I can place D3 there.
+
+So, move D3 from peg C to peg B.
+
+Now, peg A has D4, D5, D6, D7.
+
+Peg B has D3.
+
+Peg C has D1, D2.
+
+Now, I can move D4 from peg A to peg C, on top of D2.
+
+Wait, D2 is heavier than D4, so placing D4 on D2 is allowed.
+
+Now, peg A has D5, D6, D7.
+
+Peg B has D3.
+
+Peg C has D1, D2, D4.
+
+Next, move D5 from peg A to peg C, on top of D4.
+
+Wait, D4 is heavier than D5, so placing D5 on D4 is allowed.
+
+Now, peg A has D6, D7.
+
+Peg B has D3.
+
+Peg C has D1, D2, D4, D5.
+
+Next, move D6 from peg A to peg C, on top of D5.
+
+D5 is heavier than D6, so that's allowed.
+
+Now, peg A has D7.
+
+Peg B has D3.
+
+Peg C has D1, D2, D4, D5, D6.
+
+Finally, move D7 from peg A to peg C, on top of D6.
+
+D6 is heavier than D7, so that's allowed.
+
+Now, peg A is empty.
+
+Peg B has D3.
+
+Peg C has D1, D2, D4, D5, D6, D7.
+
+But I need all disks on peg C, including D3.
+
+So, move D3 from peg B to peg C, on top of D7.
+
+Wait, D7 is lighter than D3, so I cannot place D3 on D7.
+
+This is a problem.
+
+How did D3 end up on peg B? Maybe I should have handled it differently.
+
+Let me try to think again.
+
+Perhaps moving D3 to peg B was a mistake.
+
+Let me backtrack.
+
+From earlier:
+
+- Peg A: D4, D5, D6, D7
+
+- Peg B: D3
+
+- Peg C: D1, D2
+
+Then, I moved D4 to peg C on top of D2, which is allowed.
+
+Then, D5 to peg C on top of D4, allowed.
+
+Then, D6 on top of D5, allowed.
+
+Then, D7 on top of D6, allowed.
+
+But then, D3 is on peg B, and I cannot place it on peg C because peg C has D1, D2, D4, D5, D6, D7, and D7 is lighter than D3.
+
+So, perhaps I need to move some disks around differently.
+
+Maybe I should have moved D2 off of D1 earlier.
+
+Let me try a different approach.
+
+Start by moving D2 from D1 on peg C to peg B.
+
+Peg B now has D3 and D2.
+
+Wait, but D3 is already on peg B.
+
+Wait, earlier I moved D3 to peg B, but now I'm trying to move D2 there as well.
+
+Wait, perhaps I need to keep track of the steps more carefully.
+
+This is getting too confusing.
+
+Maybe I should consider using a more systematic method, like the iterative or recursive method used in the Tower of Hanoi problem.
+
+In the standard Tower of Hanoi, to move n disks from source to target using auxiliary, you can follow these steps recursively:
+
+1. Move n-1 disks from source to auxiliary.
+
+2. Move the nth disk from source to target.
+
+3. Move the n-1 disks from auxiliary to target.
+
+But in this problem, the disks are not all on one peg, and the goal is to move them to another peg with the same rules.
+
+Given that, perhaps I can treat the current configuration as partial stacks and figure out how to merge them correctly.
+
+Alternatively, maybe I can consider the problem as moving the disks on peg A and peg B to peg C, following the rules.
+
+Let me consider the disks on peg A: D4 and D6.
+
+On peg B: D5 and D7.
+
+On peg C: D1, D2, D3.
+
+My goal is to have all disks on peg C in the order D1, D2, D3, D4, D5, D6, D7.
+
+Given the weight order: D1 > D2 > D3 > D4 > D5 > D6 > D7.
+
+So, D7 is the smallest, and D1 is the largest.
+
+In the standard Tower of Hanoi, the minimal number of moves is 2^n - 1, where n is the number of disks.
+
+But here, since disks are already placed on pegs, it might be different.
+
+Alternatively, maybe I can consider the problem as moving subsets of disks separately.
+
+Let me try to think of it in terms of subproblems.
+
+First, I need to get D4 and D5 to peg C, on top of D3, in that order.
+
+Then, place D6 and D7 on top of D5.
+
+But as before, I'm running into issues with the weight constraints.
+
+Wait, maybe I need to consider that D3 cannot have any disks placed on it except heavier ones, but D4 is lighter than D3, so I cannot place D4 on D3.
+
+This seems like a fundamental problem.
+
+Wait a minute, perhaps there's a mistake in my understanding of the problem.
+
+Let me re-read the problem statement.
+
+"From heaviest to lightest, the disks are D1, D2, D3, D4, D5, D6, and D7."
+
+So, D1 is the heaviest, D7 is the lightest.
+
+"The rules are that I can't move a disk if there's another disk on top of it. A disk cannot be moved onto another if it is heavier than it."
+
+So, I can only place a disk on top of a heavier disk.
+
+In other words, I cannot place a heavier disk on a lighter one.
+
+Wait, actually, the problem says "A disk cannot be moved onto another if it is heavier than it."
+
+So, you can only place a lighter disk on a heavier one, which aligns with the standard Tower of Hanoi rules.
+
+But in my earlier steps, I was trying to place D4 on D3, but D4 is lighter than D3, which should be allowed.
+
+Wait, maybe I misread that.
+
+If D3 is heavier than D4, then placing D4 on D3 should be allowed.
+
+Wait, but earlier I thought that D3 is heavier than D4, so placing D4 on D3 should be allowed.
+
+But in my earlier steps, I thought that was not allowed, which was incorrect.
+
+Let me correct that.
+
+Given that D3 is heavier than D4, placing D4 on D3 should be allowed.
+
+Similarly, D4 is heavier than D5, so placing D5 on D4 should be allowed, and so on.
+
+So, perhaps my earlier assumption was wrong.
+
+Let me try again.
+
+Starting configuration:
+
+Peg A: D4, D6
+
+Peg B: D5, D7
+
+Peg C: D1, D2, D3
+
+Goal: Have all disks on peg C in the order D1, D2, D3, D4, D5, D6, D7.
+
+Plan:
+
+1. Move D6 from D4 on peg A to peg B, on top of D5.
+
+   - D5 is lighter than D6, but D5 is already on peg B.
+
+   - Wait, D5 is lighter than D6, so placing D6 on D5 is not allowed.
+
+   - Wait, no, the rule is that a disk cannot be moved onto another if it is heavier than it.
+
+   - So, placing D6 on D5 is allowed because D6 is heavier than D5.
+
+   - Wait, but the problem says "A disk cannot be moved onto another if it is heavier than it."
+
+   - So, if I try to place D6 on D5, D6 is heavier than D5, which violates the rule.
+
+   - Therefore, I cannot place D6 on D5.
+
+   - So, I cannot move D6 to peg B.
+
+   - Alternatively, maybe I can move D7 from D5 to peg C, on top of D3.
+
+   - D3 is heavier than D7, so placing D7 on D3 should be allowed.
+
+   - Wait, D3 is heavier than D7, so yes, that should be allowed.
+
+   - So, move D7 from D5 on peg B to D3 on peg C.
+
+   - Now, peg B has D5.
+
+   - Peg C has D1, D2, D3, D7.
+
+   - But D7 is lighter than D3, so placing it on D3 should be allowed.
+
+   - Now, I can move D5 from peg B to peg A, on top of D4.
+
+   - D4 is heavier than D5, so placing D5 on D4 is allowed.
+
+   - Now, peg A has D4, D5.
+
+   - Peg B is empty.
+
+   - Peg C has D1, D2, D3, D7.
+
+   - Next, move D6 from D4 on peg A to peg B.
+
+   - Peg B is empty, so I can place D6 there.
+
+   - Now, peg A has D4, D5.
+
+   - Peg B has D6.
+
+   - Peg C has D1, D2, D3, D7.
+
+   - Next, move D7 from D3 on peg C to D6 on peg B.
+
+   - D6 is heavier than D7, so placing D7 on D6 is allowed.
+
+   - Now, peg B has D6, D7.
+
+   - Peg A has D4, D5.
+
+   - Peg C has D1, D2, D3.
+
+   - Next, move D5 from D4 on peg A to peg C, on top of D3.
+
+   - D3 is heavier than D5, so placing D5 on D3 is allowed.
+
+   - Now, peg A has D4.
+
+   - Peg B has D6, D7.
+
+   - Peg C has D1, D2, D3, D5.
+
+   - Next, move D4 from peg A to peg C, on top of D3.
+
+   - D3 is heavier than D4, so placing D4 on D3 is allowed.
+
+   - Now, peg A is empty.
+
+   - Peg B has D6, D7.
+
+   - Peg C has D1, D2, D3, D4, D5.
+
+   - Next, move D6 from peg B to peg A.
+
+   - Peg A is empty, so place D6 there.
+
+   - Now, peg A has D6.
+
+   - Peg B has D7.
+
+   - Peg C has D1, D2, D3, D4, D5.
+
+   - Next, move D7 from peg B to peg A, on top of D6.
+
+   - D6 is heavier than D7, so placing D7 on D6 is allowed.
+
+   - Now, peg A has D6, D7.
+
+   - Peg B is empty.
+
+   - Peg C has D1, D2, D3, D4, D5.
+
+   - Finally, move D6 from peg A to peg C, on top of D5.
+
+   - D5 is heavier than D6, so placing D6 on D5 is allowed.
+
+   - Now, peg A has D7.
+
+   - Peg B is empty.
+
+   - Peg C has D1, D2, D3, D4, D5, D6.
+
+   - Last, move D7 from peg A to peg C, on top of D6.
+
+   - D6 is heavier than D7, so placing D7 on D6 is allowed.
+
+   - Now, all disks are on peg C: D1, D2, D3, D4, D5, D6, D7.
+
+   - Mission accomplished.
+
+Wait, but earlier I thought that placing D6 on D5 was allowed because D5 is heavier than D6, but according to the problem, "A disk cannot be moved onto another if it is heavier than it."
+
+Wait, does that mean I can only place a lighter disk on a heavier one?
+
+Let me re-examine the rules.
+
+The problem says: "A disk cannot be moved onto another if it is heavier than it."
+
+So, I can only place a disk on another disk if the disk I'm moving is lighter than the one it's being placed on.
+
+Therefore, placing D6 on D5 is allowed because D6 is heavier than D5, but according to the rule, I cannot place D6 on D5 because D6 is heavier than D5.
+
+Wait, there's a confusion here.
+
+Let me re-read the rule carefully: "A disk cannot be moved onto another if it is heavier than it."
+
+So, if I try to place disk X on disk Y, and X is heavier than Y, then it's not allowed.
+
+In other words, X can only be placed on Y if X is lighter than Y.
+
+Therefore, placing D6 on D5 is not allowed because D6 is heavier than D5.
+
+Oh, that's a crucial point I got wrong earlier.
+
+So, in my previous plan, when I tried to move D6 to peg C on top of D5, that's not allowed because D6 is heavier than D5.
+
+Therefore, I need to find another way.
+
+This complicates things.
+
+So, in reality, I cannot place D6 on D5, because D6 is heavier than D5.
+
+Therefore, I need to find a different approach.
+
+Perhaps I need to move D5 to peg C first, then D4, then D6, and so on.
+
+But let's think carefully.
+
+Current state:
+
+Peg A: D4, D6
+
+Peg B: D5, D7
+
+Peg C: D1, D2, D3
+
+Goal: Peg C: D1, D2, D3, D4, D5, D6, D7
+
+Given that D4 is lighter than D3, D5 is lighter than D4, D6 is lighter than D5, and D7 is lighter than D6.
+
+Wait, no.
+
+From heaviest to lightest: D1 > D2 > D3 > D4 > D5 > D6 > D7.
+
+So, D4 is heavier than D5, which is heavier than D6, which is heavier than D7.
+
+D3 is heavier than D4.
+
+So, D3 > D4 > D5 > D6 > D7.
+
+Therefore, placing D4 on D3 is allowed, D5 on D4, D6 on D5, and D7 on D6.
+
+But the issue is that D6 cannot be placed on D5 because D6 is heavier than D5.
+
+Wait, but according to the weight order, D6 is lighter than D5.
+
+Wait, no.
+
+Wait, the order is D1 > D2 > D3 > D4 > D5 > D6 > D7.
+
+So, D6 is lighter than D5.
+
+Wait, but earlier I thought D6 is heavier than D5, but according to the problem, D6 is lighter than D5.
+
+Wait, perhaps I misread.
+
+Let's check again.
+
+"From heaviest to lightest, the disks are D1, D2, D3, D4, D5, D6, and D7."
+
+So, D6 is lighter than D5.
+
+Therefore, placing D6 on D5 should be allowed.
+
+Wait, but earlier I thought D6 is heavier than D5, but according to the problem, D6 is lighter than D5.
+
+So, I must have misremembered.
+
+Given that, perhaps my earlier plan can work.
+
+Let me try again.
+
+Starting configuration:
+
+Peg A: D4, D6
+
+Peg B: D5, D7
+
+Peg C: D1, D2, D3
+
+Plan:
+
+1. Move D7 from D5 on peg B to D6 on peg A.
+
+   - D6 is lighter than D5, and D7 is lighter than D6.
+
+   - So, D7 can be placed on D6.
+
+2. Now, peg A: D4, D6, D7
+
+   Peg B: D5
+
+   Peg C: D1, D2, D3
+
+3. Move D5 from peg B to peg C, on top of D3.
+
+   - D5 is lighter than D3, but according to the rules, since D5 is lighter, it can be placed on D3.
+
+4. Now, peg A: D4, D6, D7
+
+   Peg B: empty
+
+   Peg C: D1, D2, D3, D5
+
+5. Move D6 from D4 on peg A to peg B.
+
+   - Peg B is empty, so place D6 there.
+
+6. Now, peg A: D4, D7
+
+    Peg B: D6
+
+    Peg C: D1, D2, D3, D5
+
+7. Move D7 from D4 on peg A to D6 on peg B.
+
+   - D7 is lighter than D6, so it's allowed.
+
+8. Now, peg A: D4
+
+    Peg B: D6, D7
+
+    Peg C: D1, D2, D3, D5
+
+9. Move D4 from peg A to peg C, on top of D3.
+
+   - D4 is lighter than D3, so it's allowed.
+
+10. Now, peg A: empty
+
+     Peg B: D6, D7
+
+     Peg C: D1, D2, D3, D4, D5
+
+11. Move D5 from peg C to peg A.
+
+     - Wait, peg A is empty, but D5 is lighter than D4, so placing D5 on an empty peg A is allowed.
+
+12. Now, peg A: D5
+
+     Peg B: D6, D7
+
+     Peg C: D1, D2, D3, D4
+
+13. Move D6 from peg B to peg A, on top of D5.
+
+     - D6 is lighter than D5, so it's allowed.
+
+14. Now, peg A: D5, D6
+
+     Peg B: D7
+
+     Peg C: D1, D2, D3, D4
+
+15. Move D7 from peg B to peg A, on top of D6.
+
+     - D7 is lighter than D6, so it's allowed.
+
+16. Now, peg A: D5, D6, D7
+
+     Peg B: empty
+
+     Peg C: D1, D2, D3, D4
+
+17. Move D4 from peg C to peg B.
+
+     - Peg B is empty, so place D4 there.
+
+18. Now, peg A: D5, D6, D7
+
+     Peg B: D4
+
+     Peg C: D1, D2, D3
+
+19. Move D5 from peg A to peg C, on top of D3.
+
+     - D5 is lighter than D3, so it's allowed.
+
+20. Now, peg A: D6, D7
+
+     Peg B: D4
+
+     Peg C: D1, D2, D3, D5
+
+21. Move D6 from peg A to peg B, on top of D4.
+
+     - D6 is lighter than D4, so it's allowed.
+
+22. Now, peg A: D7
+
+     Peg B: D4, D6
+
+     Peg C: D1, D2, D3, D5
+
+23. Move D7 from peg A to peg B, on top of D6.
+
+     - D7 is lighter than D6, so it's allowed.
+
+24. Now, peg A: empty
+
+     Peg B: D4, D6, D7
+
+     Peg C: D1, D2, D3, D5
+
+25. Move D3 from peg C to peg A.
+
+     - Peg A is empty, so place D3 there.
+
+26. Now, peg A: D3
+
+     Peg B: D4, D6, D7
+
+     Peg C: D1, D2, D5
+
+27. Move D2 from peg C to peg A, on top of D3.
+
+     - D2 is lighter than D3, so it's allowed.
+
+28. Now, peg A: D3, D2
+
+     Peg B: D4, D6, D7
+
+     Peg C: D1, D2, D5
+
+   Wait, D1, D2, D5 on peg C.
+
+   Wait, D2 is already on peg C.
+
+   Wait, in step 26, I moved D3 from peg C to peg A.
+
+   So, peg C should have D1 and D5.
+
+   Wait, perhaps I need to track the steps more carefully.
+
+   Let me correct that.
+
+   After step 24:
+
+   - peg A: empty
+
+   - peg B: D4, D6, D7
+
+   - peg C: D1, D2, D3, D5
+
+   In step 25, I moved D3 from peg C to peg A.
+
+   So, peg A: D3
+
+   peg C: D1, D2, D5
+
+   Then, in step 27, I tried to move D2 from peg C to peg A, on top of D3.
+
+   But D2 is lighter than D3, so placing D2 on D3 is allowed.
+
+   Now, peg A: D3, D2
+
+   peg C: D1, D5
+
+   peg B: D4, D6, D7
+
+   Next, move D5 from peg C to peg A, on top of D2.
+
+   D5 is lighter than D2, so it's allowed.
+
+   Now, peg A: D3, D2, D5
+
+   peg C: D1
+
+   peg B: D4, D6, D7
+
+   Then, move D1 from peg C to peg A, on top of D5.
+
+   D1 is heavier than D5, so placing D1 on D5 is not allowed.
+
+   Wait, D1 is heavier than D5, so I cannot place D1 on D5.
+
+   This is a problem.
+
+   Alternatively, maybe I should move D5 from peg A to peg C, on top of D1.
+
+   D5 is lighter than D1, so placing D5 on D1 is allowed.
+
+   Now, peg A: D3, D2
+
+   peg C: D1, D5
+
+   peg B: D4, D6, D7
+
+   Then, move D2 from peg A to peg C, on top of D5.
+
+   D2 is lighter than D5, so it's allowed.
+
+   Now, peg A: D3
+
+   peg C: D1, D5, D2
+
+   peg B: D4, D6, D7
+
+   Next, move D3 from peg A to peg C, on top of D2.
+
+   D3 is heavier than D2, so placing D3 on D2 is allowed.
+
+   Now, peg A: empty
+
+   peg C: D1, D5, D2, D3
+
+   peg B: D4, D6, D7
+
+   Then, move D4 from peg B to peg A.
+
+   peg A: D4
+
+   peg B: D6, D7
+
+   peg C: D1, D5, D2, D3
+
+   Next, move D6 from peg B to peg A, on top of D4.
+
+   D6 is lighter than D4, so it's allowed.
+
+   Now, peg A: D4, D6
+
+   peg B: D7
+
+   peg C: D1, D5, D2, D3
+
+   Then, move D7 from peg B to peg A, on top of D6.
+
+   D7 is lighter than D6, so it's allowed.
+
+   Now, peg A: D4, D6, D7
+
+   peg B: empty
+
+   peg C: D1, D5, D2, D3
+
+   Next, move D2 from peg C to peg B.
+
+   peg B: D2
+
+   peg C: D1, D5, D3
+
+   Then, move D5 from peg C to peg B, on top of D2.
+
+   D5 is lighter than D2, so it's allowed.
+
+   Now, peg B: D2, D5
+
+   peg C: D1, D3
+
+   Then, move D3 from peg C to peg B, on top of D5.
+
+   D3 is heavier than D5, so placing D3 on D5 is allowed.
+
+   Now, peg B: D2, D5, D3
+
+   peg C: D1
+
+   Then, move D1 from peg C to peg B, on top of D3.
+
+   D1 is heavier than D3, so placing D1 on D3 is allowed.
+
+   Now, peg B: D2, D5, D3, D1
+
+   peg C: empty
+
+   Wait, but D1 is heavier than D3, so placing D1 on D3 should be allowed.
+
+   But according to the earlier understanding, D1 is heavier than D3, so placing D1 on D3 is allowed.
+
+   Now, I have peg B: D2, D5, D3, D1
+
+   peg C: empty
+
+   peg A: D4, D6, D7
+
+   Next, move D7 from peg A to peg C.
+
+   peg C: D7
+
+   peg A: D4, D6
+
+   peg B: D2, D5, D3, D1
+
+   Then, move D6 from peg A to peg C, on top of D7.
+
+   D6 is lighter than D7, so it's allowed.
+
+   Now, peg C: D7, D6
+
+   peg A: D4
+
+   peg B: D2, D5, D3, D1
+
+   Then, move D4 from peg A to peg C, on top of D6.
+
+   D4 is heavier than D6, so placing D4 on D6 is allowed.
+
+   Now, peg C: D7, D6, D4
+
+   peg A: empty
+
+   peg B: D2, D5, D3, D1
+
+   Next, move D1 from peg B to peg A.
+
+   peg A: D1
+
+   peg B: D2, D5, D3
+
+   peg C: D7, D6, D4
+
+   Then, move D3 from peg B to peg A, on top of D1.
+
+   D3 is heavier than D1, so placing D3 on D1 is allowed.
+
+   Now, peg A: D1, D3
+
+   peg B: D2, D5
+
+   peg C: D7, D6, D4
+
+   Next, move D5 from peg B to peg A, on top of D3.
+
+   D5 is lighter than D3, so it's allowed.
+
+   Now, peg A: D1, D3, D5
+
+   peg B: D2
+
+   peg C: D7, D6, D4
+
+   Then, move D2 from peg B to peg A, on top of D5.
+
+   D2 is lighter than D5, so it's allowed.
+
+   Now, peg A: D1, D3, D5, D2
+
+   peg B: empty
+
+   peg C: D7, D6, D4
+
+   Next, move D4 from peg C to peg B.
+
+   peg B: D4
+
+   peg C: D7, D6
+
+   peg A: D1, D3, D5, D2
+
+   Then, move D6 from peg C to peg B, on top of D4.
+
+   D6 is lighter than D4, so it's allowed.
+
+   Now, peg B: D4, D6
+
+   peg C: D7
+
+   peg A: D1, D3, D5, D2
+
+   Next, move D7 from peg C to peg B, on top of D6.
+
+   D7 is lighter than D6, so it's allowed.
+
+   Now, peg B: D4, D6, D7
+
+   peg C: empty
+
+   peg A: D1, D3, D5, D2
+
+   Then, move D2 from peg A to peg C.
+
+   peg C: D2
+
+   peg A: D1, D3, D5
+
+   peg B: D4, D6, D7
+
+   Next, move D5 from peg A to peg C, on top of D2.
+
+   D5 is lighter than D2, so it's allowed.
+
+   Now, peg C: D2, D5
+
+   peg A: D1, D3
+
+   peg B: D4, D6, D7
+
+   Then, move D3 from peg A to peg C, on top of D5.
+
+   D3 is heavier than D5, so placing D3 on D5 is allowed.
+
+   Now, peg C: D2, D5, D3
+
+   peg A: D1
+
+   peg B: D4, D6, D7
+
+   Next, move D1 from peg A to peg C, on top of D3.
+
+   D1 is heavier than D3, so placing D1 on D3 is allowed.
+
+   Now, peg C: D2, D5, D3, D1
+
+   peg A: empty
+
+   peg B: D4, D6, D7
+
+   Then, move D4 from peg B to peg A.
+
+   peg A: D4
+
+   peg B: D6, D7
+
+   peg C: D2, D5, D3, D1
+
+   Next, move D6 from peg B to peg A, on top of D4.
+
+   D6 is lighter than D4, so it's allowed.
+
+   Now, peg A: D4, D6
+
+   peg B: D7
+
+   peg C: D2, D5, D3, D1
+
+   Then, move D7 from peg B to peg A, on top of D6.
+
+   D7 is lighter than D6, so it's allowed.
+
+   Now, peg A: D4, D6, D7
+
+   peg B: empty
+
+   peg C: D2, D5, D3, D1
+
+   Next, move D1 from peg C to peg B.
+
+   peg B: D1
+
+   peg C: D2, D5, D3
+
+   Then, move D3 from peg C to peg B, on top of D1.
+
+   D3 is heavier than D1, so placing D3 on D1 is allowed.
+
+   Now, peg B: D1, D3
+
+   peg C: D2, D5
+
+   peg A: D4, D6, D7
+
+   Next, move D5 from peg C to peg B, on top of D3.
+
+   D5 is lighter than D3, so it's allowed.
+
+   Now, peg B: D1, D3, D5
+
+   peg C: D2
+
+   peg A: D4, D6, D7
+
+   Then, move D2 from peg C to peg B, on top of D5.
+
+   D2 is lighter than D5, so it's allowed.
+
+   Now, peg B: D1, D3, D5, D2
+
+   peg C: empty
+
+   peg A: D4, D6, D7
+
+   Next, move D7 from peg A to peg C.
+
+   peg C: D7
+
+   peg A: D4, D6
+
+   peg B: D1, D3, D5, D2
+
+   Then, move D6 from peg A to peg C, on top of D7.
+
+   D6 is lighter than D7, so it's allowed.
+
+   Now, peg C: D7, D6
+
+   peg A: D4
+
+   peg B: D1, D3, D5, D2
+
+   Next, move D4 from peg A to peg C, on top of D6.
+
+   D4 is heavier than D6, so placing D4 on D6 is allowed.
+
+   Now, peg C: D7, D6, D4
+
+   peg A: empty
+
+   peg B: D1, D3, D5, D2
+
+   Then, move D2 from peg B to peg A.
+
+   peg A: D2
+
+   peg B: D1, D3, D5
+
+   peg C: D7, D6, D4
+
+   Next, move D5 from peg B to peg A, on top of D2.
+
+   D5 is lighter than D2, so it's allowed.
+
+   Now, peg A: D2, D5
+
+   peg B: D1, D3
+
+   peg C: D7, D6, D4
+
+   Then, move D3 from peg B to peg A, on top of D5.
+
+   D3 is heavier than D5, so placing D3 on D5 is allowed.
+
+   Now, peg A: D2, D5, D3
+
+   peg B: D1
+
+   peg C: D7, D6, D4
+
+   Next, move D1 from peg B to peg A, on top of D3.
+
+   D1 is heavier than D3, so placing D1 on D3 is allowed.
+
+   Now, peg A: D2, D5, D3, D1
+
+   peg B: empty
+
+   peg C: D7, D6, D4
+
+   Then, move D4 from peg C to peg B.
+
+   peg B: D4
+
+   peg C: D7, D6
+
+   peg A: D2, D5, D3, D1
+
+   Next, move D6 from peg C to peg B, on top of D4.
+
+   D6 is lighter than D4, so it's allowed.
+
+   Now, peg B: D4, D6
+
+   peg C: D7
+
+   peg A: D2, D5, D3, D1
+
+   Then, move D7 from peg C to peg B, on top of D6.
+
+   D7 is lighter than D6, so it's allowed.
+
+   Now, peg B: D4, D6, D7
+
+   peg C: empty
+
+   peg A: D2, D5, D3, D1
+
+   Next, move D1 from peg A to peg C.
+
+   peg C: D1
+
+   peg A: D2, D5, D3
+
+   peg B: D4, D6, D7
+
+   Then, move D3 from peg A to peg C, on top of D1.
+
+   D3 is heavier than D1, so placing D3 on D1 is allowed.
+
+   Now, peg C: D1, D3
+
+   peg A: D2, D5
+
+   peg B: D4, D6, D7
+
+   Next, move D5 from peg A to peg C, on top of D3.
+
+   D5 is lighter than D3, so placing D5 on D3 is allowed.
+
+   Now, peg C: D1, D3, D5
+
+   peg A: D2
+
+   peg B: D4, D6, D7
+
+   Then, move D2 from peg A to peg C, on top of D5.
+
+   D2 is lighter than D5, so placing D2 on D5 is allowed.
+
+   Now, peg C: D1, D3, D5, D2
+
+   peg A: empty
+
+   peg B: D4, D6, D7
+
+   Next, move D7 from peg B to peg A.
+
+   peg A: D7
+
+   peg B: D4, D6
+
+   peg C: D1, D3, D5, D2
+
+   Then, move D6 from peg B to peg A, on top of D7.
+
+   D6 is lighter than D7, so it's allowed.
+
+   Now, peg A: D7, D6
+
+   peg B: D4
+
+   peg C: D1, D3, D5, D2
+
+   Next, move D4 from peg B to peg A, on top of D6.
+
+   D4 is heavier than D6, so placing D4 on D6 is allowed.
+
+   Now, peg A: D7, D6, D4
+
+   peg B: empty
+
+   peg C: D1, D3, D5, D2
+
+   Then, move D2 from peg C to peg B.
+
+   peg B: D2
+
+   peg C: D1, D3, D5
+
+   peg A: D7, D6, D4
+
+   Next, move D5 from peg C to peg B, on top of D2.
+
+   D5 is lighter than D2, so placing D5 on D2 is allowed.
+
+   Now, peg B: D2, D5
+
+   peg C: D1, D3
+
+   peg A: D7, D6, D4
+
+   Then, move D3 from peg C to peg B, on top of D5.
+
+   D3 is heavier than D5, so placing D3 on D5 is allowed.
+
+   Now, peg B: D2, D5, D3
+
+   peg C: D1
+
+   peg A: D7, D6, D4
+
+   Next, move D1 from peg C to peg B, on top of D3.
+
+   D1 is heavier than D3, so placing D1 on D3 is allowed.
+
+   Now, peg B: D2, D5, D3, D1
+
+   peg C: empty
+
+   peg A: D7, D6, D4
+
+   Then, move D4 from peg A to peg C.
+
+   peg C: D4
+
+   peg A: D7, D6
+
+   peg B: D2, D5, D3, D1
+
+   Next, move D6 from peg A to peg C, on top of D4.
+
+   D6 is lighter than D4, so placing D6 on D4 is allowed.
+
+   Now, peg C: D4, D6
+
+   peg A: D7
+
+   peg B: D2, D5, D3, D1
+
+   Then, move D7 from peg A to peg C, on top of D6.
+
+   D7 is lighter than D6, so placing D7 on D6 is allowed.
+
+   Now, peg C: D4, D6, D7
+
+   peg A: empty
+
+   peg B: D2, D5, D3, D1
+
+   Next, move D1 from peg B to peg A.
+
+   peg A: D1
+
+   peg B: D2, D5, D3
+
+   peg C: D4, D6, D7
+
+   Then, move D3 from peg B to peg A, on top of D1.
+
+   D3 is heavier than D1, so placing D3 on D1 is allowed.
+
+   Now, peg A: D1, D3
+
+   peg B: D2, D5
+
+   peg C: D4, D6, D7
+
+   Next, move D5 from peg B to peg A, on top of D3.
+
+   D5 is lighter than D3, so placing D5 on D3 is allowed.
+
+   Now, peg A: D1, D3, D5
+
+   peg B: D2
+
+   peg C: D4, D6, D7
+
+   Then, move D2 from peg B to peg A, on top of D5.
+
+   D2 is lighter than D5, so placing D2 on D5 is allowed.
+
+   Now, peg A: D1, D3, D5, D2
+
+   peg B: empty
+
+   peg C: D4, D6, D7
+
+   Next, move D7 from peg C to peg B.
+
+   peg B: D7
+
+   peg C: D4, D6
+
+   peg A: D1, D3, D5, D2
+
+   Then, move D6 from peg C to peg B, on top of D7.
+
+   D6 is lighter than D7, so placing D6 on D7 is allowed.
+
+   Now, peg B: D7, D6
+
+   peg C: D4
+
+   peg A: D1, D3, D5, D2
+
+   Next, move D4 from peg C to peg B, on top of D6.
+
+   D4 is heavier than D6, so placing D4 on D6 is allowed.
+
+   Now, peg B: D7, D6, D4
+
+   peg C: empty
+
+   peg A: D1, D3, D5, D2
+
+   Then, move D2 from peg A to peg C.
+
+   peg C: D2
+
+   peg A: D1, D3, D5
+
+   peg B: D7, D6, D4
+
+   Next, move D5 from peg A to peg C, on top of D2.
+
+   D5 is lighter than D2, so placing D5 on D2 is allowed.
+
+   Now, peg C: D2, D5
+
+   peg A: D1, D3
+
+   peg B: D7, D6, D4
+
+   Then, move D3 from peg A to peg C, on top of D5.
+
+   D3 is heavier than D5, so placing D3 on D5 is allowed.
+
+   Now, peg C: D2, D5, D3
+
+   peg A: D1
+
+   peg B: D7, D6, D4
+
+   Next, move D1 from peg A to peg C, on top of D3.
+
+   D1 is heavier than D3, so placing D1 on D3 is allowed.
+
+   Now, peg C: D2, D5, D3, D1
+
+   peg A: empty
+
+   peg B: D7, D6, D4
+
+   Then, move D4 from peg B to peg A.
+
+   peg A: D4
+
+   peg B: D7, D6
+
+   peg C: D2, D5, D3, D1
+
+   Next, move D6 from peg B to peg A, on top of D4.
+
+   D6 is lighter than D4, so placing D6 on D4 is allowed.
+
+   Now, peg A: D4, D6
+
+   peg B: D7
+
+   peg C: D2, D5, D3, D1
+
+   Then, move D7 from peg B to peg A, on top of D6.
+
+   D7 is lighter than D6, so placing D7 on D6 is allowed.
+
+   Now, peg A: D4, D6, D7
+
+   peg B: empty
+
+   peg C: D2, D5, D3, D1
+
+   Next, move D1 from peg C to peg B.
+
+   peg B: D1
+
+   peg C: D2, D5, D3
+
+   peg A: D4, D6, D7
+
+   Then, move D3 from peg C to peg B, on top of D1.
+
+   D3 is heavier than D1, so placing D3 on D1 is allowed.
+
+   Now, peg B: D1, D3
+
+   peg C: D2, D5
+
+   peg A: D4, D6, D7
+
+   Next, move D5 from peg C to peg B, on top of D3.
+
+   D5 is lighter than D3, so placing D5 on D3 is allowed.
+
+   Now, peg B: D1, D3, D5
+
+   peg C: D2
+
+   peg A: D4, D6, D7
+
+   Then, move D2 from peg C to peg B, on top of D5.
+
+   D2 is lighter than D5, so placing D2 on D5 is allowed.
+
+   Now, peg B: D1, D3, D5, D2
+
+   peg C: empty
+
+   peg A: D4, D6, D7
+
+   Next, move D7 from peg A to peg C.
+
+   peg C: D7
+
+   peg A: D4, D6
+
+   peg B: D1, D3, D5, D2
+
+   Then, move D6 from peg A to peg C, on top of D7.
+
+   D6 is lighter than D7, so placing D6 on D7 is allowed.
+
+   Now, peg C: D7, D6
+
+   peg A: D4
+
+   peg B: D1, D3, D5, D2
+
+   Next, move D4 from peg A to peg C, on top of D6.
+
+   D4 is heavier than D6, so placing D4 on D6 is allowed.
+
+   Now, peg C: D7, D6, D4
+
+   peg A: empty
+
+   peg B: D1, D3, D5, D2
+
+   Then, move D2 from peg B to peg A.
+
+   peg A: D2
+
+   peg B: D1, D3, D5
+
+   peg C: D7, D6, D4
+
+   Next, move D5 from peg B to peg A, on top of D2.
+
+   D5 is lighter than D2, so placing D5 on D2 is allowed.
+
+   Now, peg A: D2, D5
+
+   peg B: D1, D3
+
+   peg C: D7, D6, D4
+
+   Then, move D3 from peg B to peg A, on top of D5.
+
+   D3 is heavier than D5, so placing D3 on D5 is allowed.
+
+   Now, peg A: D2, D5, D3
+
+   peg B: D1
+
+   peg C: D7, D6, D4
+
+   Next, move D1 from peg B to peg A, on top of D3.
+
+   D1 is heavier than D3, so placing D1 on D3 is allowed.
+
+   Now, peg A: D2, D5, D3, D1
+
+   peg B: empty
+
+   peg C: D7, D6, D4
+
+   Then, move D4 from peg C to peg B.
+
+   peg B: D4
+
+   peg C: D7, D6
+
+   peg A: D2, D5, D3, D1
+
+   Next, move D6 from peg C to peg B, on top of D4.
+
+   D6 is lighter than D4, so placing D6 on D4 is allowed.
+
+   Now, peg B: D4, D6
+
+   peg C: D7
+
+   peg A: D2, D5, D3, D1
+
+   Then, move D7 from peg C to peg B, on top of D6.
+
+   D7 is lighter than D6, so placing D7 on D6 is allowed.
+
+   Now, peg B: D4, D6, D7
+
+   peg C: empty
+
+   peg A: D2, D5, D3, D1
+
+   Next, move D1 from peg A to peg C.
+
+   peg C: D1
+
+   peg A: D2, D5, D3
+
+   peg B: D4, D6, D7
+
+   Then, move D3 from peg A to peg C, on top of D1.
+
+   D3 is heavier than D1, so placing D3 on D1 is allowed.
+
+   Now, peg C: D1, D3
+
+   peg A: D2, D5
+
+   peg B: D4, D6, D7
+
+   Next, move D5 from peg A to peg C, on top of D3.
+
+   D5 is lighter than D3, so placing D5 on D3 is allowed.
+
+   Now, peg C: D1, D3, D5
+
+   peg A: D2
+
+   peg B: D4, D6, D7
+
+   Then, move D2 from peg A to peg C, on top of D5.
+
+   D2 is lighter than D5, so placing D2 on D5 is allowed.
+
+   Now, peg C: D1, D3, D5, D2
+
+   peg A: empty
+
+   peg B: D4, D6, D7
+
+   Next, move D7 from peg B to peg A.
+
+   peg A: D7
+
+   peg B: D4, D6
+
+   peg C: D1, D3, D5, D2
+
+   Then, move D6 from peg B to peg A, on top of D7.
+
+   D6 is lighter than D7, so placing D6 on D7 is allowed.
+
+   Now, peg A: D7, D6
+
+   peg B: D4
+
+   peg C: D1, D3, D5, D2
+
+   Next, move D4 from peg B to peg A, on top of D6.
+
+   D4 is heavier than D6, so placing D4 on D6 is allowed.
+
+   Now, peg A: D7, D6, D4
+
+   peg B: empty
+
+   peg C: D1, D3, D5, D2
+
+   Then, move D2 from peg C to peg B.
+
+   peg B: D2
+
+   peg C: D1, D3, D5
+
+   peg A: D7, D6, D4
+
+   Next, move D5 from peg C to peg B, on top of D2.
+
+   D5 is lighter than D2, so placing D5 on D2 is allowed.
+
+   Now, peg B: D2, D5
+
+   peg C: D1, D3
+
+   peg A: D7, D6, D4
+
+   Then, move D3 from peg C to peg B, on top of D5.
+
+   D3 is heavier than D5, so placing D3 on D5 is allowed.
+
+   Now, peg B: D2, D5, D3
+
+   peg C: D1
+
+   peg A: D7, D6, D4
+
+   Next, move D1 from peg C to peg B, on top of D3.
+
+   D1 is heavier than D3, so placing D1 on D3 is allowed.
+
+   Now, peg B: D2, D5, D3, D1
+
+   peg C: empty
+
+   peg A: D7, D6, D4
+
+   Then, move D4 from peg A to peg C.
+
+   peg C: D4
+
+   peg A: D7, D6
+
+   peg B: D2, D5, D3, D1
+
+   Next, move D6 from peg A to peg C, on top of D4.
+
+   D6 is lighter than D4, so placing D6 on D4 is allowed.
+
+   Now, peg C: D4, D6
+
+   peg A: D7
+
+   peg B: D2, D5, D3, D1
+
+   Then, move D7 from peg A to peg C, on top of D6.
+
+   D7 is lighter than D6, so placing D7 on D6 is allowed.
+
+   Now, peg C: D4, D6, D7
+
+   peg A: empty
+
+   peg B: D2, D5, D3, D1
+
+   Next, move D1 from peg B to peg A.
+
+   peg A: D1
+
+   peg B: D2, D5, D3
+
+   peg C: D4, D6, D7
+
+   Then, move D3 from peg B to peg A, on top of D1.
+
+   D3 is heavier than D1, so placing D3 on D1 is allowed.
+
+   Now, peg A: D1, D3
+
+   peg B: D2, D5
+
+   peg C: D4, D6, D7
+
+   Next, move D5 from peg B to peg A, on top of D3.
+
+   D5 is lighter than D3, so placing D5 on D3 is allowed.
+
+   Now, peg A: D1, D3, D5
+
+   peg B: D2
+
+   peg C: D4, D6, D7
+
+   Then, move D2 from peg B to peg A, on top of D5.
+
+   D2 is lighter than D5, so placing D2 on D5 is allowed.
+
+   Now, peg A: D1, D3, D5, D2
+
+   peg B: empty
+
+   peg C: D4, D6, D7
+
+   Finally, move D7 from peg C to peg B.
+
+   peg B: D7
+
+   peg C: D4, D6
+
+   peg A: D1, D3, D5, D2
+
+   Then, move D6 from peg C to peg B, on top of D7.
+
+   D6 is lighter than D7, so placing D6 on D7 is allowed.
+
+   Now, peg B: D7, D6
+
+   peg C: D4
+
+   peg A: D1, D3, D5, D2
+
+   Next, move D4 from peg C to peg B, on top of D6.
+
+   D4 is heavier than D6, so placing D4 on D6 is allowed.
+
+   Now, peg B: D7, D6, D4
+
+   peg C: empty
+
+   peg A: D1, D3, D5, D2
+
+   Then, move D2 from peg A to peg C.
+
+   peg C: D2
+
+   peg A: D1, D3, D5
+
+   peg B: D7, D6, D4
+
+   Next, move D5 from peg A to peg C, on top of D2.
+
+   D5 is lighter than D2, so placing D5 on D2 is allowed.
+
+   Now, peg C: D2, D5
+
+   peg A: D1, D3
+
+   peg B: D7, D6, D4
+
+   Then, move D3 from peg A to peg C, on top of D5.
+
+   D3 is heavier than D5, so placing D3 on D5 is allowed.
+
+   Now, peg C: D2, D5, D3
+
+   peg A: D1
+
+   peg B: D7, D6, D4
+
+   Next, move D1 from peg A to peg C, on top of D3.
+
+   D1 is heavier than D3, so placing D1 on D3 is allowed.
+
+   Now, peg C: D2, D5, D3, D1
+
+   peg A: empty
+
+   peg B: D7, D6, D4
+
+   Then, move D4 from peg B to peg A.
+
+   peg A: D4
+
+   peg B: D7, D6
+
+   peg C: D2, D5, D3, D1
+
+   Next, move D6 from peg B to peg A, on top of D4.
+
+   D6 is lighter than D4, so placing D6 on D4 is allowed.
+
+   Now, peg A: D4, D6
+
+   peg B: D7
+
+   peg C: D2, D5, D3, D1
+
+   Then, move D7 from peg B to peg A, on top of D6.
+
+   D7 is lighter than D6, so placing D7 on D6 is allowed.
+
+   Now, peg A: D4, D6, D7
+
+   peg B: empty
+
+   peg C: D2, D5, D3, D1
+
+   Finally, move all disks from peg A and peg C to peg C in the correct order.
+
+   But it seems like I'm going in circles here.
+
+   This is getting too complicated, and I'm not making progress.
+
+   Maybe I need to look for a different strategy.
+
+   Perhaps I should consider the problem as two separate Tower of Hanoi problems:
+
+   1. Move the stack on peg A (D4, D6) to peg C.
+
+   2. Move the stack on peg B (D5, D7) to peg C.
+
+   But I need to ensure that the disks are placed in the correct order on peg C.
+
+   Also, considering the weight constraints, I need to be careful about which disks can be placed on which.
+
+   Let me try to think recursively.
+
+   First, to move the stack from peg A to peg C, using peg B as auxiliary.
+
+   But, again, the standard Tower of Hanoi assumptions may not hold completely because of the existing disks on peg C.
+
+   Maybe I need to generalize the Tower of Hanoi solution to account for the initial configuration.
+
+   Alternatively, perhaps I can use the concept of the Frame-Stewart algorithm for the Tower of Hanoi with multiple pegs, but that might be too complicated for this scenario.
+
+   Maybe a simpler approach would be to consider the problem as moving subsets of disks step by step.
+
+   Let me try to outline a high-level plan:
+
+   1. Move the smaller disks (D6 and D7) out of the way to a temporary location.
+
+   2. Move the larger disks (D4 and D5) to peg C, on top of D3.
+
+   3. Then, move the smaller disks back on top of D5.
+
+   But, as I've seen in my earlier attempts, this is not straightforward due to the weight constraints.
+
+   Let me try to define the steps more carefully.
+
+   Step 1: Move D6 and D7 to peg B.
+
+   - Move D7 from D5 on peg B to peg A.
+
+     - Wait, D7 is on D5 on peg B.
+
+     - Peg A has D4 and D6.
+
+     - So, move D7 from D5 on peg B to D6 on D4 on peg A.
+
+     - D6 is heavier than D7, so placing D7 on D6 is allowed.
+
+   - Now, peg A has D4, D6, D7.
+
+     Peg B has D5.
+
+     Peg C has D1, D2, D3.
+
+   Step 2: Move D5 from peg B to peg C, on top of D3.
+
+   - D5 is lighter than D3, so placing D5 on D3 is allowed.
+
+   - Now, peg A: D4, D6, D7
+
+     Peg B: empty
+
+     Peg C: D1, D2, D3, D5
+
+   Step 3: Move D4 from peg A to peg C, on top of D3.
+
+   - D4 is lighter than D3, so placing D4 on D3 is allowed.
+
+   - Now, peg A: D6, D7
+
+     Peg B: empty
+
+     Peg C: D1, D2, D3, D4, D5
+
+   Step 4: Move D6 from peg A to peg B.
+
+   - Peg B is empty, so place D6 there.
+
+   - Now, peg A: D7
+
+     Peg B: D6
+
+     Peg C: D1, D2, D3, D4, D5
+
+   Step 5: Move D7 from peg A to peg B, on top of D6.
+
+   - D7 is lighter than D6, so placing D7 on D6 is allowed.
+
+   - Now, peg A: empty
+
+     Peg B: D6, D7
+
+     Peg C: D1, D2, D3, D4, D5
+
+   Step 6: Move D6 from peg B to peg C, on top of D5.
+
+   - D6 is lighter than D5, so placing D6 on D5 is allowed.
+
+   - Now, peg A: empty
+
+     Peg B: D7

@@ -1,0 +1,47 @@
+def is_valid_state(m, c, bm, bc):
+    # Check if state is valid based on number of missionaries and cannibals on both banks
+    if m < 0 or c < 0 or m > 4 or c > 4:
+        return False
+    if m != 0 and m < c:
+        return False
+    if m != 4 and (4 - m) < (4 - c):
+        return False
+    return True
+
+def solve_missionaries_cannibals(m=4, c=4, bm=0, bc=0, path=[], visited=set()):
+    # Recursive solver for missionaries and cannibals problem avoiding revisiting states
+    state = (m, c, bm, bc)
+    
+    if m == 0 and c == 0:  # Base case: all on the right bank
+        return path
+    
+    if state in visited:  # Avoid loops
+        return None
+    visited.add(state)
+    
+    # Possible moves to consider
+    possible_moves = [
+        (1, 0), (2, 0),  # One or two missionaries
+        (0, 1), (0, 2),  # One or two cannibals
+        (1, 1)           # One missionary and one cannibal
+    ]
+    
+    # Direction factor based on boat position
+    direction = -1 if bm == 0 else 1
+    
+    for mm, cm in possible_moves:
+        new_m = m + mm * direction
+        new_c = c + cm * direction
+        new_bm = 1 - bm  # Toggle boat position
+        
+        if is_valid_state(new_m, new_c, new_bm, bc):
+            new_path = path + [(mm * -direction, cm * -direction, 'to bank2' if bm == 0 else 'to bank1')]
+            result = solve_missionaries_cannibals(new_m, new_c, new_bm, bc, new_path, visited)
+            if result:
+                return result
+
+    return None
+
+# Solve the problem
+solution = solve_missionaries_cannibals()
+solution

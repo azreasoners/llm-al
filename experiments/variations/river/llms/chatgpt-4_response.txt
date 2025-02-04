@@ -1,0 +1,33 @@
+
+ChatGPT
+To solve this classic river crossing problem involving a mouse, a snake, a piece of cheese, and a boat, where the boat can only carry one of them at a time besides the human, you must ensure that the snake never is left alone with the mouse, and the mouse is never left alone with the cheese. Here's a step-by-step solution to get all three across to the right bank of the river safely:
+
+Take the mouse to the right bank:
+Left Bank: Snake, Cheese
+Right Bank: Mouse
+Boat: Human (returning)
+Return alone to the left bank:
+Left Bank: Snake, Cheese
+Right Bank: Mouse
+Boat: Human
+Take the snake to the right bank:
+Left Bank: Cheese
+Right Bank: Mouse, Snake
+Boat: Human (returning)
+Bring the mouse back to the left bank:
+Left Bank: Mouse, Cheese
+Right Bank: Snake
+Boat: Human
+Take the cheese to the right bank:
+Left Bank: Mouse
+Right Bank: Snake, Cheese
+Boat: Human (returning)
+Return alone to the left bank:
+Left Bank: Mouse
+Right Bank: Snake, Cheese
+Boat: Human
+Take the mouse to the right bank:
+Left Bank: empty
+Right Bank: Mouse, Snake, Cheese
+Boat: Human
+Now, the mouse, snake, and cheese are all safely on the right bank, and at no point were the mouse and cheese left alone without the human, nor were the snake and mouse left alone. This ensures that the snake does not eat the mouse and the mouse does not eat the cheese during the crossing.

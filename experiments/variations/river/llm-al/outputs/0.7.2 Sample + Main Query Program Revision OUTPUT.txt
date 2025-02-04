@@ -1,0 +1,104 @@
+% PROGRAM CHANGED? [UNCHANGED]
+% BC+ signature
+:- sorts
+    thing;
+    side.
+
+:- objects
+    mouse, snake, cheese, boat :: thing;
+    leftBank, rightBank :: side.
+
+:- variables
+    T, T1, T2, T3, T4 :: thing;
+    S, S1, S2, S3, S4 :: side;
+    Bool, Bool1, Bool2, Bool3, Bool4 :: boolean.
+
+:- constants
+    moveBoat(side) :: exogenousAction;
+    load(thing) :: exogenousAction;
+    unload(thing) :: exogenousAction;
+    loc(thing) :: inertialFluent(side);
+    onBoat(thing) :: inertialFluent(boolean).
+
+% Generated constraints
+
+% 1. Loading a thing onto the boat causes the thing to be on the boat.
+load(T) causes onBoat(T).
+
+% 2. Loading a thing is not executable if the thing is already on the boat.
+nonexecutable load(T) if onBoat(T).
+
+% 3. Loading a thing is not executable if the thing's location is not the same as the boat's location.
+nonexecutable load(T) if loc(T) \= loc(boat).
+
+% 4. Unloading a thing from the boat causes the thing to not be on the boat.
+unload(T) causes ~onBoat(T).
+
+% 5. Unloading a thing is not executable if the thing is not on the boat.
+nonexecutable unload(T) if ~onBoat(T).
+
+% 6. Moving the boat to a side causes the boat's location to become that side.
+moveBoat(S) causes loc(boat)=S.
+
+% 7. Moving the boat to a side causes the location of any thing on the boat to become that side.
+moveBoat(S) causes loc(T)=S if onBoat(T).
+
+% 8. Moving the boat is not executable if there is more than one thing on the boat.
+nonexecutable moveBoat(S) if onBoat(T1) & onBoat(T2) & T1 \= T2.
+
+% 9. When a thing is on the boat, its location is the same as the boat's location.
+loc(T) = loc(boat) if onBoat(T).
+
+% 10. The boat cannot be on the boat.
+impossible onBoat(boat).
+
+% 11. It is not allowed for the mouse and the snake to be alone on one side without the boat or cheese.
+impossible loc(mouse)=S & loc(snake)=S & loc(boat)\=S & loc(cheese)\=S.
+
+% 12. It is not allowed for the mouse and the cheese to be alone on one side without the boat or snake.
+impossible loc(mouse)=S & loc(cheese)=S & loc(boat)\=S & loc(snake)\=S.
+
+% 13. The boat cannot carry more than one thing at a time.
+impossible onBoat(T1) & onBoat(T2) & T1 \= T2.
+
+% MAIN QUERY CHANGED? [UNCHANGED]
+% The mouse, snake, and cheese are on side leftBank, along with the boat. Find a plan to get the mouse, snake, and piece of cheese across the river, on the side rightBank.
+:- query
+    0: loc(mouse)=leftBank & loc(snake)=leftBank & loc(cheese)=leftBank & loc(boat)=leftBank & ~onBoat(mouse) & ~onBoat(snake) & ~onBoat(cheese) & ~onBoat(boat);
+    maxstep: loc(mouse)=rightBank & loc(snake)=rightBank & loc(cheese)=rightBank & loc(boat)=rightBank.
+
+% SAMPLE QUERIES CHANGED? [UNCHANGED]
+% Query 1: Successfully transport the mouse to the right bank (satisfiable)
+:- query
+    0: loc(mouse)=leftBank & loc(snake)=leftBank & loc(cheese)=leftBank & loc(boat)=leftBank &
+       ~onBoat(mouse) & ~onBoat(snake) & ~onBoat(cheese);
+    0: load(mouse);
+    1: moveBoat(rightBank);
+    2: unload(mouse).
+
+% Query 2: Attempt to load mouse and cheese onto the boat simultaneously (unsatisfiable)
+:- query
+    0: loc(mouse)=leftBank & loc(snake)=leftBank & loc(cheese)=leftBank & loc(boat)=leftBank &
+       ~onBoat(mouse) & ~onBoat(snake) & ~onBoat(cheese);
+    0: load(mouse);
+    0: load(cheese).
+
+% Query 3: Leaving mouse and cheese alone on left bank without boat (unsatisfiable)
+:- query
+    0: loc(mouse)=leftBank & loc(snake)=leftBank & loc(cheese)=leftBank & loc(boat)=leftBank &
+       ~onBoat(mouse) & ~onBoat(snake) & ~onBoat(cheese);
+    0: load(snake);
+    1: moveBoat(rightBank);
+    2: unload(snake).
+
+% Query 4: Attempt to unload the mouse when it is not on the boat (unsatisfiable)
+:- query
+    0: loc(mouse)=leftBank & loc(snake)=leftBank & loc(cheese)=leftBank & loc(boat)=leftBank &
+       ~onBoat(mouse) & ~onBoat(snake) & ~onBoat(cheese);
+    0: unload(mouse).
+
+% Query 5: Attempt to load the cheese when the boat and cheese are on opposite sides (unsatisfiable)
+:- query
+    0: loc(mouse)=leftBank & loc(snake)=leftBank & loc(cheese)=rightBank & loc(boat)=leftBank &
+       ~onBoat(mouse) & ~onBoat(snake) & ~onBoat(cheese);
+    0: load(cheese).

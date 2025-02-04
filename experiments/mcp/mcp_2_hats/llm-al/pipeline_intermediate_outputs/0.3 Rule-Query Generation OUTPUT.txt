@@ -1,0 +1,80 @@
+% constraints/rules
+
+% 1. Crossing a vessel causes the vessel's location to change to the opposite bank.
+cross(V) causes location(V) = bank2 if location(V) = bank1.
+cross(V) causes location(V) = bank1 if location(V) = bank2.
+
+% 2. Crossing a vessel causes the location of onboard members to change to the vessel's new location.
+cross(V) causes location(M) = bank2 if onboard(V, M) & location(V) = bank1.
+cross(V) causes location(M) = bank1 if onboard(V, M) & location(V) = bank2.
+
+% 3. Members not onboard remain at their current location after the crossing.
+% (No action needed since location(member) is an inertial fluent.)
+
+% 4. A member can be onboard the vessel only if they are at the same location as the vessel.
+always ( onboard(V, M) -> location(M) = location(V) ).
+
+% 5. Crossing a vessel is not executable if there are no members onboard.
+nonexecutable cross(V) if 
+    ~onboard(V, m1) & ~onboard(V, m2) & ~onboard(V, m3) &
+    ~onboard(V, c1) & ~onboard(V, c2) & ~onboard(V, c3).
+
+% 6. Crossing a vessel is not executable if more than two members are onboard.
+nonexecutable cross(V) if onboard(V,M1) & onboard(V,M2) & onboard(V,M3) & M1 \= M2 & M1 \= M3 & M2 \= M3.
+
+% 7. Crossing a vessel is not executable if the number of cannibals onboard exceeds the number of missionaries onboard and there is at least one missionary onboard.
+% (Redundant due to Rule 6 and the small number of members, so omitted.)
+
+% 8. After crossing, on either bank, it is not allowed for the number of cannibals to exceed the number of missionaries unless there are no missionaries on that bank.
+% For bank1:
+impossible location(Ms) = bank1 & location(Cs1) = bank1 & location(Cs2) = bank1 & Ms \= Cs1 & Cs1 \= Cs2 & Ms \= Cs2.
+impossible location(Ms) = bank1 & location(Cs1) = bank1 & location(Cs2) = bank1 & location(Cs3) = bank1 & 
+    Ms \= Cs1 & Ms \= Cs2 & Ms \= Cs3 & Cs1 \= Cs2 & Cs1 \= Cs3 & Cs2 \= Cs3.
+impossible location(Ms1) = bank1 & location(Ms2) = bank1 & location(Cs1) = bank1 & location(Cs2) = bank1 & location(Cs3) = bank1 &
+    Ms1 \= Ms2 & Cs1 \= Cs2 & Cs1 \= Cs3 & Cs2 \= Cs3 & Ms1 \= Ms2 & Ms1 \= Cs1 & Ms1 \= Cs2 & Ms1 \= Cs3 & Ms2 \= Cs1 & Ms2 \= Cs2 & Ms2 \= Cs3.
+
+% For bank2:
+impossible location(Ms) = bank2 & location(Cs1) = bank2 & location(Cs2) = bank2 & Ms \= Cs1 & Cs1 \= Cs2 & Ms \= Cs2.
+impossible location(Ms) = bank2 & location(Cs1) = bank2 & location(Cs2) = bank2 & location(Cs3) = bank2 & 
+    Ms \= Cs1 & Ms \= Cs2 & Ms \= Cs3 & Cs1 \= Cs2 & Cs1 \= Cs3 & Cs2 \= Cs3.
+impossible location(Ms1) = bank2 & location(Ms2) = bank2 & location(Cs1) = bank2 & location(Cs2) = bank2 & location(Cs3) = bank2 &
+    Ms1 \= Ms2 & Cs1 \= Cs2 & Cs1 \= Cs3 & Cs2 \= Cs3 & Ms1 \= Ms2 & Ms1 \= Cs1 & Ms1 \= Cs2 & Ms1 \= Cs3 & Ms2 \= Cs1 & Ms2 \= Cs2 & Ms2 \= Cs3.
+
+% 9. Exchanging hats between two members causes their hats to swap.
+exchangeHat(M1, M2) causes hasHat(M1) = H2 if hasHat(M2) = H2.
+exchangeHat(M1, M2) causes hasHat(M2) = H1 if hasHat(M1) = H1.
+
+% 10. Exchanging hats is executable only if both members are at the same location.
+nonexecutable exchangeHat(M1, M2) if location(M1) \= location(M2).
+
+% 11. The location of a member remains the same unless changed by crossing.
+% (No action needed since location(member) is an inertial fluent.)
+
+% 12. The location of the vessel remains the same unless changed by crossing.
+% (No action needed since location(vessel) is an inertial fluent.)
+
+% 13. The hats that members have remain the same unless changed by exchanging hats.
+% (No action needed since hasHat(member) is an inertial fluent.)
+
+% 14. Onboard is an attribute of crossing; members can be onboard only during the crossing action.
+% (No action needed as per definition of attributes.)
+
+% 15. It is not executable to both cross a vessel and exchange hats at the same time.
+nonexecutable cross(V) & exchangeHat(M1, M2).
+
+% 16. It is not executable to exchange hats between a member and themselves.
+nonexecutable exchangeHat(M1, M2) if M1 = M2.
+
+% query
+
+:- query
+    % Initial state: All missionaries and cannibals at bank1, boat at bank1, hats assigned
+    0: location(m1) = bank1 & location(m2) = bank1 & location(m3) = bank1 &
+       location(c1) = bank1 & location(c2) = bank1 & location(c3) = bank1 &
+       location(boat) = bank1 &
+       hasHat(m1) = hat1 & hasHat(m2) = hat2 & hasHat(m3) = hat3 &
+       hasHat(c1) = hat4 & hasHat(c2) = hat5 & hasHat(c3) = hat6;
+
+    % Goal state: All missionaries and cannibals at bank2
+    maxstep: location(m1) = bank2 & location(m2) = bank2 & location(m3) = bank2 &
+             location(c1) = bank2 & location(c2) = bank2 & location(c3) = bank2.

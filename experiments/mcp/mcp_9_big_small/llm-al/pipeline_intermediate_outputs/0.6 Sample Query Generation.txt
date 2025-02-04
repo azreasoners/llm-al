@@ -1,0 +1,24 @@
+% Query 1: Two people at the same location as the boat cross to the other bank (satisfiable)
+:- query
+    0: loc(missionary1) = bank1 & loc(cannibal1) = bank1 & loc(boat) = bank1;
+    0: cross(missionary1, cannibal1);
+
+% Query 2: Attempt to cross two people when one of them is not at the same location as the boat (unsatisfiable)
+:- query
+    0: loc(missionary1) = bank1 & loc(cannibal1) = bank2 & loc(boat) = bank1;
+    0: cross(missionary1, cannibal1);
+
+% Query 3: Attempt to cross when the boat is at a different location than the people (unsatisfiable)
+:- query
+    0: loc(missionary1) = bank1 & loc(cannibal1) = bank1 & loc(boat) = bank2;
+    0: cross(missionary1, cannibal1);
+
+% Query 4: One person crosses alone by having both positions as the same person (satisfiable)
+:- query
+    0: loc(cannibal2) = bank1 & loc(boat) = bank1;
+    0: cross(cannibal2, cannibal2);
+
+% Query 5: Attempt to cross when neither person is at the boat's location (unsatisfiable)
+:- query
+    0: loc(missionary2) = bank2 & loc(cannibal2) = bank2 & loc(boat) = bank1;
+    0: cross(missionary2, cannibal2);

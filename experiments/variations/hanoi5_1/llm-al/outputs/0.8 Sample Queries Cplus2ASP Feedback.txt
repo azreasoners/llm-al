@@ -1,0 +1,100 @@
+% Query 1: Try to move disk d1 to peg a when it has disk d2 on top of it (unsatisfiable)
+:- query
+    0: loc(d1)=b & loc(d2)=d1 & loc(d3)=c & loc(d4)=a & loc(d5)=d4;
+    0: move(d1,a).
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+
+
+% Query 2: Move disk d5 onto disk d4 when d5 is lighter (satisfiable)
+:- query
+    0: loc(d4)=b & loc(d5)=a;
+    0: move(d5,d4).
+
+Cplus2ASP Output:
+
+Solving...
+Solution: 1
+	
+
+	0:  loc(d1)=d3 loc(d2)=d1 loc(d3)=d2 loc(d4)=b loc(d5)=a weight(d1)=5 weight(d2)=4 weight(d3)=3 weight(d4)=2 weight(d5)=1
+
+	ACTIONS:  move(d5, d4)
+
+	1:  loc(d1)=d3 loc(d2)=d1 loc(d3)=d2 loc(d4)=b loc(d5)=d4 weight(d1)=5 weight(d2)=4 weight(d3)=3 weight(d4)=2 weight(d5)=1
+
+SATISFIABLE
+Models       : 1+
+
+
+% Query 3: Try to move disk d2 onto disk d3 when d2 is heavier than d3 (unsatisfiable)
+:- query
+    0: loc(d1)=b & loc(d2)=d1 & loc(d3)=c;
+    0: move(d2,d3).
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+
+
+% Query 4: Move disk d3 onto disk d2 when d3 is lighter (satisfiable)
+:- query
+    0: loc(d1)=b & loc(d2)=d1 & loc(d3)=c;
+    0: move(d3,d2).
+
+Cplus2ASP Output:
+
+Solving...
+Solution: 1
+	
+
+	0:  loc(d1)=b loc(d2)=d1 loc(d3)=c loc(d4)=d5 loc(d5)=d4 weight(d1)=5 weight(d2)=4 weight(d3)=3 weight(d4)=2 weight(d5)=1
+
+	ACTIONS:  move(d3, d2)
+
+	1:  loc(d1)=b loc(d2)=d1 loc(d3)=d2 loc(d4)=d5 loc(d5)=d4 weight(d1)=5 weight(d2)=4 weight(d3)=3 weight(d4)=2 weight(d5)=1
+
+SATISFIABLE
+Models       : 1+
+
+
+% Query 5: Try to move disk d4 onto itself (unsatisfiable)
+:- query
+    0: loc(d4)=a;
+    0: move(d4,d4).
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+
+
+
+
+
+:- query
+    0: loc(d1)=b & loc(d2)=d1 & loc(d3)=c & loc(d4)=a & loc(d5)=d4;
+    maxstep: loc(d1)=c & loc(d2)=d1 & loc(d3)=d2 & loc(d4)=d3 & loc(d5)=d4.
+
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+

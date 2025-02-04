@@ -1,0 +1,27 @@
+% Query 1: Attempt to move the boat from LeftBank to LeftBank when it's already on LeftBank (unsatisfiable)
+:- query
+    0: loc(boat) = LeftBank;
+    0: moveBoat(LeftBank).
+
+% Query 2: Try to board the mouse onto the boat when mouse is on RightBank and boat is on LeftBank (unsatisfiable)
+:- query
+    0: loc(boat) = LeftBank & loc(mouse) = RightBank;
+    0: boardBoat(mouse).
+
+% Query 3: Try to have the mouse and snake on the boat at the same time (unsatisfiable)
+:- query
+    0: loc(boat) = LeftBank & loc(mouse) = LeftBank & loc(snake) = LeftBank & ~onBoat(mouse) & onBoat(snake);
+    0: boardBoat(mouse).
+
+% Query 4: Try to leave mouse and cheese alone on LeftBank while the boat travels to RightBank (unsatisfiable)
+:- query
+    0: loc(boat) = LeftBank & loc(mouse) = LeftBank & loc(cheese) = LeftBank & loc(snake) = RightBank & ~onBoat(mouse) & ~onBoat(cheese);
+    0: moveBoat(RightBank).
+
+% Query 5: Successfully transport the mouse from LeftBank to RightBank (satisfiable)
+:- query
+    0: loc(boat) = LeftBank & loc(mouse) = LeftBank & ~onBoat(mouse);
+    0: boardBoat(mouse);
+    1: moveBoat(RightBank);
+    2: unboardBoat(mouse);
+    maxstep: loc(mouse) = RightBank & ~onBoat(mouse).

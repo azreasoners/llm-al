@@ -1,0 +1,58 @@
+
+Here's a step-by-step solution to the Missionaries and Cannibals problem, adhering to the given constraints:
+
+Initial State:
+
+bank1: 3 Missionaries, 3 Cannibals, Boat
+bank2: 0 Missionaries, 0 Cannibals
+Moves (M = Missionary, C = Cannibal):
+
+bank1 to bank2: 1 Missionary, 1 Cannibal (1M, 1C)
+
+bank1: 2M, 2C
+bank2: 1M, 1C, Boat
+bank2 to bank1: 1 Missionary (1M)
+
+bank1: 3M, 2C, Boat
+bank2: 0M, 1C
+bank1 to bank2: 2 Cannibals (2C)
+
+bank1: 3M, 0C
+bank2: 0M, 3C, Boat
+bank2 to bank1: 1 Cannibal (1C)
+
+bank1: 3M, 1C, Boat
+bank2: 0M, 2C
+bank1 to bank2: 2 Missionaries (2M)
+
+bank1: 1M, 1C
+bank2: 2M, 2C, Boat
+bank2 to bank1: 1 Missionary, 1 Cannibal (1M, 1C)
+
+bank1: 2M, 2C, Boat
+bank2: 1M, 1C
+bank1 to bank2: 2 Missionaries (2M)
+
+bank1: 0M, 2C
+bank2: 3M, 1C, Boat
+bank2 to bank1: 1 Cannibal (1C)
+
+bank1: 0M, 3C, Boat
+bank2: 3M, 0C
+bank1 to bank2: 2 Cannibals (2C)
+
+bank1: 0M, 1C
+bank2: 3M, 2C, Boat
+bank2 to bank1: 1 Cannibal (1C)
+
+bank1: 0M, 2C, Boat
+bank2: 3M, 1C
+bank1 to bank2: 2 Cannibals (2C)
+
+bank1: 0M, 0C
+bank2: 3M, 3C, Boat
+Final State:
+
+bank1: 0 Missionaries, 0 Cannibals
+bank2: 3 Missionaries, 3 Cannibals, Boat
+This sequence of moves ensures that at no point do the cannibals outnumber the missionaries on either bank or in the boat. It also adheres to the boat's capacity and the requirement that someone must row.

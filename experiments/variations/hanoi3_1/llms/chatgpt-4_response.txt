@@ -1,0 +1,22 @@
+
+ChatGPT
+To solve the problem of moving all disks to peg c in the Tower of Hanoi style, where smaller disks must sit atop larger ones, we can follow a step-by-step process. Let's assume the disks are arranged in increasing size from d1 (smallest) to d3 (largest).
+
+Here is the current setup:
+
+Peg a: Empty
+Peg b: d2 on d1
+Peg c: d3
+Objective: Move all disks to peg c with d3 at the bottom, d2 in the middle, and d1 on top, following the rules you mentioned.
+
+Step-by-step Solution
+Move d1 from peg b to peg a.
+This is possible because d1 is the top disk on peg b.
+Move d2 from peg b to peg c.
+This is possible because d2 is now the top disk on peg b, and peg c's top disk (d3) is larger than d2.
+Move d1 from peg a to peg c.
+This is possible because peg c's top disk (d2) is larger than d1.
+This plan will achieve the desired configuration:
+
+Peg c: d1 on d2 on d3
+Each step adheres to the rules that a disk cannot be moved if another disk is on top of it and a disk cannot be moved onto a smaller disk. This plan will successfully stack all disks on peg c in the correct order.

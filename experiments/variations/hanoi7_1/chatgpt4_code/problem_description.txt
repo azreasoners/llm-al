@@ -1,0 +1,11 @@
+Use the code interpreter to generate a Python program to solve the following problem. Revise the program as many times as needed until the program is correct.
+
+There are three types of things: location, disk, and peg.
+disks and pegs are locations.
+
+Problem Description:
+To successfully stack disks in a tower, one needs to move disks off of other disks or pegs to achieve the desired ordered stack. A disk cannot be moved if there is another disk on top of it. A disk cannot be moved onto another if it is heavier than it.
+
+There are five disks: d1, d2, d3, d4, and d5. There are three pegs: a, b, and c.
+
+Disk d1 is on peg c. Disk d2 is on disk d1. Disk d3 is on disk d2. Disk d4 is on peg a. Disk d5 is on peg b. Disk d6 is on disk d4. Disk d7 is on disk d5. From heaviest to lightest, the disks are d1, d2, d3, d4, d5, d6, and d7. Find a plan to stack all disks on peg c.

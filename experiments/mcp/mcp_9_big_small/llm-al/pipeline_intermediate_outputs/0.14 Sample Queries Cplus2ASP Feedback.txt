@@ -1,0 +1,358 @@
+% Query 0: Check satisfiability of program signature and rules (ignores other queries). (satisfiable)
+:- query = sat.
+
+Cplus2ASP Output:
+
+ERROR: temp.bc:74:52]: Encountered undeclared identifier "L1/0".
+ERROR: temp.bc:74:58]: Encountered undeclared identifier "L1/0".
+ERROR: temp.bc:74:63]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:74:68]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:74:73]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:74:90]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:74:95]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:74:104]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:74:121]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:74:126]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:75:49]: Encountered undeclared identifier "L2/0".
+ERROR: temp.bc:75:55]: Encountered undeclared identifier "L2/0".
+ERROR: temp.bc:75:60]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:75:65]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:75:70]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:75:87]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:75:92]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:75:101]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:75:118]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:75:123]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:76:55]: Encountered undeclared identifier "L1/0".
+ERROR: temp.bc:76:61]: Encountered undeclared identifier "L1/0".
+ERROR: temp.bc:76:66]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:76:71]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:76:76]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:76:93]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:76:98]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:76:107]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:76:124]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:76:129]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:77:52]: Encountered undeclared identifier "L2/0".
+ERROR: temp.bc:77:58]: Encountered undeclared identifier "L2/0".
+ERROR: temp.bc:77:63]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:77:68]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:77:73]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:77:90]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:77:95]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:77:104]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:77:121]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:77:126]: Encountered undeclared identifier "N2/0".
+
+Since this fails, check the error message(s).
+
+% Sample Query 1: Two people at the same location as the boat cross to the other bank (satisfiable)
+:- query
+    0: loc(missionary1) = bank1 & loc(cannibal1) = bank1 & loc(boat) = bank1 & 
+       num_missionaries(bank1) = 1 & num_cannibals(bank1) = 1 & num_missionaries(bank2) = 0 & num_cannibals(bank2) = 0 &
+       num_missionaries(boat) = 0 & num_cannibals(boat) = 0;
+    0: cross2(missionary1, cannibal1).
+
+Cplus2ASP Output:
+
+ERROR: temp.bc:74:52]: Encountered undeclared identifier "L1/0".
+ERROR: temp.bc:74:58]: Encountered undeclared identifier "L1/0".
+ERROR: temp.bc:74:63]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:74:68]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:74:73]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:74:90]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:74:95]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:74:104]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:74:121]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:74:126]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:75:49]: Encountered undeclared identifier "L2/0".
+ERROR: temp.bc:75:55]: Encountered undeclared identifier "L2/0".
+ERROR: temp.bc:75:60]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:75:65]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:75:70]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:75:87]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:75:92]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:75:101]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:75:118]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:75:123]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:76:55]: Encountered undeclared identifier "L1/0".
+ERROR: temp.bc:76:61]: Encountered undeclared identifier "L1/0".
+ERROR: temp.bc:76:66]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:76:71]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:76:76]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:76:93]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:76:98]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:76:107]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:76:124]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:76:129]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:77:52]: Encountered undeclared identifier "L2/0".
+ERROR: temp.bc:77:58]: Encountered undeclared identifier "L2/0".
+ERROR: temp.bc:77:63]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:77:68]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:77:73]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:77:90]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:77:95]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:77:104]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:77:121]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:77:126]: Encountered undeclared identifier "N2/0".
+
+% Sample Query 2: Attempt to cross two people when one of them is not at the same location as the boat (unsatisfiable)
+:- query
+    0: loc(missionary1) = bank1 & loc(cannibal1) = bank2 & loc(boat) = bank1 & 
+       num_missionaries(bank1) = 1 & num_cannibals(bank1) = 0 & num_missionaries(bank2) = 0 & num_cannibals(bank2) = 1 &
+       num_missionaries(boat) = 0 & num_cannibals(boat) = 0;
+    0: cross2(missionary1, cannibal1).
+
+Cplus2ASP Output:
+
+ERROR: temp.bc:74:52]: Encountered undeclared identifier "L1/0".
+ERROR: temp.bc:74:58]: Encountered undeclared identifier "L1/0".
+ERROR: temp.bc:74:63]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:74:68]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:74:73]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:74:90]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:74:95]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:74:104]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:74:121]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:74:126]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:75:49]: Encountered undeclared identifier "L2/0".
+ERROR: temp.bc:75:55]: Encountered undeclared identifier "L2/0".
+ERROR: temp.bc:75:60]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:75:65]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:75:70]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:75:87]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:75:92]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:75:101]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:75:118]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:75:123]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:76:55]: Encountered undeclared identifier "L1/0".
+ERROR: temp.bc:76:61]: Encountered undeclared identifier "L1/0".
+ERROR: temp.bc:76:66]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:76:71]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:76:76]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:76:93]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:76:98]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:76:107]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:76:124]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:76:129]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:77:52]: Encountered undeclared identifier "L2/0".
+ERROR: temp.bc:77:58]: Encountered undeclared identifier "L2/0".
+ERROR: temp.bc:77:63]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:77:68]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:77:73]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:77:90]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:77:95]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:77:104]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:77:121]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:77:126]: Encountered undeclared identifier "N2/0".
+
+% Sample Query 3: Attempt to cross when the boat is at a different location than the people (unsatisfiable)
+:- query
+    0: loc(missionary1) = bank1 & loc(cannibal1) = bank1 & loc(boat) = bank2 & 
+       num_missionaries(bank1) = 1 & num_cannibals(bank1) = 1 & num_missionaries(bank2) = 0 & num_cannibals(bank2) = 0 &
+       num_missionaries(boat) = 0 & num_cannibals(boat) = 0;
+    0: cross2(missionary1, cannibal1).
+
+Cplus2ASP Output:
+
+ERROR: temp.bc:74:52]: Encountered undeclared identifier "L1/0".
+ERROR: temp.bc:74:58]: Encountered undeclared identifier "L1/0".
+ERROR: temp.bc:74:63]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:74:68]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:74:73]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:74:90]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:74:95]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:74:104]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:74:121]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:74:126]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:75:49]: Encountered undeclared identifier "L2/0".
+ERROR: temp.bc:75:55]: Encountered undeclared identifier "L2/0".
+ERROR: temp.bc:75:60]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:75:65]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:75:70]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:75:87]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:75:92]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:75:101]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:75:118]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:75:123]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:76:55]: Encountered undeclared identifier "L1/0".
+ERROR: temp.bc:76:61]: Encountered undeclared identifier "L1/0".
+ERROR: temp.bc:76:66]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:76:71]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:76:76]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:76:93]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:76:98]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:76:107]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:76:124]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:76:129]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:77:52]: Encountered undeclared identifier "L2/0".
+ERROR: temp.bc:77:58]: Encountered undeclared identifier "L2/0".
+ERROR: temp.bc:77:63]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:77:68]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:77:73]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:77:90]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:77:95]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:77:104]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:77:121]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:77:126]: Encountered undeclared identifier "N2/0".
+
+% Sample Query 4: One person crosses alone (satisfiable)
+:- query
+    0: loc(cannibal2) = bank1 & loc(boat) = bank1 & num_cannibals(bank1) = 1 & num_missionaries(bank1) = 0 &
+       num_cannibals(bank2) = 0 & num_missionaries(bank2) = 0 &
+       num_cannibals(boat) = 0 & num_missionaries(boat) = 0;
+    0: cross1(cannibal2).
+
+Cplus2ASP Output:
+
+ERROR: temp.bc:74:52]: Encountered undeclared identifier "L1/0".
+ERROR: temp.bc:74:58]: Encountered undeclared identifier "L1/0".
+ERROR: temp.bc:74:63]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:74:68]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:74:73]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:74:90]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:74:95]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:74:104]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:74:121]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:74:126]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:75:49]: Encountered undeclared identifier "L2/0".
+ERROR: temp.bc:75:55]: Encountered undeclared identifier "L2/0".
+ERROR: temp.bc:75:60]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:75:65]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:75:70]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:75:87]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:75:92]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:75:101]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:75:118]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:75:123]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:76:55]: Encountered undeclared identifier "L1/0".
+ERROR: temp.bc:76:61]: Encountered undeclared identifier "L1/0".
+ERROR: temp.bc:76:66]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:76:71]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:76:76]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:76:93]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:76:98]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:76:107]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:76:124]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:76:129]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:77:52]: Encountered undeclared identifier "L2/0".
+ERROR: temp.bc:77:58]: Encountered undeclared identifier "L2/0".
+ERROR: temp.bc:77:63]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:77:68]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:77:73]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:77:90]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:77:95]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:77:104]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:77:121]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:77:126]: Encountered undeclared identifier "N2/0".
+
+% Sample Query 5: Attempt to cross when neither person is at the boat's location (unsatisfiable)
+:- query
+    0: loc(missionary2) = bank2 & loc(cannibal2) = bank2 & loc(boat) = bank1 & 
+       num_missionaries(bank2) = 1 & num_cannibals(bank2) = 1 & num_missionaries(bank1) = 0 & num_cannibals(bank1) = 0 &
+       num_missionaries(boat) = 0 & num_cannibals(boat) = 0;
+    0: cross2(missionary2, cannibal2).
+
+Cplus2ASP Output:
+
+ERROR: temp.bc:74:52]: Encountered undeclared identifier "L1/0".
+ERROR: temp.bc:74:58]: Encountered undeclared identifier "L1/0".
+ERROR: temp.bc:74:63]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:74:68]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:74:73]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:74:90]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:74:95]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:74:104]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:74:121]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:74:126]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:75:49]: Encountered undeclared identifier "L2/0".
+ERROR: temp.bc:75:55]: Encountered undeclared identifier "L2/0".
+ERROR: temp.bc:75:60]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:75:65]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:75:70]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:75:87]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:75:92]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:75:101]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:75:118]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:75:123]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:76:55]: Encountered undeclared identifier "L1/0".
+ERROR: temp.bc:76:61]: Encountered undeclared identifier "L1/0".
+ERROR: temp.bc:76:66]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:76:71]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:76:76]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:76:93]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:76:98]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:76:107]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:76:124]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:76:129]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:77:52]: Encountered undeclared identifier "L2/0".
+ERROR: temp.bc:77:58]: Encountered undeclared identifier "L2/0".
+ERROR: temp.bc:77:63]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:77:68]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:77:73]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:77:90]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:77:95]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:77:104]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:77:121]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:77:126]: Encountered undeclared identifier "N2/0".
+
+
+
+
+% Original natural language query: Three missionaries and three cannibals are at location bank1. The boat is at location bank1. Find a plan so that all missionaries and all cannibals are at location bank2.
+:- query
+    0: loc(small_missionary) = bank1 & loc(missionary1) = bank1 & loc(missionary2) = bank1 &
+       loc(big_cannibal) = bank1 & loc(cannibal1) = bank1 & loc(cannibal2) = bank1 & loc(boat) = bank1 &
+       num_missionaries(bank1) = 3 & num_cannibals(bank1) = 3 &
+       num_missionaries(bank2) = 0 & num_cannibals(bank2) = 0 & 
+       num_missionaries(boat) = 0 & num_cannibals(boat) = 0;
+    maxstep: loc(small_missionary) = bank2 & loc(missionary1) = bank2 & loc(missionary2) = bank2 &
+             loc(big_cannibal) = bank2 & loc(cannibal1) = bank2 & loc(cannibal2) = bank2 &
+             num_missionaries(bank2) = 3 & num_cannibals(bank2) = 3 &
+             num_missionaries(bank1) = 0 & num_cannibals(bank1) = 0 &
+             num_missionaries(boat) = 0 & num_cannibals(boat) = 0 &
+             loc(boat) = bank2.
+
+
+Cplus2ASP Output:
+
+ERROR: temp.bc:74:52]: Encountered undeclared identifier "L1/0".
+ERROR: temp.bc:74:58]: Encountered undeclared identifier "L1/0".
+ERROR: temp.bc:74:63]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:74:68]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:74:73]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:74:90]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:74:95]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:74:104]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:74:121]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:74:126]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:75:49]: Encountered undeclared identifier "L2/0".
+ERROR: temp.bc:75:55]: Encountered undeclared identifier "L2/0".
+ERROR: temp.bc:75:60]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:75:65]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:75:70]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:75:87]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:75:92]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:75:101]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:75:118]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:75:123]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:76:55]: Encountered undeclared identifier "L1/0".
+ERROR: temp.bc:76:61]: Encountered undeclared identifier "L1/0".
+ERROR: temp.bc:76:66]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:76:71]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:76:76]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:76:93]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:76:98]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:76:107]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:76:124]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:76:129]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:77:52]: Encountered undeclared identifier "L2/0".
+ERROR: temp.bc:77:58]: Encountered undeclared identifier "L2/0".
+ERROR: temp.bc:77:63]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:77:68]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:77:73]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:77:90]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:77:95]: Encountered undeclared identifier "N1/0".
+ERROR: temp.bc:77:104]: Encountered undeclared identifier "N2/0".
+ERROR: temp.bc:77:121]: Encountered undeclared identifier "else/0".
+ERROR: temp.bc:77:126]: Encountered undeclared identifier "N2/0".

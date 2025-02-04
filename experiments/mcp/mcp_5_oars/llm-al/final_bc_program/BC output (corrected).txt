@@ -1,0 +1,63 @@
+Solving...
+Solution: 1
+
+
+        0:  capacity(boat)=2 loc(boat)=bank1 numCannibalsAt(bank1)=3 numCannibalsAt(bank2)=0 numMissionariesAt(bank1)=3 numMissionariesAt(bank2)=0 numOarsAt(bank1)=1 numOarsAt(bank2)=1
+
+        ACTIONS:  cross(boat) numCannibalsOn(boat)=1 numMissionariesOn(boat)=0 numOarsOn(boat)=1
+
+        1:  capacity(boat)=2 loc(boat)=bank2 numCannibalsAt(bank1)=2 numCannibalsAt(bank2)=1 numMissionariesAt(bank1)=3 numMissionariesAt(bank2)=0 numOarsAt(bank1)=0 numOarsAt(bank2)=2
+
+        ACTIONS:  cross(boat) numCannibalsOn(boat)=1 numMissionariesOn(boat)=0 numOarsOn(boat)=2
+
+        2:  capacity(boat)=2 loc(boat)=bank1 numCannibalsAt(bank1)=3 numCannibalsAt(bank2)=0 numMissionariesAt(bank1)=3 numMissionariesAt(bank2)=0 numOarsAt(bank1)=2 numOarsAt(bank2)=0
+
+        ACTIONS:  cross(boat) numCannibalsOn(boat)=2 numMissionariesOn(boat)=0 numOarsOn(boat)=2
+
+        3:  capacity(boat)=2 loc(boat)=bank2 numCannibalsAt(bank1)=1 numCannibalsAt(bank2)=2 numMissionariesAt(bank1)=3 numMissionariesAt(bank2)=0 numOarsAt(bank1)=0 numOarsAt(bank2)=2
+
+        ACTIONS:  cross(boat) numCannibalsOn(boat)=1 numMissionariesOn(boat)=0 numOarsOn(boat)=2
+
+        4:  capacity(boat)=2 loc(boat)=bank1 numCannibalsAt(bank1)=2 numCannibalsAt(bank2)=1 numMissionariesAt(bank1)=3 numMissionariesAt(bank2)=0 numOarsAt(bank1)=2 numOarsAt(bank2)=0
+
+        ACTIONS:  cross(boat) numCannibalsOn(boat)=2 numMissionariesOn(boat)=0 numOarsOn(boat)=2
+
+        5:  capacity(boat)=2 loc(boat)=bank2 numCannibalsAt(bank1)=0 numCannibalsAt(bank2)=3 numMissionariesAt(bank1)=3 numMissionariesAt(bank2)=0 numOarsAt(bank1)=0 numOarsAt(bank2)=2
+
+        ACTIONS:  cross(boat) numCannibalsOn(boat)=1 numMissionariesOn(boat)=0 numOarsOn(boat)=2
+
+        6:  capacity(boat)=2 loc(boat)=bank1 numCannibalsAt(bank1)=1 numCannibalsAt(bank2)=2 numMissionariesAt(bank1)=3 numMissionariesAt(bank2)=0 numOarsAt(bank1)=2 numOarsAt(bank2)=0
+
+        ACTIONS:  cross(boat) numCannibalsOn(boat)=0 numMissionariesOn(boat)=2 numOarsOn(boat)=2
+
+        7:  capacity(boat)=2 loc(boat)=bank2 numCannibalsAt(bank1)=1 numCannibalsAt(bank2)=2 numMissionariesAt(bank1)=1 numMissionariesAt(bank2)=2 numOarsAt(bank1)=0 numOarsAt(bank2)=2
+
+        ACTIONS:  cross(boat) numCannibalsOn(boat)=1 numMissionariesOn(boat)=1 numOarsOn(boat)=2
+
+        8:  capacity(boat)=2 loc(boat)=bank1 numCannibalsAt(bank1)=2 numCannibalsAt(bank2)=1 numMissionariesAt(bank1)=2 numMissionariesAt(bank2)=1 numOarsAt(bank1)=2 numOarsAt(bank2)=0
+
+        ACTIONS:  cross(boat) numCannibalsOn(boat)=0 numMissionariesOn(boat)=2 numOarsOn(boat)=2
+
+        9:  capacity(boat)=2 loc(boat)=bank2 numCannibalsAt(bank1)=2 numCannibalsAt(bank2)=1 numMissionariesAt(bank1)=0 numMissionariesAt(bank2)=3 numOarsAt(bank1)=0 numOarsAt(bank2)=2
+
+        ACTIONS:  cross(boat) numCannibalsOn(boat)=1 numMissionariesOn(boat)=0 numOarsOn(boat)=2
+
+        10:  capacity(boat)=2 loc(boat)=bank1 numCannibalsAt(bank1)=3 numCannibalsAt(bank2)=0 numMissionariesAt(bank1)=0 numMissionariesAt(bank2)=3 numOarsAt(bank1)=2 numOarsAt(bank2)=0
+
+        ACTIONS:  cross(boat) numCannibalsOn(boat)=2 numMissionariesOn(boat)=0 numOarsOn(boat)=2
+
+        11:  capacity(boat)=2 loc(boat)=bank2 numCannibalsAt(bank1)=1 numCannibalsAt(bank2)=2 numMissionariesAt(bank1)=0 numMissionariesAt(bank2)=3 numOarsAt(bank1)=0 numOarsAt(bank2)=2
+
+        ACTIONS:  cross(boat) numCannibalsOn(boat)=0 numMissionariesOn(boat)=1 numOarsOn(boat)=2
+
+        12:  capacity(boat)=2 loc(boat)=bank1 numCannibalsAt(bank1)=1 numCannibalsAt(bank2)=2 numMissionariesAt(bank1)=1 numMissionariesAt(bank2)=2 numOarsAt(bank1)=2 numOarsAt(bank2)=0
+
+        ACTIONS:  cross(boat) numCannibalsOn(boat)=1 numMissionariesOn(boat)=1 numOarsOn(boat)=2
+
+        13:  capacity(boat)=2 loc(boat)=bank2 numCannibalsAt(bank1)=0 numCannibalsAt(bank2)=3 numMissionariesAt(bank1)=0 numMissionariesAt(bank2)=3 numOarsAt(bank1)=0 numOarsAt(bank2)=2
+
+SATISFIABLE
+Models       : 1+
+Calls        : 1
+Time         : 0.156s (Solving: 0.08s 1st Model: 0.08s Unsat: 0.00s)
+CPU Time     : 0.156s

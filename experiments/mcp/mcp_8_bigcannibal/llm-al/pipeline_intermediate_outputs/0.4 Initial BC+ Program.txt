@@ -1,0 +1,79 @@
+:- sorts
+    vessel;
+    location;
+    group;
+    integer.
+
+
+:- objects
+    boat :: vessel;
+    bank1, bank2 :: location;
+    missionary, cannibal, bigCannibal :: group;
+    0..10 :: integer.
+
+
+:- variables
+    V, V1, V2, V3, V4 :: vessel;
+    Loc, Loc1, Loc2, Loc3, Loc4 :: location;
+    G, G1, G2, G3, G4 :: group;
+    N, N1, N2, N3, N4 :: integer.
+
+
+:- constants
+    cross(vessel) :: exogenousAction;
+    numCrossing(vessel, group) :: attribute(integer) of cross(vessel);
+    numAt(group, location) :: additiveFluent(integer);
+    boatLoc :: inertialFluent(location).
+
+
+% Define opposite locations.
+opposite(bank1, bank2).
+opposite(bank2, bank1).
+
+% 1. Crossing the vessel causes the boat location to change to the opposite bank.
+cross(V) causes boatLoc = Loc2 if boatLoc = Loc1 & opposite(Loc1, Loc2).
+
+% 2. Crossing the vessel decrements the number at the original location by the number crossing in each group.
+cross(V) decrements numAt(G, Loc1) by N if numCrossing(V, G) = N & boatLoc = Loc1.
+
+% 3. Crossing the vessel increments the number at the opposite location by the number crossing in each group.
+cross(V) increments numAt(G, Loc2) by N if numCrossing(V, G) = N & boatLoc = Loc1 & opposite(Loc1, Loc2).
+
+% 4. The cross action is not executable if the total number crossing is zero.
+nonexecutable cross(V) if NTotal = N1 + N2 + N3 & NTotal = 0 & numCrossing(V, missionary) = N1 & numCrossing(V, cannibal) = N2 & numCrossing(V, bigCannibal) = N3.
+
+% 5. The cross action is not executable if the total number crossing exceeds two.
+nonexecutable cross(V) if NTotal = N1 + N2 + N3 & NTotal > 2 & numCrossing(V, missionary) = N1 & numCrossing(V, cannibal) = N2 & numCrossing(V, bigCannibal) = N3.
+
+% 6a. The cross action is not executable if the number of missionaries crossing exceeds the number at the location.
+nonexecutable cross(V) if numCrossing(V, missionary) = N & numAt(missionary, boatLoc) = N1 & N > N1.
+
+% 6b. The cross action is not executable if the number of cannibals crossing exceeds the number at the location.
+nonexecutable cross(V) if numCrossing(V, cannibal) = N & numAt(cannibal, boatLoc) = N1 & N > N1.
+
+% 6c. The cross action is not executable if the number of bigCannibals crossing exceeds the number at the location.
+nonexecutable cross(V) if numCrossing(V, bigCannibal) = N & numAt(bigCannibal, boatLoc) = N1 & N > N1.
+
+% 7a. The cross action is not executable if the boat is not at the location and missionaries are crossing.
+nonexecutable cross(V) if boatLoc \= Loc & numCrossing(V, missionary) = N & N > 0.
+
+% 7b. The cross action is not executable if the boat is not at the location and cannibals are crossing.
+nonexecutable cross(V) if boatLoc \= Loc & numCrossing(V, cannibal) = N & N > 0.
+
+% 7c. The cross action is not executable if the boat is not at the location and bigCannibals are crossing.
+nonexecutable cross(V) if boatLoc \= Loc & numCrossing(V, bigCannibal) = N & N > 0.
+
+% 8. The cross action is not executable if bigCannibal is crossing with others.
+nonexecutable cross(V) if numCrossing(V, bigCannibal) > 0 & NTotal > 1 & NTotal = N1 + N2 + N3 & numCrossing(V, missionary) = N1 & numCrossing(V, cannibal) = N2 & numCrossing(V, bigCannibal) = N3.
+
+% 9. It's impossible for cannibals to outnumber missionaries at a location when missionaries are present.
+impossible numAt(missionary, Loc) = N_m & N_m > 0 & numAt(cannibal, Loc) = N_c & numAt(bigCannibal, Loc) = N_bc & N_c + N_bc > N_m.
+
+% 10. The cross action is not executable if cannibals crossing outnumber missionaries crossing.
+nonexecutable cross(V) if numCrossing(V, missionary) = N_m & N_m > 0 & numCrossing(V, cannibal) = N_c & numCrossing(V, bigCannibal) = N_bc & N_c + N_bc > N_m.
+
+
+% query
+:- query
+    0: numAt(missionary, bank1) = 3 & numAt(cannibal, bank1) = 2 & numAt(bigCannibal, bank1) = 1 & boatLoc = bank1;
+    maxstep: numAt(missionary, bank2) = 3 & numAt(cannibal, bank2) = 2 & numAt(bigCannibal, bank2) = 1 & boatLoc = bank2.

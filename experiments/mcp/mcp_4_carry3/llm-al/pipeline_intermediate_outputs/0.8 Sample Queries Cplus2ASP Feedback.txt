@@ -1,0 +1,106 @@
+% Query 1: Try to cross the boat with zero passengers (unsatisfiable)
+:- query
+    0: numAt(missionaries, bank1) = 6 & numAt(cannibals, bank1) = 6 & loc(boat1) = bank1;
+    0: cross(boat1);
+    0: transporting(boat1, missionaries) = 0 & transporting(boat1, cannibals) = 0;
+    maxstep: loc(boat1) = bank2.
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+
+
+% Query 2: Cross the boat with 2 missionaries and 1 cannibal from bank1 to bank2 (unsatisfiable because cannibals outnumber missionaries on bank1 after crossing)
+:- query
+    0: numAt(missionaries, bank1) = 6 & numAt(cannibals, bank1) = 6 & loc(boat1) = bank1;
+    0: cross(boat1);
+    0: transporting(boat1, missionaries) = 2 & transporting(boat1, cannibals) = 1;
+    maxstep:
+        numAt(missionaries, bank1) = 4 & numAt(cannibals, bank1) = 5 &
+        numAt(missionaries, bank2) = 2 & numAt(cannibals, bank2) = 1 &
+        loc(boat1) = bank2.
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+
+
+% Query 3: Try to cross the boat with 3 missionaries and 1 cannibal (unsatisfiable because exceeds capacity)
+:- query
+    0: numAt(missionaries, bank1) = 6 & numAt(cannibals, bank1) = 6 & loc(boat1) = bank1;
+    0: cross(boat1);
+    0: transporting(boat1, missionaries) = 3 & transporting(boat1, cannibals) = 1;
+    maxstep: loc(boat1) = bank2.
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+
+
+% Query 4: Try to cross one cannibal from bank1 to bank2 when cannibals would outnumber missionaries on bank2 (unsatisfiable)
+:- query
+    0: numAt(missionaries, bank1) = 3 & numAt(cannibals, bank1) = 3 &
+       numAt(missionaries, bank2) = 3 & numAt(cannibals, bank2) = 3 &
+       loc(boat1) = bank1;
+    0: cross(boat1);
+    0: transporting(boat1, missionaries) = 0 & transporting(boat1, cannibals) = 1;
+    maxstep:
+        numAt(missionaries, bank1) = 3 & numAt(cannibals, bank1) = 2 &
+        numAt(missionaries, bank2) = 3 & numAt(cannibals, bank2) = 4 &
+        loc(boat1) = bank2.
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+
+
+% Query 5: Cross two cannibals from bank1 to bank2 (satisfiable)
+:- query
+    0: numAt(missionaries, bank1) = 6 & numAt(cannibals, bank1) = 6 &
+       numAt(missionaries, bank2) = 0 & numAt(cannibals, bank2) = 0 &
+       loc(boat1) = bank1;
+    0: cross(boat1);
+    0: transporting(boat1, missionaries) = 0 & transporting(boat1, cannibals) = 2;
+    maxstep:
+        numAt(missionaries, bank1) = 6 & numAt(cannibals, bank1) = 4 &
+        numAt(missionaries, bank2) = 0 & numAt(cannibals, bank2) = 2 &
+        loc(boat1) = bank2.
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+
+
+
+
+% Six missionaries and six cannibals are at location bank1. The boat is at location bank1. Find a plan so that all missionaries and all cannibals are at location bank2.
+
+:- query
+    0: numAt(missionaries, bank1) = 6 & numAt(cannibals, bank1) = 6 & numAt(missionaries, bank2) = 0 & numAt(cannibals, bank2) = 0 & loc(boat1) = bank1;
+    maxstep: numAt(missionaries, bank2) = 6 & numAt(cannibals, bank2) = 6 & numAt(missionaries, bank1) = 0 & numAt(cannibals, bank1) = 0.
+
+
+
+Cplus2ASP Output:
+
+TIMEOUT

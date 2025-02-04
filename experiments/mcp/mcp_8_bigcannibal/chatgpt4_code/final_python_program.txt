@@ -1,0 +1,71 @@
+def solve_missionaries_and_cannibals_v2():
+    from collections import deque
+    
+    # Helper function to check if a state is safe
+    def is_safe(m, c):
+        # No missionaries or they outnumber or equal the cannibals
+        return (m == 0 or m >= c) and ((3 - m == 0) or (3 - m >= 3 - c))
+    
+    # Initialize queue for BFS with initial state: (missionaries, cannibals, large cannibal, boat position)
+    # large_cannibal: 0 at bank1, 1 at bank2
+    queue = deque([((3, 3, 0, 0), [])])  # (state, path)
+    visited = set([(3, 3, 0, 0)])
+    
+    while queue:
+        (m, c, l, b), path = queue.popleft()
+        
+        # Check for goal state
+        if (m, c, l, b) == (0, 0, 1, 1):
+            return path
+        
+        # Generate possible moves: moving 1 or 2, considering the large cannibal
+        moves = []
+        if l == 0:  # Large cannibal on the current side
+            if b == 0:
+                moves.append((0, 0, 1))  # Large cannibal alone
+            else:
+                moves.append((0, 0, -1))  # Return alone
+        else:
+            if b == 0:
+                moves.append((0, 0, -1))  # Return alone
+            else:
+                moves.append((0, 0, 1))  # Large cannibal alone
+
+        # Normal moves (1 or 2 people)
+        if b == 0:
+            if m > 0:
+                moves.append((1, 0, 0))  # One missionary
+            if c > 0:
+                moves.append((0, 1, 0))  # One cannibal
+            if m > 1 and l == 0:
+                moves.append((2, 0, 0))  # Two missionaries
+            if c > 1 and l == 0:
+                moves.append((0, 2, 0))  # Two cannibals
+            if m > 0 and c > 0 and l == 0:
+                moves.append((1, 1, 0))  # One missionary and one cannibal
+        else:
+            if (3 - m) > 0:
+                moves.append((-1, 0, 0))  # One missionary returns
+            if (3 - c) > 0:
+                moves.append((0, -1, 0))  # One cannibal returns
+            if (3 - m) > 1 and l == 1:
+                moves.append((-2, 0, 0))  # Two missionaries return
+            if (3 - c) > 1 and l == 1:
+                moves.append((0, -2, 0))  # Two cannibals return
+            if (3 - m) > 0 and (3 - c) > 0 and l == 1:
+                moves.append((-1, -1, 0))  # One missionary and one cannibal return
+        
+        # Apply moves
+        for dm, dc, dl in moves:
+            new_m = m - dm
+            new_c = c - dc
+            new_l = l - dl
+            new_b = 1 - b
+            new_state = (new_m, new_c, new_l, new_b)
+            if is_safe(new_m, new_c) and is_safe(3 - new_m, 3 - new_c) and new_state not in visited:
+                visited.add(new_state)
+                queue.append((new_state, path + [(dm, dc, dl, b)]))
+    
+    return "No solution found"
+
+solve_missionaries_and_cannibals_v2()

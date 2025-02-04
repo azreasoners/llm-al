@@ -1,0 +1,100 @@
+% Query 1: One cannibal crosses alone from bank1 to bank2. (satisfiable)
+:- query
+    0: loc(boat) = bank1 & numOn(bank1, cannibals) = 4 & numOn(bank1, missionaries) = 4 & numOn(bank2, cannibals) = 0 & numOn(bank2, missionaries) = 0;
+    0: cross(boat);
+    0: numMoving(boat, cannibals) = 1 & numMoving(boat, missionaries) = 0 & movingTo(boat) = bank2.
+
+Cplus2ASP Output:
+
+Solving...
+Solution: 1
+	
+
+	0:  loc(boat)=bank1 numOn(bank1, cannibals)=4 numOn(bank1, missionaries)=4 numOn(bank2, cannibals)=0 numOn(bank2, missionaries)=0
+
+	ACTIONS:  cross(boat) movingTo(boat)=bank2 numMoving(boat, cannibals)=1 numMoving(boat, missionaries)=0
+
+	1:  loc(boat)=bank2 numOn(bank1, cannibals)=3 numOn(bank1, missionaries)=4 numOn(bank2, cannibals)=1 numOn(bank2, missionaries)=0
+
+SATISFIABLE
+Models       : 1
+
+
+% Query 2: Two cannibals cross together from bank1 to bank2. (satisfiable)
+:- query
+    0: loc(boat) = bank1 & numOn(bank1, cannibals) = 4 & numOn(bank1, missionaries) = 4 & numOn(bank2, cannibals) = 0 & numOn(bank2, missionaries) = 0;
+    0: cross(boat);
+    0: numMoving(boat, cannibals) = 2 & numMoving(boat, missionaries) = 0 & movingTo(boat) = bank2.
+
+Cplus2ASP Output:
+
+Solving...
+Solution: 1
+	
+
+	0:  loc(boat)=bank1 numOn(bank1, cannibals)=4 numOn(bank1, missionaries)=4 numOn(bank2, cannibals)=0 numOn(bank2, missionaries)=0
+
+	ACTIONS:  cross(boat) movingTo(boat)=bank2 numMoving(boat, cannibals)=2 numMoving(boat, missionaries)=0
+
+	1:  loc(boat)=bank2 numOn(bank1, cannibals)=2 numOn(bank1, missionaries)=4 numOn(bank2, cannibals)=2 numOn(bank2, missionaries)=0
+
+SATISFIABLE
+Models       : 1
+
+
+% Query 3: Three cannibals try to cross together from bank1 to bank2. (unsatisfiable)
+:- query
+    0: loc(boat) = bank1 & numOn(bank1, cannibals) = 4 & numOn(bank1, missionaries) = 4 & numOn(bank2, cannibals) = 0 & numOn(bank2, missionaries) = 0;
+    0: cross(boat);
+    0: numMoving(boat, cannibals) = 3 & numMoving(boat, missionaries) = 0 & movingTo(boat) = bank2.
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+
+
+% Query 4: Two cannibals cross to bank2 where they will outnumber missionaries there. (unsatisfiable)
+:- query
+    0: loc(boat) = bank1 & numOn(bank1, cannibals) = 3 & numOn(bank1, missionaries) = 3 & numOn(bank2, cannibals) = 1 & numOn(bank2, missionaries) = 1 & loc(boat)=bank1;
+    0: cross(boat);
+    0: numMoving(boat, cannibals) = 2 & numMoving(boat, missionaries) = 0 & movingTo(boat) = bank2.
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+
+
+% Query 5: The boat tries to cross with zero people on it. (unsatisfiable)
+:- query
+    0: loc(boat) = bank1 & numOn(bank1, cannibals) = 4 & numOn(bank1, missionaries) = 4 & numOn(bank2, cannibals) = 0 & numOn(bank2, missionaries) = 0;
+    0: cross(boat);
+    0: numMoving(boat, cannibals) = 0 & numMoving(boat, missionaries) = 0 & movingTo(boat) = bank2.
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+
+
+
+
+
+:- query
+    0: numOn(bank1, missionaries) = 4 & numOn(bank1, cannibals) = 4 & numOn(bank2, missionaries) = 0 & numOn(bank2, cannibals) = 0 & loc(boat) = bank1;
+    maxstep: numOn(bank2, missionaries) = 4 & numOn(bank2, cannibals) = 4.
+
+
+Cplus2ASP Output:
+
+TIMEOUT

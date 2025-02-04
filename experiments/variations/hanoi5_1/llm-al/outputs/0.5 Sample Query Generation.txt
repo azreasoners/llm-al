@@ -1,0 +1,24 @@
+% Query 1: Try to move disk d1 to peg a when it has disk d2 on top of it (unsatisfiable)
+:- query
+    0: loc(d1)=b & loc(d2)=d1 & loc(d3)=c & loc(d4)=a & loc(d5)=d4;
+    0: move(d1,a).
+
+% Query 2: Move disk d5 onto disk d4 when d5 is lighter (satisfiable)
+:- query
+    0: loc(d4)=b & loc(d5)=a;
+    0: move(d5,d4).
+
+% Query 3: Try to move disk d2 onto disk d3 when d2 is heavier than d3 (unsatisfiable)
+:- query
+    0: loc(d1)=b & loc(d2)=d1 & loc(d3)=c;
+    0: move(d2,d3).
+
+% Query 4: Move disk d3 onto disk d2 when d3 is lighter (satisfiable)
+:- query
+    0: loc(d1)=b & loc(d2)=d1 & loc(d3)=c;
+    0: move(d3,d2).
+
+% Query 5: Try to move disk d4 onto itself (unsatisfiable)
+:- query
+    0: loc(d4)=a;
+    0: move(d4,d4).

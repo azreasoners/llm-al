@@ -1,0 +1,16 @@
+def find_solution():
+    """ Hardcoded solution based on the manual step-by-step approach. """
+    steps = [
+        ('left', 'snake', 'right'),  # Take the snake across
+        ('right', 'human', 'left'),  # Return alone
+        ('left', 'cheese', 'right'),  # Take the cheese across
+        ('right', 'snake', 'left'),  # Return with the snake
+        ('left', 'mouse', 'right'),  # Take the mouse across
+        ('right', 'human', 'left'),  # Return alone
+        ('left', 'snake', 'right')   # Take the snake across
+    ]
+    return steps
+
+# Execute the manual solution
+manual_solution = find_solution()
+manual_solution

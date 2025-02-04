@@ -1,0 +1,81 @@
+% PROGRAM CHANGED? [CHANGED]
+
+% BC+ signature
+
+:- sorts
+    int;
+    row;
+    column;
+    value.
+
+:- objects
+    0..8 :: int;
+    1..9 :: int;
+
+    r0, r1, r2, r3, r4, r5, r6, r7, r8 :: row;
+    c0, c1, c2, c3, c4, c5, c6, c7, c8 :: column;
+    v1, v2, v3, v4, v5, v6, v7, v8, v9 :: value.
+
+:- variables
+    R, R1, R2 :: row;
+    C, C1, C2 :: column;
+    V, V1, V2 :: value;
+    N, N1, N2 :: int.
+
+:- constants
+    val(row, column) :: inertialFluent(value);
+    rowNum(row) :: rigid(int);
+    colNum(column) :: rigid(int);
+
+% Map each row to its numerical value
+rowNum(r0) = 0.
+rowNum(r1) = 1.
+rowNum(r2) = 2.
+rowNum(r3) = 3.
+rowNum(r4) = 4.
+rowNum(r5) = 5.
+rowNum(r6) = 6.
+rowNum(r7) = 7.
+rowNum(r8) = 8.
+
+% Map each column to its numerical value
+colNum(c0) = 0.
+colNum(c1) = 1.
+colNum(c2) = 2.
+colNum(c3) = 3.
+colNum(c4) = 4.
+colNum(c5) = 5.
+colNum(c6) = 6.
+colNum(c7) = 7.
+colNum(c8) = 8.
+
+% Constraints
+
+% No two cells in the same row have the same value.
+impossible val(R, C) = V & val(R, C1) = V & C \= C1.
+
+% No two cells in the same column have the same value.
+impossible val(R, C) = V & val(R1, C) = V & R \= R1.
+
+% No two cells in the same 3x3 block have the same value.
+impossible val(R, C) = V & val(R1, C1) = V & (R \= R1 | C \= C1) & (rowNum(R) // 3 = rowNum(R1) // 3) & (colNum(C) // 3 = colNum(C1) // 3).
+
+% Initial clues are specified in the query.
+
+% MAIN QUERY CHANGED? [CHANGED]
+
+:- query
+    0: val(r0, c2) = v9 & val(r0, c4) = v2 & val(r0, c5) = v8 & val(r0, c6) = v7 &
+       val(r1, c0) = v8 & val(r1, c2) = v6 & val(r1, c5) = v4 & val(r1, c8) = v5 &
+       val(r2, c2) = v3 & val(r2, c8) = v4 &
+       val(r3, c0) = v6 &
+       val(r4, c1) = v2 & val(r4, c3) = v7 & val(r4, c4) = v1 & val(r4, c5) = v3 & val(r4, c6) = v4 & val(r4, c7) = v5 &
+       val(r5, c8) = v2 &
+       val(r6, c0) = v3 & val(r6, c6) = v5 &
+       val(r7, c0) = v9 & val(r7, c3) = v4 & val(r7, c6) = v8 & val(r7, c8) = v7 &
+       val(r8, c2) = v1 & val(r8, c3) = v2 & val(r8, c4) = v5 & val(r8, c6) = v3.
+
+% SAMPLE QUERIES CHANGED? [UNCHANGED]
+
+% Query 0: Check satisfiability of program signature and rules (ignores other queries). (satisfiable)
+:- query = sat.

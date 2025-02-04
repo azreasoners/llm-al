@@ -1,0 +1,6 @@
+% Moving a disk to a location causes the disk's location to become that location.
+% A disk cannot be moved if there is another disk whose location is the disk being moved.
+% The move action is not executable if the destination location is a disk and the disk being moved is heavier than the destination disk.
+% The move action is not executable if the disk being moved is the same as its destination location.
+% It is impossible for two disks to have the same location.
+% A disk can be moved onto a peg regardless of weight.

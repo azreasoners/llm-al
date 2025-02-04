@@ -1,0 +1,47 @@
+
+ 
+Absolutely! Here's the solution to the classic "Missionaries and Cannibals" problem, along with explanations and a breakdown of how it fits into your defined types:
+
+Understanding the Problem
+
+Types:
+
+vessel: boat
+location: bank1, bank2
+group: missionaries, cannibals
+integer: Numbers representing the quantity of missionaries or cannibals on each bank or in the boat
+Rules:
+
+The boat can carry a maximum of two people (or things).
+Cannibals cannot outnumber missionaries on either bank, or they will eat them.
+Cannibals cannot outnumber missionaries on the boat, or they will eat them.
+The boat cannot move on its own; someone must be on board.
+Solution
+
+Here's a step-by-step solution to get everyone safely across:
+
+Two cannibals (CC) cross to bank2.
+bank1: 3M, 1C / boat: CC / bank2:
+One cannibal (C) returns to bank1.
+bank1: 3M, 2C / boat: C / bank2: C
+Two missionaries (MM) cross to bank2.
+bank1: 1M, 2C / boat: MM / bank2: 1C, 2M
+One cannibal (C) returns to bank1.
+bank1: 1M, 3C / boat: C / bank2: 2M, 1C
+Two cannibals (CC) cross to bank2.
+bank1: 1M / boat: CC / bank2: 2M, 3C
+One cannibal (C) returns to bank1.
+bank1: 1M, 1C / boat: C / bank2: 2M, 2C
+Two missionaries (MM) cross to bank2.
+bank1: / boat: MM / bank2: 3M, 3C
+One missionary (M) and one cannibal (C) return to bank1.
+bank1: 1M, 1C / boat: MC / bank2: 2M, 2C
+Two cannibals (CC) cross to bank2.
+bank1: 1M / boat: CC / bank2: 2M, 3C
+One cannibal (C) returns to bank1.
+bank1: 1M, 1C / boat: C / bank2: 2M, 2C
+Two missionaries (MM) cross to bank2.
+bank1: / boat: MM / bank2: 3M, 3C
+Success! Everyone has crossed the river safely.
+
+Let me know if you'd like to explore variations of this problem or other logic puzzles!

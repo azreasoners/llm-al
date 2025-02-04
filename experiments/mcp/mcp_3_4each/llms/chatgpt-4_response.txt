@@ -1,0 +1,37 @@
+
+ChatGPT
+To solve the problem of crossing four missionaries and four cannibals across a river with the constraints given, we can follow a specific sequence of moves. The goal is to move everyone from bank1 to bank2 without any point having more cannibals than missionaries on either bank or on the boat.
+
+Here’s one way to solve the problem:
+
+Move 2 Cannibals from bank1 to bank2.
+Now on bank1: 4 missionaries, 2 cannibals; on bank2: 0 missionaries, 2 cannibals; boat at bank2.
+Return 1 Cannibal from bank2 to bank1.
+Now on bank1: 4 missionaries, 3 cannibals; on bank2: 0 missionaries, 1 cannibal; boat at bank1.
+Move 2 Cannibals from bank1 to bank2.
+Now on bank1: 4 missionaries, 1 cannibal; on bank2: 0 missionaries, 3 cannibals; boat at bank2.
+Return 1 Cannibal from bank2 to bank1.
+Now on bank1: 4 missionaries, 2 cannibals; on bank2: 0 missionaries, 2 cannibals; boat at bank1.
+Move 2 Missionaries from bank1 to bank2.
+Now on bank1: 2 missionaries, 2 cannibals; on bank2: 2 missionaries, 2 cannibals; boat at bank2.
+Return 1 Cannibal and 1 Missionary from bank2 to bank1.
+Now on bank1: 3 missionaries, 3 cannibals; on bank2: 1 missionary, 1 cannibal; boat at bank1.
+Move 2 Missionaries from bank1 to bank2.
+Now on bank1: 1 missionary, 3 cannibals; on bank2: 3 missionaries, 1 cannibal; boat at bank2.
+Return 1 Cannibal from bank2 to bank1.
+Now on bank1: 1 missionary, 4 cannibals; on bank2: 3 missionaries, 0 cannibals; boat at bank1.
+Move 2 Cannibals from bank1 to bank2.
+Now on bank1: 1 missionary, 2 cannibals; on bank2: 3 missionaries, 2 cannibals; boat at bank2.
+Return 1 Cannibal from bank2 to bank1.
+Now on bank1: 1 missionary, 3 cannibals; on bank2: 3 missionaries, 1 cannibal; boat at bank1.
+Move 1 Missionary and 1 Cannibal from bank1 to bank2.
+Now on bank1: 0 missionaries, 2 cannibals; on bank2: 4 missionaries, 2 cannibals; boat at bank2.
+Return 1 Cannibal from bank2 to bank1.
+Now on bank1: 0 missionaries, 3 cannibals; on bank2: 4 missionaries, 1 cannibal; boat at bank1.
+Move 2 Cannibals from bank1 to bank2.
+Now on bank1: 0 missionaries, 1 cannibal; on bank2: 4 missionaries, 3 cannibals; boat at bank2.
+Return 1 Cannibal from bank2 to bank1.
+Now on bank1: 0 missionaries, 2 cannibals; on bank2: 4 missionaries, 2 cannibals; boat at bank1.
+Move 2 Cannibals from bank1 to bank2.
+Now on bank1: 0 missionaries, 0 cannibals; on bank2: 4 missionaries, 4 cannibals.
+All missionaries and cannibals are successfully moved to bank2 without ever having more cannibals than missionaries on either bank or the boat at any time.

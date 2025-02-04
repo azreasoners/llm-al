@@ -1,0 +1,15 @@
+Here is a plan to get all the missionaries and cannibals safely across the river to bank2:
+
+A missionary and a cannibal row the boat from bank1 to bank2. (1 missionary, 1 cannibal at bank2. 2 missionaries, 2 cannibals at bank1)
+The cannibal rows the boat back from bank2 to bank1. (3 cannibals, 2 missionaries at bank1. 1 missionary at bank2)
+Two cannibals row the boat from bank1 to bank2. (1 cannibal, 2 missionaries at bank1. 2 cannibals, 1 missionary at bank2)
+A missionary and a cannibal row the boat back from bank2 to bank1. (2 missionaries, 2 cannibals at bank1. 1 cannibal at bank2)
+Two missionaries row the boat from bank1 to bank2. (2 cannibals at bank1. 3 missionaries, 1 cannibal at bank2)
+A missionary rows the boat back from bank2 to bank1. (2 cannibals, 1 missionary at bank1. 2 missionaries, 1 cannibal at bank2)
+Two cannibals row the boat from bank1 to bank2. (1 missionary at bank1. 2 missionaries, 3 cannibals at bank2)
+A cannibal rows the boat back from bank2 to bank1. (1 missionary, 1 cannibal at bank1. 2 missionaries, 2 cannibals at bank2)
+The missionary and cannibal row the boat from bank1 to bank2. (3 missionaries, 3 cannibals at bank2)
+At each step, the number of cannibals never exceeds the number of missionaries on either bank or in the boat. And in 9 one-way trips, everyone gets safely across to bank2.
+
+Copy
+Re

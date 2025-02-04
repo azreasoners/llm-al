@@ -1,0 +1,8 @@
+There are two types of things: thing and side.
+
+Problem Description:
+There is a mouse, a snake, and a piece of cheese, and you need to get them across a river using a boat. However, you must ensure that the snake doesn't eat the mouse, and the mouse doesn't eat the cheese. As long as they are not left alone, then they cannot eat. You (the human) and the boat are in the same position always. The boat cannot carry more than one item.
+
+The mouse, snake, cheese, and boat are things. LeftBank and RightBank are sides of the river.
+
+The snake, and cheese are on side leftBank. The mouse and the boat are on side rightBank. Find a plan to get the mouse, snake, and piece of cheese across the river, on the side RightBank. 

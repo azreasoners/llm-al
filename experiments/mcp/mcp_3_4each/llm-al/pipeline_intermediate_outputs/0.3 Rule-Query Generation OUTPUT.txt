@@ -1,0 +1,42 @@
+% constraints/rules
+
+% 1. Crossing the river in a vessel causes the location of the vessel to change to movingTo(Vessel).
+cross(V) causes loc(V) = Loc if movingTo(V) = Loc.
+
+% 2. Crossing the river in a vessel causes the number of people of each group at the starting location to decrease by numMoving(Vessel, Group).
+cross(V) decrements numOn(Loc, G) by N if loc(V) = Loc & numMoving(V, G) = N.
+
+% 3. Crossing the river in a vessel causes the number of people of each group at the movingTo location to increase by numMoving(Vessel, Group).
+cross(V) increments numOn(Loc, G) by N if movingTo(V) = Loc & numMoving(V, G) = N.
+
+% 4. The cross action is not executable if the sum of numMoving(Vessel, missionaries) and numMoving(Vessel, cannibals) is zero.
+nonexecutable cross(V) if N1 + N2 = 0 & numMoving(V, missionaries) = N1 & numMoving(V, cannibals) = N2.
+
+% 5. The cross action is not executable if the sum of numMoving(Vessel, missionaries) and numMoving(Vessel, cannibals) is greater than two.
+nonexecutable cross(V) if N1 + N2 > 2 & numMoving(V, missionaries) = N1 & numMoving(V, cannibals) = N2.
+
+% 6. The cross action is not executable if numMoving(Vessel, Group) is negative for any group.
+nonexecutable cross(V) if numMoving(V, G) < 0.
+
+% 7. The cross action is not executable if numMoving(Vessel, Group) exceeds the number of people of that group at the current location of the vessel.
+nonexecutable cross(V) if M > N & numMoving(V, G) = M & loc(V) = Loc & numOn(Loc, G) = N.
+
+% 8. The cross action is not executable if movingTo(Vessel) is the same as the current location of the vessel.
+nonexecutable cross(V) if loc(V) = Loc & movingTo(V) = Loc.
+
+% 9. After the crossing, on either bank, if the number of missionaries is greater than zero, the number of cannibals cannot exceed the number of missionaries.
+always (numOn(Loc, missionaries) = M & numOn(Loc, cannibals) = C & M > 0) -> C <= M.
+
+% 10. During the crossing, if the number of missionaries moving is greater than zero, the number of cannibals moving cannot exceed the number of missionaries moving.
+nonexecutable cross(V) if M > 0 & C > M & numMoving(V, missionaries) = M & numMoving(V, cannibals) = C.
+
+% 11. The boat cannot cross the river unless there is at least one person on it.
+% (This constraint is already covered by constraint 4.)
+
+% 12. The number of people of each group at each location remains the same unless changed by crossing.
+% (Additive fluents remain the same unless affected by a rule; no explicit rule needed.)
+
+% query
+:- query
+    0: numOn(bank1, missionaries) = 4 & numOn(bank1, cannibals) = 4 & loc(boat) = bank1;
+    maxstep: numOn(bank2, missionaries) = 4 & numOn(bank2, cannibals) = 4.

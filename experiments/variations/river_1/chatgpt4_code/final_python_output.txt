@@ -1,0 +1,7 @@
+['Return alone to LeftBank',
+ 'Move cheese to RightBank',
+ 'Return alone to LeftBank',
+ 'Move snake to RightBank',
+ 'Return with mouse to LeftBank',
+ 'Return alone to RightBank',
+ 'Move mouse to RightBank']

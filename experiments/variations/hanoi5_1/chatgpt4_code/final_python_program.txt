@@ -1,0 +1,45 @@
+def solve_hanoi(disk, source, target, auxiliary, disks_placement, moves):
+    """
+    Recursive function to solve the Tower of Hanoi problem for each disk considering dependencies.
+    """
+    if disks_placement[disk] == target:
+        return  # Disk is already at the target
+
+    # Find where the current disk is placed
+    current_location = disks_placement[disk]
+
+    # If the disk is on top of another disk, move that disk first
+    for d in disks_placement:
+        if disks_placement[d] == disk:
+            solve_hanoi(d, current_location, auxiliary, target, disks_placement, moves)
+    
+    # Now all disks on top of this one have been moved to the auxiliary, can move the disk to target
+    moves.append(f"Move {disk} from {current_location} to {target}")
+    disks_placement[disk] = target
+
+    # Move all disks from auxiliary to target, stacking them on top of the current disk
+    for d in disks_placement:
+        if disks_placement[d] == auxiliary:
+            solve_hanoi(d, auxiliary, target, current_location, disks_placement, moves)
+
+def plan_disk_moves():
+    # Initial placement of disks on pegs
+    disks_placement = {
+        'd5': 'd4',
+        'd4': 'a',
+        'd3': 'c',
+        'd2': 'd1',
+        'd1': 'b'
+    }
+
+    # List to store moves
+    moves = []
+
+    # Start moving each disk to peg c, considering their dependencies and starting points
+    for disk in ['d1', 'd2', 'd3', 'd4', 'd5']:
+        solve_hanoi(disk, disks_placement[disk], 'c', 'a' if disks_placement[disk] != 'a' else 'b', disks_placement, moves)
+
+    return moves
+
+# Execute the plan
+plan_disk_moves()

@@ -1,0 +1,55 @@
+
+def is_final(state):
+    # All missionaries and cannibals are on the right bank
+    return state == (0, 0, 3, 3, 1)
+
+
+def is_valid_improved(state):
+    # Ensuring missionaries are never outnumbered by cannibals on both banks
+    M1, C1, M2, C2, _ = state
+    conditions_on_banks = (M1 == 0 or M1 >= C1) and (M2 == 0 or M2 >= C2)
+    return conditions_on_banks
+
+def generate_successors_improved(state):
+    # Generating valid moves considering the boat capacity and the number of people on each bank
+    M1, C1, M2, C2, B = state
+    successors = []
+    # Moves: (M, C) where M is missionaries, C is cannibals
+    possible_moves = [(1, 0), (0, 1), (1, 1), (2, 0), (0, 2)]
+
+    if B == 0:  # Boat is at the left bank (bank1)
+        for M, C in possible_moves:
+            if M <= M1 and C <= C1:
+                new_state = (M1 - M, C1 - C, M2 + M, C2 + C, 1)
+                if is_valid_improved(new_state):
+                    successors.append(new_state)
+    else:  # Boat is at the right bank (bank2)
+        for M, C in possible_moves:
+            if M <= M2 and C <= C2:
+                new_state = (M1 + M, C1 + C, M2 - M, C2 - C, 0)
+                if is_valid_improved(new_state):
+                    successors.append(new_state)
+
+    return successors
+
+def bfs_solve_improved():
+    from collections import deque
+    initial_state = (3, 3, 0, 0, 0)  # (M1, C1, M2, C2, Boat position)
+    queue = deque([(initial_state, [])])
+    visited = set([initial_state])
+
+    while queue:
+        current_state, path = queue.popleft()
+
+        if is_final(current_state):
+            return path  # Returning the path that led to the solution
+        
+        for successor in generate_successors_improved(current_state):
+            if successor not in visited:
+                visited.add(successor)
+                queue.append((successor, path + [successor]))
+    
+    return None
+
+# Attempting to solve the problem again with improved functions
+bfs_solve_improved()

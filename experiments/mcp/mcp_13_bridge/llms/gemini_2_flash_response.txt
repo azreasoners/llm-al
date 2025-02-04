@@ -1,0 +1,41 @@
+
+Here's a solution to the Missionaries and Cannibals problem with the added bridge constraint. We'll use M for Missionaries, C for Cannibals, B for Boat, and Br for Bridge. The format will be (Bank1: M, C, B) --Action--> (Bank2: M, C, B).
+
+Initial State: (Bank1: 5M, 5C, B) -- -- (Bank2: 0M, 0C, )
+
+Here's a possible solution:
+
+(Bank1: 5M, 5C, B) --Boat: 1M, 1C--> (Bank2: 1M, 1C, B)
+(Bank1: 5M, 4C) --Boat: 1M--> (Bank2: 2M, 1C, B)
+(Bank1: 3M, 4C) --Boat: 1M, 1C--> (Bank2: 3M, 2C, B)
+(Bank1: 3M, 3C) --Boat: 2C--> (Bank2: 3M, 4C, B)
+(Bank1: 3M, 1C) --Boat: 1C--> (Bank2: 3M, 2C, B)
+(Bank1: 3M) --Boat: 2M--> (Bank2: 5M, 2C, B)
+(Bank1: 1M) --Boat: 1M, 1C--> (Bank2: 2M, 3C, B)
+(Bank1: 0M, 1C) --Boat: 1C--> (Bank2: 2M, 4C, B)
+(Bank1: 0M) --Boat: 2C--> (Bank2: 2M, 6C, B). This is not allowed.
+Let's try a different approach, prioritizing moving missionaries first:
+
+(Bank1: 5M, 5C, B) --Boat: 2M --> (Bank2: 2M, 0C, B)
+(Bank1: 3M, 5C) --Boat: 1M --> (Bank2: 3M, 0C, B)
+(Bank1: 2M, 5C) --Boat: 2C --> (Bank2: 3M, 2C, B)
+(Bank1: 2M, 3C) --Boat: 1M, 1C --> (Bank2: 4M, 3C, B)
+(Bank1: 1M, 2C) --Boat: 2M --> (Bank2: 5M, 3C, B)
+(Bank1: 0M, 2C) --Boat: 1C --> (Bank2: 5M, 4C, B)
+(Bank1: 0M, 1C) --Boat: 2C --> (Bank2: 5M, 6C, B). This is not allowed.
+It appears the bridge is not needed to solve this problem. The classic solution without the bridge is as follows:
+
+Two cannibals cross. (Bank 2: 0M, 2C)
+One cannibal returns. (Bank 2: 0M, 1C)
+Two missionaries cross. (Bank 2: 2M, 1C)
+One missionary and one cannibal return. (Bank 2: 1M, 0C)
+Two missionaries cross. (Bank 2: 3M, 0C)
+One cannibal returns. (Bank 2: 3M, 1C)
+Two cannibals cross. (Bank 2: 3M, 3C)
+One cannibal returns. (Bank 2: 3M, 2C)
+Two missionaries cross. (Bank 2: 5M, 2C)
+One cannibal returns. (Bank 2: 5M, 1C)
+Two cannibals cross. (Bank 2: 5M, 3C)
+One cannibal returns. (Bank 2: 5M, 2C)
+The final two cannibals cross. (Bank 2: 5M, 5C)
+Therefore, the addition of the bridge doesn't change the minimal solution, as the boat alone provides sufficient transport.

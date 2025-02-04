@@ -1,0 +1,181 @@
+
+ChatGPT
+
+Analyzed
+
+python
+Always show details
+
+Copy code
+def solve_tower_of_hanoi(n, source, target, auxiliary):
+    """
+    Recursive solution to solve the Tower of Hanoi problem.
+
+    :param n: Number of disks
+    :param source: The initial peg
+    :param target: The destination peg
+    :param auxiliary: The auxiliary peg
+    :return: A list of moves required to solve the problem
+    """
+    if n == 1:
+        return [(source, target)]
+    else:
+        moves = []
+        # Move n-1 disks from source to auxiliary, so they are out of the way
+        moves += solve_tower_of_hanoi(n-1, source, auxiliary, target)
+        
+        # Move the nth disk from source to target
+        moves.append((source, target))
+        
+        # Move the n-1 disks from auxiliary to target
+        moves += solve_tower_of_hanoi(n-1, auxiliary, target, source)
+        
+        return moves
+
+# Number of disks
+number_of_disks = 7
+
+# Call the function and print the moves
+moves = solve_tower_of_hanoi(number_of_disks, 'a', 'c', 'b')
+moves
+Result
+[('a', 'c'),
+ ('a', 'b'),
+ ('c', 'b'),
+ ('a', 'c'),
+ ('b', 'a'),
+ ('b', 'c'),
+ ('a', 'c'),
+ ('a', 'b'),
+ ('c', 'b'),
+ ('c', 'a'),
+ ('b', 'a'),
+ ('c', 'b'),
+ ('a', 'c'),
+ ('a', 'b'),
+ ('c', 'b'),
+ ('a', 'c'),
+ ('b', 'a'),
+ ('b', 'c'),
+ ('a', 'c'),
+ ('b', 'a'),
+ ('c', 'b'),
+ ('c', 'a'),
+ ('b', 'a'),
+ ('b', 'c'),
+ ('a', 'c'),
+ ('a', 'b'),
+ ('c', 'b'),
+ ('a', 'c'),
+ ('b', 'a'),
+ ('b', 'c'),
+ ('a', 'c'),
+ ('a', 'b'),
+ ('c', 'b'),
+ ('c', 'a'),
+ ('b', 'a'),
+ ('c', 'b'),
+ ('a', 'c'),
+ ('a', 'b'),
+ ('c', 'b'),
+ ('c', 'a'),
+ ('b', 'a'),
+ ('b', 'c'),
+ ('a', 'c'),
+ ('b', 'a'),
+ ('c', 'b'),
+ ('c', 'a'),
+ ('b', 'a'),
+ ('c', 'b'),
+ ('a', 'c'),
+ ('a', 'b'),
+ ('c', 'b'),
+ ('a', 'c'),
+ ('b', 'a'),
+ ('b', 'c'),
+ ('a', 'c'),
+ ('a', 'b'),
+ ('c', 'b'),
+ ('c', 'a'),
+ ('b', 'a'),
+ ('c', 'b'),
+ ('a', 'c'),
+ ('a', 'b'),
+ ('c', 'b'),
+ ('a', 'c'),
+ ('b', 'a'),
+ ('b', 'c'),
+ ('a', 'c'),
+ ('b', 'a'),
+ ('c', 'b'),
+ ('c', 'a'),
+ ('b', 'a'),
+ ('b', 'c'),
+ ('a', 'c'),
+ ('a', 'b'),
+ ('c', 'b'),
+ ('a', 'c'),
+ ('b', 'a'),
+ ('b', 'c'),
+ ('a', 'c'),
+ ('b', 'a'),
+ ('c', 'b'),
+ ('c', 'a'),
+ ('b', 'a'),
+ ('c', 'b'),
+ ('a', 'c'),
+ ('a', 'b'),
+ ('c', 'b'),
+ ('c', 'a'),
+ ('b', 'a'),
+ ('b', 'c'),
+ ('a', 'c'),
+ ('b', 'a'),
+ ('c', 'b'),
+ ('c', 'a'),
+ ('b', 'a'),
+ ('b', 'c'),
+ ('a', 'c'),
+ ('a', 'b'),
+ ('c', 'b'),
+ ('a', 'c'),
+ ('b', 'a'),
+ ('b', 'c'),
+ ('a', 'c'),
+ ('a', 'b'),
+ ('c', 'b'),
+ ('c', 'a'),
+ ('b', 'a'),
+ ('c', 'b'),
+ ('a', 'c'),
+ ('a', 'b'),
+ ('c', 'b'),
+ ('a', 'c'),
+ ('b', 'a'),
+ ('b', 'c'),
+ ('a', 'c'),
+ ('b', 'a'),
+ ('c', 'b'),
+ ('c', 'a'),
+ ('b', 'a'),
+ ('b', 'c'),
+ ('a', 'c'),
+ ('a', 'b'),
+ ('c', 'b'),
+ ('a', 'c'),
+ ('b', 'a'),
+ ('b', 'c'),
+ ('a', 'c')]
+I have created a Python program that solves the Tower of Hanoi problem for 7 disks initially stacked on peg 'a' and needing to be moved to peg 'c' with the help of an auxiliary peg 'b'. The program lists the series of moves required to complete this task. Each move is represented as a tuple, where the first element is the source peg and the second element is the destination peg.
+
+Here's a small excerpt of the sequence of moves:
+
+Move from 'a' to 'c'
+Move from 'a' to 'b'
+Move from 'c' to 'b'
+Move from 'a' to 'c'
+Move from 'b' to 'a'
+Move from 'b' to 'c'
+Move from 'a' to 'c'
+...
+This pattern continues, ensuring that no heavier disk is placed on a lighter disk, and no disk is moved unless there are no other disks on top of it. Would you like the full sequence or a summary of how the moves progress? ​

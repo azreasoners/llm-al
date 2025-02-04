@@ -1,0 +1,61 @@
+
+expand_moreedit
+
+Show drafts
+expand_more
+volume_up
+
+Here's how you can solve the classic Missionaries and Cannibals problem with the added element of a strong missionary to protect them on the boat.
+
+Understanding the Rules:
+
+Capacity: Boat can carry a maximum of two people.
+Safety on Banks: Cannibals cannot outnumber missionaries on either bank.
+Safety on Boat: Cannibals cannot outnumber missionaries on the boat, unless the strong missionary is present.
+Strong Missionary: The strong missionary's presence on the boat prevents the cannibals from attacking.
+Representing the Problem:
+
+Let's use these representations:
+
+M: Missionaries
+C: Cannibals
+S: Strong missionary
+B: Boat
+State Representation:
+
+A state can be represented as: (# of Missionaries on bank1, # of Cannibals on bank1, Boat Location)
+
+Initial State: (4, 4, bank1)
+Goal State: (0, 0, bank2)
+Possible Actions:
+
+Here are the possible moves, assuming the strong missionary can row the boat alone:
+
+One missionary and one cannibal cross to bank2 (MC ->)
+One missionary crosses to bank2 (M ->)
+Two missionaries cross to bank2 (MM ->)
+The strong missionary and one cannibal cross to bank2 (SC ->)
+One cannibal crosses to bank2 (C ->)
+One cannibal returns to bank1 (<- C)
+Two cannibals return to bank1 (<- CC)
+One missionary returns to bank1 (<- M)
+Solution (One Possible Plan):
+
+SC -> (3, 3, bank2)
+<- C (3, 4, bank1)
+MM -> (1, 4, bank2)
+<- M (2, 4, bank1)
+MC -> (1, 3, bank2)
+<- C (2, 3, bank1)
+MC -> (1, 2, bank2)
+<- M (2, 2, bank1)
+SC -> (1, 1, bank2)
+<- S (2, 1, bank1)
+SC -> (1, 0, bank2)
+<- C (2, 0, bank1)
+CC -> (0, 0, bank2)
+Important Notes:
+
+There are other valid solutions to this problem.
+The strong missionary makes certain moves possible that wouldn't be safe normally.
+Let me know if you'd like help visualizing these steps, or would like to see a different solution path!

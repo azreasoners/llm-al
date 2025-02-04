@@ -1,0 +1,17 @@
+AI
+
+Here is a plan to stack all disks on peg c:
+
+Move disk d3 from disk d2 to peg b
+Move disk d2 from disk d1 to peg c
+Move disk d3 from peg b to peg c
+Move disk d1 from peg a to peg c
+The key steps are:
+
+Move the top disk d3 to the open peg b to free up disk d2
+Move disk d2 to the target peg c
+Move disk d3 on top of d2 on peg c
+Finally, move the bottom disk d1 to peg c
+This ensures that a larger disk is never placed on top of a smaller one. By using the spare peg b as a temporary holding location, we are able to reorder the stack of disks to the target peg c, moving one disk at a time.
+
+This is a classic example of the Towers of Hanoi problem. The recursive solution generalizes to any number of disks. With 3 disks it takes a minimum of 7 moves (2^3 - 1). In general, the minimum number of moves is 2^n - 1, where n is the number of disks.

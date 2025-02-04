@@ -1,0 +1,7 @@
+[('left', 'snake', 'right'),
+ ('right', 'human', 'left'),
+ ('left', 'cheese', 'right'),
+ ('right', 'snake', 'left'),
+ ('left', 'mouse', 'right'),
+ ('right', 'human', 'left'),
+ ('left', 'snake', 'right')]

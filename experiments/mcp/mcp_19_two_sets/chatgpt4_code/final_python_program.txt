@@ -1,0 +1,52 @@
+def is_valid(state):
+    """ Check if a state is valid according to the rules. """
+    # Each pair of (missionaries, cannibals) must have missionaries >= cannibals unless missionaries are 0
+    (m1, c1, m2, c2) = state
+    return (m1 == 0 or m1 >= c1) and (m2 == 0 or m2 >= c2)
+
+def bfs():
+    """ Use Breadth-First Search (BFS) to find the solution to the problem. """
+    from collections import deque
+    
+    # Initial state (missionaries1, cannibals1, missionaries2, cannibals2)
+    start = (3, 3, 3, 3)
+    # Goal state
+    goal = (0, 0, 0, 0)
+    # Possible moves, representing (missionaries, cannibals) moved from bank1 to bank2
+    moves = [(1, 0), (2, 0), (0, 1), (0, 2), (1, 1)]
+    
+    # Queue for BFS
+    queue = deque([(start, [])])
+    # Visited states
+    visited = set()
+    visited.add(start)
+    
+    while queue:
+        current_state, path = queue.popleft()
+        if current_state == goal:
+            return path
+        
+        # Generate new states based on moves
+        for move in moves:
+            # Apply move to both sets independently and together
+            for i in range(3):  # Apply move to first set, second set, or both
+                if i == 0:  # First set only
+                    new_state = (current_state[0] - move[0], current_state[1] - move[1], current_state[2], current_state[3])
+                elif i == 1:  # Second set only
+                    new_state = (current_state[0], current_state[1], current_state[2] - move[0], current_state[3] - move[1])
+                else:  # Both sets
+                    new_state = (
+                        current_state[0] - move[0], current_state[1] - move[1],
+                        current_state[2] - move[0], current_state[3] - move[1]
+                    )
+                
+                # Check if new state is valid and not visited
+                if is_valid(new_state) and new_state not in visited:
+                    visited.add(new_state)
+                    queue.append((new_state, path + [new_state]))
+    
+    return None  # No solution found
+
+# Find the solution using BFS
+solution = bfs()
+solution

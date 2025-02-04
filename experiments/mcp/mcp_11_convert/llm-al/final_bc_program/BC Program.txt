@@ -1,0 +1,86 @@
+:- sorts
+    vessel;
+    location;
+    group;
+    integer.
+
+
+
+:- objects
+    boat :: vessel;
+    bank1, bank2 :: location;
+    missionaries, cannibals :: group;
+    0..10 :: integer.
+
+
+
+:- variables
+    V, V1, V2, V3, V4 :: vessel;
+    Loc, Loc1, Loc2, Loc3, Loc4 :: location;
+    G, G1, G2, G3, G4 :: group;
+    N, N1, N2, N3, N4, M :: integer.
+
+
+
+:- constants
+    cross(vessel) :: exogenousAction;
+    convert(location) :: exogenousAction;
+    numCrossing(vessel, group) :: attribute(integer) of cross(vessel);
+    loc(vessel) :: inertialFluent(location);
+    capacity(vessel) :: inertialFluent(integer);
+    numAt(group, location) :: additiveFluent(integer).
+
+% Generated constraints
+
+% 1. The capacity of the boat is 2.
+capacity(boat) = 2.
+
+% 2. The boat cannot cross if no one is on board (number of people crossing < 1).
+nonexecutable cross(boat) if N1 = numCrossing(boat, missionaries) & N2 = numCrossing(boat, cannibals) & N1 + N2 < 1.
+
+% 3. Crossing the boat moves the specified number of group G from one bank to the other bank.
+cross(boat) decrements numAt(G, Loc1) by N if N = numCrossing(boat, G) & loc(boat) = Loc1.
+
+cross(boat) increments numAt(G, Loc2) by N if N = numCrossing(boat, G) & loc(boat) = Loc1 & Loc2 \= Loc1.
+
+% 4. After crossing, the location of the boat becomes the opposite bank.
+cross(boat) causes loc(boat) = Loc2 if loc(boat) = Loc1 & Loc2 \= Loc1.
+
+% 5. The number of people crossing cannot exceed the capacity of the boat.
+nonexecutable cross(boat) if N1 = numCrossing(boat, missionaries) & N2 = numCrossing(boat, cannibals) & N1 + N2 > capacity(boat).
+
+% 7. The number of people crossing from each group cannot exceed the number of people from that group at the departure location.
+nonexecutable cross(boat) if N = numCrossing(boat, G) & loc(boat) = Loc & M = numAt(G, Loc) & N > M.
+
+% 9. The number of people in any group at any location cannot be negative.
+impossible numAt(G, Loc) < 0.
+
+% 10. On either bank, the number of cannibals cannot be greater than the number of missionaries unless there are no missionaries at that bank.
+impossible numAt(missionaries, Loc) > 0 & numAt(cannibals, Loc) > numAt(missionaries, Loc).
+
+% 11. On the boat during crossing, the number of cannibals cannot be greater than the number of missionaries unless there are no missionaries on the boat.
+nonexecutable cross(boat) if N1 = numCrossing(boat, missionaries) & N2 = numCrossing(boat, cannibals) & N1 > 0 & N2 > N1.
+
+% 13. If there are at least three missionaries and at least one cannibal at a location, performing the convert action at that location decreases the number of cannibals by one and increases the number of missionaries by one.
+convert(Loc) decrements numAt(cannibals, Loc) by 1.
+
+convert(Loc) increments numAt(missionaries, Loc) by 1.
+
+% 14. The action convert(location) is not executable unless there are at least three missionaries and at least one cannibal at that location.
+nonexecutable convert(Loc) if numAt(missionaries, Loc) < 3.
+
+nonexecutable convert(Loc) if numAt(cannibals, Loc) < 1.
+
+% 15. It is impossible to perform both the crossing and the convert actions at the same time.
+nonexecutable cross(boat) & convert(Loc).
+
+
+
+% Original natural language query: Three missionaries and three cannibals are at location bank1. The boat is at location bank1. Find a plan so that all missionaries and all cannibals are at location bank2.
+
+:- query
+    0: numAt(missionaries, bank1) = 3 & numAt(cannibals, bank1) = 3 & numAt(missionaries, bank2) = 0 &
+       numAt(cannibals, bank2) = 0 & loc(boat) = bank1;
+    maxstep: numAt(missionaries, bank2) = 3 & numAt(cannibals, bank2) = 3 &
+             numAt(missionaries, bank1) = 0 & numAt(cannibals, bank1) = 0.
+

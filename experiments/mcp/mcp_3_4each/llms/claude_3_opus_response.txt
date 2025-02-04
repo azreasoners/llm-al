@@ -1,0 +1,95 @@
+Here's a plan to safely transport the four missionaries and four cannibals from bank1 to bank2 using the boat with a capacity of 2:
+
+Move 1 missionary and 1 cannibal from bank1 to bank2 using the boat.
+
+Boat: 1 missionary, 1 cannibal
+Bank1: 3 missionaries, 3 cannibals
+Bank2: 1 missionary, 1 cannibal
+
+
+Move 1 cannibal from bank2 to bank1 using the boat.
+
+Boat: 1 cannibal
+Bank1: 3 missionaries, 4 cannibals
+Bank2: 1 missionary
+
+
+Move 2 cannibals from bank1 to bank2 using the boat.
+
+Boat: 2 cannibals
+Bank1: 3 missionaries, 2 cannibals
+Bank2: 1 missionary, 3 cannibals
+
+
+Move 1 missionary and 1 cannibal from bank2 to bank1 using the boat.
+
+Boat: 1 missionary, 1 cannibal
+Bank1: 4 missionaries, 3 cannibals
+Bank2: 2 cannibals
+
+
+Move 2 missionaries from bank1 to bank2 using the boat.
+
+Boat: 2 missionaries
+Bank1: 2 missionaries, 3 cannibals
+Bank2: 2 missionaries, 2 cannibals
+
+
+Move 1 missionary from bank2 to bank1 using the boat.
+
+Boat: 1 missionary
+Bank1: 3 missionaries, 3 cannibals
+Bank2: 1 missionary, 2 cannibals
+
+
+Move 2 cannibals from bank1 to bank2 using the boat.
+
+Boat: 2 cannibals
+Bank1: 3 missionaries, 1 cannibal
+Bank2: 1 missionary, 4 cannibals
+
+
+Move 1 cannibal from bank2 to bank1 using the boat.
+
+Boat: 1 cannibal
+Bank1: 3 missionaries, 2 cannibals
+Bank2: 1 missionary, 3 cannibals
+
+
+Move 2 missionaries from bank1 to bank2 using the boat.
+
+Boat: 2 missionaries
+Bank1: 1 missionary, 2 cannibals
+Bank2: 3 missionaries, 3 cannibals
+
+
+Move 1 missionary and 1 cannibal from bank2 to bank1 using the boat.
+
+Boat: 1 missionary, 1 cannibal
+Bank1: 2 missionaries, 3 cannibals
+Bank2: 2 missionaries, 2 cannibals
+
+
+Move 2 cannibals from bank1 to bank2 using the boat.
+
+Boat: 2 cannibals
+Bank1: 2 missionaries, 1 cannibal
+Bank2: 2 missionaries, 4 cannibals
+
+
+Move 2 missionaries from bank1 to bank2 using the boat.
+
+Boat: 2 missionaries
+Bank1: 1 cannibal
+Bank2: 4 missionaries, 4 cannibals
+
+
+Move 1 cannibal from bank1 to bank2 using the boat.
+
+Boat: 1 cannibal
+Bank1: Empty
+Bank2: 4 missionaries, 4 cannibals, Boat
+
+
+
+All missionaries and cannibals are now safely at bank2.

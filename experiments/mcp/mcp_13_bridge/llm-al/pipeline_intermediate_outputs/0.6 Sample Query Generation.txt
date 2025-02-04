@@ -1,0 +1,26 @@
+% Query 1: Attempt to cross the boat with 2 missionaries and 1 cannibal (unsatisfiable)
+:- query
+  0: numAt(missionaries, bank1)=5 & numAt(cannibals, bank1)=5 & boatLocation=bank1;
+  0: cross(boat) & amount(missionaries)=2 & amount(cannibals)=1.
+
+% Query 2: Cross the boat with 1 missionary and 1 cannibal from bank1 to bank2 (satisfiable)
+:- query
+  0: numAt(missionaries, bank1)=5 & numAt(cannibals, bank1)=5 & boatLocation=bank1;
+  0: cross(boat) & amount(missionaries)=1 & amount(cannibals)=1;
+  maxstep: numAt(missionaries, bank1)=4 & numAt(cannibals, bank1)=4 & numAt(missionaries, bank2)=1 & numAt(cannibals, bank2)=1 & boatLocation=bank2.
+
+% Query 3: Cross the boat with 2 cannibals from bank1 to bank2 (satisfiable)
+:- query
+  0: numAt(missionaries, bank1)=5 & numAt(cannibals, bank1)=5 & numAt(missionaries, bank2)=0 & numAt(cannibals, bank2)=0 & boatLocation=bank1;
+  0: cross(boat) & amount(missionaries)=0 & amount(cannibals)=2;
+  maxstep: numAt(missionaries, bank1)=5 & numAt(cannibals, bank1)=3 & numAt(missionaries, bank2)=0 & numAt(cannibals, bank2)=2 & boatLocation=bank2.
+
+% Query 4: Attempt to cross the boat with no one on it (unsatisfiable)
+:- query
+  0: numAt(missionaries, bank1)=5 & numAt(cannibals, bank1)=5 & boatLocation=bank1;
+  0: cross(boat) & amount(missionaries)=0 & amount(cannibals)=0.
+
+% Query 5: Attempt to cross the bridge with 3 people (2 missionaries and 1 cannibal) (unsatisfiable)
+:- query
+  0: numAt(missionaries, bank1)=5 & numAt(cannibals, bank1)=5;
+  0: cross(bridge) & amount(missionaries)=2 & amount(cannibals)=1.

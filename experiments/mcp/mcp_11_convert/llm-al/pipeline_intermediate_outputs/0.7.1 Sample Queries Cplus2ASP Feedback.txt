@@ -1,0 +1,152 @@
+% Query 1: Try to cross the boat when no one is on it (unsatisfiable)
+:- query
+    0: numAt(missionaries, bank1) = 1 & numAt(cannibals, bank1) = 1 &
+       numAt(missionaries, bank2) = 2 & numAt(cannibals, bank2) = 2 &
+       loc(boat) = bank1;
+    0: cross(boat) & numCrossing(boat, missionaries) = 0 & numCrossing(boat, cannibals) = 0.
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+
+
+% Query 2: Try to cross the boat with 3 people on it (unsatisfiable)
+:- query
+    0: numAt(missionaries, bank1) = 3 & numAt(cannibals, bank1) = 3 &
+       numAt(missionaries, bank2) = 0 & numAt(cannibals, bank2) = 0 &
+       loc(boat) = bank1;
+    0: cross(boat) & numCrossing(boat, missionaries) = 2 & numCrossing(boat, cannibals) = 1.
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+
+
+% Query 3: Try to cross the boat with acceptable number of passengers (1 missionary and 1 cannibal) (satisfiable)
+:- query
+    0: numAt(missionaries, bank1) = 3 & numAt(cannibals, bank1) = 3 &
+       numAt(missionaries, bank2) = 0 & numAt(cannibals, bank2) = 0 &
+       loc(boat) = bank1;
+    0: cross(boat) & numCrossing(boat, missionaries) = 1 & numCrossing(boat, cannibals) = 1.
+
+Cplus2ASP Output:
+
+Solving...
+Solution: 1
+	
+
+	0:  capacity(boat)=2 loc(boat)=bank1 numAt(cannibals, bank1)=3 numAt(cannibals, bank2)=0 numAt(missionaries, bank1)=3 numAt(missionaries, bank2)=0
+
+	ACTIONS:  cross(boat) numCrossing(boat, cannibals)=1 numCrossing(boat, missionaries)=1
+
+	1:  capacity(boat)=2 loc(boat)=bank2 numAt(cannibals, bank1)=2 numAt(cannibals, bank2)=1 numAt(missionaries, bank1)=2 numAt(missionaries, bank2)=1
+
+SATISFIABLE
+Models       : 1
+
+
+% Query 4: Try to cross a cannibal to bank2, leading to cannibals outnumbering missionaries on bank2 (unsatisfiable)
+:- query
+    0: numAt(missionaries, bank1) = 2 & numAt(cannibals, bank1) = 1 &
+       numAt(missionaries, bank2) = 1 & numAt(cannibals, bank2) = 2 &
+       loc(boat) = bank1;
+    0: cross(boat) & numCrossing(boat, missionaries) = 0 & numCrossing(boat, cannibals) = 1.
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+
+
+% Query 5: Try to perform both 'cross(boat)' and 'convert(bank1)' at the same time (unsatisfiable)
+:- query
+    0: numAt(missionaries, bank1) = 3 & numAt(cannibals, bank1) = 3 &
+       numAt(missionaries, bank2) = 0 & numAt(cannibals, bank2) = 0 &
+       loc(boat) = bank1;
+    0: cross(boat) & numCrossing(boat, missionaries) = 1 & numCrossing(boat, cannibals) = 1 &
+       convert(bank1).
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+
+
+
+
+
+:- query
+    0: numAt(missionaries, bank1) = 3 & numAt(cannibals, bank1) = 3 & numAt(missionaries, bank2) = 0 &
+       numAt(cannibals, bank2) = 0 & loc(boat) = bank1;
+    maxstep: numAt(missionaries, bank2) = 3 & numAt(cannibals, bank2) = 3 &
+             numAt(missionaries, bank1) = 0 & numAt(cannibals, bank1) = 0.
+
+Cplus2ASP Output:
+
+Solving...
+Solution: 1
+	
+
+	0:  capacity(boat)=2 loc(boat)=bank1 numAt(cannibals, bank1)=3 numAt(cannibals, bank2)=0 numAt(missionaries, bank1)=3 numAt(missionaries, bank2)=0
+
+	ACTIONS:  cross(boat) numCrossing(boat, cannibals)=2 numCrossing(boat, missionaries)=0
+
+	1:  capacity(boat)=2 loc(boat)=bank2 numAt(cannibals, bank1)=1 numAt(cannibals, bank2)=2 numAt(missionaries, bank1)=3 numAt(missionaries, bank2)=0
+
+	ACTIONS:  cross(boat) numCrossing(boat, cannibals)=1 numCrossing(boat, missionaries)=0
+
+	2:  capacity(boat)=2 loc(boat)=bank1 numAt(cannibals, bank1)=2 numAt(cannibals, bank2)=1 numAt(missionaries, bank1)=3 numAt(missionaries, bank2)=0
+
+	ACTIONS:  cross(boat) numCrossing(boat, cannibals)=2 numCrossing(boat, missionaries)=0
+
+	3:  capacity(boat)=2 loc(boat)=bank2 numAt(cannibals, bank1)=0 numAt(cannibals, bank2)=3 numAt(missionaries, bank1)=3 numAt(missionaries, bank2)=0
+
+	ACTIONS:  cross(boat) numCrossing(boat, cannibals)=1 numCrossing(boat, missionaries)=0
+
+	4:  capacity(boat)=2 loc(boat)=bank1 numAt(cannibals, bank1)=1 numAt(cannibals, bank2)=2 numAt(missionaries, bank1)=3 numAt(missionaries, bank2)=0
+
+	ACTIONS:  cross(boat) numCrossing(boat, cannibals)=0 numCrossing(boat, missionaries)=2
+
+	5:  capacity(boat)=2 loc(boat)=bank2 numAt(cannibals, bank1)=1 numAt(cannibals, bank2)=2 numAt(missionaries, bank1)=1 numAt(missionaries, bank2)=2
+
+	ACTIONS:  cross(boat) numCrossing(boat, cannibals)=1 numCrossing(boat, missionaries)=1
+
+	6:  capacity(boat)=2 loc(boat)=bank1 numAt(cannibals, bank1)=2 numAt(cannibals, bank2)=1 numAt(missionaries, bank1)=2 numAt(missionaries, bank2)=1
+
+	ACTIONS:  cross(boat) numCrossing(boat, cannibals)=0 numCrossing(boat, missionaries)=2
+
+	7:  capacity(boat)=2 loc(boat)=bank2 numAt(cannibals, bank1)=2 numAt(cannibals, bank2)=1 numAt(missionaries, bank1)=0 numAt(missionaries, bank2)=3
+
+	ACTIONS:  cross(boat) numCrossing(boat, cannibals)=1 numCrossing(boat, missionaries)=0
+
+	8:  capacity(boat)=2 loc(boat)=bank1 numAt(cannibals, bank1)=3 numAt(cannibals, bank2)=0 numAt(missionaries, bank1)=0 numAt(missionaries, bank2)=3
+
+	ACTIONS:  cross(boat) numCrossing(boat, cannibals)=2 numCrossing(boat, missionaries)=0
+
+	9:  capacity(boat)=2 loc(boat)=bank2 numAt(cannibals, bank1)=1 numAt(cannibals, bank2)=2 numAt(missionaries, bank1)=0 numAt(missionaries, bank2)=3
+
+	ACTIONS:  cross(boat) numCrossing(boat, cannibals)=0 numCrossing(boat, missionaries)=1
+
+	10:  capacity(boat)=2 loc(boat)=bank1 numAt(cannibals, bank1)=1 numAt(cannibals, bank2)=2 numAt(missionaries, bank1)=1 numAt(missionaries, bank2)=2
+
+	ACTIONS:  cross(boat) numCrossing(boat, cannibals)=1 numCrossing(boat, missionaries)=1
+
+	11:  capacity(boat)=2 loc(boat)=bank2 numAt(cannibals, bank1)=0 numAt(cannibals, bank2)=3 numAt(missionaries, bank1)=0 numAt(missionaries, bank2)=3
+
+SATISFIABLE
+Models       : 1+
+

@@ -1,0 +1,19 @@
+def solve_hanoi(n, from_peg, to_peg, aux_peg):
+    if n == 0:
+        return []
+    steps = solve_hanoi(n - 1, from_peg, aux_peg, to_peg)
+    steps.append((from_peg, to_peg))
+    steps += solve_hanoi(n - 1, aux_peg, to_peg, from_peg)
+    return steps
+
+# Number of disks
+n_disks = 5
+
+# Peg labels
+from_peg = 'a'
+to_peg = 'c'
+aux_peg = 'b'
+
+# Generate the move sequence to solve the problem
+hanoi_solution = solve_hanoi(n_disks, from_peg, to_peg, aux_peg)
+hanoi_solution

@@ -1,0 +1,71 @@
+User
+ 
+
+ChatGPT
+To solve this problem, we need to find a sequence of moves that allows all three missionaries (M) and three cannibals (C), including the big cannibal, to safely cross from bank1 to bank2. The boat has a capacity for two but the big cannibal counts as two due to his size. Let's outline a strategy that considers all these constraints and achieves the goal without violating the rules:
+
+Initial setup:
+bank1: 3M, 3C (1 big cannibal)
+bank2: 0M, 0C
+boat at bank1
+Rules to follow:
+Cannibals may never outnumber missionaries at any location.
+At most two can ride the boat at any one time.
+The big cannibal occupies the boat alone due to his size.
+Step-by-Step Solution
+Move 1
+Action: Big cannibal crosses to bank2.
+bank1: 3M, 2C
+bank2: 0M, 1C (big)
+boat at bank2
+Move 2
+Action: Big cannibal returns to bank1.
+bank1: 3M, 3C
+bank2: 0M, 0C
+boat at bank1
+Move 3
+Action: Two small cannibals cross to bank2.
+bank1: 3M, 1C
+bank2: 0M, 2C (big cannibal not counted here)
+boat at bank2
+Move 4
+Action: One small cannibal returns to bank1.
+bank1: 3M, 2C
+bank2: 0M, 1C
+boat at bank1
+Move 5
+Action: Two missionaries cross to bank2.
+bank1: 1M, 2C
+bank2: 2M, 1C
+boat at bank2
+Move 6
+Action: One missionary and one small cannibal return to bank1.
+bank1: 2M, 3C
+bank2: 1M, 0C
+boat at bank1
+Move 7
+Action: Two missionaries cross to bank2.
+bank1: 0M, 3C
+bank2: 3M, 0C
+boat at bank2
+Move 8
+Action: Big cannibal crosses to bank2.
+bank1: 0M, 2C
+bank2: 3M, 1C (big)
+boat at bank2
+Move 9
+Action: Big cannibal returns to bank1.
+bank1: 0M, 3C
+bank2: 3M, 0C
+boat at bank1
+Move 10
+Action: Two small cannibals cross to bank2.
+bank1: 0M, 1C
+bank2: 3M, 2C
+boat at bank2
+Move 11
+Action: Big cannibal crosses to bank2, completing the transfer.
+bank1: 0M, 0C
+bank2: 3M, 3C
+boat at bank2
+This sequence of moves ensures that at no point do the cannibals outnumber the missionaries on either bank or in the boat, and everyone successfully crosses to bank2.

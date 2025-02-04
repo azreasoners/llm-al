@@ -1,0 +1,32 @@
+profile picture
+ 
+Absolutely! Here's the solution to the classic Missionaries and Cannibals problem along with explanations to help you understand the logic behind the steps.
+
+Understanding the Rules
+
+Capacity: The boat can carry a maximum of two people.
+Safety on the banks: Cannibals cannot outnumber missionaries on either bank, or the missionaries will be in danger.
+Safety on the boat: If, on the boat, cannibals outnumber the missionaries, there's also a risk.
+Movement: The boat must have at least one person to cross the river.
+Missionaries limitations: Missionaries cannot row the boat.
+Representation:
+
+M = Missionary
+C = Cannibal
+B = Boat
+Steps to Solve
+
+CC -> Two cannibals cross the river (bank1: 3M, 1C, B | bank2: 2C)
+C <- One cannibal returns (bank1: 3M, 2C | bank2: 1C, B)
+CC -> Two cannibals cross again (bank1: 3M, B | bank2: 3C)
+C <- One cannibal returns (bank1: 3M, 1C, B | bank2: 2C)
+MM -> Two missionaries cross (bank1: 1M, 1C | bank2: 2M, 2C, B)
+MC <- One missionary, one cannibal return (bank1: 2M, 2C, B | bank2: 1M, 1C)
+MM -> Two missionaries cross (bank1: B | bank2: 3M, 3C, B)
+C <- One cannibal returns (bank1: 1C, B | bank2: 3M, 2C)
+CC -> Two cannibals cross (bank1: B | bank2: 3M, 3C, B)
+C <- One cannibal returns (bank1: 1C, B | bank2: 3M, 2C)
+CC -> Two cannibals cross again (bank1: | bank2: 3M, 3C, B)
+Success! Now all three missionaries and three cannibals are safely on bank2.
+
+Let me know if you'd like a visual representation of this, or want to explore ways to represent and solve this problem using programming!

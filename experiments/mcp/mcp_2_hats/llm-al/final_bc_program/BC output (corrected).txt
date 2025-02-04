@@ -1,0 +1,55 @@
+Solving...
+Solution: 1
+
+
+        0:  hasHat(c1)=hat4 hasHat(c2)=hat5 hasHat(c3)=hat6 hasHat(m1)=hat1 hasHat(m2)=hat2 hasHat(m3)=hat3 loc_member(c1)=bank1 loc_member(c2)=bank1 loc_member(c3)=bank1 loc_member(m1)=bank1 loc_member(m2)=bank1 loc_member(m3)=bank1 loc_vessel(boat)=bank1 numCannibalsAt(bank1)=3 numCannibalsAt(bank2)=0 numMissionariesAt(bank1)=3 numMissionariesAt(bank2)=0
+
+        ACTIONS:  cross(boat) numCannibalsOnBoard(boat)=2 numMissionariesOnBoard(boat)=0 onboard(boat, c1) onboard(boat, c2) onboard(boat, c3) onboard(boat, m1) onboard(boat, m2) onboard(boat, m3)
+
+        1:  hasHat(c1)=hat4 hasHat(c2)=hat5 hasHat(c3)=hat6 hasHat(m1)=hat1 hasHat(m2)=hat2 hasHat(m3)=hat3 loc_member(c1)=bank2 loc_member(c2)=bank2 loc_member(c3)=bank2 loc_member(m1)=bank2 loc_member(m2)=bank2 loc_member(m3)=bank2 loc_vessel(boat)=bank2 numCannibalsAt(bank1)=1 numCannibalsAt(bank2)=2 numMissionariesAt(bank1)=3 numMissionariesAt(bank2)=0
+
+        ACTIONS:  cross(boat) numCannibalsOnBoard(boat)=1 numMissionariesOnBoard(boat)=0
+
+        2:  hasHat(c1)=hat4 hasHat(c2)=hat5 hasHat(c3)=hat6 hasHat(m1)=hat1 hasHat(m2)=hat2 hasHat(m3)=hat3 loc_member(c1)=bank2 loc_member(c2)=bank2 loc_member(c3)=bank2 loc_member(m1)=bank2 loc_member(m2)=bank2 loc_member(m3)=bank2 loc_vessel(boat)=bank1 numCannibalsAt(bank1)=2 numCannibalsAt(bank2)=1 numMissionariesAt(bank1)=3 numMissionariesAt(bank2)=0
+
+        ACTIONS:  cross(boat) numCannibalsOnBoard(boat)=2 numMissionariesOnBoard(boat)=0
+
+        3:  hasHat(c1)=hat4 hasHat(c2)=hat5 hasHat(c3)=hat6 hasHat(m1)=hat1 hasHat(m2)=hat2 hasHat(m3)=hat3 loc_member(c1)=bank2 loc_member(c2)=bank2 loc_member(c3)=bank2 loc_member(m1)=bank2 loc_member(m2)=bank2 loc_member(m3)=bank2 loc_vessel(boat)=bank2 numCannibalsAt(bank1)=0 numCannibalsAt(bank2)=3 numMissionariesAt(bank1)=3 numMissionariesAt(bank2)=0
+
+        ACTIONS:  cross(boat) numCannibalsOnBoard(boat)=1 numMissionariesOnBoard(boat)=0 onboard(boat, m1)
+
+        4:  hasHat(c1)=hat4 hasHat(c2)=hat5 hasHat(c3)=hat6 hasHat(m1)=hat1 hasHat(m2)=hat2 hasHat(m3)=hat3 loc_member(c1)=bank2 loc_member(c2)=bank2 loc_member(c3)=bank2 loc_member(m1)=bank1 loc_member(m2)=bank2 loc_member(m3)=bank2 loc_vessel(boat)=bank1 numCannibalsAt(bank1)=1 numCannibalsAt(bank2)=2 numMissionariesAt(bank1)=3 numMissionariesAt(bank2)=0
+
+        ACTIONS:  cross(boat) numCannibalsOnBoard(boat)=0 numMissionariesOnBoard(boat)=2
+
+        5:  hasHat(c1)=hat4 hasHat(c2)=hat5 hasHat(c3)=hat6 hasHat(m1)=hat1 hasHat(m2)=hat2 hasHat(m3)=hat3 loc_member(c1)=bank2 loc_member(c2)=bank2 loc_member(c3)=bank2 loc_member(m1)=bank1 loc_member(m2)=bank2 loc_member(m3)=bank2 loc_vessel(boat)=bank2 numCannibalsAt(bank1)=1 numCannibalsAt(bank2)=2 numMissionariesAt(bank1)=1 numMissionariesAt(bank2)=2
+
+        ACTIONS:  cross(boat) numCannibalsOnBoard(boat)=1 numMissionariesOnBoard(boat)=1
+
+        6:  hasHat(c1)=hat4 hasHat(c2)=hat5 hasHat(c3)=hat6 hasHat(m1)=hat1 hasHat(m2)=hat2 hasHat(m3)=hat3 loc_member(c1)=bank2 loc_member(c2)=bank2 loc_member(c3)=bank2 loc_member(m1)=bank1 loc_member(m2)=bank2 loc_member(m3)=bank2 loc_vessel(boat)=bank1 numCannibalsAt(bank1)=2 numCannibalsAt(bank2)=1 numMissionariesAt(bank1)=2 numMissionariesAt(bank2)=1
+
+        ACTIONS:  cross(boat) numCannibalsOnBoard(boat)=0 numMissionariesOnBoard(boat)=2
+
+        7:  hasHat(c1)=hat4 hasHat(c2)=hat5 hasHat(c3)=hat6 hasHat(m1)=hat1 hasHat(m2)=hat2 hasHat(m3)=hat3 loc_member(c1)=bank2 loc_member(c2)=bank2 loc_member(c3)=bank2 loc_member(m1)=bank1 loc_member(m2)=bank2 loc_member(m3)=bank2 loc_vessel(boat)=bank2 numCannibalsAt(bank1)=2 numCannibalsAt(bank2)=1 numMissionariesAt(bank1)=0 numMissionariesAt(bank2)=3
+
+        ACTIONS:  cross(boat) numCannibalsOnBoard(boat)=1 numMissionariesOnBoard(boat)=0 onboard(boat, m2) onboard(boat, m3)
+
+        8:  hasHat(c1)=hat4 hasHat(c2)=hat5 hasHat(c3)=hat6 hasHat(m1)=hat1 hasHat(m2)=hat2 hasHat(m3)=hat3 loc_member(c1)=bank2 loc_member(c2)=bank2 loc_member(c3)=bank2 loc_member(m1)=bank1 loc_member(m2)=bank1 loc_member(m3)=bank1 loc_vessel(boat)=bank1 numCannibalsAt(bank1)=3 numCannibalsAt(bank2)=0 numMissionariesAt(bank1)=0 numMissionariesAt(bank2)=3
+
+        ACTIONS:  cross(boat) numCannibalsOnBoard(boat)=2 numMissionariesOnBoard(boat)=0
+
+        9:  hasHat(c1)=hat4 hasHat(c2)=hat5 hasHat(c3)=hat6 hasHat(m1)=hat1 hasHat(m2)=hat2 hasHat(m3)=hat3 loc_member(c1)=bank2 loc_member(c2)=bank2 loc_member(c3)=bank2 loc_member(m1)=bank1 loc_member(m2)=bank1 loc_member(m3)=bank1 loc_vessel(boat)=bank2 numCannibalsAt(bank1)=1 numCannibalsAt(bank2)=2 numMissionariesAt(bank1)=0 numMissionariesAt(bank2)=3
+
+        ACTIONS:  cross(boat) numCannibalsOnBoard(boat)=1 numMissionariesOnBoard(boat)=0 onboard(boat, c1) onboard(boat, c2) onboard(boat, c3)
+
+        10:  hasHat(c1)=hat4 hasHat(c2)=hat5 hasHat(c3)=hat6 hasHat(m1)=hat1 hasHat(m2)=hat2 hasHat(m3)=hat3 loc_member(c1)=bank1 loc_member(c2)=bank1 loc_member(c3)=bank1 loc_member(m1)=bank1 loc_member(m2)=bank1 loc_member(m3)=bank1 loc_vessel(boat)=bank1 numCannibalsAt(bank1)=2 numCannibalsAt(bank2)=1 numMissionariesAt(bank1)=0 numMissionariesAt(bank2)=3
+
+        ACTIONS:  cross(boat) numCannibalsOnBoard(boat)=2 numMissionariesOnBoard(boat)=0 onboard(boat, c1) onboard(boat, c2) onboard(boat, c3) onboard(boat, m1) onboard(boat, m2) onboard(boat, m3)
+
+        11:  hasHat(c1)=hat4 hasHat(c2)=hat5 hasHat(c3)=hat6 hasHat(m1)=hat1 hasHat(m2)=hat2 hasHat(m3)=hat3 loc_member(c1)=bank2 loc_member(c2)=bank2 loc_member(c3)=bank2 loc_member(m1)=bank2 loc_member(m2)=bank2 loc_member(m3)=bank2 loc_vessel(boat)=bank2 numCannibalsAt(bank1)=0 numCannibalsAt(bank2)=3 numMissionariesAt(bank1)=0 numMissionariesAt(bank2)=3
+
+SATISFIABLE
+Models       : 1+
+Calls        : 1
+Time         : 0.165s (Solving: 0.06s 1st Model: 0.06s Unsat: 0.00s)
+CPU Time     : 0.165s

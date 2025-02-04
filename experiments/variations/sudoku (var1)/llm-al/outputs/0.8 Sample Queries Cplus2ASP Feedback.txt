@@ -1,0 +1,97 @@
+% Query 1: Set the value 5 at cell (0, 0) in an empty grid (satisfiable)
+:- query
+    0: setValue(0, 0, 5).
+
+Cplus2ASP Output:
+
+Solving...
+Solution: 1
+	
+
+	0:  val(0, 0)=empty val(0, 1)=empty val(0, 2)=empty val(0, 3)=empty val(0, 4)=empty val(0, 5)=empty val(0, 6)=empty val(0, 7)=empty val(0, 8)=empty val(1, 0)=empty val(1, 1)=empty val(1, 2)=empty val(1, 3)=empty val(1, 4)=empty val(1, 5)=empty val(1, 6)=empty val(1, 7)=empty val(1, 8)=empty val(2, 0)=empty val(2, 1)=empty val(2, 2)=empty val(2, 3)=empty val(2, 4)=empty val(2, 5)=empty val(2, 6)=empty val(2, 7)=empty val(2, 8)=empty val(3, 0)=empty val(3, 1)=empty val(3, 2)=empty val(3, 3)=empty val(3, 4)=empty val(3, 5)=empty val(3, 6)=empty val(3, 7)=empty val(3, 8)=empty val(4, 0)=empty val(4, 1)=empty val(4, 2)=empty val(4, 3)=empty val(4, 4)=empty val(4, 5)=empty val(4, 6)=empty val(4, 7)=empty val(4, 8)=empty val(5, 0)=empty val(5, 1)=empty val(5, 2)=empty val(5, 3)=empty val(5, 4)=empty val(5, 5)=empty val(5, 6)=empty val(5, 7)=empty val(5, 8)=empty val(6, 0)=empty val(6, 1)=empty val(6, 2)=empty val(6, 3)=empty val(6, 4)=empty val(6, 5)=empty val(6, 6)=empty val(6, 7)=empty val(6, 8)=empty val(7, 0)=empty val(7, 1)=empty val(7, 2)=empty val(7, 3)=empty val(7, 4)=empty val(7, 5)=empty val(7, 6)=empty val(7, 7)=empty val(7, 8)=empty val(8, 0)=empty val(8, 1)=empty val(8, 2)=empty val(8, 3)=empty val(8, 4)=empty val(8, 5)=empty val(8, 6)=empty val(8, 7)=empty val(8, 8)=empty
+
+	ACTIONS:  setValue(0, 0, 5)
+
+	1:  val(0, 0)=5 val(0, 1)=empty val(0, 2)=empty val(0, 3)=empty val(0, 4)=empty val(0, 5)=empty val(0, 6)=empty val(0, 7)=empty val(0, 8)=empty val(1, 0)=empty val(1, 1)=empty val(1, 2)=empty val(1, 3)=empty val(1, 4)=empty val(1, 5)=empty val(1, 6)=empty val(1, 7)=empty val(1, 8)=empty val(2, 0)=empty val(2, 1)=empty val(2, 2)=empty val(2, 3)=empty val(2, 4)=empty val(2, 5)=empty val(2, 6)=empty val(2, 7)=empty val(2, 8)=empty val(3, 0)=empty val(3, 1)=empty val(3, 2)=empty val(3, 3)=empty val(3, 4)=empty val(3, 5)=empty val(3, 6)=empty val(3, 7)=empty val(3, 8)=empty val(4, 0)=empty val(4, 1)=empty val(4, 2)=empty val(4, 3)=empty val(4, 4)=empty val(4, 5)=empty val(4, 6)=empty val(4, 7)=empty val(4, 8)=empty val(5, 0)=empty val(5, 1)=empty val(5, 2)=empty val(5, 3)=empty val(5, 4)=empty val(5, 5)=empty val(5, 6)=empty val(5, 7)=empty val(5, 8)=empty val(6, 0)=empty val(6, 1)=empty val(6, 2)=empty val(6, 3)=empty val(6, 4)=empty val(6, 5)=empty val(6, 6)=empty val(6, 7)=empty val(6, 8)=empty val(7, 0)=empty val(7, 1)=empty val(7, 2)=empty val(7, 3)=empty val(7, 4)=empty val(7, 5)=empty val(7, 6)=empty val(7, 7)=empty val(7, 8)=empty val(8, 0)=empty val(8, 1)=empty val(8, 2)=empty val(8, 3)=empty val(8, 4)=empty val(8, 5)=empty val(8, 6)=empty val(8, 7)=empty val(8, 8)=empty
+
+SATISFIABLE
+Models       : 1+
+
+
+% Query 2: Try to set the value 3 at cell (0, 0) when it already has value 5 (unsatisfiable)
+:- query
+    0: val(0, 0) = 5 & setValue(0, 0, 3).
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+
+
+% Query 3: Try to set the value 5 at cell (0, 2) when cell (0, 1) already has value 5 (unsatisfiable)
+:- query
+    0: val(0, 1) = 5 & setValue(0, 2, 5).
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+
+
+% Query 4: Try to set the value 5 at cell (2, 0) when cell (1, 0) already has value 5 (unsatisfiable)
+:- query
+    0: val(1, 0) = 5 & setValue(2, 0, 5).
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+
+
+% Query 5: Try to set the value 5 at cell (1, 1) when cell (0, 0) already has value 5 (unsatisfiable)
+:- query
+    0: val(0, 0) = 5 & setValue(1, 1, 5).
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+
+
+
+
+:- query
+    0: val(0, 2) = 9 & val(0, 4) = 2 & val(0, 5) = 8 & val(0, 6) = 7 &
+       val(1, 0) = 8 & val(1, 2) = 6 & val(1, 5) = 4 & val(1, 8) = 5 &
+       val(2, 2) = 3 & val(2, 8) = 4 &
+       val(3, 0) = 6 &
+       val(4, 1) = 2 & val(4, 3) = 7 & val(4, 4) = 1 & val(4, 5) = 3 & val(4, 6) = 4 & val(4, 7) = 5 &
+       val(5, 8) = 2 &
+       val(6, 0) = 3 & val(6, 6) = 5 &
+       val(7, 0) = 9 & val(7, 3) = 4 & val(7, 6) = 8 & val(7, 8) = 7 &
+       val(8, 2) = 1 & val(8, 3) = 2 & val(8, 4) = 5 & val(8, 6) = 3.
+
+
+Cplus2ASP Output:
+
+Solving...
+Solution: 1
+	
+
+	0:  val(0, 0)=empty val(0, 1)=empty val(0, 2)=9 val(0, 3)=empty val(0, 4)=2 val(0, 5)=8 val(0, 6)=7 val(0, 7)=empty val(0, 8)=empty val(1, 0)=8 val(1, 1)=empty val(1, 2)=6 val(1, 3)=empty val(1, 4)=empty val(1, 5)=4 val(1, 6)=empty val(1, 7)=empty val(1, 8)=5 val(2, 0)=empty val(2, 1)=empty val(2, 2)=3 val(2, 3)=empty val(2, 4)=empty val(2, 5)=empty val(2, 6)=empty val(2, 7)=empty val(2, 8)=4 val(3, 0)=6 val(3, 1)=empty val(3, 2)=empty val(3, 3)=empty val(3, 4)=empty val(3, 5)=empty val(3, 6)=empty val(3, 7)=empty val(3, 8)=empty val(4, 0)=empty val(4, 1)=2 val(4, 2)=empty val(4, 3)=7 val(4, 4)=1 val(4, 5)=3 val(4, 6)=4 val(4, 7)=5 val(4, 8)=empty val(5, 0)=empty val(5, 1)=empty val(5, 2)=empty val(5, 3)=empty val(5, 4)=empty val(5, 5)=empty val(5, 6)=empty val(5, 7)=empty val(5, 8)=2 val(6, 0)=3 val(6, 1)=empty val(6, 2)=empty val(6, 3)=empty val(6, 4)=empty val(6, 5)=empty val(6, 6)=5 val(6, 7)=empty val(6, 8)=empty val(7, 0)=9 val(7, 1)=empty val(7, 2)=empty val(7, 3)=4 val(7, 4)=empty val(7, 5)=empty val(7, 6)=8 val(7, 7)=empty val(7, 8)=7 val(8, 0)=empty val(8, 1)=empty val(8, 2)=1 val(8, 3)=2 val(8, 4)=5 val(8, 5)=empty val(8, 6)=3 val(8, 7)=empty val(8, 8)=empty
+
+SATISFIABLE
+Models       : 1+
+

@@ -1,0 +1,41 @@
+def river_crossing_puzzle_final():
+    # Initial state: positions of mouse, snake, cheese and boat
+    leftBank = {'snake', 'cheese'}
+    rightBank = {'mouse', 'boat'}
+    moves = []
+
+    # Move sequence to solve the puzzle
+    # Move 1: Return alone to the left bank (start from right with the boat)
+    moves.append("Return alone to LeftBank")
+
+    # Move 2: Take the cheese to the right bank
+    leftBank.remove('cheese')
+    rightBank.add('cheese')
+    moves.append("Move cheese to RightBank")
+
+    # Move 3: Return alone to the left bank
+    moves.append("Return alone to LeftBank")
+
+    # Move 4: Take the snake to the right bank
+    leftBank.remove('snake')
+    rightBank.add('snake')
+    moves.append("Move snake to RightBank")
+
+    # Move 5: Return with the mouse to the left bank (move mouse and return to avoid mouse being with the cheese alone)
+    rightBank.remove('mouse')
+    leftBank.add('mouse')
+    moves.append("Return with mouse to LeftBank")
+
+    # Move 6: Go alone to the right bank (leave mouse on left bank)
+    moves.append("Return alone to RightBank")
+
+    # Move 7: Take the mouse to the right bank (final move)
+    leftBank.remove('mouse')
+    rightBank.add('mouse')
+    moves.append("Move mouse to RightBank")
+
+    # Final state and moves
+    return moves
+
+# Execute the program and print the moves
+river_crossing_puzzle_final()

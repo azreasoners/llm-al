@@ -1,0 +1,48 @@
+```
+Actions:
+cross(vessel) :: exogenousAction;
+walk :: exogenousAction.
+
+Constants:
+numOnBank(group, location) :: additiveFluent(integer); // The number of people in group at a location.
+jesusLocation :: inertialFluent(location); // The location of Jesus.
+boatLocation :: inertialFluent(location); // The location of the boat.
+loading(group) :: attribute(integer) of cross(vessel); // Number of people of group boarding the boat in the cross action.
+jesusOnBoat :: attribute(boolean) of cross(vessel); // Whether Jesus is on the boat during the cross action.
+capacity(vessel) :: rigid(integer); // The capacity of the boat.
+totalNum(group) :: rigid(integer); // Total number of people in the group.
+
+BC+ Signature:
+
+:- sorts
+    vessel;
+    location;
+    group;
+    integer;
+    boolean.
+
+:- objects
+    boat :: vessel;
+    bank1, bank2 :: location;
+    missionaries, cannibals, jesus :: group;
+    true, false :: boolean;
+    0..10 :: integer.
+
+:- variables
+    Vessel, Vessel1, Vessel2, Vessel3, Vessel4 :: vessel;
+    G, G1, G2, G3, G4 :: group;
+    Loc, Loc1, Loc2, Loc3, Loc4 :: location;
+    N, N1, N2, N3, N4 :: integer;
+    Bool, Bool1, Bool2, Bool3, Bool4 :: boolean.
+
+:- constants
+    numOnBank(group, location) :: additiveFluent(integer);
+    jesusLocation :: inertialFluent(location);
+    boatLocation :: inertialFluent(location);
+    cross(vessel) :: exogenousAction;
+    loading(group) :: attribute(integer) of cross(vessel);
+    jesusOnBoat :: attribute(boolean) of cross(vessel);
+    walk :: exogenousAction;
+    capacity(vessel) :: rigid(integer);
+    totalNum(group) :: rigid(integer).
+```

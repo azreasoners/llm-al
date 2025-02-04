@@ -1,0 +1,34 @@
+Here's a plan to safely transport all the missionaries and cannibals from bank1 to bank2 while following the given constraints:
+
+Two cannibals take the boat from bank1 to bank2.
+(bank1: 3 missionaries, 1 cannibal; boat: 2 cannibals; bank2: empty)
+One cannibal returns to bank1 with the boat.
+(bank1: 3 missionaries, 2 cannibals; boat: 1 cannibal; bank2: 1 cannibal)
+Two missionaries take the boat from bank1 to bank2.
+(bank1: 1 missionary, 2 cannibals; boat: 2 missionaries; bank2: 1 cannibal)
+One missionary and one cannibal return to bank1 with the boat.
+(bank1: 2 missionaries, 3 cannibals; boat: 1 missionary, 1 cannibal; bank2: 1 missionary)
+Two cannibals take the boat from bank1 to bank2.
+(bank1: 2 missionaries, 1 cannibal; boat: 2 cannibals; bank2: 1 missionary, 2 cannibals)
+One cannibal returns to bank1 with the boat.
+(bank1: 2 missionaries, 2 cannibals; boat: 1 cannibal; bank2: 1 missionary, 2 cannibals)
+Two missionaries take the boat from bank1 to bank2.
+(bank1: 2 cannibals; boat: 2 missionaries; bank2: 3 missionaries, 2 cannibals)
+One missionary and one cannibal return to bank1 with the boat.
+(bank1: 1 missionary, 3 cannibals; boat: 1 missionary, 1 cannibal; bank2: 2 missionaries, 1 cannibal)
+Two cannibals take the boat from bank1 to bank2.
+(bank1: 1 missionary, 1 cannibal; boat: 2 cannibals; bank2: 2 missionaries, 3 cannibals)
+One cannibal returns to bank1 with the boat.
+(bank1: 1 missionary, 2 cannibals; boat: 1 cannibal; bank2: 2 missionaries, 2 cannibals)
+Two cannibals take the boat from bank1 to bank2.
+(bank1: 1 missionary; boat: 2 cannibals; bank2: 2 missionaries, 4 cannibals)
+One missionary and one cannibal return to bank1 with the boat.
+(bank1: 2 missionaries, 1 cannibal; boat: 1 missionary, 1 cannibal; bank2: 1 missionary, 3 cannibals)
+Two missionaries take the boat from bank1 to bank2.
+(bank1: 1 cannibal; boat: 2 missionaries; bank2: 3 missionaries, 3 cannibals)
+The boat returns to bank1 with one missionary.
+(bank1: 1 missionary, 1 cannibal; boat: 1 missionary; bank2: 2 missionaries, 3 cannibals)
+Two cannibals take the boat from bank1 to bank2.
+(bank1: 1 missionary; boat: 2 cannibals; bank2: 3 missionaries, 5 cannibals)
+
+At the end of this process, all three missionaries and all three cannibals have safely crossed from bank1 to bank2, and the constraints were maintained throughout the journey.

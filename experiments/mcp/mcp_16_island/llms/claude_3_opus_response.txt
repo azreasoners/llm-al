@@ -1,0 +1,17 @@
+
+Here is a plan to get all the missionaries and cannibals safely across the river to bank2 using the island:
+
+2 cannibals take the boat from bank1 to island.
+1 cannibal takes the boat back from island to bank1.
+2 missionaries take the boat from bank1 to island.
+2 cannibals take the boat from island to bank2.
+1 cannibal takes the boat back from bank2 to island.
+2 cannibals take the boat from island to bank1.
+1 missionary and 1 cannibal take the boat from bank1 to island.
+2 missionaries take the boat from island to bank2.
+1 cannibal takes the boat back from bank2 to island.
+2 cannibals take the boat from island to bank1.
+2 missionaries take the boat from bank1 to bank2.
+1 missionary takes the boat back from bank2 to island.
+1 missionary and 1 cannibal take the boat from island to bank2.
+At the end, all 5 missionaries and 5 cannibals are at bank2, with the boat also at bank2. At no point do the cannibals outnumber the missionaries at any location or on the boat. The boat never crosses empty and always carries 1 or 2 people. The island is utilized as an intermediary point to ensure the required balance is maintained throughout the process.

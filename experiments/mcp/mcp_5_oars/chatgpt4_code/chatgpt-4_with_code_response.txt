@@ -1,0 +1,82 @@
+
+ChatGPT
+
+Analyzed
+
+python
+Always show details
+
+Copy code
+def safe(m, c):
+    """Check if missionaries are not outnumbered by cannibals on any side."""
+    return (m == 0 or m >= c) and (3 - m == 0 or 3 - m >= 3 - c)
+
+def move(state, next_states):
+    """Generate the next valid states from the current state."""
+    m, c, b = state
+    if b == 1:  # boat on the starting bank
+        directions = -1
+        target_bank = 2
+    else:  # boat on the target bank
+        directions = 1
+        target_bank = 1
+
+    # Possible moves: (1M, 0C), (2M, 0C), (0M, 1C), (0M, 2C), (1M, 1C)
+    for dm, dc in [(1, 0), (2, 0), (0, 1), (0, 2), (1, 1)]:
+        nm, nc = m + directions * dm, c + directions * dc
+        if 0 <= nm <= 3 and 0 <= nc <= 3 and safe(nm, nc):
+            next_states.add((nm, nc, target_bank))
+
+def bfs():
+    """Use breadth-first search to find the minimum path to the goal."""
+    from collections import deque
+    initial = (3, 3, 1)  # (missionaries, cannibals, boat location)
+    goal = (0, 0, 2)
+    queue = deque([initial])
+    paths = {initial: [initial]}
+    visited = set([initial])
+    
+    while queue:
+        current = queue.popleft()
+        if current == goal:
+            return paths[current]
+        
+        next_states = set()
+        move(current, next_states)
+        
+        for state in next_states:
+            if state not in visited:
+                visited.add(state)
+                queue.append(state)
+                paths[state] = paths[current] + [state]
+
+    return None
+
+bfs()
+Result
+[(3, 3, 1),
+ (3, 1, 2),
+ (3, 2, 1),
+ (3, 0, 2),
+ (3, 1, 1),
+ (1, 1, 2),
+ (2, 2, 1),
+ (0, 2, 2),
+ (0, 3, 1),
+ (0, 1, 2),
+ (0, 2, 1),
+ (0, 0, 2)]
+Here is the solution for safely crossing all three missionaries and three cannibals to the other bank:
+
+(3 missionaries, 3 cannibals, boat at bank1) -> (3 missionaries, 1 cannibal, boat at bank2)
+(3 missionaries, 2 cannibals, boat at bank1) <- (3 missionaries, 1 cannibal, boat at bank2)
+(3 missionaries, 0 cannibals, boat at bank2) -> (3 missionaries, 2 cannibals, boat at bank1)
+(3 missionaries, 1 cannibal, boat at bank1) <- (3 missionaries, 0 cannibals, boat at bank2)
+(1 missionary, 1 cannibal, boat at bank2) -> (3 missionaries, 1 cannibal, boat at bank1)
+(2 missionaries, 2 cannibals, boat at bank1) <- (1 missionary, 1 cannibal, boat at bank2)
+(0 missionaries, 2 cannibals, boat at bank2) -> (2 missionaries, 2 cannibals, boat at bank1)
+(0 missionaries, 3 cannibals, boat at bank1) <- (0 missionaries, 2 cannibals, boat at bank2)
+(0 missionaries, 1 cannibal, boat at bank2) -> (0 missionaries, 3 cannibals, boat at bank1)
+(0 missionaries, 2 cannibals, boat at bank1) <- (0 missionaries, 1 cannibal, boat at bank2)
+(0 missionaries, 0 cannibals, boat at bank2) -> (0 missionaries, 2 cannibals, boat at bank1)
+This sequence of moves ensures that at no point do the cannibals outnumber the missionaries on either bank or on the boat. ​

@@ -1,0 +1,179 @@
+
+ChatGPT
+
+Analysis errored
+
+python
+Always show details
+
+Copy code
+def is_valid(state):
+    # State is defined as [ML, CL, MR, CR, B] where:
+    # ML = Missionaries on the left bank
+    # CL = Cannibals on the left bank
+    # MR = Missionaries on the right bank
+    # CR = Cannibals on the right bank
+    # B = Boat position (0 = left, 1 = right)
+
+    ML, CL, MR, CR, B = state
+    
+    # Check for number of missionaries being less than number of cannibals on either side
+    if ML < CL and ML > 0: return False
+    if MR < CR and MR > 0: return False
+    
+    # Check all numbers are non-negative (valid state)
+    if ML < 0 or CL < 0 or MR < 0 or CR < 0: return False
+    
+    return True
+
+def is_goal(state):
+    # Goal is to have all missionaries and cannibals on the right bank
+    return state == [0, 0, 3, 3, 1]
+
+def generate_states(current_state):
+    # Generate all possible valid states from current state by moving the boat
+    ML, CL, MR, CR, B = current_state
+    possible_moves = [(1, 0), (2, 0), (0, 1), (0, 2), (1, 1)]
+    new_states = []
+    
+    for M, C in possible_moves:
+        if B == 0:  # Boat is on the left side, move to right
+            new_state = [ML - M, CL - C, MR + M, CR + C, 1]
+        else:       # Boat is on the right side, move to left
+            new_state = [ML + M, CL + C, MR - M, CR - C, 0]
+        
+        # Check if the move is valid
+        if is_valid(new_state):
+            new_states.append(new_state)
+            
+    return new_states
+
+def bfs(initial_state):
+    from collections import deque
+    
+    queue = deque([initial_state])
+    visited = set()
+    visited.add(tuple(initial_state))
+    parent_map = {tuple(initial_state): None}
+    
+    while queue:
+        current_state = queue.popleft()
+        
+        if is_goal(current_state):
+            return reconstruct_path(current_state, parent_map)
+        
+        for next_state in generate_states(current_state):
+            state_tuple = tuple(next_state)
+            if state_tuple not in visited:
+                visited.add(state_tuple)
+                parent_map[state_tuple] = current_state
+                queue.append(next_state)
+                
+    return None
+
+def reconstruct_path(state, parent_map):
+    path = []
+    state_tuple = tuple(state)
+    while state_tuple is not None:
+        path.append(state_tuple)
+        state_tuple = parent_map[state_tuple]
+    path.reverse()
+    return path
+
+# Start from the initial state [3, 3, 0, 0, 0] where all are on the left bank and boat is also on left
+initial_state = [3, 3, 0, 0, 0]
+solution = bfs(initial_state)
+solution
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+Cell In[1], line 76
+     74 # Start from the initial state [3, 3, 0, 0, 0] where all are on the left bank and boat is also on left
+     75 initial_state = [3, 3, 0, 0, 0]
+---> 76 solution = bfs(initial_state)
+     77 solution
+
+Cell In[1], line 54, in bfs(initial_state)
+     51 current_state = queue.popleft()
+     53 if is_goal(current_state):
+---> 54     return reconstruct_path(current_state, parent_map)
+     56 for next_state in generate_states(current_state):
+     57     state_tuple = tuple(next_state)
+
+Cell In[1], line 70, in reconstruct_path(state, parent_map)
+     68 while state_tuple is not None:
+     69     path.append(state_tuple)
+---> 70     state_tuple = parent_map[state_tuple]
+     71 path.reverse()
+     72 return path
+
+TypeError: unhashable type: 'list'
+It seems there was an error in the code related to the handling of the state tuples in the parent mapping. I need to ensure that the keys in the parent_map are always tuples since lists cannot be used as dictionary keys due to their mutable nature. Let me fix this issue and run the code again. ​​
+
+
+Analyzed
+
+python
+Always show details
+
+Copy code
+def bfs(initial_state):
+    from collections import deque
+    
+    queue = deque([tuple(initial_state)])  # Start with the initial state as a tuple
+    visited = set()
+    visited.add(tuple(initial_state))
+    parent_map = {tuple(initial_state): None}
+    
+    while queue:
+        current_state = queue.popleft()
+        
+        if is_goal(list(current_state)):  # Convert tuple back to list for goal check
+            return reconstruct_path(current_state, parent_map)
+        
+        for next_state in generate_states(list(current_state)):  # Convert tuple back to list for generating states
+            state_tuple = tuple(next_state)
+            if state_tuple not in visited:
+                visited.add(state_tuple)
+                parent_map[state_tuple] = current_state
+                queue.append(state_tuple)
+                
+    return None
+
+# Start from the initial state [3, 3, 0, 0, 0] where all are on the left bank and boat is also on left
+initial_state = [3, 3, 0, 0, 0]
+solution = bfs(initial_state)
+solution
+Result
+[(3, 3, 0, 0, 0),
+ (3, 1, 0, 2, 1),
+ (3, 2, 0, 1, 0),
+ (3, 0, 0, 3, 1),
+ (3, 1, 0, 2, 0),
+ (1, 1, 2, 2, 1),
+ (2, 2, 1, 1, 0),
+ (0, 2, 3, 1, 1),
+ (0, 3, 3, 0, 0),
+ (0, 1, 3, 2, 1),
+ (1, 1, 2, 2, 0),
+ (0, 0, 3, 3, 1)]
+The Python program successfully found a solution to the problem where three missionaries and three cannibals need to cross a river using a boat that carries at most two people. Here's the sequence of states representing their movements from one bank to the other:
+
+Initial state: All three missionaries and three cannibals are on the left bank. ([3 missionaries, 3 cannibals, 0, 0, left bank])
+Two cannibals cross to the right bank. ([3, 1, 0, 2, right bank])
+One cannibal returns to the left bank. ([3, 2, 0, 1, left bank])
+Two cannibals cross to the right bank. ([3, 0, 0, 3, right bank])
+One cannibal returns to the left bank. ([3, 1, 0, 2, left bank])
+Two missionaries cross to the right bank. ([1, 1, 2, 2, right bank])
+One missionary and one cannibal return to the left bank. ([2, 2, 1, 1, left bank])
+Two missionaries cross to the right bank. ([0, 2, 3, 1, right bank])
+Two cannibals return to the left bank. ([0, 3, 3, 0, left bank])
+Two cannibals cross to the right bank. ([0, 1, 3, 2, right bank])
+One cannibal returns to the left bank. ([1, 1, 2, 2, left bank])
+Two cannibals cross to the right bank. ([0, 0, 3, 3, right bank])
+This sequence of movements ensures that all missionaries and cannibals are safely transported to the right bank without ever allowing the cannibals to outnumber the missionaries on either bank. ​​
+
+
+
+
+
+

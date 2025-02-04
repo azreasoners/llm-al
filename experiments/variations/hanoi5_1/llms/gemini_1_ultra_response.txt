@@ -1,0 +1,38 @@
+profile picture
+ 
+Here's how you can solve the disk stacking problem, along with a detailed plan to get all the disks on peg c.
+
+Understanding the Rules
+
+Heavier disks on the bottom: You can only place smaller (lighter) disks on top of larger (heavier) ones.
+One move at a time: You can move only one disk at a time.
+Locations: Disks can be placed on locations (pegs or other disks).
+The Problem Setup
+
+You have three pegs (a, b, c), and five disks (d1, d2, d3, d4, d5). Your goal is to move all the disks onto peg 'c', maintaining the order with the heaviest disk (d1) at the bottom.
+
+The Solution Strategy
+
+The Tower of Hanoi is a classic puzzle with a recursive solution. The basic strategy involves these steps:
+
+Move a sub-tower: Move a smaller tower of 'n-1' disks to an auxiliary peg to expose the bottom disk.
+Move the largest disk: Move the largest (bottom) disk to the target peg.
+Rebuild the sub-tower: Move the 'n-1' disk tower from the auxiliary peg onto the largest disk on the target peg.
+The Plan
+
+Here's a step-by-step plan to stack all the disks on peg 'c':
+
+Move d5 from a to b: Get the smallest disk out of the way.
+Move d4 from a to c: Move the next smallest to the target peg
+Move d5 from b to c: Place the smallest on top of d4.
+Move d3 from c to b: Move the disk blocking d1 and d2.
+Move d1 from b to a: Expose the largest disk.
+Move d2 from b to c: Place it on the target peg .
+Move d1 from a to c: Move the largest disk to the target peg.
+Move d3 from b to a: Get d3 out of the way.
+Move d5 from c to b: Place d5 temporarily.
+Move d4 from c to a: Place d4 temporarily.
+Move d5 from b to c: Put the smallest back on the target peg.
+Move d4 from a to c: Move it on top of d5.
+Move d3 from a to c: Place the final disk on the peg.
+You have successfully moved all the disks to peg 'c' in the correct order!

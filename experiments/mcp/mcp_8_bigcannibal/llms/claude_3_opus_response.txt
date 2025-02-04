@@ -1,0 +1,17 @@
+
+Here's a step-by-step plan to safely transport the three missionaries and three cannibals across the river from bank1 to bank2:
+
+1 missionary and 1 cannibal cross from bank1 to bank2 in the boat.
+The cannibal returns to bank1 alone in the boat.
+2 cannibals cross from bank1 to bank2 in the boat.
+1 missionary and 1 cannibal return to bank1 in the boat.
+2 missionaries cross from bank1 to bank2 in the boat.
+1 cannibal returns to bank1 alone in the boat.
+2 cannibals cross from bank1 to bank2 in the boat.
+1 cannibal returns to bank1 alone in the boat.
+The big cannibal crosses from bank1 to bank2 alone in the boat.
+1 missionary returns to bank1 alone in the boat.
+2 missionaries cross from bank1 to bank2 in the boat.
+At the end of this sequence, all three missionaries and all three cannibals (including the big cannibal) will be at bank2, and the boat will also be at bank2.
+
+Throughout this process, the number of cannibals never exceeds the number of missionaries on either bank or in the boat, ensuring the safety of the missionaries.

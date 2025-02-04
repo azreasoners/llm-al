@@ -1,0 +1,29 @@
+
+expand_moreedit
+
+Show drafts
+expand_more
+volume_up
+
+Absolutely! This is a classic river crossing puzzle. Here's one possible solution to get all the missionaries and cannibals safely across the river, given the increased boat capacity of 3:
+
+Steps:
+
+Bank1 to Bank2: 3 cannibals cross the river.
+Bank2 to Bank1: 1 cannibal returns.
+Bank1 to Bank2: 3 missionaries cross the river.
+Bank2 to Bank1: 1 missionary and 1 cannibal return.
+Bank1 to Bank2: 3 cannibals cross the river.
+Bank2 to Bank1: 1 cannibal returns.
+Bank1 to Bank2: 3 missionaries cross the river.
+Bank2 to Bank1: 1 missionary and 1 cannibal return.
+Bank1 to Bank2: 2 missionaries cross the river.
+Bank2 to Bank1: 1 cannibal returns.
+Bank1 to Bank2: 2 cannibals cross the river.
+Bank2 to Bank1: 1 cannibal returns.
+Bank1 to Bank2: 2 cannibals cross the river.
+Explanation:
+
+The key to solving this puzzle is to carefully balance the number of missionaries and cannibals on each side of the river and in the boat.  You must always ensure that missionaries are never outnumbered by cannibals in any location.
+
+Let me know if you'd like to see other possible solutions!

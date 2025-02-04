@@ -1,0 +1,34 @@
+def solve_tower_of_hanoi(n, source, target, auxiliary):
+    """
+    Solves the Tower of Hanoi problem for n disks.
+    The function prints the move required to move n disks from the source peg to the target peg.
+    
+    Parameters:
+        n (int): Number of disks to move.
+        source (str): The peg where disks are initially located.
+        target (str): The peg where disks should be moved.
+        auxiliary (str): The third peg used as a temporary storage.
+    """
+    if n == 1:
+        print(f"Move disk from {source} to {target}")
+    else:
+        # Move top n-1 disks from source to auxiliary, so they are out of the way
+        solve_tower_of_hanoi(n-1, source, auxiliary, target)
+        
+        # Move the nth disk from source to target
+        print(f"Move disk from {source} to {target}")
+        
+        # Move the n-1 disks from auxiliary to target
+        solve_tower_of_hanoi(n-1, auxiliary, target, source)
+
+# Initially, disk d3 is on peg c, disk d1 is on peg b, and disk d2 is on disk d1
+# We need to move disks d2 and d1 to peg c
+
+# Move d2 from b (over d1) to a (temporary move to free d1)
+solve_tower_of_hanoi(1, 'b', 'a', 'c')
+
+# Move d1 from b to c
+solve_tower_of_hanoi(1, 'b', 'c', 'a')
+
+# Move d2 from a to c
+solve_tower_of_hanoi(1, 'a', 'c', 'b')

@@ -1,0 +1,43 @@
+```
+Actions:
+cross(boat) - The action of the boat crossing the river.
+
+Constants:
+numAt(BG,P) - The number of members of basicGroup BG at place P. This is an additive fluent representing the count of missionaries and cannibals at each place (bank or boat).
+numCrossing(V,BG) - The number of members of basicGroup BG crossing on vessel V during a cross action. This is an attribute of the cross action.
+rower(V,BG) - Indicates whether a member of basicGroup BG is rowing vessel V during a cross action. This is a boolean attribute of the cross action.
+boatLoc - The location of the boat. This is an inertial fluent indicating the boat's current location (bank1 or bank2).
+capacity(V) - The capacity of vessel V. This is a constant representing how many people the vessel can hold.
+
+BC+ Signature:
+
+:- sorts
+    integer;
+    basicGroup;
+    group >> basicGroup;
+    vessel;
+    location;
+    place >> location; vessel.
+
+:- objects
+    missionaries, cannibals :: basicGroup;
+    boat :: vessel;
+    bank1, bank2 :: location;
+    0..10 :: integer.
+
+:- variables
+    BG, BG1, BG2, BG3, BG4 :: basicGroup;
+    G, G1, G2, G3, G4 :: group;
+    V, V1, V2, V3, V4 :: vessel;
+    L, L1, L2, L3, L4 :: location;
+    P, P1, P2, P3, P4 :: place;
+    N, N1, N2, N3, N4 :: integer.
+
+:- constants
+    cross(vessel) :: exogenousAction;
+    numCrossing(vessel, basicGroup) :: attribute(integer) of cross(vessel);
+    rower(vessel, basicGroup) :: attribute(boolean) of cross(vessel);
+    capacity(vessel) :: constant(integer);
+    boatLoc :: inertialFluent(location);
+    numAt(basicGroup, place) :: additiveFluent(integer).
+```

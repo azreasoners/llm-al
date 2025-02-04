@@ -1,0 +1,34 @@
+```
+Actions:
+cross(vessel)
+
+Constants:
+numAt(group, location) :: additiveFluent(integer)     % The number of people of a group at a location
+boatLoc :: inertialFluent(location)                   % The location of the boat
+numCrossing(vessel, group) :: attribute(integer) of cross(vessel)    % The number of people of a group crossing in the vessel during a cross action
+
+BC+ Signature:
+:- sorts
+    vessel;
+    location;
+    group;
+    integer.
+
+:- objects
+    boat :: vessel;
+    bank1, bank2 :: location;
+    missionary, cannibal, bigCannibal :: group;
+    0..10 :: integer.
+
+:- variables
+    V, V1, V2, V3, V4 :: vessel;
+    Loc, Loc1, Loc2, Loc3, Loc4 :: location;
+    G, G1, G2, G3, G4 :: group;
+    N, N1, N2, N3, N4 :: integer.
+
+:- constants
+    cross(vessel) :: exogenousAction;
+    numCrossing(vessel, group) :: attribute(integer) of cross(vessel);
+    numAt(group, location) :: additiveFluent(integer);
+    boatLoc :: inertialFluent(location).
+```

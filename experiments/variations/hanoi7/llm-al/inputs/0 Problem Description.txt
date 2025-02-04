@@ -1,0 +1,1 @@
+To successfully stack disks in a tower, one needs to move disks off of other disks or pegs to achieve the desired ordered stack. A disk cannot be moved if there is another disk on top of it. A disk cannot be moved onto another if it is heavier than it. Provide the commonsense knowledge.

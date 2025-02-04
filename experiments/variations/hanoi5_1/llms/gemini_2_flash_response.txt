@@ -1,0 +1,60 @@
+Here's a plan to move all the disks to peg c, following the rules:
+
+Initial State:
+
+Peg a: d5, d4
+Peg b: d2, d1
+Peg c: d3
+Steps:
+
+Move d5 from peg a to peg c: This is possible as peg c only has d3, which is lighter.
+Move d4 from peg a to peg b: This is possible as peg b only has d2 and d1, which are lighter.
+Move d2 from peg b to peg a: This is possible as peg a only has d4 which is heavier.
+Move d1 from peg b to peg c: This is possible as peg c has d5 and d3 which are lighter.
+Move d2 from peg a to peg c: This is possible as peg c has d5, d3, and d1 which are lighter.
+Move d4 from peg b to peg c: This is possible as peg c has d5, d3, d1, and d2 which are lighter.
+Final State:
+
+Peg a: Empty
+Peg b: Empty
+Peg c: d5, d4, d2, d1, d3 (incorrect order, needs further steps)
+The above steps get all disks to peg c, but not in the desired order (largest to smallest from bottom to top). We need to adjust the strategy to achieve the correct stacking order. The classic Tower of Hanoi solution is needed here.
+
+Here's the corrected approach using the Tower of Hanoi logic, adapted for the weight restriction:
+
+Understanding the Tower of Hanoi: The key is to move the largest disk (d1) to the target peg (c) first. To do this, we need to move all smaller disks to a temporary peg. Then, we move the largest disk, and finally move the smaller disks onto the largest one.
+
+Steps (Corrected):
+
+Move d5 from a to c: (a: d4, b: d2, d1, c: d3, d5)
+Move d4 from a to b: (a: empty, b: d4, d2, d1, c: d3, d5)
+Move d2 from b to a: (a: d2, b: d4, d1, c: d3, d5)
+Move d1 from b to c: (a: d2, b: d4, c: d3, d5, d1)
+Move d2 from a to c: (a: empty, b: d4, c: d3, d5, d1, d2)
+Move d4 from b to a: (a: d4, b: empty, c: d3, d5, d1, d2)
+Move d3 from c to b: (a: d4, b: d3, c: d5, d1, d2)
+Move d4 from a to c: (a: empty, b: d3, c: d5, d1, d2, d4)
+Move d3 from b to c: (a: empty, b: empty, c: d5, d1, d2, d4, d3)
+Final State:
+
+Peg a: Empty
+Peg b: Empty
+Peg c: d5, d1, d2, d4, d3 (Still incorrect order)
+Final Corrected Approach:
+
+We need to move the disks in the order they should appear on peg c. Here's the correct and complete solution:
+
+Move d5 from a to c.
+Move d4 from a to b.
+Move d3 from c to a.
+Move d4 from b to c.
+Move d3 from a to c.
+Move d2 from b to a.
+Move d1 from b to c.
+Move d2 from a to c.
+Final State:
+
+Peg a: Empty
+Peg b: Empty
+Peg c: d5, d4, d3, d2, d1 (Correct Order!)
+This final sequence of moves correctly stacks all the disks on peg c in descending order of size (d5 at the bottom, d1 at the top).

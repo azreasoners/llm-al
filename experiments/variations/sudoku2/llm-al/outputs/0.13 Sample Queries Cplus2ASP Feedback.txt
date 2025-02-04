@@ -1,0 +1,96 @@
+% Query 1% Sample Query 1: Test if assigning conflicting values in the same row is impossible (should be unsatisfiable)
+:- query
+    0: val(0,0)=5 & val(0,1)=5.
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+
+
+% Sample Query 2: Test if assigning conflicting values in the same column is impossible (should be unsatisfiable)
+:- query
+    0: val(0,0)=7 & val(1,0)=7.
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+
+
+% Sample Query 3: Test if assigning conflicting values in the same 3x3 square is impossible (should be unsatisfiable)
+:- query
+    0: val(0,0)=2 & val(1,1)=2.
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+
+
+% Sample Query 4: Assign a value that does not conflict (should be satisfiable)
+:- query
+    0: val(0,0)=5.
+
+Cplus2ASP Output:
+
+Solving...
+Solution: 1
+	
+
+	0:  val(0, 0)=5 val(0, 1)=3 val(0, 2)=8 val(0, 3)=1 val(0, 4)=2 val(0, 5)=7 val(0, 6)=4 val(0, 7)=6 val(0, 8)=9 val(1, 0)=9 val(1, 1)=7 val(1, 2)=1 val(1, 3)=4 val(1, 4)=8 val(1, 5)=6 val(1, 6)=2 val(1, 7)=3 val(1, 8)=5 val(2, 0)=4 val(2, 1)=6 val(2, 2)=2 val(2, 3)=9 val(2, 4)=3 val(2, 5)=5 val(2, 6)=1 val(2, 7)=8 val(2, 8)=7 val(3, 0)=6 val(3, 1)=1 val(3, 2)=3 val(3, 3)=2 val(3, 4)=5 val(3, 5)=9 val(3, 6)=8 val(3, 7)=7 val(3, 8)=4 val(4, 0)=8 val(4, 1)=9 val(4, 2)=5 val(4, 3)=7 val(4, 4)=4 val(4, 5)=3 val(4, 6)=6 val(4, 7)=1 val(4, 8)=2 val(5, 0)=7 val(5, 1)=2 val(5, 2)=4 val(5, 3)=6 val(5, 4)=1 val(5, 5)=8 val(5, 6)=9 val(5, 7)=5 val(5, 8)=3 val(6, 0)=2 val(6, 1)=4 val(6, 2)=7 val(6, 3)=3 val(6, 4)=6 val(6, 5)=1 val(6, 6)=5 val(6, 7)=9 val(6, 8)=8 val(7, 0)=1 val(7, 1)=5 val(7, 2)=9 val(7, 3)=8 val(7, 4)=7 val(7, 5)=2 val(7, 6)=3 val(7, 7)=4 val(7, 8)=6 val(8, 0)=3 val(8, 1)=8 val(8, 2)=6 val(8, 3)=5 val(8, 4)=9 val(8, 5)=4 val(8, 6)=7 val(8, 7)=2 val(8, 8)=1
+
+SATISFIABLE
+Models       : 1+
+
+
+% Sample Query 5: Assign values to complete a 3x3 square (should be satisfiable)
+:- query
+    0: val(0,0)=5 & val(0,1)=6 & val(1,0)=4 & val(1,1)=8 & val(2,0)=9 & val(2,1)=1 & val(2,2)=7.
+
+Cplus2ASP Output:
+
+Solving...
+Solution: 1
+	
+
+	0:  val(0, 0)=5 val(0, 1)=6 val(0, 2)=3 val(0, 3)=8 val(0, 4)=7 val(0, 5)=4 val(0, 6)=9 val(0, 7)=2 val(0, 8)=1 val(1, 0)=4 val(1, 1)=8 val(1, 2)=2 val(1, 3)=9 val(1, 4)=1 val(1, 5)=3 val(1, 6)=7 val(1, 7)=6 val(1, 8)=5 val(2, 0)=9 val(2, 1)=1 val(2, 2)=7 val(2, 3)=5 val(2, 4)=2 val(2, 5)=6 val(2, 6)=3 val(2, 7)=4 val(2, 8)=8 val(3, 0)=1 val(3, 1)=5 val(3, 2)=9 val(3, 3)=2 val(3, 4)=4 val(3, 5)=8 val(3, 6)=6 val(3, 7)=3 val(3, 8)=7 val(4, 0)=2 val(4, 1)=4 val(4, 2)=8 val(4, 3)=3 val(4, 4)=6 val(4, 5)=7 val(4, 6)=5 val(4, 7)=1 val(4, 8)=9 val(5, 0)=3 val(5, 1)=7 val(5, 2)=6 val(5, 3)=1 val(5, 4)=9 val(5, 5)=5 val(5, 6)=4 val(5, 7)=8 val(5, 8)=2 val(6, 0)=7 val(6, 1)=2 val(6, 2)=4 val(6, 3)=6 val(6, 4)=8 val(6, 5)=9 val(6, 6)=1 val(6, 7)=5 val(6, 8)=3 val(7, 0)=6 val(7, 1)=3 val(7, 2)=1 val(7, 3)=7 val(7, 4)=5 val(7, 5)=2 val(7, 6)=8 val(7, 7)=9 val(7, 8)=4 val(8, 0)=8 val(8, 1)=9 val(8, 2)=5 val(8, 3)=4 val(8, 4)=3 val(8, 5)=1 val(8, 6)=2 val(8, 7)=7 val(8, 8)=6
+
+SATISFIABLE
+Models       : 1+
+
+
+
+
+:- query
+    0: val(0,2)=4 & val(0,3)=3 & val(0,6)=2 & val(0,8)=9 &
+       val(1,2)=5 & val(1,5)=9 & val(1,8)=1 &
+       val(2,1)=7 & val(2,4)=6 & val(2,7)=4 & val(2,8)=3 &
+       val(3,2)=6 & val(3,5)=2 & val(3,7)=8 & val(3,8)=7 &
+       val(4,0)=1 & val(4,1)=9 & val(4,5)=7 & val(4,6)=4 &
+       val(5,1)=5 & val(5,4)=8 & val(5,5)=3 &
+       val(6,0)=6 & val(6,6)=1 & val(6,8)=5 &
+       val(7,2)=3 & val(7,3)=5 & val(7,5)=8 & val(7,6)=6 & val(7,7)=9 &
+       val(8,1)=4 & val(8,2)=2 & val(8,3)=9 & val(8,4)=1 & val(8,6)=3.
+
+
+Cplus2ASP Output:
+
+Solving...
+Solution: 1
+	
+
+	0:  val(0, 0)=8 val(0, 1)=6 val(0, 2)=4 val(0, 3)=3 val(0, 4)=7 val(0, 5)=1 val(0, 6)=2 val(0, 7)=5 val(0, 8)=9 val(1, 0)=3 val(1, 1)=2 val(1, 2)=5 val(1, 3)=8 val(1, 4)=4 val(1, 5)=9 val(1, 6)=7 val(1, 7)=6 val(1, 8)=1 val(2, 0)=9 val(2, 1)=7 val(2, 2)=1 val(2, 3)=2 val(2, 4)=6 val(2, 5)=5 val(2, 6)=8 val(2, 7)=4 val(2, 8)=3 val(3, 0)=4 val(3, 1)=3 val(3, 2)=6 val(3, 3)=1 val(3, 4)=9 val(3, 5)=2 val(3, 6)=5 val(3, 7)=8 val(3, 8)=7 val(4, 0)=1 val(4, 1)=9 val(4, 2)=8 val(4, 3)=6 val(4, 4)=5 val(4, 5)=7 val(4, 6)=4 val(4, 7)=3 val(4, 8)=2 val(5, 0)=2 val(5, 1)=5 val(5, 2)=7 val(5, 3)=4 val(5, 4)=8 val(5, 5)=3 val(5, 6)=9 val(5, 7)=1 val(5, 8)=6 val(6, 0)=6 val(6, 1)=8 val(6, 2)=9 val(6, 3)=7 val(6, 4)=3 val(6, 5)=4 val(6, 6)=1 val(6, 7)=2 val(6, 8)=5 val(7, 0)=7 val(7, 1)=1 val(7, 2)=3 val(7, 3)=5 val(7, 4)=2 val(7, 5)=8 val(7, 6)=6 val(7, 7)=9 val(7, 8)=4 val(8, 0)=5 val(8, 1)=4 val(8, 2)=2 val(8, 3)=9 val(8, 4)=1 val(8, 5)=6 val(8, 6)=3 val(8, 7)=7 val(8, 8)=8
+
+SATISFIABLE
+Models       : 1+
+

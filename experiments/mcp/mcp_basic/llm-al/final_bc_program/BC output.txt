@@ -1,0 +1,55 @@
+Solving...
+Solution: 1
+	
+
+	0:  loc(boat)=bank1 numOnBank(bank1, cannibals)=3 numOnBank(bank1, missionaries)=3 numOnBank(bank2, cannibals)=0 numOnBank(bank2, missionaries)=0
+
+	ACTIONS:  cross(boat) numCrossing(boat, cannibals)=2 numCrossing(boat, missionaries)=0
+
+	1:  loc(boat)=bank2 numOnBank(bank1, cannibals)=1 numOnBank(bank1, missionaries)=3 numOnBank(bank2, cannibals)=2 numOnBank(bank2, missionaries)=0
+
+	ACTIONS:  cross(boat) numCrossing(boat, cannibals)=1 numCrossing(boat, missionaries)=0
+
+	2:  loc(boat)=bank1 numOnBank(bank1, cannibals)=2 numOnBank(bank1, missionaries)=3 numOnBank(bank2, cannibals)=1 numOnBank(bank2, missionaries)=0
+
+	ACTIONS:  cross(boat) numCrossing(boat, cannibals)=2 numCrossing(boat, missionaries)=0
+
+	3:  loc(boat)=bank2 numOnBank(bank1, cannibals)=0 numOnBank(bank1, missionaries)=3 numOnBank(bank2, cannibals)=3 numOnBank(bank2, missionaries)=0
+
+	ACTIONS:  cross(boat) numCrossing(boat, cannibals)=1 numCrossing(boat, missionaries)=0
+
+	4:  loc(boat)=bank1 numOnBank(bank1, cannibals)=1 numOnBank(bank1, missionaries)=3 numOnBank(bank2, cannibals)=2 numOnBank(bank2, missionaries)=0
+
+	ACTIONS:  cross(boat) numCrossing(boat, cannibals)=0 numCrossing(boat, missionaries)=2
+
+	5:  loc(boat)=bank2 numOnBank(bank1, cannibals)=1 numOnBank(bank1, missionaries)=1 numOnBank(bank2, cannibals)=2 numOnBank(bank2, missionaries)=2
+
+	ACTIONS:  cross(boat) numCrossing(boat, cannibals)=1 numCrossing(boat, missionaries)=1
+
+	6:  loc(boat)=bank1 numOnBank(bank1, cannibals)=2 numOnBank(bank1, missionaries)=2 numOnBank(bank2, cannibals)=1 numOnBank(bank2, missionaries)=1
+
+	ACTIONS:  cross(boat) numCrossing(boat, cannibals)=0 numCrossing(boat, missionaries)=2
+
+	7:  loc(boat)=bank2 numOnBank(bank1, cannibals)=2 numOnBank(bank1, missionaries)=0 numOnBank(bank2, cannibals)=1 numOnBank(bank2, missionaries)=3
+
+	ACTIONS:  cross(boat) numCrossing(boat, cannibals)=1 numCrossing(boat, missionaries)=0
+
+	8:  loc(boat)=bank1 numOnBank(bank1, cannibals)=3 numOnBank(bank1, missionaries)=0 numOnBank(bank2, cannibals)=0 numOnBank(bank2, missionaries)=3
+
+	ACTIONS:  cross(boat) numCrossing(boat, cannibals)=2 numCrossing(boat, missionaries)=0
+
+	9:  loc(boat)=bank2 numOnBank(bank1, cannibals)=1 numOnBank(bank1, missionaries)=0 numOnBank(bank2, cannibals)=2 numOnBank(bank2, missionaries)=3
+
+	ACTIONS:  cross(boat) numCrossing(boat, cannibals)=0 numCrossing(boat, missionaries)=1
+
+	10:  loc(boat)=bank1 numOnBank(bank1, cannibals)=1 numOnBank(bank1, missionaries)=1 numOnBank(bank2, cannibals)=2 numOnBank(bank2, missionaries)=2
+
+	ACTIONS:  cross(boat) numCrossing(boat, cannibals)=1 numCrossing(boat, missionaries)=1
+
+	11:  loc(boat)=bank2 numOnBank(bank1, cannibals)=0 numOnBank(bank1, missionaries)=0 numOnBank(bank2, cannibals)=3 numOnBank(bank2, missionaries)=3
+
+SATISFIABLE
+Models       : 1+
+Calls        : 1
+Time         : 1.129s (Solving: 0.18s 1st Model: 0.18s Unsat: 0.00s)
+CPU Time     : 1.129s

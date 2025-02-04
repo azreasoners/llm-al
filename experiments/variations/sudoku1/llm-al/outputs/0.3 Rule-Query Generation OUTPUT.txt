@@ -1,0 +1,33 @@
+% constraints/rules
+
+% 1. Assigning a value to a cell causes the value at that cell to be that value.
+assign(R,C,V) causes valueAt(R,C)=V.
+
+% 2. Assigning a value to a cell is not executable if the cell already has a value assigned.
+nonexecutable assign(R,C,V) if valueAt(R,C)=V1.
+
+% 3. Assigning a value to a cell is not executable if the same value already exists in the same row.
+nonexecutable assign(R,C,V) if valueAt(R,C1)=V & C1\=C.
+
+% 4. Assigning a value to a cell is not executable if the same value already exists in the same column.
+nonexecutable assign(R,C,V) if valueAt(R1,C)=V & R1\=R.
+
+% 5. Assigning a value to a cell is not executable if the same value already exists in the same 3x3 square.
+nonexecutable assign(R,C,V) if valueAt(R1,C1)=V & (R1,C1)\=(R,C) & (R//3) = (R1//3) & (C//3) = (C1//3).
+
+% 6. It is impossible for two cells in the same row to have the same value.
+impossible valueAt(R,C1)=V & valueAt(R,C2)=V & C1\=C2.
+
+% 7. It is impossible for two cells in the same column to have the same value.
+impossible valueAt(R1,C)=V & valueAt(R2,C)=V & R1\=R2.
+
+% 8. It is impossible for two cells in the same 3x3 square to have the same value.
+impossible valueAt(R1,C1)=V & valueAt(R2,C2)=V & (R1,C1)\=(R2,C2) & (R1//3) = (R2//3) & (C1//3) = (C2//3).
+
+% query
+:- query
+    0: valueAt(0,0)=8 & valueAt(1,2)=3 & valueAt(1,3)=6 & valueAt(2,1)=7 & valueAt(2,4)=9 & valueAt(2,6)=2 &
+       valueAt(3,1)=5 & valueAt(3,5)=7 & valueAt(4,4)=4 & valueAt(4,5)=5 & valueAt(4,6)=7 & valueAt(5,3)=1 &
+       valueAt(5,7)=3 & valueAt(6,2)=1 & valueAt(6,7)=6 & valueAt(6,8)=8 & valueAt(7,2)=8 & valueAt(7,3)=5 &
+       valueAt(7,7)=1 & valueAt(8,1)=9 & valueAt(8,6)=4;
+    maxstep: .

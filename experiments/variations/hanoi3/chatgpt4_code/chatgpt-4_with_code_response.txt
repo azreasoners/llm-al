@@ -1,0 +1,49 @@
+
+ChatGPT
+
+Analyzed
+
+python
+Always show details
+
+Copy code
+def solve_hanoi(n, source, target, auxiliary):
+    if n == 0:
+        return []
+    moves = []
+    # Move n-1 disks from source to auxiliary, so they are out of the way
+    moves += solve_hanoi(n-1, source, auxiliary, target)
+    # Move the nth disk from source to target
+    moves.append((source, target))
+    # Move the n-1 disks from auxiliary to target
+    moves += solve_hanoi(n-1, auxiliary, target, source)
+    return moves
+
+# Number of disks
+n_disks = 3
+# Initial positions (peg names)
+source_peg = 'a'
+target_peg = 'c'
+auxiliary_peg = 'b'
+
+# Generate the moves to solve the problem
+hanoi_moves = solve_hanoi(n_disks, source_peg, target_peg, auxiliary_peg)
+hanoi_moves
+Result
+[('a', 'c'),
+ ('a', 'b'),
+ ('c', 'b'),
+ ('a', 'c'),
+ ('b', 'a'),
+ ('b', 'c'),
+ ('a', 'c')]
+The generated Python program solves the Tower of Hanoi problem for 3 disks and 3 pegs. Here is the sequence of moves needed to stack all disks on peg c:
+
+Move the top disk from peg a to peg c.
+Move the next disk from peg a to peg b.
+Move the disk from peg c to peg b.
+Move the bottom disk from peg a to peg c.
+Move the disk from peg b to peg a.
+Move the disk from peg b to peg c.
+Move the disk from peg a to peg c.
+This sequence effectively transfers all disks to peg c with the largest on the bottom and the smallest on top, adhering to the rules of the Tower of Hanoi. ​

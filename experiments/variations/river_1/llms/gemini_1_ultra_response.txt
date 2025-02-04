@@ -1,0 +1,17 @@
+
+Absolutely! This is a classic logic puzzle, often called the "Fox, Goose, and Bag of Beans" problem. Here's how to solve it:
+
+Steps:
+
+Take the mouse across the river: Leave the snake and cheese on the LeftBank.
+Return alone: Bring the boat back to the RightBank.
+Take the snake across the river: Leave the mouse on the RightBank.
+Bring the mouse back: Return with the mouse to the LeftBank.
+Take the cheese across the river: Leave the mouse on the LeftBank and bring the cheese to the RightBank.
+Return alone: Bring the boat back to the LeftBank.
+Take the mouse across the river: Finally, bring the mouse to join the snake and cheese on the RightBank.
+Explanation:
+
+The main challenge is that you can never leave the snake and mouse alone together, or the mouse and cheese alone together. With some careful planning, you can safely transport everything!
+
+Let me know if you'd like another puzzle to solve!

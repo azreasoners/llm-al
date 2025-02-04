@@ -1,0 +1,10 @@
+Use the code interpreter to generate a Python program to solve the following problem. Revise the program as many times as needed until the program is correct.
+
+There are four types of things: vessel, location, group, and integer.
+
+Problem Description:
+Three missionaries and three cannibals shall cross a river in a rowboat which carries at most two people at once. The rowboat cannot cross the river with nothing on it. On either side, the cannibals may never outnumber the missionaries or the missionaries will be eaten. Also, the cannibals may never outnumber the missionaries on the rowboat or the missionaries will be eaten. The rowboat's capacity is 2.
+
+rowboat is a vessel. bank1 and bank2 are locations. missionaries and cannibals are groups. 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, and 10 are integers.
+
+Three missionaries and three cannibals are at location bank1. The rowboat is at location bank1. Find a plan so that all missionaries and all cannibals are at location bank2.

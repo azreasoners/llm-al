@@ -1,0 +1,78 @@
+def is_valid(state):
+    # State is defined as [ML, CL, MR, CR, B] where:
+    # ML = Missionaries on the left bank
+    # CL = Cannibals on the left bank
+    # MR = Missionaries on the right bank
+    # CR = Cannibals on the right bank
+    # B = Boat position (0 = left, 1 = right)
+
+    ML, CL, MR, CR, B = state
+    
+    # Check for number of missionaries being less than number of cannibals on either side
+    if ML < CL and ML > 0: return False
+    if MR < CR and MR > 0: return False
+    
+    # Check all numbers are non-negative (valid state)
+    if ML < 0 or CL < 0 or MR < 0 or CR < 0: return False
+    
+    return True
+
+def is_goal(state):
+    # Goal is to have all missionaries and cannibals on the right bank
+    return state == [0, 0, 3, 3, 1]
+
+def generate_states(current_state):
+    # Generate all possible valid states from current state by moving the boat
+    ML, CL, MR, CR, B = current_state
+    possible_moves = [(1, 0), (2, 0), (0, 1), (0, 2), (1, 1)]
+    new_states = []
+    
+    for M, C in possible_moves:
+        if B == 0:  # Boat is on the left side, move to right
+            new_state = [ML - M, CL - C, MR + M, CR + C, 1]
+        else:       # Boat is on the right side, move to left
+            new_state = [ML + M, CL + C, MR - M, CR - C, 0]
+        
+        # Check if the move is valid
+        if is_valid(new_state):
+            new_states.append(new_state)
+            
+    return new_states
+
+def reconstruct_path(state, parent_map):
+    path = []
+    state_tuple = tuple(state)
+    while state_tuple is not None:
+        path.append(state_tuple)
+        state_tuple = parent_map[state_tuple]
+    path.reverse()
+    return path
+
+def bfs(initial_state):
+    from collections import deque
+    
+    queue = deque([tuple(initial_state)])  # Start with the initial state as a tuple
+    visited = set()
+    visited.add(tuple(initial_state))
+    parent_map = {tuple(initial_state): None}
+    
+    while queue:
+        current_state = queue.popleft()
+        
+        if is_goal(list(current_state)):  # Convert tuple back to list for goal check
+            return reconstruct_path(current_state, parent_map)
+        
+        for next_state in generate_states(list(current_state)):  # Convert tuple back to list for generating states
+            state_tuple = tuple(next_state)
+            if state_tuple not in visited:
+                visited.add(state_tuple)
+                parent_map[state_tuple] = current_state
+                queue.append(state_tuple)
+                
+    return None
+
+
+# Start from the initial state [3, 3, 0, 0, 0] where all are on the left bank and boat is also on left
+initial_state = [3, 3, 0, 0, 0]
+solution = bfs(initial_state)
+solution

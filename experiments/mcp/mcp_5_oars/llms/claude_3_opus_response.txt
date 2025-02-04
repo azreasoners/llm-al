@@ -1,0 +1,41 @@
+
+Here is a plan to get all three missionaries and three cannibals safely across the river from bank1 to bank2:
+Initial state:
+bank1: 3 missionaries, 3 cannibals, 1 boat, 2 oars
+bank2: empty
+
+Move 1 missionary and 1 cannibal in the boat from bank1 to bank2.
+bank1: 2 missionaries, 2 cannibals, 1 oar
+bank2: 1 missionary, 1 cannibal, 1 boat, 1 oar
+1 cannibal takes the boat back from bank2 to bank1.
+bank1: 2 missionaries, 3 cannibals, 1 boat, 2 oars
+bank2: 1 missionary
+Move 2 cannibals in the boat from bank1 to bank2.
+bank1: 2 missionaries, 1 cannibal
+bank2: 1 missionary, 3 cannibals, 1 boat, 2 oars
+1 missionary and 1 cannibal take the boat back from bank2 to bank1.
+bank1: 3 missionaries, 2 cannibals, 1 boat, 2 oars
+bank2: 2 cannibals
+Move 2 missionaries in the boat from bank1 to bank2.
+bank1: 1 missionary, 2 cannibals
+bank2: 2 missionaries, 2 cannibals, 1 boat, 2 oars
+1 missionary takes the boat back from bank2 to bank1.
+bank1: 2 missionaries, 2 cannibals, 1 boat, 2 oars
+bank2: 1 missionary, 2 cannibals
+Move 2 cannibals in the boat from bank1 to bank2.
+bank1: 2 missionaries
+bank2: 1 missionary, 3 cannibals, 1 boat, 2 oars
+1 cannibal takes the boat back from bank2 to bank1.
+bank1: 2 missionaries, 1 cannibal, 1 boat, 2 oars
+bank2: 1 missionary, 3 cannibals
+Move 2 missionaries in the boat from bank1 to bank2.
+bank1: 1 cannibal
+bank2: 3 missionaries, 3 cannibals, 1 boat, 2 oars
+1 missionary takes the boat back from bank2 to bank1.
+bank1: 1 missionary, 1 cannibal, 1 boat, 2 oars
+bank2: 2 missionaries, 3 cannibals
+Move 1 missionary and 1 cannibal in the boat from bank1 to bank2.
+bank1: empty
+bank2: 3 missionaries, 3 cannibals, 1 boat, 2 oars
+
+Final state achieved with all missionaries and cannibals safely on bank2.

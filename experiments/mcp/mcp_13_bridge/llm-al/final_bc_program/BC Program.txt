@@ -1,0 +1,74 @@
+:- sorts
+    vessel;
+    location;
+    group;
+    integer.
+
+
+:- objects
+    boat, bridge :: vessel;
+    bank1, bank2 :: location;
+    missionaries, cannibals :: group;
+    0..10 :: integer.
+
+
+:- variables
+    V, V1, V2, V3, V4 :: vessel;
+    L, L1, L2, L3, L4 :: location;
+    G, G1, G2, G3, G4 :: group;
+    N, N1, N2, N3, N4 :: integer.
+
+
+:- constants
+    cross(vessel) :: exogenousAction;
+    amount(vessel, group) :: attribute(integer) of cross(vessel);
+    numAt(group, location) :: additiveFluent(integer);
+    capacity(vessel) :: inertialFluent(integer);
+    boatLocation :: inertialFluent(location).
+
+% Generated constraints
+
+% 1. The action cross(V) is not executable if the total number of people boarding exceeds the capacity of the vessel.
+nonexecutable cross(V) if amount(V, missionaries)=N1 & amount(V, cannibals)=N2 & N1 + N2 > capacity(V).
+
+% 2. The action cross(V) is not executable if the total number of people boarding the vessel is zero.
+nonexecutable cross(V) if amount(V, missionaries)=N1 & amount(V, cannibals)=N2 & N1 + N2 = 0.
+
+% 3. Crossing the boat causes the location of the boat to change to the other bank.
+cross(boat) causes boatLocation=bank2 if boatLocation=bank1.
+cross(boat) causes boatLocation=bank1 if boatLocation=bank2.
+
+% 4. Crossing a vessel transfers amount(V, G) people from the current location to the other bank.
+% For the boat:
+cross(boat) decrements numAt(G, L) by N if boatLocation=L & amount(boat, G)=N & N > 0.
+cross(boat) increments numAt(G, L2) by N if boatLocation=L & amount(boat, G)=N & N > 0 & L2\=L.
+
+% For the bridge (always from bank1 to bank2):
+cross(bridge) decrements numAt(G, bank1) by N if amount(bridge, G)=N & N > 0.
+cross(bridge) increments numAt(G, bank2) by N if amount(bridge, G)=N & N > 0.
+
+% 5. The action cross(V) is not executable if the amount of any group boarding the vessel is negative or exceeds the number at the current location.
+nonexecutable cross(V) if amount(V, G)=N & N < 0.
+nonexecutable cross(V) if amount(V, G)=N & numAt(G, L)=N1 & N > N1 &
+    ((V=boat & boatLocation=L) | (V=bridge & L=bank1)).
+
+% 6. The action cross(V) is not executable if the cannibals on the vessel outnumber the missionaries on the vessel during crossing.
+nonexecutable cross(V) if amount(V, cannibals)=N1 & amount(V, missionaries)=N2 & N2 > 0 & N1 > N2.
+
+% 7. On either bank, the cannibals may never outnumber the missionaries unless there are no missionaries at that location.
+impossible numAt(cannibals, L) > numAt(missionaries, L) & numAt(missionaries, L) > 0.
+
+% 8. The capacity of the boat and the bridge is 2.
+capacity(boat) = 2.
+capacity(bridge) = 2.
+
+% 9. The action cross(bridge) is not executable if no one is crossing.
+nonexecutable cross(bridge) if amount(bridge, missionaries)=N1 & amount(bridge, cannibals)=N2 & N1 + N2 = 0.
+
+% 10. The boat cannot cross the river with nothing on it.
+% This is covered by rule 2.
+
+
+:- query
+  0: numAt(missionaries, bank1)=5 & numAt(cannibals, bank1)=5 & numAt(missionaries, bank2)=0 & numAt(cannibals, bank2)=0 & boatLocation=bank1;
+  maxstep: numAt(missionaries, bank2)=5 & numAt(cannibals, bank2)=5 & numAt(missionaries, bank1)=0 & numAt(cannibals, bank1)=0.

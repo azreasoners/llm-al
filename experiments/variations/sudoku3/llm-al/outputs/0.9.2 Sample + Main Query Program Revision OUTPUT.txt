@@ -1,0 +1,100 @@
+% PROGRAM CHANGED? [CHANGED]
+% BC+ signature
+:- sorts
+    row;
+    column;
+    value.
+
+:- objects
+    0..3 :: row;
+    0..3 :: column;
+    0..4 :: value.  % Include 0 to represent 'unassigned'
+
+:- variables
+    R, R1, R2, R3, R4 :: row;
+    C, C1, C2, C3, C4 :: column;
+    V, V1, V2, V3, V4 :: value.
+
+:- constants
+    value(row, column) :: inertialFluent(value);
+    assignValue(row, column, value) :: exogenousAction.
+
+% By default, cells have value 0 (unassigned)
+default value(R, C) = 0.
+
+% constraints/rules
+
+% 1. Assigning a value to a cell causes the value at that cell to become that value.
+assignValue(R, C, V) causes value(R, C) = V.
+
+% 2. The assignValue action is not executable if the cell already has a value (non-zero).
+nonexecutable assignValue(R, C, V) if value(R, C) \= 0.
+
+% 3. The assignValue action is not executable if the same value exists in the same row.
+nonexecutable assignValue(R, C, V) if value(R, C1) = V & C1 \= C & V \= 0.
+
+% 4. The assignValue action is not executable if the same value exists in the same column.
+nonexecutable assignValue(R, C, V) if value(R1, C) = V & R1 \= R & V \= 0.
+
+% 5. The assignValue action is not executable if the same value exists in the same block.
+nonexecutable assignValue(R, C, V) if value(R1, C1) = V & (R1 \= R | C1 \= C) & (R // 2) = (R1 // 2) & (C // 2) = (C1 // 2) & V \= 0.
+
+% 6. No two cells in the same row can have the same value (excluding 0)
+impossible value(R, C1) = V & value(R, C2) = V & C1 \= C2 & V \= 0.
+
+% 7. No two cells in the same column can have the same value (excluding 0)
+impossible value(R1, C) = V & value(R2, C) = V & R1 \= R2 & V \= 0.
+
+% 8. No two cells in the same block can have the same value (excluding 0)
+impossible value(R1, C1) = V & value(R2, C2) = V & (R1 \= R2 | C1 \= C2) & (R1 // 2) = (R2 // 2) & (C1 // 2) = (C2 // 2) & V \= 0.
+
+% MAIN QUERY CHANGED? [CHANGED]
+:- query
+    0: value(0,0)=0 & value(0,1)=0 & value(0,2)=2 & value(0,3)=0 &
+       value(1,0)=0 & value(1,1)=2 & value(1,2)=0 & value(1,3)=0 &
+       value(2,0)=1 & value(2,1)=0 & value(2,2)=0 & value(2,3)=4 &
+       value(3,0)=0 & value(3,1)=0 & value(3,2)=3 & value(3,3)=0;
+    maxstep: value(R, C)=V & V \= 0.
+
+% SAMPLE QUERIES CHANGED? [CHANGED]
+% Query 1: Assign value 1 to cell (0,0) when no constraints are violated. (satisfiable)
+:- query
+    0: value(0,2)=2 & value(0,3)=3 &
+       value(1,0)=3 &
+       value(2,1)=1 &
+       value(3,2)=4;
+    0: assignValue(0,0,1);
+    maxstep: value(0,0)=1.
+
+% Query 2: Try to assign value 2 to cell (0,0) when another cell in the same row already has value 2. (unsatisfiable)
+:- query
+    0: value(0,2)=2 & value(0,3)=3 &
+       value(1,0)=3 &
+       value(2,1)=1 &
+       value(3,2)=4;
+    0: assignValue(0,0,2).
+
+% Query 3: Try to assign value 3 to cell (0,0) when another cell in the same column already has value 3. (unsatisfiable)
+:- query
+    0: value(0,2)=2 & value(0,3)=3 &
+       value(1,0)=3 &
+       value(2,1)=1 &
+       value(3,2)=4;
+    0: assignValue(0,0,3).
+
+% Query 4: Try to assign value 1 to cell (0,0) when another cell in the same block already has value 1. (unsatisfiable)
+:- query
+    0: value(0,2)=2 & value(0,3)=3 &
+       value(1,0)=3 & value(1,1)=1 &
+       value(2,1)=1 &
+       value(3,2)=4;
+    0: assignValue(0,0,1).
+
+% Query 5: Assign value 4 to cell (0,0) when the same value exists in a different block. (satisfiable)
+:- query
+    0: value(0,2)=2 & value(0,3)=3 &
+       value(1,0)=3 &
+       value(2,1)=1 &
+       value(3,0)=4 & value(3,2)=1;
+    0: assignValue(0,0,4);
+    maxstep: value(0,0)=4.

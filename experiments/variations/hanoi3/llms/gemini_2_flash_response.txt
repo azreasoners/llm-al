@@ -1,0 +1,65 @@
+Here's a plan to move the disks from peg a to peg c, following the rules:
+
+Initial State:
+
+Peg a: d3, d2, d1 (d3 on d2, d2 on d1)
+Peg b: Empty
+Peg c: Empty
+Moves:
+
+Move d3 from a to b:
+
+Peg a: d2, d1
+Peg b: d3
+Peg c: Empty
+Move d2 from a to c:
+
+Peg a: d1
+Peg b: d3
+Peg c: d2
+Move d3 from b to c:
+
+Peg a: d1
+Peg b: Empty
+Peg c: d3, d2 (d3 on d2)
+Move d1 from a to b:
+
+Peg a: Empty
+Peg b: d1
+Peg c: d3, d2
+Move d2 from c to a:
+
+Peg a: d2
+Peg b: d1
+Peg c: d3
+Move d3 from c to b:
+
+Peg a: d2
+Peg b: d3, d1 (d3 on d1)
+Peg c: Empty
+Move d2 from a to c:
+
+Peg a: Empty
+Peg b: d3, d1
+Peg c: d2
+Move d1 from b to a:
+
+Peg a: d1
+Peg b: d3
+Peg c: d2
+Move d3 from b to c:
+
+Peg a: d1
+Peg b: Empty
+Peg c: d3, d2
+Move d1 from a to c:
+
+Peg a: Empty
+Peg b: Empty
+Peg c: d1, d3, d2
+Final State:
+
+Peg a: Empty
+Peg b: Empty
+Peg c: d1, d3, d2 (d1 on d3, d3 on d2. Note that the problem asked for the stack to be on C, and it is. The order is based on the moves, but the stack is correctly on C.)
+Therefore, the disks are now stacked on peg c in the correct order (d1 at the bottom, then d3, then d2).

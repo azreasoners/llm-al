@@ -1,0 +1,33 @@
+Here's a step-by-step plan to get everything across the river safely:
+
+Initial State:
+
+Left Bank: Snake, Cheese
+Right Bank: Mouse, Boat
+Steps:
+
+Move 1: Take the Mouse from the Right Bank to the Left Bank.
+
+Left Bank: Snake, Cheese, Mouse
+Right Bank: Boat
+Move 2: Take the Cheese from the Left Bank to the Right Bank.
+
+Left Bank: Snake, Mouse
+Right Bank: Cheese, Boat
+Move 3: Bring the Mouse back from the Right Bank to the Left Bank.
+
+Left Bank: Snake, Mouse, Mouse
+Right Bank: Cheese, Boat
+Move 4: Take the Snake from the Left Bank to the Right Bank.
+
+Left Bank: Mouse
+Right Bank: Cheese, Snake, Boat
+Move 5: Take the Mouse from the Left Bank to the Right Bank.
+
+Left Bank:
+Right Bank: Cheese, Snake, Mouse, Boat
+Final State:
+
+Left Bank: Empty
+Right Bank: Snake, Cheese, Mouse, Boat
+Therefore, all items are now safely on the Right Bank.

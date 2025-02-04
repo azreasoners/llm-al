@@ -1,0 +1,87 @@
+def is_valid_state(state):
+    """
+    Check if a given state is valid. A state is valid if:
+    - Missionaries on either side are not outnumbered by cannibals unless there are no missionaries.
+    - No negative counts of missionaries or cannibals.
+    """
+    m1, c1, m2, c2 = state
+    # Check for negative numbers
+    if m1 < 0 or c1 < 0 or m2 < 0 or c2 < 0:
+        return False
+    # Check if missionaries are outnumbered by cannibals on either bank
+    if (m1 > 0 and c1 > m1) or (m2 > 0 and c2 > m2):
+        return False
+    return True
+
+def move(state, action):
+    """
+    Apply an action to the state and return the new state.
+    An action is represented as (missionaries, cannibals, direction) where
+    direction = 1 means moving to bank2, and -1 means moving back to bank1.
+    """
+    missionaries, cannibals, direction = action
+    m1, c1, m2, c2 = state
+
+    if direction == 1:  # Moving to bank2
+        new_state = (m1 - missionaries, c1 - cannibals, m2 + missionaries, c2 + cannibals)
+    else:  # Moving back to bank1
+        new_state = (m1 + missionaries, c1 + cannibals, m2 - missionaries, c2 - cannibals)
+    
+    return new_state
+
+def generate_possible_actions(state, boat_location):
+    """
+    Generate all possible actions given the current state and boat location.
+    """
+    if boat_location == 1:  # At bank1
+        m, c, _, _ = state
+    else:  # At bank2
+        _, _, m, c = state
+    
+    actions = []
+    # Generate all combinations of missionaries and cannibals that can be moved
+    for missionaries in range(0, min(m, 2) + 1):
+        for cannibals in range(0, min(c, 2) + 1):
+            if 1 <= missionaries + cannibals <= 2:  # At least one person and at most two
+                if missionaries == 0 or missionaries >= cannibals:  # Valid boat condition
+                    actions.append((missionaries, cannibals, boat_location))
+    return actions
+
+
+# Initial state: (3 missionaries, 3 cannibals, 0 missionaries on bank2, 0 cannibals on bank2)
+initial_state = (3, 3, 0, 0)
+
+
+
+def find_solution_memoized(state, boat_location, path=[], memo=None):
+    """
+    Recursive function to find a solution to the missionaries and cannibals problem with memoization.
+    """
+    if memo is None:
+        memo = set()  # Use a set to record visited states
+    
+    if state == (0, 0, 3, 3):  # All have crossed to bank2
+        return path
+
+    # Check if the state has been visited
+    memo_key = (state, boat_location)
+    if memo_key in memo:
+        return None
+    memo.add(memo_key)
+
+    actions = generate_possible_actions(state, boat_location)
+    for action in actions:
+        new_state = move(state, action)
+        if is_valid_state(new_state):
+            # Toggle boat location
+            new_boat_location = 2 if boat_location == 1 else 1
+            # Try this path
+            result = find_solution_memoized(new_state, new_boat_location, path + [action], memo)
+            if result is not None:
+                return result
+    
+    return None
+
+# Retry the solution with memoization
+memoized_solution = find_solution_memoized(initial_state, 1)
+memoized_solution

@@ -1,0 +1,28 @@
+Here's a plan to move the disks from their initial positions to peg c, following the rules you've provided:
+
+Initial State:
+
+Peg a: Empty
+Peg b: d1 (bottom), d2 (top)
+Peg c: d3
+Goal State:
+
+Peg a: Empty
+Peg b: Empty
+Peg c: d1 (bottom), d2 (middle), d3 (top)
+Moves:
+
+Move d2 from peg b to peg a: This is possible as there's no disk on d2.
+Move d1 from peg b to peg c: This is possible as there's no disk on d1, and d1 is the heaviest, so it can go on an empty peg.
+Move d2 from peg a to peg c: This is possible as d1 is already on peg c, and d1 is heavier than d2.
+Move d3 from peg c to peg a: This is necessary to free up peg c for d2.
+Move d3 from peg a to peg b: This is necessary to free up peg a for d2.
+Move d2 from peg c to peg a: This is necessary to free up peg c for d3.
+Move d3 from peg b to peg c: This is possible as d2 is already on peg c, and d2 is heavier than d3.
+Move d2 from peg a to peg c: This is possible as d1 is already on peg c, and d1 is heavier than d2.
+Final State:
+
+Peg a: Empty
+Peg b: Empty
+Peg c: d1 (bottom), d2 (middle), d3 (top)
+Therefore, all disks are now stacked on peg c in the correct order.

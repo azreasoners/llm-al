@@ -1,0 +1,407 @@
+So I've got this problem with three disks and three pegs. The disks are stacked on peg A right now, with d1 at the bottom, d2 in the middle, and d3 on top. The goal is to move them all to peg C, following some rules. The rules are:
+
+1. I can't move a disk if there's another disk on top of it.
+
+2. I can't place a heavier disk onto a lighter one.
+
+And I need to get all the disks to peg C. Okay, let's see.
+
+First, I need to understand the current setup. We have three disks: d1, d2, and d3, stacked on peg A, with d1 being the heaviest and d3 the lightest. So, the stack is d1 on A, d2 on d1, and d3 on d2.
+
+I need to move them to peg C, same order, with d1 at the bottom, d2 in the middle, and d3 on top.
+
+Now, the rules are important here. I can't move a disk if there's another disk on top of it. So, to move d1, I need to have d2 and d3 off of it. Similarly, to move d2, d3 needs to be off of it.
+
+Also, I can't place a heavier disk onto a lighter one. So, d1 is heavier than d2 and d3, and d2 is heavier than d3. That means d1 can only go on an empty peg or on top of d2 or d3, but since d2 and d3 are lighter, it can only go on an empty peg. D2 can go on an empty peg or on top of d3, and d3 can go on any empty peg.
+
+This sounds like a Tower of Hanoi problem, which I've heard of before. In the classic Tower of Hanoi, you have three pegs and a number of disks of decreasing size, and you have to move the entire stack from one peg to another, following similar rules.
+
+In the classic version with three disks, the minimal number of moves is 7. I think that's the case here too.
+
+Let me try to outline the steps.
+
+First, I need to move d3 off of d2 so that I can move d2 off of d1.
+
+So, step 1: move d3 from A to C.
+
+Now, the state is:
+
+- Peg A: d1, d2
+
+- Peg B: empty
+
+- Peg C: d3
+
+Next, I need to move d2 off of d1 so that I can move d1.
+
+But wait, d2 is still on d1, and d3 is now on C.
+
+So, step 2: move d2 from A to B.
+
+Now, the state is:
+
+- Peg A: d1
+
+- Peg B: d2
+
+- Peg C: d3
+
+Now, I can move d1 to C, but wait, C has d3, which is lighter than d1, and I can't place a heavier disk on a lighter one. So, I can't put d1 on top of d3.
+
+So, I need to move d3 out of the way.
+
+Step 3: move d3 from C to A.
+
+Now, the state is:
+
+- Peg A: d1, d3
+
+- Peg B: d2
+
+- Peg C: empty
+
+Now, I can move d1 to C, since C is empty.
+
+Step 4: move d1 from A to C.
+
+State:
+
+- Peg A: d3
+
+- Peg B: d2
+
+- Peg C: d1
+
+Now, I need to get d2 on top of d1, but d2 is on B, and d3 is on A.
+
+So, step 5: move d2 from B to C.
+
+But, C has d1, which is lighter than d2. Wait, no: d1 is heavier than d2, so d2 can be placed on top of d1.
+
+Wait, but according to the problem, d1 is heavier than d2, which is heavier than d3.
+
+So, d1 > d2 > d3.
+
+So, d2 can be placed on d1, since d1 is heavier.
+
+So, step 5: move d2 from B to C.
+
+State:
+
+- Peg A: d3
+
+- Peg B: empty
+
+- Peg C: d1, d2
+
+Now, finally, move d3 to C.
+
+Step 6: move d3 from A to C.
+
+State:
+
+- Peg A: empty
+
+- Peg B: empty
+
+- Peg C: d1, d2, d3
+
+And that's the goal.
+
+Wait, but in step 3, I moved d3 from C to A, and then in step 6, moved it from A to C, after moving d1 and d2.
+
+This seems a bit inefficient, but let's check if this sequence actually works.
+
+Let's recap:
+
+1. Move d3 from A to C.
+
+2. Move d2 from A to B.
+
+3. Move d3 from C to A.
+
+4. Move d1 from A to C.
+
+5. Move d2 from B to C.
+
+6. Move d3 from A to C.
+
+Yes, that seems to work.
+
+Alternatively, maybe there's a better way, or a more systematic way to approach this.
+
+I recall that in the Tower of Hanoi, the general solution involves recursion: to move n disks from source to target, you first move n-1 disks to the auxiliary peg, then move the nth disk to the target, and then move the n-1 disks from the auxiliary to the target.
+
+In this case, n=3:
+
+- Move 2 disks (d2 and d3) from A to B, using C as auxiliary.
+
+- Move d1 from A to C.
+
+- Move 2 disks from B to C, using A as auxiliary.
+
+But wait, in the initial setup, d2 is on d1, and d3 is on d2. So, to move d2 and d3 from A to B:
+
+- First, move d3 from A to C.
+
+- Then, move d2 from A to B.
+
+- Then, move d3 from C to B.
+
+So, that's three moves to move the top two disks to B.
+
+Then, move d1 from A to C.
+
+Then, move d3 from B to A.
+
+Then, move d2 from B to C.
+
+Then, move d3 from A to C.
+
+Wait, this seems similar to what I did earlier.
+
+Let me write it down:
+
+1. Move d3 from A to C.
+
+2. Move d2 from A to B.
+
+3. Move d3 from C to B.
+
+4. Move d1 from A to C.
+
+5. Move d2 from B to C.
+
+6. Move d3 from B to C.
+
+Wait, this is a different sequence from before.
+
+In the first approach, step 3 was moving d3 from C to A, and then moving d1 to C, etc.
+
+In this second approach, I'm moving d3 from C to B after moving d2 to B.
+
+Then, moving d1 to C, and then moving d2 and d3 to C.
+
+This seems more straightforward.
+
+Let me check if this works.
+
+After step 1: d3 is on C.
+
+After step 2: d2 is on B.
+
+After step 3: d3 is on B.
+
+After step 4: d1 is on C.
+
+After step 5: d2 is on C.
+
+After step 6: d3 is on C.
+
+So, final state: C has d1, d2, d3.
+
+Which is the goal.
+
+This seems better than the first sequence.
+
+I think this is the standard solution for the Tower of Hanoi with three disks.
+
+So, the plan is:
+
+1. Move d3 from A to C.
+
+2. Move d2 from A to B.
+
+3. Move d3 from C to B.
+
+4. Move d1 from A to C.
+
+5. Move d2 from B to C.
+
+6. Move d3 from B to C.
+
+That's six moves in total.
+
+I think that's the minimal number of moves.
+
+Alternatively, sometimes people solve it in seven moves, but six should be sufficient.
+
+Wait, I think the minimal number of moves for three disks is seven, but in this case, it's six.
+
+Wait, no, actually, the minimal number for three disks is seven in the standard Tower of Hanoi.
+
+Wait, let me verify.
+
+The general formula for the minimal number of moves in Tower of Hanoi is 2^n - 1, where n is the number of disks.
+
+So, for n=3, it should be 7 moves.
+
+But in the sequence I just provided, it's six moves.
+
+So, maybe I missed something.
+
+Let me recount the moves:
+
+1. d3 from A to C.
+
+2. d2 from A to B.
+
+3. d3 from C to B.
+
+4. d1 from A to C.
+
+5. d2 from B to C.
+
+6. d3 from B to C.
+
+That's six moves.
+
+But according to the formula, it should be 7 moves.
+
+Wait, maybe I made a mistake.
+
+Let me try to see.
+
+In the standard Tower of Hanoi, the sequence for three disks from A to C is:
+
+1. Move d1 from A to C.
+
+2. Move d2 from A to B.
+
+3. Move d1 from C to B.
+
+4. Move d3 from A to C.
+
+5. Move d1 from B to A.
+
+6. Move d2 from B to C.
+
+7. Move d1 from A to C.
+
+That's seven moves.
+
+But in my earlier sequence, I had six moves.
+
+So, perhaps there's an error in my earlier sequence.
+
+Let me check the sequence again:
+
+1. Move d3 from A to C.
+
+2. Move d2 from A to B.
+
+3. Move d3 from C to B.
+
+4. Move d1 from A to C.
+
+5. Move d2 from B to C.
+
+6. Move d3 from B to C.
+
+Is there any violation of the rules in this sequence?
+
+Let's see:
+
+- After step 1: A has d1, d2; B is empty; C has d3.
+
+- After step 2: A has d1; B has d2; C has d3.
+
+- After step 3: A has d1; B has d2, d3; C is empty.
+
+- After step 4: A is empty; B has d2, d3; C has d1.
+
+- After step 5: A is empty; B has d3; C has d1, d2.
+
+- After step 6: A is empty; B is empty; C has d1, d2, d3.
+
+Seems fine.
+
+But according to the formula, it should take 7 moves.
+
+Wait, maybe the formula is for indistinct disks, and since in this problem, disks are distinct and ordered by weight, perhaps 6 moves are sufficient.
+
+Alternatively, maybe I made a mistake in the standard Tower of Hanoi steps.
+
+Let me look it up.
+
+No, for three distinct disks in Tower of Hanoi, the minimal number of moves is indeed 7.
+
+So, perhaps my six-move sequence is invalid in some way.
+
+Looking back, in step 4, moving d1 to C, while C has d3, but d1 is heavier than d3, which is allowed, since heavier disks can be placed under lighter ones, but according to the problem, you can't place a heavier disk onto a lighter one.
+
+Wait, the problem says: "A disk cannot be moved onto another if it is heavier than it."
+
+So, placing d1 onto C, which has d3, and d1 is heavier than d3, is allowed, because d1 is heavier, but the rule says you can't place a heavier disk onto a lighter one.
+
+Wait, the rule is: "A disk cannot be moved onto another if it is heavier than it."
+
+So, you can't place a heavier disk onto a lighter one.
+
+In step 4, moving d1 onto C, which has d3, and d1 is heavier than d3, which violates the rule.
+
+So, actually, step 4 is invalid.
+
+That's why my six-move sequence doesn't work.
+
+So, I need to find another way.
+
+Therefore, the correct minimal number of moves is 7, as per the standard Tower of Hanoi problem.
+
+So, the sequence should be:
+
+1. Move d3 from A to C.
+
+2. Move d2 from A to B.
+
+3. Move d3 from C to B.
+
+4. Move d1 from A to C.
+
+5. Move d3 from B to A.
+
+6. Move d2 from B to C.
+
+7. Move d3 from A to C.
+
+Let me verify this sequence:
+
+- Start: A has d1, d2, d3; B empty; C empty.
+
+- Step 1: A has d1, d2; B empty; C has d3.
+
+- Step 2: A has d1; B has d2; C has d3.
+
+- Step 3: A has d1; B has d2, d3; C empty.
+
+- Step 4: A empty; B has d2, d3; C has d1.
+
+- Step 5: A has d3; B has d2; C has d1.
+
+- Step 6: A has d3; B empty; C has d1, d2.
+
+- Step 7: A empty; B empty; C has d1, d2, d3.
+
+Perfect, that works.
+
+So, the plan is:
+
+1. Move d3 from A to C.
+
+2. Move d2 from A to B.
+
+3. Move d3 from C to B.
+
+4. Move d1 from A to C.
+
+5. Move d3 from B to A.
+
+6. Move d2 from B to C.
+
+7. Move d3 from A to C.
+
+That's the sequence to move all disks to peg C in the correct order.
+
+**Final Answer**
+
+\[ \boxed{7} \]

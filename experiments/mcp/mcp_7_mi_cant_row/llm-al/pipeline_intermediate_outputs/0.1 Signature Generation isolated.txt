@@ -1,0 +1,24 @@
+BC+ Signature:
+:- sorts
+    vessel;
+    location;
+    group;
+    integer.
+
+:- objects
+    boat :: vessel;
+    bank1, bank2 :: location;
+    missionaries, cannibals :: group;
+    0..10 :: integer.
+
+:- variables
+    G, G1, G2, G3, G4 :: group;
+    Loc, Loc1, Loc2, Loc3, Loc4 :: location;
+    N, N1, N2, N3, N4 :: integer.
+
+:- constants
+    cross :: exogenousAction;
+    numCrossing(group) :: attribute(integer) of cross;
+
+    numAt(group, location) :: inertialFluent(integer);
+    boatAt :: inertialFluent(location);

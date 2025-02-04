@@ -1,0 +1,28 @@
+
+Here's a plan to get the mouse, snake, and cheese across the river to the RightBank, ensuring that the snake doesn't eat the mouse and the mouse doesn't eat the cheese:
+
+Initial state:
+
+LeftBank: snake, cheese
+RightBank: mouse, boat
+Step 1: Take the mouse from RightBank to LeftBank.
+
+LeftBank: snake, cheese, mouse
+RightBank: boat
+Step 2: Take the cheese from LeftBank to RightBank.
+
+LeftBank: snake, mouse
+RightBank: cheese, boat
+Step 3: Take the mouse from LeftBank to RightBank.
+
+LeftBank: snake
+RightBank: cheese, mouse, boat
+Step 4: Take the snake from LeftBank to RightBank.
+
+LeftBank:
+RightBank: cheese, mouse, snake, boat
+Final state:
+
+LeftBank:
+RightBank: mouse, snake, cheese, boat
+In this plan, the mouse and cheese are never left alone together, and the snake and mouse are also never left alone together. By following these steps, you can safely transport all three items to the RightBank without any of them being eaten.

@@ -1,0 +1,70 @@
+Here's a plan to safely transport all the missionaries and cannibals from bank1 to bank2 using the rowboat:
+
+Two cannibals take the rowboat from bank1 to bank2.
+
+Location bank1: 3 missionaries, 1 cannibal
+Location bank2: 2 cannibals
+
+
+One cannibal returns in the rowboat from bank2 to bank1.
+
+Location bank1: 3 missionaries, 2 cannibals
+Location bank2: 1 cannibal
+
+
+Two missionaries take the rowboat from bank1 to bank2.
+
+Location bank1: 1 missionary, 2 cannibals
+Location bank2: 2 missionaries, 1 cannibal
+
+
+One missionary and one cannibal return in the rowboat from bank2 to bank1.
+
+Location bank1: 2 missionaries, 3 cannibals
+Location bank2: 1 missionary
+
+
+Two cannibals take the rowboat from bank1 to bank2.
+
+Location bank1: 2 missionaries, 1 cannibal
+Location bank2: 1 missionary, 2 cannibals
+
+
+One cannibal returns in the rowboat from bank2 to bank1.
+
+Location bank1: 2 missionaries, 2 cannibals
+Location bank2: 1 missionary, 1 cannibal
+
+
+Two missionaries take the rowboat from bank1 to bank2.
+
+Location bank1: 2 cannibals
+Location bank2: 3 missionaries, 1 cannibal
+
+
+One missionary and one cannibal return in the rowboat from bank2 to bank1.
+
+Location bank1: 1 missionary, 3 cannibals
+Location bank2: 2 missionaries
+
+
+Two cannibals take the rowboat from bank1 to bank2.
+
+Location bank1: 1 missionary
+Location bank2: 2 missionaries, 3 cannibals
+
+
+One cannibal returns in the rowboat from bank2 to bank1.
+
+Location bank1: 1 missionary, 1 cannibal
+Location bank2: 2 missionaries, 2 cannibals
+
+
+The remaining missionary and cannibal take the rowboat from bank1 to bank2.
+
+Location bank1: Empty
+Location bank2: 3 missionaries, 3 cannibals
+
+
+
+At the end of this plan, all missionaries and cannibals are safely at bank2, and the conditions are met throughout the process.

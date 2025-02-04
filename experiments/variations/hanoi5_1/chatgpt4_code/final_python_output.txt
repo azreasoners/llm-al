@@ -1,0 +1,10 @@
+['Move d2 from d1 to a',
+ 'Move d3 from c to a',
+ 'Move d1 from b to c',
+ 'Move d5 from d4 to b',
+ 'Move d1 from c to b',
+ 'Move d4 from a to c',
+ 'Move d5 from b to c',
+ 'Move d3 from a to c',
+ 'Move d1 from b to c',
+ 'Move d2 from a to c']

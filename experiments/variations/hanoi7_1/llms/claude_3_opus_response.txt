@@ -1,0 +1,34 @@
+
+Here is a plan to stack all the disks on peg c, moving from the initial state to the goal state:
+
+Initial state:
+
+Peg a: d4, d6
+Peg b: d5, d7
+Peg c: d1, d2, d3
+Steps:
+
+Move d7 from peg b to peg a
+Move d5 from peg b to peg c
+Move d7 from peg a to peg c
+Move d6 from peg a to peg b
+Move d4 from peg a to peg c
+Move d6 from peg b to peg c
+Move d3 from peg c to peg a
+Move d2 from peg c to peg b
+Move d3 from peg a to peg b
+Move d1 from peg c to peg a
+Move d3 from peg b to peg c
+Move d2 from peg b to peg a
+Move d3 from peg c to peg a
+Move d5 from peg c to peg b
+Move d3 from peg a to peg b
+Move d2 from peg a to peg c
+Move d3 from peg b to peg c
+Move d1 from peg a to peg c
+Final state:
+
+Peg a: empty
+Peg b: empty
+Peg c: d1, d2, d3, d4, d5, d6, d7
+This plan ensures that no disk is ever placed on top of a lighter disk. By systematically moving the disks according to their weights, all disks can be successfully stacked on peg c.

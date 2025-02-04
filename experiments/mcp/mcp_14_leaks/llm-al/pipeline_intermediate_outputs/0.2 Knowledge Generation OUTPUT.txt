@@ -1,0 +1,41 @@
+% Crossing the boat causes the location of the vessel to change to the destination location.
+
+% Crossing the boat causes the numbers of missionaries and cannibals on the boat to become zero.
+
+% Crossing the boat causes the number of missionaries at the starting location to decrease by the number of missionaries on board.
+
+% Crossing the boat causes the number of cannibals at the starting location to decrease by the number of cannibals on board.
+
+% Crossing the boat causes the number of missionaries at the destination location to increase by the number of missionaries on board.
+
+% Crossing the boat causes the number of cannibals at the destination location to increase by the number of cannibals on board.
+
+% The crossing action is not executable if the total number of individuals on board is zero, as the boat cannot cross empty.
+
+% The crossing action is not executable if the total number of individuals on board exceeds the capacity of the vessel.
+
+% The crossing action is not executable if the number of missionaries on board exceeds the number of missionaries at the starting location.
+
+% The crossing action is not executable if the number of cannibals on board exceeds the number of cannibals at the starting location.
+
+% After crossing, it is not allowed for the number of cannibals to outnumber the number of missionaries at either location, unless the number of missionaries at that location is zero.
+
+% During crossing, it is not allowed for the number of cannibals on the boat to outnumber the number of missionaries on the boat, unless the number of missionaries on the boat is zero.
+
+% If there are two individuals on the boat during crossing, the river leaks and water needs to be bailed.
+
+% Bailing water is required during crossing if the river leaks due to having two individuals on the boat.
+
+% Bailing water is not executable if there is only one individual on the boat.
+
+% Bailing water is only executable during the action of crossing.
+
+% The capacity of the boat remains constant and is equal to two.
+
+% At any time, the numbers of missionaries and cannibals at each location and on the boat cannot be negative.
+
+% The total number of missionaries and cannibals across both banks and the boat remains constant throughout the process.
+
+% The numbers of missionaries and cannibals at each location and on the boat remain the same unless changed by crossing actions.
+
+% The boat cannot cross the river with nothing on it.

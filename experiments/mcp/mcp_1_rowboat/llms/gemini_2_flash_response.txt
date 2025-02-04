@@ -1,0 +1,50 @@
+
+Here's a step-by-step solution to the Missionaries and Cannibals problem, using the provided terminology:
+
+Initial State:
+
+bank1: 3 missionaries, 3 cannibals, rowboat
+bank2: 0 missionaries, 0 cannibals
+Moves (numbered for clarity):
+
+Move 1: 2 cannibals cross from bank1 to bank2.
+
+bank1: 3 missionaries, 1 cannibal
+bank2: 0 missionaries, 2 cannibals, rowboat
+Move 2: 1 cannibal returns from bank2 to bank1.
+
+bank1: 3 missionaries, 2 cannibals, rowboat
+bank2: 0 missionaries, 1 cannibal
+Move 3: 2 missionaries cross from bank1 to bank2.
+
+bank1: 1 missionary, 2 cannibals
+bank2: 2 missionaries, 1 cannibal, rowboat
+Move 4: 1 missionary and 1 cannibal return from bank2 to bank1.
+
+bank1: 2 missionaries, 3 cannibals, rowboat
+bank2: 1 missionary, 0 cannibals
+Move 5: 2 missionaries cross from bank1 to bank2.
+
+bank1: 0 missionaries, 3 cannibals
+bank2: 3 missionaries, 0 cannibals, rowboat
+Move 6: 1 cannibal returns from bank2 to bank1.
+
+bank1: 0 missionaries, 4 cannibals, rowboat
+bank2: 3 missionaries, 0 cannibals
+Move 7: 2 cannibals cross from bank1 to bank2.
+
+bank1: 0 missionaries, 1 cannibal
+bank2: 3 missionaries, 2 cannibals, rowboat
+Move 8: 1 cannibal returns from bank2 to bank1.
+
+bank1: 0 missionaries, 2 cannibals, rowboat
+bank2: 3 missionaries, 1 cannibal
+Move 9: 2 cannibals cross from bank1 to bank2.
+
+bank1: 0 missionaries, 0 cannibals
+bank2: 3 missionaries, 3 cannibals, rowboat
+Final State:
+
+bank1: 0 missionaries, 0 cannibals
+bank2: 3 missionaries, 3 cannibals, rowboat
+All missionaries and cannibals have successfully crossed the river to bank2.

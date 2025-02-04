@@ -1,0 +1,49 @@
+AI
+
+
+Here is a plan to stack all the disks on peg c, moving them one at a time from the starting configuration on peg a:
+
+Move d7 from d6 to peg b
+Move d6 from d5 to peg c
+Move d7 from peg b to d6 on peg c
+Move d5 from d4 to peg b
+Move d7 from d6 to peg a
+Move d6 from peg c to d5 on peg b
+Move d7 from peg a to d6 on peg b
+Move d4 from d3 to peg c
+Move d7 from d6 to peg a
+Move d6 from d5 to peg c
+Move d7 from peg a to d6 on peg c
+Move d5 from peg b to d4 on peg c
+Move d7 from d6 to peg b
+Move d6 from peg c to peg a
+Move d7 from peg b to d5 on peg c
+Move d3 from d2 to peg b
+Move d6 from peg a to d7 on peg c
+Move d2 from d1 to peg a
+Move d6 from d7 to peg b
+Move d7 from peg c to d2 on peg a
+Move d6 from peg b to d5 on peg c
+Move d7 from d2 to d6 on peg c
+Move d2 from peg a to d3 on peg b
+Move d7 from d6 to peg a
+Move d6 from peg c to peg b
+Move d7 from peg a to d2 on peg b
+Move d1 from peg a to peg c
+Move d7 from d2 to d6 on peg c
+Move d6 from peg b to peg a
+Move d7 from peg c to d1 on peg c
+Move d6 from peg a to d5 on peg c
+Move d2 from d3 to d7 on peg c
+Move d3 from peg b to d4 on peg c
+Move d5 from peg c to peg b
+Move d2 from d7 to d6 on peg c
+Move d7 from peg c to peg a
+Move d2 from d6 to peg b
+Move d6 from peg c to d7 on peg a
+Move d5 from peg b to d3 on peg c
+Move d2 from peg b to d6 on peg a
+Move d6 from d7 to d5 on peg c
+Move d7 from peg a to d2 on peg b
+Move d6 from peg a to d1 on peg c
+The disks are now stacked in order on peg c, from heaviest (d1) on the bottom to lightest (d7) on top. This recursive approach, moving disks back and forth between the pegs, is the classic Tower of Hanoi solution.

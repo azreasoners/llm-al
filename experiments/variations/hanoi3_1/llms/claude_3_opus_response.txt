@@ -1,0 +1,20 @@
+
+Here is a plan to stack all the disks on peg c:
+
+Move disk d2 from disk d1 to peg a.
+Move disk d1 from peg b to peg c.
+Move disk d2 from peg a to peg c.
+The resulting state will have disk d1 on peg c, disk d2 on disk d1, and disk d3 on disk d2, with all disks stacked on peg c.
+
+Explanation:
+
+We start by moving the top disk d2 off of d1 and onto the empty peg a. This frees up disk d1 to be moved.
+We then move disk d1 from its current peg b onto the target peg c. Now peg c has disks d3 and d1.
+Finally, we move disk d2 from peg a onto disk d1 on peg c. This stacks all the disks on peg c in the order d1, d2, d3.
+The key points are:
+
+Disks can only be moved one at a time
+A disk can only be moved if there is no disk on top of it
+A disk can only be moved onto an empty peg or onto a larger disk
+The goal is to stack the disks in ascending order on the target peg
+Let me know if you have any other questions!

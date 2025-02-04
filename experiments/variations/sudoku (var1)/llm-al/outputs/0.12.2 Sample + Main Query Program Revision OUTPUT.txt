@@ -1,0 +1,111 @@
+% PROGRAM CHANGED? [UNCHANGED]
+
+% BC+ signature
+
+:- sorts
+    index;
+    row;
+    column;
+    value.
+
+:- objects
+    0..8 :: index;
+    v1, v2, v3, v4, v5, v6, v7, v8, v9, none :: value;
+
+    r0, r1, r2, r3, r4, r5, r6, r7, r8 :: row;
+    c0, c1, c2, c3, c4, c5, c6, c7, c8 :: column.
+
+:- variables
+    R, R1, R2 :: row;
+    C, C1, C2 :: column;
+    V, V1, V2 :: value;
+    N, N1, N2 :: index.
+
+:- constants
+    val(row, column) :: inertialFluent(value);
+    rowNum(row) :: rigid(index);
+    colNum(column) :: rigid(index);
+    assign(row, column, value) :: exogenousAction.
+
+% Generated constraints
+
+% Map each row to its numerical index
+rowNum(r0) = 0.
+rowNum(r1) = 1.
+rowNum(r2) = 2.
+rowNum(r3) = 3.
+rowNum(r4) = 4.
+rowNum(r5) = 5.
+rowNum(r6) = 6.
+rowNum(r7) = 7.
+rowNum(r8) = 8.
+
+% Map each column to its numerical index
+colNum(c0) = 0.
+colNum(c1) = 1.
+colNum(c2) = 2.
+colNum(c3) = 3.
+colNum(c4) = 4.
+colNum(c5) = 5.
+colNum(c6) = 6.
+colNum(c7) = 7.
+colNum(c8) = 8.
+
+% Action effects
+assign(R, C, V) causes val(R, C) = V.
+
+% Action preconditions
+nonexecutable assign(R, C, V) if val(R, C) \= none.
+nonexecutable assign(R, C, V) if V = none.
+
+% Constraints
+
+% No two cells in the same row have the same value
+false if val(R, C) = V & val(R, C1) = V & C \= C1 & V \= none.
+
+% No two cells in the same column have the same value
+false if val(R, C) = V & val(R1, C) = V & R \= R1 & V \= none.
+
+% No two cells in the same 3x3 block have the same value
+false if val(R, C) = V & val(R1, C1) = V & (R \= R1 | C \= C1) &
+           (rowNum(R) // 3 = rowNum(R1) // 3) & (colNum(C) // 3 = colNum(C1) // 3) & V \= none.
+
+% Default value of val is none
+default val(R, C) = none.
+
+% MAIN QUERY CHANGED? [UNCHANGED]
+
+:- query
+    0: val(r0, c2) = v9 & val(r0, c4) = v2 & val(r0, c5) = v8 & val(r0, c6) = v7 &
+       val(r1, c0) = v8 & val(r1, c2) = v6 & val(r1, c5) = v4 & val(r1, c8) = v5 &
+       val(r2, c2) = v3 & val(r2, c8) = v4 &
+       val(r3, c0) = v6 &
+       val(r4, c1) = v2 & val(r4, c3) = v7 & val(r4, c4) = v1 & val(r4, c5) = v3 & val(r4, c6) = v4 & val(r4, c7) = v5 &
+       val(r5, c8) = v2 &
+       val(r6, c0) = v3 & val(r6, c6) = v5 &
+       val(r7, c0) = v9 & val(r7, c3) = v4 & val(r7, c6) = v8 & val(r7, c8) = v7 &
+       val(r8, c2) = v1 & val(r8, c3) = v2 & val(r8, c4) = v5 & val(r8, c6) = v3;
+
+    % Goal: All cells are filled (i.e., their value is not 'none')
+    maxstep: val(r0, c0) \= none & val(r0, c1) \= none & val(r0, c2) \= none & val(r0, c3) \= none &
+             val(r0, c4) \= none & val(r0, c5) \= none & val(r0, c6) \= none & val(r0, c7) \= none & val(r0, c8) \= none &
+             val(r1, c0) \= none & val(r1, c1) \= none & val(r1, c2) \= none & val(r1, c3) \= none &
+             val(r1, c4) \= none & val(r1, c5) \= none & val(r1, c6) \= none & val(r1, c7) \= none & val(r1, c8) \= none &
+             val(r2, c0) \= none & val(r2, c1) \= none & val(r2, c2) \= none & val(r2, c3) \= none &
+             val(r2, c4) \= none & val(r2, c5) \= none & val(r2, c6) \= none & val(r2, c7) \= none & val(r2, c8) \= none &
+             val(r3, c0) \= none & val(r3, c1) \= none & val(r3, c2) \= none & val(r3, c3) \= none &
+             val(r3, c4) \= none & val(r3, c5) \= none & val(r3, c6) \= none & val(r3, c7) \= none & val(r3, c8) \= none &
+             val(r4, c0) \= none & val(r4, c1) \= none & val(r4, c2) \= none & val(r4, c3) \= none &
+             val(r4, c4) \= none & val(r4, c5) \= none & val(r4, c6) \= none & val(r4, c7) \= none & val(r4, c8) \= none &
+             val(r5, c0) \= none & val(r5, c1) \= none & val(r5, c2) \= none & val(r5, c3) \= none &
+             val(r5, c4) \= none & val(r5, c5) \= none & val(r5, c6) \= none & val(r5, c7) \= none & val(r5, c8) \= none &
+             val(r6, c0) \= none & val(r6, c1) \= none & val(r6, c2) \= none & val(r6, c3) \= none &
+             val(r6, c4) \= none & val(r6, c5) \= none & val(r6, c6) \= none & val(r6, c7) \= none & val(r6, c8) \= none &
+             val(r7, c0) \= none & val(r7, c1) \= none & val(r7, c2) \= none & val(r7, c3) \= none &
+             val(r7, c4) \= none & val(r7, c5) \= none & val(r7, c6) \= none & val(r7, c7) \= none & val(r7, c8) \= none &
+             val(r8, c0) \= none & val(r8, c1) \= none & val(r8, c2) \= none & val(r8, c3) \= none &
+             val(r8, c4) \= none & val(r8, c5) \= none & val(r8, c6) \= none & val(r8, c7) \= none & val(r8, c8) \= none.
+
+% SAMPLE QUERIES CHANGED? [UNCHANGED]
+
+% (No sample queries provided)

@@ -1,0 +1,9 @@
+% Query 0: Check satisfiability of program signature and rules (ignores other queries). (satisfiable)
+:- query = sat.
+
+Cplus2ASP Output:
+
+ERROR: temp.bc:32:5]: Detected conflicting definition of symbol "location/1".
+
+Since this fails, check the error message(s).
+

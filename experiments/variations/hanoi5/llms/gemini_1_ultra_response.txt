@@ -1,0 +1,56 @@
+
+Here's how you can solve the classic Tower of Hanoi puzzle and a plan to move the disks to peg c:
+
+Understanding the Rules
+
+One disk at a time: You can only move the top disk from one stack.
+Larger disk restriction: You cannot place a larger disk on top of a smaller one.
+Three pegs: You have three pegs (a, b, c) to utilize during the moves.
+The Goal: Move the entire stack of disks from peg 'a' to peg 'c', obeying the rules.
+
+Recursive Solution
+
+The Tower of Hanoi is classically solved using recursion. Here's the thought process:
+
+Move the top n-1 disks from 'a' to 'b' (using 'c' as the temporary peg). This leaves the largest disk (dn) isolated on peg 'a'.
+Move the largest disk (dn) from 'a' to 'c'.
+Move the n-1 disks from 'b' to 'c' (using 'a' as the temporary peg).
+Step-by-Step Plan
+
+Let's apply this to your specific 5-disk scenario:
+
+Move disks d1, d2, d3, d4 from peg 'a' to peg 'b':
+
+Move d1 from 'a' to 'c'
+Move d2 from 'a' to 'b'
+Move d1 from 'c' to 'b'
+Move d3 from 'a' to 'c'
+Move d1 from 'b' to 'a'
+Move d2 from 'b' to 'c'
+Move d1 from 'a' to 'c'
+Move d4 from 'a' to 'b'
+Move d1 from 'c' to 'a'
+Move d2 from 'c' to 'b'
+Move d1 from 'a' to 'b'
+Move disk d5 from peg 'a' to peg 'c'.
+
+Move disks d1, d2, d3, d4 from peg 'b' to peg 'c':
+
+Move d1 from 'b' to 'c'
+Move d2 from 'b' to 'a'
+Move d1 from 'c' to 'a'
+Move d3 from 'b' to 'c'
+Move d1 from 'a' to 'b'
+Move d2 from 'a' to 'c'
+Move d1 from 'b' to 'c'
+Move d4 from 'b' to 'a'
+Move d1 from 'c' to 'b'
+Move d2 from 'c' to 'a'
+Move d1 from 'b' to 'a'
+Move d3 from 'c' to 'b'
+Move d1 from 'a' to 'c'
+Move d2 from 'a' to 'b'
+Move d1 from 'c' to 'b'
+Congratulations! You've successfully moved the entire tower of disks from peg 'a' to peg 'c'.
+
+Important Note: The number of moves required to solve the Tower of Hanoi puzzle increases exponentially with the number of disks. The formula for moves is 2^n - 1, where 'n' is the number of disks (in this case, 2^5 - 1 = 31 moves).

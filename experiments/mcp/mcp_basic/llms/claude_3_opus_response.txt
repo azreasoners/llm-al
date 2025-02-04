@@ -1,0 +1,21 @@
+Here's a plan to safely transport all missionaries and cannibals from bank1 to bank2:
+
+1 missionary and 1 cannibal go from bank1 to bank2 in the boat.
+The 1 cannibal returns from bank2 to bank1 in the boat alone.
+2 cannibals go from bank1 to bank2 in the boat.
+1 missionary and 1 cannibal return from bank2 to bank1 in the boat.
+2 missionaries go from bank1 to bank2 in the boat.
+1 cannibal returns from bank2 to bank1 in the boat alone.
+2 cannibals go from bank1 to bank2 in the boat.
+1 cannibal returns from bank2 to bank1 in the boat alone.
+The remaining 2 missionaries go from bank1 to bank2 in the boat.
+
+At the end, all 3 missionaries and 3 cannibals will be at bank2, with the boat also at bank2. At no point are the cannibals allowed to outnumber the missionaries on either bank or in the boat.
+To summarize:
+
+The boat makes 9 one-way trips total
+Missionaries travel from bank1 to bank2 a total of 4 times (1 on trip 1, 1 on trip 5, 2 on trip 9)
+Cannibals travel from bank1 to bank2 a total of 5 times (1 on trip 1, 2 on trip 3, 2 on trip 7)
+The boat returns empty from bank2 to bank1 a total of 4 times (trips 2, 6, 8)
+
+Let me know if you need any clarification or have additional questions!

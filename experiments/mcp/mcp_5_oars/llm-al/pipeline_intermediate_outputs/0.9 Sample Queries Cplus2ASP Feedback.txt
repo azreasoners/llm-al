@@ -1,0 +1,194 @@
+% Query 0: Check satisfiability of program signature and rules (ignores other queries). (satisfiable)
+:- query = sat.
+
+Cplus2ASP Output:
+
+ERROR: temp.bc:67:32]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:67:53]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:67:76]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:67:83]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:73:43]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:73:99]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:73:122]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:73:129]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:79:40]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:79:93]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:79:116]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:79:123]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:85:35]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:85:83]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:85:106]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:85:113]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:97:1]: Encountered undeclared identifier "opposite_bank/2".
+ERROR: temp.bc:98:1]: Encountered undeclared identifier "opposite_bank/2".
+
+Since this fails, check the error message(s).
+
+% Query 1: Attempting to cross the boat with no one on board. This should be unsatisfiable because the boat cannot cross without at least one person on it.
+
+:- query
+    0: numMissionariesAt(bank1) = 3 & numCannibalsAt(bank1) = 3 & numOarsAt(bank1) = 1 & numOarsAt(bank2)=1 & loc(boat) = bank1; 
+    1: cross(boat);
+    1: numMissionariesOn(boat) = 0 & numCannibalsOn(boat) = 0 & numOarsOn(boat) = 1.
+
+Cplus2ASP Output:
+
+ERROR: temp.bc:67:32]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:67:53]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:67:76]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:67:83]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:73:43]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:73:99]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:73:122]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:73:129]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:79:40]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:79:93]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:79:116]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:79:123]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:85:35]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:85:83]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:85:106]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:85:113]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:97:1]: Encountered undeclared identifier "opposite_bank/2".
+ERROR: temp.bc:98:1]: Encountered undeclared identifier "opposite_bank/2".
+
+% Query 2: Attempting to cross the boat with three people on board. This should be unsatisfiable because the boat's capacity is 2.
+
+:- query
+    0: numMissionariesAt(bank1) = 3 & numCannibalsAt(bank1) = 3 & numOarsAt(bank1) = 2 & numOarsAt(bank2)=0 & loc(boat) = bank1;
+    1: cross(boat);
+    1: numMissionariesOn(boat) = 2 & numCannibalsOn(boat) = 1 & numOarsOn(boat) = 2.
+
+Cplus2ASP Output:
+
+ERROR: temp.bc:67:32]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:67:53]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:67:76]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:67:83]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:73:43]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:73:99]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:73:122]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:73:129]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:79:40]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:79:93]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:79:116]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:79:123]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:85:35]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:85:83]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:85:106]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:85:113]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:97:1]: Encountered undeclared identifier "opposite_bank/2".
+ERROR: temp.bc:98:1]: Encountered undeclared identifier "opposite_bank/2".
+
+% Query 3: Attempting to cross the boat with one person but zero oars on the boat. This should be unsatisfiable because the boat must have at least one oar to cross.
+
+:- query
+    0: numMissionariesAt(bank1) = 3 & numCannibalsAt(bank1) = 3 & numOarsAt(bank1) = 1 & numOarsAt(bank2)=1 & loc(boat) = bank1; 
+    1: cross(boat);
+    1: numMissionariesOn(boat) = 1 & numCannibalsOn(boat) = 0 & numOarsOn(boat) = 0.
+
+Cplus2ASP Output:
+
+ERROR: temp.bc:67:32]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:67:53]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:67:76]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:67:83]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:73:43]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:73:99]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:73:122]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:73:129]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:79:40]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:79:93]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:79:116]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:79:123]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:85:35]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:85:83]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:85:106]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:85:113]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:97:1]: Encountered undeclared identifier "opposite_bank/2".
+ERROR: temp.bc:98:1]: Encountered undeclared identifier "opposite_bank/2".
+
+% Query 4: Attempting to cross the boat with two people but only one oar on the boat. This should be unsatisfiable because crossing with two people requires two oars.
+
+:- query
+    0: numMissionariesAt(bank1) = 3 & numCannibalsAt(bank1) = 3 & numOarsAt(bank1) = 2 & numOarsAt(bank2)=0 & loc(boat) = bank1; 
+    1: cross(boat);
+    1: numMissionariesOn(boat) = 1 & numCannibalsOn(boat) = 1 & numOarsOn(boat) = 1.
+
+Cplus2ASP Output:
+
+ERROR: temp.bc:67:32]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:67:53]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:67:76]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:67:83]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:73:43]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:73:99]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:73:122]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:73:129]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:79:40]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:79:93]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:79:116]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:79:123]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:85:35]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:85:83]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:85:106]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:85:113]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:97:1]: Encountered undeclared identifier "opposite_bank/2".
+ERROR: temp.bc:98:1]: Encountered undeclared identifier "opposite_bank/2".
+
+% Query 5: Successfully having the boat cross with one missionary and one oar on board from bank1 to bank2. This should be satisfiable.
+
+:- query
+    0: numMissionariesAt(bank1) = 3 & numCannibalsAt(bank1) = 3 & numOarsAt(bank1) = 1 & numOarsAt(bank2)=1 & loc(boat) = bank1; 
+    1: cross(boat);
+    1: numMissionariesOn(boat) = 1 & numCannibalsOn(boat) = 0 & numOarsOn(boat) = 1;
+    maxstep: numMissionariesAt(bank2) = 1 & numCannibalsAt(bank2) = 0 & numOarsAt(bank2) = 2 & loc(boat) = bank2.
+
+Cplus2ASP Output:
+
+ERROR: temp.bc:67:32]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:67:53]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:67:76]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:67:83]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:73:43]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:73:99]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:73:122]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:73:129]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:79:40]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:79:93]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:79:116]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:79:123]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:85:35]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:85:83]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:85:106]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:85:113]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:97:1]: Encountered undeclared identifier "opposite_bank/2".
+ERROR: temp.bc:98:1]: Encountered undeclared identifier "opposite_bank/2".
+
+
+
+:- query
+    0: numMissionariesAt(bank1) = 3 & numCannibalsAt(bank1) = 3 & numMissionariesAt(bank2) = 0 & numCannibalsAt(bank2) = 0 & numOarsAt(bank1) = 1 & numOarsAt(bank2) = 1 & loc(boat) = bank1;
+    maxstep: numMissionariesAt(bank2) = 3 & numCannibalsAt(bank2) = 3.
+
+
+Cplus2ASP Output:
+
+ERROR: temp.bc:67:32]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:67:53]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:67:76]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:67:83]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:73:43]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:73:99]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:73:122]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:73:129]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:79:40]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:79:93]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:79:116]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:79:123]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:85:35]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:85:83]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:85:106]: Encountered undeclared identifier "L_old/0".
+ERROR: temp.bc:85:113]: Encountered undeclared identifier "L_new/0".
+ERROR: temp.bc:97:1]: Encountered undeclared identifier "opposite_bank/2".
+ERROR: temp.bc:98:1]: Encountered undeclared identifier "opposite_bank/2".

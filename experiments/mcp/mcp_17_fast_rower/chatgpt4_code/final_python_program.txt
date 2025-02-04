@@ -1,0 +1,61 @@
+def is_safe(m, c, strong_missionary_on_boat):
+    """
+    Check if the missionaries will not be eaten on either bank.
+    m: number of missionaries on the original bank
+    c: number of cannibals on the original bank
+    strong_missionary_on_boat: True if the strong missionary is on the boat
+    """
+    # If strong missionary is on the boat, missionaries are safe
+    if strong_missionary_on_boat:
+        return True
+
+    # Check conditions on both banks
+    if m < c and m > 0:  # more cannibals than missionaries on bank1
+        return False
+    if (4 - m) < (4 - c) and (4 - m) > 0:  # more cannibals than missionaries on bank2
+        return False
+
+    return True
+
+
+def search(state, path, solutions):
+    """
+    Recursively explore all possible states to solve the problem.
+    state: (missionaries, cannibals, boat position)
+    path: list of moves taken to reach current state
+    solutions: list to store successful paths
+    """
+    m, c, boat = state  # Unpack the state
+
+    # Check for solution
+    if (m, c, boat) == (0, 0, 1):
+        solutions.append(path)
+        return
+
+    # Define possible moves
+    moves = [(2, 0), (0, 2), (1, 1), (1, 0), (0, 1)]
+
+    for move in moves:
+        boat_m, boat_c = move
+        strong_missionary_on_boat = boat_m > 0 and boat_m >= boat_c
+
+        if boat == 0:  # boat at bank1
+            next_state = (m - boat_m, c - boat_c, 1)
+        else:  # boat at bank2
+            next_state = (m + boat_m, c + boat_c, 0)
+
+        # Check if move is valid and safe
+        if (0 <= next_state[0] <= 4 and 0 <= next_state[1] <= 4 and
+                is_safe(next_state[0], next_state[1], strong_missionary_on_boat) and next_state not in path):
+            # Move the boat and continue searching
+            search(next_state, path + [next_state], solutions)
+
+
+def solve_missionaries_and_cannibals():
+    initial_state = (4, 4, 0)  # 4 missionaries, 4 cannibals, boat at bank1
+    solutions = []
+    search(initial_state, [initial_state], solutions)
+    return solutions
+
+# Get the solutions for the missionaries and cannibals problem
+solve_missionaries_and_cannibals()

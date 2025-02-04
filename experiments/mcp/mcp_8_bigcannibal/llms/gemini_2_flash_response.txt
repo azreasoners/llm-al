@@ -1,0 +1,71 @@
+
+Here's a solution to the Missionaries and Cannibals problem with the added constraint of a large cannibal:
+
+Initial State:
+
+Bank 1: 3 Missionaries, 3 Cannibals (1 Big Cannibal)
+Bank 2: 0 Missionaries, 0 Cannibals
+Boat: Empty, at Bank 1
+Moves (M = Missionary, C = Cannibal, BC = Big Cannibal):
+
+Bank 1 to Bank 2: 1 C, 1 BC
+
+Bank 1: 3 M, 2 C
+Bank 2: 0 M, 1 C, 1 BC
+Boat: 1 C, 1 BC at Bank 2
+Bank 2 to Bank 1: 1 C
+
+Bank 1: 3 M, 3 C
+Bank 2: 0 M, 1 BC
+Boat: 1 C at Bank 1
+Bank 1 to Bank 2: 2 C
+
+Bank 1: 3 M, 1 C
+Bank 2: 0 M, 3 C, 1 BC
+Boat: 2 C at Bank 2
+Bank 2 to Bank 1: 1 C
+
+Bank 1: 3 M, 2 C
+Bank 2: 0 M, 2 C, 1 BC
+Boat: 1 C at Bank 1
+Bank 1 to Bank 2: 2 M
+
+Bank 1: 1 M, 2 C
+Bank 2: 2 M, 2 C, 1 BC
+Boat: 2 M at Bank 2
+Bank 2 to Bank 1: 1 M, 1 C
+
+Bank 1: 2 M, 3 C
+Bank 2: 1 M, 1 C, 1 BC
+Boat: 1 M, 1 C at Bank 1
+Bank 1 to Bank 2: 2 M
+
+Bank 1: 0 M, 3 C
+Bank 2: 3 M, 1 C, 1 BC
+Boat: 2 M at Bank 2
+Bank 2 to Bank 1: 1 C
+
+Bank 1: 0 M, 4 C
+Bank 2: 3 M, 0 C, 1 BC
+Boat: 1 C at Bank 1
+Bank 1 to Bank 2: 2 C
+
+Bank 1: 0 M, 2 C
+Bank 2: 3 M, 2 C, 1 BC
+Boat: 2 C at Bank 2
+Bank 2 to Bank 1: 1 C
+
+Bank 1: 0 M, 3 C
+Bank 2: 3 M, 1 C, 1 BC
+Boat: 1 C at Bank 1
+Bank 1 to Bank 2: 1 BC, 1 C
+
+Bank 1: 0 M, 2 C
+Bank 2: 3 M, 2 C
+Boat: 1 BC, 1 C at bank 2
+Final State:
+
+Bank 1: 0 Missionaries, 0 Cannibals
+Bank 2: 3 Missionaries, 3 Cannibals (1 Big Cannibal)
+Boat: Empty, at Bank 2
+This solution accounts for the large cannibal by ensuring they are always accompanied by another cannibal when traveling by boat. This prevents the large cannibal from being alone on either bank or the boat which would make the puzzle unsolvable.

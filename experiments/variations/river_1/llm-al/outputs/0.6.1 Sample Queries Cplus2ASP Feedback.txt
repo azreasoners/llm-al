@@ -1,0 +1,194 @@
+% Query 1: Try to move the boat while an item is boarding the boat at the same time. (unsatisfiable)
+:- query
+    0: loc(boat) = LeftBank & loc(mouse) = LeftBank & ~onBoat(mouse);
+    1: moveBoat(RightBank) & boardBoat(mouse).
+
+Cplus2ASP Output:
+
+Solving...
+UNSATISFIABLE
+Models       : 0
+No solution.
+
+
+
+% Query 2: Try to board the boat with an item when another item is already on the boat. (unsatisfiable)
+:- query
+    0: loc(boat) = LeftBank & loc(mouse) = LeftBank & loc(cheese) = LeftBank & onBoat(mouse);
+    1: boardBoat(cheese).
+
+Cplus2ASP Output:
+
+Solving...
+Solution: 1
+	
+
+	0:  loc(boat)=LeftBank loc(cheese)=LeftBank loc(mouse)=LeftBank loc(snake)=RightBank onBoat(mouse)
+
+	ACTIONS:  unboardBoat(mouse)
+
+	1:  loc(boat)=LeftBank loc(cheese)=LeftBank loc(mouse)=LeftBank loc(snake)=RightBank
+
+	ACTIONS:  boardBoat(cheese)
+
+	2:  loc(boat)=LeftBank loc(cheese)=LeftBank loc(mouse)=LeftBank loc(snake)=RightBank onBoat(cheese)
+
+SATISFIABLE
+Models       : 1+
+
+
+% Query 3: Try to board the boat with an item when the item is not on the same side as the boat. (unsatisfiable)
+:- query
+    0: loc(boat) = LeftBank & loc(mouse) = RightBank;
+    1: boardBoat(mouse).
+
+Cplus2ASP Output:
+
+Solving...
+Solution: 1
+	
+
+	0:  loc(boat)=LeftBank loc(cheese)=RightBank loc(mouse)=RightBank loc(snake)=RightBank
+
+	ACTIONS:  moveBoat(RightBank)
+
+	1:  loc(boat)=RightBank loc(cheese)=RightBank loc(mouse)=RightBank loc(snake)=RightBank
+
+	ACTIONS:  boardBoat(mouse)
+
+	2:  loc(boat)=RightBank loc(cheese)=RightBank loc(mouse)=RightBank loc(snake)=RightBank onBoat(mouse)
+
+SATISFIABLE
+Models       : 1+
+
+
+% Query 4: Successfully move the boat with the mouse from LeftBank to RightBank. (satisfiable)
+:- query
+    0: loc(boat) = LeftBank & loc(mouse) = LeftBank & ~onBoat(mouse);
+    1: boardBoat(mouse);
+    2: moveBoat(RightBank);
+    3: unboardBoat(mouse);
+    maxstep: loc(mouse) = RightBank & loc(boat) = RightBank & ~onBoat(mouse).
+
+Cplus2ASP Output:
+
+Solving...
+Solution: 1
+	
+
+	0:  loc(boat)=LeftBank loc(cheese)=RightBank loc(mouse)=LeftBank loc(snake)=LeftBank
+
+	1:  loc(boat)=LeftBank loc(cheese)=RightBank loc(mouse)=LeftBank loc(snake)=LeftBank
+
+	ACTIONS:  boardBoat(mouse)
+
+	2:  loc(boat)=LeftBank loc(cheese)=RightBank loc(mouse)=LeftBank loc(snake)=LeftBank onBoat(mouse)
+
+	ACTIONS:  moveBoat(RightBank)
+
+	3:  loc(boat)=RightBank loc(cheese)=RightBank loc(mouse)=RightBank loc(snake)=LeftBank onBoat(mouse)
+
+	ACTIONS:  unboardBoat(mouse)
+
+	4:  loc(boat)=RightBank loc(cheese)=RightBank loc(mouse)=RightBank loc(snake)=LeftBank
+
+SATISFIABLE
+Models       : 1+
+
+
+% Query 5: Try to move the boat when snake and mouse are left alone on a side without the boat. (unsatisfiable)
+:- query
+    0: loc(boat) = LeftBank & loc(snake) = LeftBank & loc(mouse) = LeftBank & loc(cheese) = RightBank &
+       ~onBoat(snake) & ~onBoat(mouse) & ~onBoat(cheese);
+    1: moveBoat(RightBank).
+
+Cplus2ASP Output:
+
+Solving...
+Solution: 1
+	
+
+	0:  loc(boat)=LeftBank loc(cheese)=RightBank loc(mouse)=LeftBank loc(snake)=LeftBank
+
+	ACTIONS:  boardBoat(snake)
+
+	1:  loc(boat)=LeftBank loc(cheese)=RightBank loc(mouse)=LeftBank loc(snake)=LeftBank onBoat(snake)
+
+	ACTIONS:  moveBoat(RightBank)
+
+	2:  loc(boat)=RightBank loc(cheese)=RightBank loc(mouse)=LeftBank loc(snake)=RightBank onBoat(snake)
+
+SATISFIABLE
+Models       : 1+
+
+
+
+
+:- query
+    0: loc(snake) = LeftBank & loc(cheese) = LeftBank & loc(mouse) = RightBank & loc(boat) = RightBank &
+       ~onBoat(snake) & ~onBoat(cheese) & ~onBoat(mouse);
+    maxstep: loc(snake) = RightBank & loc(cheese) = RightBank & loc(mouse) = RightBank.
+
+Cplus2ASP Output:
+
+Solving...
+Solution: 1
+	
+
+	0:  loc(boat)=RightBank loc(cheese)=LeftBank loc(mouse)=RightBank loc(snake)=LeftBank
+
+	ACTIONS:  moveBoat(LeftBank)
+
+	1:  loc(boat)=LeftBank loc(cheese)=LeftBank loc(mouse)=RightBank loc(snake)=LeftBank
+
+	ACTIONS:  boardBoat(cheese)
+
+	2:  loc(boat)=LeftBank loc(cheese)=LeftBank loc(mouse)=RightBank loc(snake)=LeftBank onBoat(cheese)
+
+	ACTIONS:  moveBoat(RightBank)
+
+	3:  loc(boat)=RightBank loc(cheese)=RightBank loc(mouse)=RightBank loc(snake)=LeftBank onBoat(cheese)
+
+	ACTIONS:  unboardBoat(cheese)
+
+	4:  loc(boat)=RightBank loc(cheese)=RightBank loc(mouse)=RightBank loc(snake)=LeftBank
+
+	ACTIONS:  boardBoat(mouse)
+
+	5:  loc(boat)=RightBank loc(cheese)=RightBank loc(mouse)=RightBank loc(snake)=LeftBank onBoat(mouse)
+
+	ACTIONS:  moveBoat(LeftBank)
+
+	6:  loc(boat)=LeftBank loc(cheese)=RightBank loc(mouse)=LeftBank loc(snake)=LeftBank onBoat(mouse)
+
+	ACTIONS:  unboardBoat(mouse)
+
+	7:  loc(boat)=LeftBank loc(cheese)=RightBank loc(mouse)=LeftBank loc(snake)=LeftBank
+
+	ACTIONS:  boardBoat(snake)
+
+	8:  loc(boat)=LeftBank loc(cheese)=RightBank loc(mouse)=LeftBank loc(snake)=LeftBank onBoat(snake)
+
+	ACTIONS:  moveBoat(RightBank)
+
+	9:  loc(boat)=RightBank loc(cheese)=RightBank loc(mouse)=LeftBank loc(snake)=RightBank onBoat(snake)
+
+	ACTIONS:  unboardBoat(snake)
+
+	10:  loc(boat)=RightBank loc(cheese)=RightBank loc(mouse)=LeftBank loc(snake)=RightBank
+
+	ACTIONS:  moveBoat(LeftBank)
+
+	11:  loc(boat)=LeftBank loc(cheese)=RightBank loc(mouse)=LeftBank loc(snake)=RightBank
+
+	ACTIONS:  boardBoat(mouse)
+
+	12:  loc(boat)=LeftBank loc(cheese)=RightBank loc(mouse)=LeftBank loc(snake)=RightBank onBoat(mouse)
+
+	ACTIONS:  moveBoat(RightBank)
+
+	13:  loc(boat)=RightBank loc(cheese)=RightBank loc(mouse)=RightBank loc(snake)=RightBank onBoat(mouse)
+
+SATISFIABLE
+Models       : 1+
+

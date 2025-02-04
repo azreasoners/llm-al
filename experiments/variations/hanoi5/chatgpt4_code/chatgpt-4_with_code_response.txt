@@ -1,0 +1,71 @@
+
+ChatGPT
+
+Analyzed
+
+python
+Always show details
+
+Copy code
+def solve_hanoi(n, from_peg, to_peg, aux_peg):
+    if n == 0:
+        return []
+    steps = solve_hanoi(n - 1, from_peg, aux_peg, to_peg)
+    steps.append((from_peg, to_peg))
+    steps += solve_hanoi(n - 1, aux_peg, to_peg, from_peg)
+    return steps
+
+# Number of disks
+n_disks = 5
+
+# Peg labels
+from_peg = 'a'
+to_peg = 'c'
+aux_peg = 'b'
+
+# Generate the move sequence to solve the problem
+hanoi_solution = solve_hanoi(n_disks, from_peg, to_peg, aux_peg)
+hanoi_solution
+Result
+[('a', 'c'),
+ ('a', 'b'),
+ ('c', 'b'),
+ ('a', 'c'),
+ ('b', 'a'),
+ ('b', 'c'),
+ ('a', 'c'),
+ ('a', 'b'),
+ ('c', 'b'),
+ ('c', 'a'),
+ ('b', 'a'),
+ ('c', 'b'),
+ ('a', 'c'),
+ ('a', 'b'),
+ ('c', 'b'),
+ ('a', 'c'),
+ ('b', 'a'),
+ ('b', 'c'),
+ ('a', 'c'),
+ ('b', 'a'),
+ ('c', 'b'),
+ ('c', 'a'),
+ ('b', 'a'),
+ ('b', 'c'),
+ ('a', 'c'),
+ ('a', 'b'),
+ ('c', 'b'),
+ ('a', 'c'),
+ ('b', 'a'),
+ ('b', 'c'),
+ ('a', 'c')]
+The program generates a series of moves to solve the problem of stacking all five disks from peg 'a' to peg 'c', using peg 'b' as an auxiliary peg. Here is the sequence of moves required:
+
+Move the top disk from peg 'a' to peg 'c'.
+Move the next disk from peg 'a' to peg 'b'.
+Move a disk from peg 'c' to peg 'b'.
+Move a disk from peg 'a' to peg 'c'.
+Move a disk from peg 'b' to peg 'a'.
+Move a disk from peg 'b' to peg 'c'.
+Move a disk from peg 'a' to peg 'c'.
+Continue this pattern until all disks are moved from peg 'a' to peg 'c'.
+Each step ensures that no larger disk is placed on top of a smaller disk, adhering to the problem's constraints. This list of 31 moves solves the puzzle by transferring all disks to peg 'c'. ​
