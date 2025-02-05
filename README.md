@@ -136,7 +136,7 @@ python main.py --task <TASK NAME>
 
 ### Additional Parameters
 - **`--o <OUTPUT FOLDER NAME>`**: Output folder name (default: same as the task name).
-- **`--model <LLM MODEL>`**: LLM model to use (default: `"o1-preview"`. Options: `"gpt-4o"`, `"o1-preview"`, `"o3-mini"`).
+- **`--model <LLM MODEL>`**: LLM model to use (default: `"o1-preview"`. Options: `"gpt-4o"`, `"o1-preview"`, `"o1"`, `"o3-mini"`).
 - **`--max_updates <MAX LLM REVISIONS>`**: Maximum number of revisions from the LLM (default: 8).
 - **`--concurrency`**: Enables concurrent actions when running Cplus2ASP.
 ### Examples:

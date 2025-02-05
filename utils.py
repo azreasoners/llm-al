@@ -16,7 +16,7 @@ def get_response(prompt, prompt_cache, model, redo=False, temp=0.,max_tokens=350
         messages = [{'role': 'user', 'content': prompt}]
         while not passed:
             try:
-                if model not in ['o1-preview', 'o3-mini']:
+                if model not in ['o1-preview', 'o3-mini', 'o1']:
                     response = openai.ChatCompletion.create(
                         messages=messages,
                         model=model,
