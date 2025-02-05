@@ -16,7 +16,7 @@ openai.organization = ORG_KEY
 
 parser = argparse.ArgumentParser(formatter_class=RawTextHelpFormatter)
 parser.add_argument('--o', type=str, help='the output file name')
-parser.add_argument("--model", type=str, help = '{o1-preview, gpt-4o}', default = 'o1-preview')
+parser.add_argument("--model", type=str, help = '{o1-preview, gpt-4o, o3-mini}', default = 'o1-preview')
 parser.add_argument("--task", type=str, help = 'Problem to run.', required=True)
 parser.add_argument("--max_updates", type=str, help = 'Maximum number of steps for LLM revision.', default = 8)
 parser.add_argument("--concurrency", action="store_true", help="Cplus2ASP will run with concurrent actions allowed.")
