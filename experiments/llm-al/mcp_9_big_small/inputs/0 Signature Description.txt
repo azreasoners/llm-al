@@ -1,9 +1,0 @@
-There are four types of objects: "vessel", "location", "group", and "integer".
-
-boat is a vessel.
-bank1 and bank2 are locations.
-missionaries and cannibals and small missionaries and big cannibals are groups.
-0..10 are integers.
-
-Actions
-Crossing a vessel is an action.

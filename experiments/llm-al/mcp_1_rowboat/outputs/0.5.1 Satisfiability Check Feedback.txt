@@ -1,9 +1,0 @@
-% Query 0: Check satisfiability of program signature and rules (ignores other queries). Make sure that the  (satisfiable)
-:- query = sat.
-
-Cplus2ASP Output:
-
-Since this fails, this indicates a deeper, high priority issue related to the signature and/or rules. 
-* Check the signature, so that fluents can have values that exist given the sorts and objects and that there are no rules which necessarily lead to contradiction. If a constant is declared for example like "fluentName(args) :: inertialFluent(sort);...", where "sort" is a declared sort, then there should be some objects for that sort that are declared. For example, if a constant is declared like "loc(car) :: inertialFluent(location);...", then there should be objects declared of sort "location" (or of a sort which has location as a supersort (location >> otherSort)). Keep in mind that sorts representing integers, should have objects declared which are numbers (e.g., "integer :: 0..5", or "integer :: 0, 1, 2, ..."). Integers should be only up to what is needed, since unnecessarily large numbers will cause the solver to take a long time.
-* Check that there are no simple or rigid fluents of any kind or any nonspecified constant types (they should only be either "exogenousAction" or "inertialFluent"). Instead of rigid or simple fluents, use inertialFluent, even if it is not intuitive.
-

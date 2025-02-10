@@ -1,1 +1,0 @@
-For each set, three missionaries and three cannibals are at location bank1, the boat is at location bank1. Find a plan so that all missionaries and all cannibals are at location bank2 for both sets.

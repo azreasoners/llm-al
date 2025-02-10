@@ -1,9 +1,0 @@
-% Query 0: Check satisfiability of program signature and rules (ignores other queries). (satisfiable)
-:- query = sat.
-
-Cplus2ASP Output:
-
-ERROR: temp.bc:39:21]: The head of an additive law (G in "F decrements G") must be an additive constant (additiveFluent or additiveAction).
-
-Since this fails, check the error message(s).
-

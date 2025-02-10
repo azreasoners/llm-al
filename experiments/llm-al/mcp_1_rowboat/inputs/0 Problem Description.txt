@@ -1,1 +1,0 @@
-Three missionaries and three cannibals shall cross a river in a rowboat which carries at most two people at once. The rowboat cannot cross the river with nothing on it. On either side, the cannibals may never outnumber the missionaries or the missionaries will be eaten. Also, the cannibals may never outnumber the missionaries on the rowboat or the missionaries will be eaten.

@@ -1,6 +1,0 @@
-% Moving a disk causes its location to be that location.
-% The move action is not executable if there is a disk on top of the disk being moved.
-% The move action is not executable if moving a disk onto a disk that is lighter than it.
-% The move action is not executable if moving a disk onto itself.
-% It is impossible for a disk to be on top of itself.
-% It is impossible for two disks to be at the same location.

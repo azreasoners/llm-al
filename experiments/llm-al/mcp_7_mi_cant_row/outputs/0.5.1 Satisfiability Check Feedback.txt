@@ -1,9 +1,0 @@
-% Query 0: Check satisfiability of program signature and rules (ignores other queries). (satisfiable)
-:- query = sat.
-
-Cplus2ASP Output:
-
-% Error: An error occurred while executing the translator.
-
-Since this fails, check the error message(s).
-

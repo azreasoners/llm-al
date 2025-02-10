@@ -1,5 +1,0 @@
-% Moving a disk to a location causes its location to be that location.
-% Moving a disk is not executable if there is another disk whose location is the disk being moved.
-% Moving a disk onto another disk is not executable if the moving disk's weight is greater than the destination disk's weight.
-% Moving a disk onto a location is not executable if there is a disk whose location is the destination location.
-% A disk cannot be moved onto itself.

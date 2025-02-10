@@ -1,1 +1,0 @@
-/home/a/.cplus2asp.config: cannot open file

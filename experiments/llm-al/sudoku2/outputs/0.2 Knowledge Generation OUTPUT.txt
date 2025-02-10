@@ -1,8 +1,0 @@
-% Setting a value at (row, column) causes the value at that cell to be the specified value.
-% Setting a value at (row, column) is not executable if the cell at (row, column) already has a value.
-% Setting a value at (row, column) is not executable if another cell in the same row already has that value.
-% Setting a value at (row, column) is not executable if another cell in the same column already has that value.
-% Setting a value at (row, column) is not executable if another cell in the same 3x3 square already has that value.
-% It is impossible for two cells in the same row to have the same value.
-% It is impossible for two cells in the same column to have the same value.
-% It is impossible for two cells in the same 3x3 square to have the same value.
