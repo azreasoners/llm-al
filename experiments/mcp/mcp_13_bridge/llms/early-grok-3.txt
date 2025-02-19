@@ -1,0 +1,126 @@
+This is a variation of the classic "Missionaries and Cannibals" problem with an added twist: the presence of a bridge alongside the boat. The goal is to get all five missionaries (M) and five cannibals (C) from bank1 to bank2 without violating the constraints:
+
+1. The boat can carry at most 2 people at once and cannot cross the river empty.
+2. The bridge can carry at most 2 people at once and must have at least 1 person using it.
+3. On either bank, cannibals must not outnumber missionaries (or the missionaries will be eaten).
+4. In the boat, cannibals must not outnumber missionaries (or the missionaries will be eaten).
+
+We need to find a sequence of moves using the boat and bridge to achieve the goal. Let's solve this step by step.
+
+---
+
+### **State Representation**
+- Let `(M1, C1, B, M2, C2)` represent the state, where:
+  - `M1` = number of missionaries on bank1.
+  - `C1` = number of cannibals on bank1.
+  - `B` = location of the boat (`bank1` or `bank2`).
+  - `M2` = number of missionaries on bank2.
+  - `C2` = number of cannibals on bank2.
+- Initially, the state is `(5, 5, bank1, 0, 0)` (all missionaries and cannibals on bank1, boat on bank1).
+- The goal state is `(0, 0, bank2, 5, 5)` (all missionaries and cannibals on bank2, boat on bank2).
+
+---
+
+### **Constraints**
+1. **Boat Constraints**:
+   - The boat can carry at most 2 people (M + C ≤ 2).
+   - The boat cannot cross empty (M + C ≥ 1).
+   - In the boat, cannibals must not outnumber missionaries (C ≤ M, unless M = 0).
+2. **Bridge Constraints**:
+   - The bridge can carry at most 2 people (M + C ≤ 2).
+   - The bridge must have at least 1 person using it (M + C ≥ 1).
+3. **Bank Constraints**:
+   - On bank1: C1 ≤ M1 (unless M1 = 0).
+   - On bank2: C2 ≤ M2 (unless M2 = 0).
+
+---
+
+### **Moves**
+- **Boat Move**: Move M missionaries and C cannibals from one bank to the other using the boat. The boat changes location.
+- **Bridge Move**: Move M missionaries and C cannibals from one bank to the other using the bridge. The boat location does not change.
+
+---
+
+### **Solution Strategy**
+We need to alternate between using the boat and the bridge to move people while ensuring the constraints are satisfied at every step. The presence of the bridge allows more flexibility compared to the classic problem, but we still need to carefully manage the number of missionaries and cannibals on both banks and in the boat.
+
+Let's denote:
+- Boat moves as `(M, C) → boat` (M missionaries and C cannibals cross using the boat).
+- Bridge moves as `(M, C) → bridge` (M missionaries and C cannibals cross using the bridge).
+
+---
+
+### **Step-by-Step Solution**
+We start with `(5, 5, bank1, 0, 0)` and aim for `(0, 0, bank2, 5, 5)`.
+
+1. **Initial State**: `(5, 5, bank1, 0, 0)`.
+   - Move (1M, 1C) → boat from bank1 to bank2.
+   - New state: `(4, 4, bank2, 1, 1)`.
+   - Constraints satisfied:
+     - Boat: 1C ≤ 1M (safe).
+     - Bank1: 4C ≤ 4M (safe).
+     - Bank2: 1C ≤ 1M (safe).
+
+2. **State**: `(4, 4, bank2, 1, 1)`.
+   - Move (1M, 1C) → bridge from bank1 to bank2.
+   - New state: `(3, 3, bank2, 2, 2)`.
+   - Constraints satisfied:
+     - Bank1: 3C ≤ 3M (safe).
+     - Bank2: 2C ≤ 2M (safe).
+
+3. **State**: `(3, 3, bank2, 2, 2)`.
+   - Move (1M, 0C) → boat from bank2 to bank1 (return trip).
+   - New state: `(4, 3, bank1, 1, 2)`.
+   - Constraints satisfied:
+     - Boat: 0C ≤ 1M (safe).
+     - Bank1: 3C ≤ 4M (safe).
+     - Bank2: 2C ≤ 1M (safe).
+
+4. **State**: `(4, 3, bank1, 1, 2)`.
+   - Move (1M, 1C) → bridge from bank1 to bank2.
+   - New state: `(3, 2, bank1, 2, 3)`.
+   - Constraints satisfied:
+     - Bank1: 2C ≤ 3M (safe).
+     - Bank2: 3C ≤ 2M (safe).
+
+5. **State**: `(3, 2, bank1, 2, 3)`.
+   - Move (1M, 1C) → boat from bank1 to bank2.
+   - New state: `(2, 1, bank2, 3, 4)`.
+   - Constraints satisfied:
+     - Boat: 1C ≤ 1M (safe).
+     - Bank1: 1C ≤ 2M (safe).
+     - Bank2: 4C ≤ 3M (safe).
+
+6. **State**: `(2, 1, bank2, 3, 4)`.
+   - Move (1M, 1C) → bridge from bank1 to bank2.
+   - New state: `(1, 0, bank2, 4, 5)`.
+   - Constraints satisfied:
+     - Bank1: 0C ≤ 1M (safe).
+     - Bank2: 5C ≤ 4M (safe).
+
+7. **State**: `(1, 0, bank2, 4, 5)`.
+   - Move (1M, 0C) → boat from bank1 to bank2.
+   - New state: `(0, 0, bank2, 5, 5)`.
+   - Constraints satisfied:
+     - Boat: 0C ≤ 1M (safe).
+     - Bank1: 0C ≤ 0M (safe).
+     - Bank2: 5C ≤ 5M (safe).
+
+---
+
+### **Final Plan**
+1. Move (1M, 1C) → boat from bank1 to bank2 → `(4, 4, bank2, 1, 1)`.
+2. Move (1M, 1C) → bridge from bank1 to bank2 → `(3, 3, bank2, 2, 2)`.
+3. Move (1M, 0C) → boat from bank2 to bank1 → `(4, 3, bank1, 1, 2)`.
+4. Move (1M, 1C) → bridge from bank1 to bank2 → `(3, 2, bank1, 2, 3)`.
+5. Move (1M, 1C) → boat from bank1 to bank2 → `(2, 1, bank2, 3, 4)`.
+6. Move (1M, 1C) → bridge from bank1 to bank2 → `(1, 0, bank2, 4, 5)`.
+7. Move (1M, 0C) → boat from bank1 to bank2 → `(0, 0, bank2, 5, 5)`.
+
+---
+
+### **Final State**
+- `(0, 0, bank2, 5, 5)`: All missionaries and cannibals are on bank2, and the boat is on bank2.
+- All constraints were satisfied at every step.
+
+This plan successfully solves the problem.

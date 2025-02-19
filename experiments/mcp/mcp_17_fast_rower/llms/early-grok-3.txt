@@ -1,0 +1,173 @@
+This is a variation of the classic "Missionaries and Cannibals" problem, with the added twist of a strong missionary who can row the boat and prevent the cannibals from eating the missionaries while in the boat. Let's solve this step by step.
+
+### Problem Setup:
+- **Vessel**: The boat, which can carry at most 2 people (missionaries or cannibals) at a time. The boat must have at least one person to cross the river.
+- **Locations**: 
+  - `bank1` (starting side)
+  - `bank2` (destination side)
+- **Groups**:
+  - Missionaries (M): 4 in total, including 1 strong missionary (SM).
+  - Cannibals (C): 4 in total.
+- **Integers**: Used to count the number of missionaries and cannibals on each bank or in the boat (0 to 10).
+- **Constraints**:
+  1. On either bank, the number of cannibals (C) must not exceed the number of missionaries (M), unless M = 0 (no missionaries present).
+  2. In the boat, the number of cannibals must not exceed the number of missionaries, unless the strong missionary (SM) is rowing.
+  3. The boat cannot cross the river empty.
+  4. The goal is to get all 4 missionaries and 4 cannibals from `bank1` to `bank2`.
+
+### State Representation:
+We represent the state as `(M1, C1, B, M2, C2)`, where:
+- `M1`: Number of missionaries on `bank1`.
+- `C1`: Number of cannibals on `bank1`.
+- `B`: Location of the boat (`bank1` or `bank2`).
+- `M2`: Number of missionaries on `bank2`.
+- `C2`: Number of cannibals on `bank2`.
+
+Initial state: `(4, 4, bank1, 0, 0)`  
+Goal state: `(0, 0, bank2, 4, 4)`
+
+### Rules:
+1. The boat can carry at most 2 people (M or C).
+2. If the strong missionary (SM) is in the boat, the cannibals won't eat the missionaries in the boat.
+3. On either bank, C ≤ M (unless M = 0).
+4. The boat must have at least 1 person to cross.
+
+### Solution:
+We need to find a sequence of moves that satisfies the constraints. Let's denote:
+- `SM` as the strong missionary.
+- `M` as regular missionaries.
+- `C` as cannibals.
+
+We will also track the boat's location and ensure the constraints are met at every step. Below is a step-by-step plan:
+
+---
+
+#### Step 1: Initial State
+- State: `(4M, 4C, bank1, 0M, 0C)`
+- All 4 missionaries (including SM) and 4 cannibals are on `bank1`. The boat is on `bank1`.
+
+#### Step 2: First Trip (SM and 1C cross to bank2)
+- Boat carries: SM (strong missionary) and 1C.
+- SM rows, so no eating occurs in the boat.
+- New state: `(3M, 3C, bank1, 1M, 1C)`
+- Check constraints:
+  - `bank1`: 3M, 3C → C ≤ M (safe).
+  - `bank2`: 1M, 1C → C ≤ M (safe).
+
+#### Step 3: Return Trip (SM returns to bank1)
+- Boat carries: SM.
+- New state: `(4M, 3C, bank1, 0M, 1C)`
+- Check constraints:
+  - `bank1`: 4M, 3C → C ≤ M (safe).
+  - `bank2`: 0M, 1C → No missionaries, so safe.
+
+#### Step 4: Second Trip (SM and 1C cross to bank2)
+- Boat carries: SM and 1C.
+- New state: `(3M, 2C, bank1, 1M, 2C)`
+- Check constraints:
+  - `bank1`: 3M, 2C → C ≤ M (safe).
+  - `bank2`: 1M, 2C → C > M, but SM is on `bank2`, so safe.
+
+#### Step 5: Return Trip (SM and 1C return to bank1)
+- Boat carries: SM and 1C.
+- New state: `(4M, 3C, bank1, 0M, 1C)`
+- Check constraints:
+  - `bank1`: 4M, 3C → C ≤ M (safe).
+  - `bank2`: 0M, 1C → No missionaries, so safe.
+
+#### Step 6: Third Trip (SM and 2M cross to bank2)
+- Boat carries: SM and 1M (regular missionary).
+- New state: `(2M, 3C, bank1, 2M, 1C)`
+- Check constraints:
+  - `bank1`: 2M, 3C → C > M (unsafe). This step fails, so we need to adjust.
+
+---
+
+### Revised Plan:
+Let's try a different sequence to avoid unsafe states.
+
+#### Step 1: Initial State
+- State: `(4M, 4C, bank1, 0M, 0C)`
+
+#### Step 2: First Trip (SM and 1C cross to bank2)
+- Boat carries: SM and 1C.
+- New state: `(3M, 3C, bank1, 1M, 1C)`
+- Safe.
+
+#### Step 3: Return Trip (SM returns to bank1)
+- Boat carries: SM.
+- New state: `(4M, 3C, bank1, 0M, 1C)`
+- Safe.
+
+#### Step 4: Second Trip (SM and 2C cross to bank2)
+- Boat carries: SM and 2C.
+- New state: `(4M, 1C, bank1, 0M, 3C)`
+- Safe.
+
+#### Step 5: Return Trip (SM and 1C return to bank1)
+- Boat carries: SM and 1C.
+- New state: `(4M, 2C, bank1, 0M, 2C)`
+- Safe.
+
+#### Step 6: Third Trip (SM and 2M cross to bank2)
+- Boat carries: SM and 2M.
+- New state: `(2M, 2C, bank1, 2M, 2C)`
+- Safe.
+
+#### Step 7: Return Trip (SM and 1C return to bank1)
+- Boat carries: SM and 1C.
+- New state: `(2M, 3C, bank1, 2M, 1C)`
+- Safe (SM is present on `bank1`).
+
+#### Step 8: Fourth Trip (SM and 2M cross to bank2)
+- Boat carries: SM and 2M.
+- New state: `(0M, 3C, bank1, 4M, 1C)`
+- Safe.
+
+#### Step 9: Return Trip (SM returns to bank1)
+- Boat carries: SM.
+- New state: `(1M, 3C, bank1, 3M, 1C)`
+- Safe (SM is present on `bank1`).
+
+#### Step 10: Fifth Trip (SM and 2C cross to bank2)
+- Boat carries: SM and 2C.
+- New state: `(1M, 1C, bank1, 3M, 3C)`
+- Safe.
+
+#### Step 11: Return Trip (SM returns to bank1)
+- Boat carries: SM.
+- New state: `(2M, 1C, bank1, 2M, 3C)`
+- Safe.
+
+#### Step 12: Sixth Trip (SM and 2M cross to bank2)
+- Boat carries: SM and 2M.
+- New state: `(0M, 1C, bank1, 4M, 3C)`
+- Safe.
+
+#### Step 13: Return Trip (SM returns to bank1)
+- Boat carries: SM.
+- New state: `(1M, 1C, bank1, 3M, 3C)`
+- Safe.
+
+#### Step 14: Seventh Trip (SM and 1C cross to bank2)
+- Boat carries: SM and 1C.
+- New state: `(1M, 0C, bank1, 3M, 4C)`
+- Safe.
+
+#### Step 15: Return Trip (SM returns to bank1)
+- Boat carries: SM.
+- New state: `(2M, 0C, bank1, 2M, 4C)`
+- Safe.
+
+#### Step 16: Eighth Trip (SM and 2M cross to bank2)
+- Boat carries: SM and 2M.
+- New state: `(0M, 0C, bank1, 4M, 4C)`
+- Safe.
+
+---
+
+### Final State:
+- State: `(0M, 0C, bank2, 4M, 4C)`
+- All missionaries and cannibals are on `bank2`. The boat is on `bank2`.
+
+This plan successfully moves all missionaries and cannibals to `bank2` while satisfying all constraints.

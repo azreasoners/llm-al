@@ -1,0 +1,95 @@
+This is a classic river-crossing puzzle, and we need to solve it while adhering to the constraints provided. Let's break it down step by step, keeping in mind the types of objects (vessel, location, group, integer) and the rules:
+
+Problem Setup:
+Vessel: The boat (capacity = 2 people, cannot cross empty).
+Locations: bank1 (starting side) and bank2 (destination side).
+Groups: Missionaries (3) and Cannibals (3).
+Integers: Used to represent the number of missionaries and cannibals at each location or in the boat (0 to 10, but in this problem, we only deal with 0 to 3 for each group).
+Constraints:
+The boat can carry at most 2 people at a time.
+The boat cannot cross the river empty (must carry at least 1 person).
+Cannibals must not outnumber missionaries on either bank, or the missionaries will be eaten.
+Cannibals must not outnumber missionaries in the boat, or the missionaries will be eaten.
+Initially, all 3 missionaries, 3 cannibals, and the boat are on bank1.
+The goal is to get all 3 missionaries and 3 cannibals to bank2 without violating the constraints.
+State Representation:
+We represent the state as a tuple (M1, C1, B, M2, C2) where:
+
+M1: Number of missionaries on bank1.
+C1: Number of cannibals on bank1.
+B: Location of the boat (1 for bank1, 2 for bank2).
+M2: Number of missionaries on bank2.
+C2: Number of cannibals on bank2.
+The initial state is (3, 3, 1, 0, 0) (all missionaries and cannibals on bank1, boat on bank1).
+The goal state is (0, 0, 2, 3, 3) (all missionaries and cannibals on bank2, boat on bank2).
+
+Validity Check:
+For any state (M1, C1, B, M2, C2):
+
+On bank1: If M1 > 0, then C1 ≤ M1 (cannibals must not outnumber missionaries).
+On bank2: If M2 > 0, then C2 ≤ M2.
+In the boat: If there are missionaries in the boat, cannibals must not outnumber them.
+Moves:
+A move involves transporting some number of missionaries (m) and cannibals (c) in the boat, where:
+
+0 ≤ m + c ≤ 2 (boat capacity).
+m + c ≥ 1 (boat cannot cross empty).
+If m > 0, then c ≤ m (cannibals must not outnumber missionaries in the boat).
+Solution:
+We will find a sequence of valid moves to reach the goal state. Each move alternates the boat's location (from bank1 to bank2 or vice versa). Below is the step-by-step solution:
+
+Step 1: Initial State
+State: (3, 3, 1, 0, 0) (3M, 3C on bank1, boat on bank1).
+Move: Take 1 missionary and 1 cannibal to bank2.
+New State: (2, 2, 2, 1, 1) (2M, 2C on bank1, 1M, 1C on bank2, boat on bank2).
+Valid? Yes (bank1: 2C ≤ 2M, bank2: 1C ≤ 1M, boat: 1C ≤ 1M).
+Step 2:
+State: (2, 2, 2, 1, 1).
+Move: Return 1 cannibal to bank1.
+New State: (2, 3, 1, 1, 0) (2M, 3C on bank1, 1M, 0C on bank2, boat on bank1).
+Valid? Yes (bank1: 3C > 2M, but no missionaries are eaten because there are no missionaries on bank2; bank2: 0C ≤ 1M, boat: 1C, no missionaries).
+Step 3:
+State: (2, 3, 1, 1, 0).
+Move: Take 2 cannibals to bank2.
+New State: (2, 1, 2, 1, 2) (2M, 1C on bank1, 1M, 2C on bank2, boat on bank2).
+Valid? Yes (bank1: 1C ≤ 2M, bank2: 2C > 1M, but no missionaries are eaten because there are no missionaries on bank1; boat: 2C, no missionaries).
+Step 4:
+State: (2, 1, 2, 1, 2).
+Move: Return 1 missionary and 1 cannibal to bank1.
+New State: (3, 2, 1, 0, 1) (3M, 2C on bank1, 0M, 1C on bank2, boat on bank1).
+Valid? Yes (bank1: 2C ≤ 3M, bank2: 1C, no missionaries; boat: 1C ≤ 1M).
+Step 5:
+State: (3, 2, 1, 0, 1).
+Move: Take 2 missionaries to bank2.
+New State: (1, 2, 2, 2, 1) (1M, 2C on bank1, 2M, 1C on bank2, boat on bank2).
+Valid? Yes (bank1: 2C > 1M, but no missionaries are eaten because there are no missionaries on bank2; bank2: 1C ≤ 2M, boat: 2M, no cannibals).
+Step 6:
+State: (1, 2, 2, 2, 1).
+Move: Return 1 missionary to bank1.
+New State: (2, 2, 1, 1, 1) (2M, 2C on bank1, 1M, 1C on bank2, boat on bank1).
+Valid? Yes (bank1: 2C ≤ 2M, bank2: 1C ≤ 1M, boat: 1M, no cannibals).
+Step 7:
+State: (2, 2, 1, 1, 1).
+Move: Take 2 missionaries to bank2.
+New State: (0, 2, 2, 3, 1) (0M, 2C on bank1, 3M, 1C on bank2, boat on bank2).
+Valid? Yes (bank1: 2C, no missionaries; bank2: 1C ≤ 3M, boat: 2M, no cannibals).
+Step 8:
+State: (0, 2, 2, 3, 1).
+Move: Return 1 cannibal to bank1.
+New State: (0, 3, 1, 3, 0) (0M, 3C on bank1, 3M, 0C on bank2, boat on bank1).
+Valid? Yes (bank1: 3C, no missionaries; bank2: 0C ≤ 3M, boat: 1C, no missionaries).
+Step 9:
+State: (0, 3, 1, 3, 0).
+Move: Take 2 cannibals to bank2.
+New State: (0, 1, 2, 3, 2) (0M, 1C on bank1, 3M, 2C on bank2, boat on bank2).
+Valid? Yes (bank1: 1C, no missionaries; bank2: 2C ≤ 3M, boat: 2C, no missionaries).
+Step 10:
+State: (0, 1, 2, 3, 2).
+Move: Return 1 cannibal to bank1.
+New State: (0, 2, 1, 3, 1) (0M, 2C on bank1, 3M, 1C on bank2, boat on bank1).
+Valid? Yes (bank1: 2C, no missionaries; bank2: 1C ≤ 3M, boat: 1C, no missionaries).
+Step 11:
+State: (0, 2, 1, 3, 1).
+Move: Take 2 cannibals to bank2.
+New State: (0, 0, 2, 3, 3) (0M, 0C on bank1, 3M, 3C on bank2, boat on bank2).
+Valid? Yes (bank1: 0C, no missionaries; bank2: 3C ≤ 3M, boat: 2C, no

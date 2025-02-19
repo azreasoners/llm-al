@@ -1,0 +1,108 @@
+This is a classic river crossing problem with constraints on the number of missionaries and cannibals on both banks and in the boat. Let's solve this step by step, ensuring that the cannibals never outnumber the missionaries on either bank or in the boat, and adhering to the boat's capacity of 2.
+
+### Problem Setup:
+- **Objects**:
+  - Vessel: `boat` (capacity = 2, cannot cross empty).
+  - Locations: `bank1` (starting side), `bank2` (destination side).
+  - Groups: `missionaries` (4 initially), `cannibals` (4 initially).
+  - Integers: 0 to 10 (used to track counts).
+- **Initial State**:
+  - `bank1`: 4 missionaries, 4 cannibals, boat.
+  - `bank2`: 0 missionaries, 0 cannibals.
+- **Goal State**:
+  - `bank1`: 0 missionaries, 0 cannibals.
+  - `bank2`: 4 missionaries, 4 cannibals, boat.
+- **Constraints**:
+  1. Cannibals must not outnumber missionaries on either bank (or missionaries get eaten).
+  2. Cannibals must not outnumber missionaries in the boat (or missionaries get eaten).
+  3. The boat can carry at most 2 people (missionaries or cannibals).
+  4. The boat cannot cross the river empty.
+
+### Strategy:
+We need to find a sequence of boat trips that safely moves all missionaries and cannibals from `bank1` to `bank2`. We'll denote the state as `(M1, C1, B, M2, C2)`, where:
+- `M1`, `C1`: Number of missionaries and cannibals on `bank1`.
+- `B`: Location of the boat (`bank1` or `bank2`).
+- `M2`, `C2`: Number of missionaries and cannibals on `bank2`.
+
+We need to ensure:
+- On `bank1`: If `M1 > 0`, then `M1 ≥ C1`.
+- On `bank2`: If `M2 > 0`, then `M2 ≥ C2`.
+- In the boat: If there is at least one missionary, the number of missionaries must be greater than or equal to the number of cannibals.
+
+### Step-by-Step Solution:
+We will list the state transitions and the boat's passengers for each trip.
+
+1. **Initial State**: (4M, 4C, boat at bank1, 0M, 0C)
+   - Start with 4 missionaries and 4 cannibals on `bank1`, boat at `bank1`.
+
+2. **Trip 1**: Send 1 missionary and 1 cannibal to `bank2`.
+   - Boat carries: 1M, 1C → `bank2`.
+   - New state: (3M, 3C, boat at bank2, 1M, 1C).
+
+3. **Trip 2**: Return 1 missionary to `bank1`.
+   - Boat carries: 1M → `bank1`.
+   - New state: (4M, 3C, boat at bank1, 0M, 1C).
+
+4. **Trip 3**: Send 2 cannibals to `bank2`.
+   - Boat carries: 2C → `bank2`.
+   - New state: (4M, 1C, boat at bank2, 0M, 3C).
+
+5. **Trip 4**: Return 1 cannibal to `bank1`.
+   - Boat carries: 1C → `bank1`.
+   - New state: (4M, 2C, boat at bank1, 0M, 2C).
+
+6. **Trip 5**: Send 2 missionaries to `bank2`.
+   - Boat carries: 2M → `bank2`.
+   - New state: (2M, 2C, boat at bank2, 2M, 2C).
+
+7. **Trip 6**: Return 1 missionary and 1 cannibal to `bank1`.
+   - Boat carries: 1M, 1C → `bank1`.
+   - New state: (3M, 3C, boat at bank1, 1M, 1C).
+
+8. **Trip 7**: Send 2 missionaries to `bank2`.
+   - Boat carries: 2M → `bank2`.
+   - New state: (1M, 3C, boat at bank2, 3M, 1C).
+
+9. **Trip 8**: Return 1 missionary to `bank1`.
+   - Boat carries: 1M → `bank1`.
+   - New state: (2M, 3C, boat at bank1, 2M, 1C).
+
+10. **Trip 9**: Send 2 missionaries to `bank2`.
+    - Boat carries: 2M → `bank2`.
+    - New state: (0M, 3C, boat at bank2, 4M, 1C).
+
+11. **Trip 10**: Return 1 cannibal to `bank1`.
+    - Boat carries: 1C → `bank1`.
+    - New state: (0M, 4C, boat at bank1, 4M, 0C).
+
+12. **Trip 11**: Send 2 cannibals to `bank2`.
+    - Boat carries: 2C → `bank2`.
+    - New state: (0M, 2C, boat at bank2, 4M, 2C).
+
+13. **Trip 12**: Return 1 cannibal to `bank1`.
+    - Boat carries: 1C → `bank1`.
+    - New state: (0M, 3C, boat at bank1, 4M, 1C).
+
+14. **Trip 13**: Send 2 cannibals to `bank2`.
+    - Boat carries: 2C → `bank2`.
+    - New state: (0M, 1C, boat at bank2, 4M, 3C).
+
+15. **Trip 14**: Return 1 cannibal to `bank1`.
+    - Boat carries: 1C → `bank1`.
+    - New state: (0M, 2C, boat at bank1, 4M, 2C).
+
+16. **Trip 15**: Send 2 cannibals to `bank2`.
+    - Boat carries: 2C → `bank2`.
+    - New state: (0M, 0C, boat at bank2, 4M, 4C).
+
+### Final State:
+- `bank1`: 0 missionaries, 0 cannibals.
+- `bank2`: 4 missionaries, 4 cannibals, boat.
+- All missionaries and cannibals have safely crossed the river, and the boat is at `bank2`.
+
+### Verification:
+- At no point did the cannibals outnumber the missionaries on either bank (when missionaries were present).
+- At no point did the cannibals outnumber the missionaries in the boat.
+- The boat never crossed empty and carried at most 2 people per trip.
+
+This sequence of 15 trips solves the problem.

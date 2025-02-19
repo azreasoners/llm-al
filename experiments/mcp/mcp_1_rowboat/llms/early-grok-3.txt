@@ -1,0 +1,141 @@
+This is a classic river-crossing puzzle, and we need to solve it while adhering to the constraints provided. Let's break it down step by step.
+
+---
+
+### **Problem Analysis**
+- **Entities**:
+  - **Vessel**: `rowboat` (capacity = 2 people, cannot cross empty).
+  - **Locations**: `bank1` (starting side), `bank2` (destination side).
+  - **Groups**: `missionaries` (3 total), `cannibals` (3 total).
+  - **Integers**: Used to track the number of missionaries and cannibals at each location or in the rowboat (0 to 10, but relevant values here are 0 to 3 for each group).
+
+- **Constraints**:
+  1. The rowboat can carry at most 2 people (missionaries or cannibals) at a time.
+  2. The rowboat cannot cross the river empty (at least 1 person must be in it).
+  3. On either bank, the number of cannibals must not exceed the number of missionaries (unless no missionaries are present). Otherwise, the missionaries will be eaten.
+  4. In the rowboat, the number of cannibals must not exceed the number of missionaries (unless no missionaries are present). Otherwise, the missionaries will be eaten.
+  5. Initially, all 3 missionaries, 3 cannibals, and the rowboat are on `bank1`.
+  6. The goal is to get all 3 missionaries and 3 cannibals to `bank2` without violating the constraints.
+
+- **State Representation**:
+  - We can represent the state as `(M1, C1, B, M2, C2)` where:
+    - `M1`: Number of missionaries on `bank1`.
+    - `C1`: Number of cannibals on `bank1`.
+    - `B`: Location of the rowboat (`bank1` or `bank2`).
+    - `M2`: Number of missionaries on `bank2`.
+    - `C2`: Number of cannibals on `bank2`.
+  - Initial state: `(3, 3, bank1, 0, 0)`.
+  - Goal state: `(0, 0, bank2, 3, 3)`.
+
+- **Safety Check**:
+  - For each bank:
+    - If there are missionaries (`M > 0`), then `C ≤ M` (cannibals must not outnumber missionaries).
+    - If `M = 0`, any number of cannibals is safe.
+  - For the rowboat:
+    - If there are missionaries in the boat (`M > 0`), then `C ≤ M`.
+    - If `M = 0`, any number of cannibals is safe.
+
+---
+
+### **Solution Strategy**
+We need to find a sequence of moves (crossings) that transitions from the initial state to the goal state while satisfying all constraints. Each move involves:
+1. Deciding how many missionaries (`m`) and cannibals (`c`) to transport in the rowboat (where `m + c ≤ 2` and `m + c ≥ 1`).
+2. Checking that the rowboat configuration is safe (`c ≤ m` if `m > 0`).
+3. Checking that both banks remain safe after the move.
+
+We will solve this by listing the states and transitions step by step.
+
+---
+
+### **Step-by-Step Solution**
+We use the notation `(M1, C1, B, M2, C2)` for states and describe each move.
+
+1. **Initial State**: `(3, 3, bank1, 0, 0)`.
+   - All missionaries and cannibals are on `bank1`, and the rowboat is on `bank1`.
+
+2. **Move 1**: Take 1 missionary and 1 cannibal to `bank2`.
+   - Rowboat: 1 missionary, 1 cannibal (safe, `1 ≤ 1`).
+   - New state: `(2, 2, bank2, 1, 1)`.
+   - Check safety:
+     - `bank1`: 2 missionaries, 2 cannibals (safe, `2 ≤ 2`).
+     - `bank2`: 1 missionary, 1 cannibal (safe, `1 ≤ 1`).
+
+3. **Move 2**: Return 1 missionary to `bank1`.
+   - Rowboat: 1 missionary (safe, no cannibals).
+   - New state: `(3, 2, bank1, 0, 1)`.
+   - Check safety:
+     - `bank1`: 3 missionaries, 2 cannibals (safe, `2 ≤ 3`).
+     - `bank2`: 0 missionaries, 1 cannibal (safe, no missionaries).
+
+4. **Move 3**: Take 2 cannibals to `bank2`.
+   - Rowboat: 2 cannibals (safe, no missionaries).
+   - New state: `(3, 0, bank2, 0, 3)`.
+   - Check safety:
+     - `bank1`: 3 missionaries, 0 cannibals (safe, no cannibals).
+     - `bank2`: 0 missionaries, 3 cannibals (safe, no missionaries).
+
+5. **Move 4**: Return 1 cannibal to `bank1`.
+   - Rowboat: 1 cannibal (safe, no missionaries).
+   - New state: `(3, 1, bank1, 0, 2)`.
+   - Check safety:
+     - `bank1`: 3 missionaries, 1 cannibal (safe, `1 ≤ 3`).
+     - `bank2`: 0 missionaries, 2 cannibals (safe, no missionaries).
+
+6. **Move 5**: Take 2 missionaries to `bank2`.
+   - Rowboat: 2 missionaries (safe, no cannibals).
+   - New state: `(1, 1, bank2, 2, 2)`.
+   - Check safety:
+     - `bank1`: 1 missionary, 1 cannibal (safe, `1 ≤ 1`).
+     - `bank2`: 2 missionaries, 2 cannibals (safe, `2 ≤ 2`).
+
+7. **Move 6**: Return 1 missionary and 1 cannibal to `bank1`.
+   - Rowboat: 1 missionary, 1 cannibal (safe, `1 ≤ 1`).
+   - New state: `(2, 2, bank1, 1, 1)`.
+   - Check safety:
+     - `bank1`: 2 missionaries, 2 cannibals (safe, `2 ≤ 2`).
+     - `bank2`: 1 missionary, 1 cannibal (safe, `1 ≤ 1`).
+
+8. **Move 7**: Take 2 missionaries to `bank2`.
+   - Rowboat: 2 missionaries (safe, no cannibals).
+   - New state: `(0, 2, bank2, 3, 1)`.
+   - Check safety:
+     - `bank1`: 0 missionaries, 2 cannibals (safe, no missionaries).
+     - `bank2`: 3 missionaries, 1 cannibal (safe, `1 ≤ 3`).
+
+9. **Move 8**: Return 1 cannibal to `bank1`.
+   - Rowboat: 1 cannibal (safe, no missionaries).
+   - New state: `(0, 3, bank1, 3, 0)`.
+   - Check safety:
+     - `bank1`: 0 missionaries, 3 cannibals (safe, no missionaries).
+     - `bank2`: 3 missionaries, 0 cannibals (safe, no cannibals).
+
+10. **Move 9**: Take 2 cannibals to `bank2`.
+    - Rowboat: 2 cannibals (safe, no missionaries).
+    - New state: `(0, 1, bank2, 3, 2)`.
+    - Check safety:
+      - `bank1`: 0 missionaries, 1 cannibal (safe, no missionaries).
+      - `bank2`: 3 missionaries, 2 cannibals (safe, `2 ≤ 3`).
+
+11. **Move 10**: Return 1 cannibal to `bank1`.
+    - Rowboat: 1 cannibal (safe, no missionaries).
+    - New state: `(0, 2, bank1, 3, 1)`.
+    - Check safety:
+      - `bank1`: 0 missionaries, 2 cannibals (safe, no missionaries).
+      - `bank2`: 3 missionaries, 1 cannibal (safe, `1 ≤ 3`).
+
+12. **Move 11**: Take 2 cannibals to `bank2`.
+    - Rowboat: 2 cannibals (safe, no missionaries).
+    - New state: `(0, 0, bank2, 3, 3)`.
+    - Check safety:
+      - `bank1`: 0 missionaries, 0 cannibals (safe, empty).
+      - `bank2`: 3 missionaries, 3 cannibals (safe, `3 ≤ 3`).
+
+---
+
+### **Final Plan**
+The sequence of moves is as follows (each move lists the number of missionaries and cannibals taken in the rowboat and the direction):
+
+1. Take 1 missionary, 1 cannibal from `bank1` to `bank2`.
+2. Return 1 missionary from `bank2` to `bank1`.
+3. Take 2 cannibals from `bank1` to `bank2`.
+4. Return
