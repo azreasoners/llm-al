@@ -1,0 +1,1060 @@
+Okay, so I need to solve this missionaries and cannibals problem. Let me think through it step by step.
+
+First, the setup: there are three missionaries (M) and three cannibals (C) on bank1, and the boat is also there. The goal is to get everyone to bank2 without the cannibals ever outnumbering the missionaries on either bank or in the boat. The boat can carry at most two people, and it can't go empty.
+
+Hmm. The classic version of this problem usually has the constraint that cannibals can't outnumber missionaries on either bank, but here there's an added twist that even on the boat, the cannibals can't outnumber the missionaries. That's a new condition. So, when moving people, the boat's composition must also satisfy M >= C, or if there are no missionaries on the boat, then maybe it's okay? Wait, no. The problem states: "the cannibals may never outnumber the missionaries on the boat or the missionaries will be eaten." So, on the boat, the number of cannibals can't exceed the number of missionaries. So, if there's one missionary and one cannibal on the boat, that's okay. But two cannibals and one missionary would be bad. Wait, no. Wait, the boat's capacity is two. So, possible combinations are 1 or 2 people. So, possible valid boat loads are:
+
+1 missionary (M)
+1 cannibal (C)
+2 missionaries (MM)
+2 cannibals (CC) – but wait, CC would have two cannibals and zero missionaries. So that would mean cannibals outnumber missionaries on the boat. So CC is invalid. Similarly, a boat with one missionary and one cannibal (MC) is okay because they are equal. But two cannibals would be invalid. So the valid boat configurations are:
+1M
+1C
+2M
+1M + 1C
+So those are the four possible valid boat loads. That's important. So when moving people, we can't have two cannibals in the boat. So the boat can't carry two cannibals. That's a key point.
+
+Now, the problem is to find a sequence of moves where after each move, on both banks and on the boat, the cannibals don't outnumber the missionaries. Let's try to model this.
+
+Let me start by representing the state as (M1, C1, B, M2, C2), where M1 and C1 are the number of missionaries and cannibals on bank1, M2 and C2 on bank2, and B is the location of the boat (bank1 or bank2). The initial state is (3,3, bank1, 0,0). The goal is (0,0, bank2, 3,3).
+
+Each move involves moving 1 or 2 people from the current bank to the other, but the boat must have a valid composition (as per the rules above). Also, after moving, the counts on each bank must not have cannibals outnumbering missionaries.
+
+Let me try to think of possible moves from the initial state.
+
+Initial state: (3,3, bank1, 0,0). Boat is at bank1.
+
+Possible moves from here:
+
+We can send 1M, 1C, 2M, or 1M+1C. Wait, but the boat can carry up to two. So possible moves are:
+
+Send 1M: Then bank1 becomes (2,3, ...), boat has 1M. But after moving, bank1 would have 2M and 3C. So 3C > 2M → invalid. So this move is invalid because it leaves the bank1 in an invalid state.
+Send 1C: Then bank1 becomes (3,2, ...), boat has 1C. After moving, bank1 has 3M and 2C, which is okay. The boat is moving 1C to bank2. Then bank2 would have 0M and 1C. But since there are 0 missionaries there, cannibals can be any number (since 0 missionaries can't be outnumbered). So that's okay. So this is a possible move. Then the state becomes (3,2, bank2, 0,1). But then the boat is at bank2. Now, someone has to bring the boat back. So the next move would have to be from bank2 to bank1. But bank2 has 0M and 1C. So possible moves from bank2: send 1C back. Then the state would revert to (3,3, bank1, 0,0). That's not helpful. Alternatively, maybe the initial move of sending 1C is not useful because it just leads to a loop.
+Send 2M: Boat has 2M. Then bank1 becomes (1,3, ...), which would have 3C > 1M → invalid. So that's no good.
+Send 1M + 1C: Boat has 1M and 1C. Then bank1 becomes (2,2, ...), which is okay (2M and 2C). The boat moves to bank2. Then bank2 becomes (1,1). The boat is now at bank2. Now, we need to send someone back. The boat is at bank2, which has 1M and 1C. So possible return trips:
+From bank2, possible moves are:
+
+1M: leaving 0M and 1C on bank2. But 1C > 0M → invalid.
+1C: leaving 1M and 0C on bank2. That's okay. Then the boat returns 1C to bank1. Now, bank1 has 2M + 3C (since we took 1C to bank2 and then brought back 1C). Wait, no: original move was sending 1M+1C to bank2. Then bank1 was (2,2). Then after moving 1C back, bank1 becomes (2,3) and bank2 becomes (1,0). But bank1 now has 2M and 3C → 3C > 2M → invalid. So that's bad.
+Alternatively, from bank2, send 1M +1C back. But that would return to the original state. Not helpful.
+
+Alternatively, send 2M back? But there's only 1M on bank2. So that's not possible.
+
+Hmm. So this approach might not work. Let me try another initial move.
+
+Wait, maybe the first move should be sending two cannibals? But wait, the boat can't carry two cannibals because that would mean on the boat, C > M (since two cannibals and zero missionaries). So that's invalid. So sending two cannibals is not allowed. So the only valid initial moves are sending 1C, 2M (but that leaves bank1 invalid), 1M (leaves bank1 invalid), or 1M+1C. So the only valid initial move is sending 1M+1C. But as we saw, that leads to a problem when returning.
+
+Alternatively, maybe the first move is sending two missionaries. But as we saw, that leaves bank1 with 1M and 3C, which is invalid. So that's no good.
+
+Wait, perhaps I'm missing something. Let me check again.
+
+Wait, the problem says that on either side, the cannibals may never outnumber the missionaries. So when the boat is moving, the boat's composition must also satisfy that cannibals don't outnumber missionaries. So the boat can't have two cannibals. So possible moves are:
+
+From bank1 (3M,3C), possible boat loads are:
+
+1M: then bank1 becomes 2M,3C → invalid.
+1C: bank1 becomes 3M,2C → valid. Boat moves 1C to bank2. Now bank2 has 0M,1C. Then the boat is at bank2. Now, to return, someone has to go back. The only person on bank2 is 1C. So send 1C back. Then we're back to original state. Not helpful.
+2M: bank1 becomes 1M,3C → invalid.
+1M +1C: bank1 becomes 2M,2C → valid. Boat moves to bank2, which now has 1M,1C. Now, to return, possible moves from bank2:
+1M: leaves 0M,1C on bank2 → invalid.
+1C: leaves 1M,0C on bank2 → valid. Then boat returns 1C to bank1. Now, bank1 has 2M,3C (since we took 1C to bank2 and then brought back 1C). But 3C > 2M → invalid. So that's bad.
+Alternatively, send both 1M and 1C back. But that would just reverse the move.
+
+Hmm. So this seems like a dead end. Maybe the initial move isn't possible. Wait, but there must be a solution. Maybe I need to try a different approach.
+
+Let me look up the standard solution for missionaries and cannibals. Wait, but in the standard problem, the boat can carry two people, and the constraint is only on the banks, not the boat. So the solution there is:
+
+Send two cannibals over. Then one comes back.
+Send two cannibals again. Then one comes back.
+Send two missionaries over. Then a cannibal and a missionary come back.
+Send two missionaries over. Then one cannibal comes back.
+Send two cannibals over. Then one comes back.
+Send two cannibals over.
+But in our case, the boat can't have two cannibals. So that solution won't work here. So we need a different approach.
+
+Alternatively, maybe the first move is sending one missionary and one cannibal. Let's try that again.
+
+State after first move: bank1 (2M,2C), bank2 (1M,1C), boat at bank2.
+
+Now, someone has to bring the boat back. The possible people on bank2 are 1M and 1C. So possible return trips:
+
+1M: leaves 0M,1C on bank2 → invalid.
+1C: leaves 1M,0C on bank2 → valid. So boat returns 1C to bank1. Now, bank1 becomes 2M,3C → invalid. So that's no good.
+Or, send both 1M and 1C back. But that would just undo the first move.
+So that's not helpful. Hmm.
+
+Alternative idea: Maybe the first move is sending two missionaries. But that leaves bank1 with 1M and 3C, which is invalid. So that's not allowed.
+
+Wait, perhaps the first move is sending one missionary. But that leaves bank1 with 2M and 3C, which is invalid. So that's no good.
+
+So the only possible first move is sending one cannibal. But that leads to a loop. So maybe there's a different way.
+
+Wait, perhaps the boat can carry one missionary and one cannibal, but then after moving, the boat is on the other side. Then, to return, maybe send one missionary back. Wait, but let's see:
+
+First move: 1M +1C to bank2. Now bank1 has 2M,2C; bank2 has 1M,1C. Boat is at bank2.
+
+Now, send 1M back to bank1. So boat takes 1M from bank2 to bank1. Now, bank1 has 3M,2C; bank2 has 0M,1C. Boat is at bank1.
+
+Now, from bank1, possible moves:
+
+Send 2C. But the boat can't carry two cannibals. So that's invalid.
+
+Send 1C: then bank1 becomes 3M,1C. Bank2 becomes 0M,2C. But bank2 has 2C and 0M → that's allowed (since 0 missionaries can't be outnumbered). Then boat is at bank2. Now, someone has to bring the boat back. Bank2 has 2C. So send 1C back. Then bank1 is 3M,2C; bank2 is 0M,1C. But this is the same as after the first return trip. So not helpful.
+
+Alternatively, send 1M +1C again. From bank1 (3M,2C), send 1M+1C to bank2. Now bank1 becomes 2M,1C. Bank2 becomes 1M+1C +1M+1C = 2M,2C. Boat is at bank2. Now, check validity: bank1 has 2M and 1C → okay. Bank2 has 2M and 2C → okay. Boat has 1M+1C → okay.
+
+Now, someone needs to bring the boat back. From bank2 (2M,2C), possible moves:
+
+Send 1M: leaves 1M,2C → invalid.
+
+Send 1C: leaves 2M,1C → okay. So boat returns 1C to bank1. Now, bank1 has 2M,2C; bank2 has 2M,1C. Boat is at bank1.
+
+From bank1 (2M,2C), possible moves:
+
+Send 2M: leaves 0M,2C → invalid.
+
+Send 2C: invalid (can't send two cannibals).
+
+Send 1M+1C: leaves 1M,1C on bank1 → okay. Boat moves to bank2. Now bank2 has 2M+1C +1M+1C = 3M,2C. Wait, no. Wait, bank2 was at 2M,1C. Adding 1M+1C makes it 3M,2C. But the total missionaries are 3, so that's all. Then bank1 has 1M,1C. Boat is at bank2.
+
+Now, check validity: bank1 has 1M,1C → okay. Bank2 has 3M,2C → 2C ≤ 3M → okay. Boat has 1M+1C → okay.
+
+Now, someone needs to go back. From bank2 (3M,2C), possible moves:
+
+Send 1M: leaves 2M,2C → okay. Boat returns 1M to bank1. Now, bank1 has 2M,1C; bank2 has 2M,2C. Boat is at bank1.
+
+From bank1 (2M,1C), possible moves:
+
+Send 2M: leaves 0M,1C → invalid.
+
+Send 1M+1C: leaves 1M,0C → okay. Boat moves to bank2. Now bank2 has 2M+2C +1M+1C = 3M,3C. Wait, but we already have 3M and 2C on bank2. Adding 1M and 1C would make 4M and 3C, but we only have 3M total. Wait, no. Let me correct that.
+
+Wait, initial state after previous steps:
+
+After sending 1M+1C to bank2, bank2 has 3M,2C (since originally 2M,1C +1M+1C = 3M,2C). But there are only 3 missionaries total. So that's correct. Then, when sending 1M back, bank2 becomes 2M,2C. Then, sending 1M+1C from bank1 (which had 2M,1C) to bank2, which now has 2M+1C +1M+1C = 3M,2C. But missionaries total are 3, so that's okay. Then bank1 has 1M,0C. Wait, no. Wait, original bank1 after previous step was 2M,1C. Sending 1M+1C leaves 1M,0C. Then bank2 becomes 3M,2C. Then the boat is at bank2. Now, to return, someone has to go back. From bank2 (3M,2C), possible moves:
+
+Send 1M: leaves 2M,2C → okay. Boat returns 1M to bank1. Now bank1 has 2M,0C; bank2 has 2M,2C. Boat is at bank1.
+
+From bank1 (2M,0C), possible moves:
+
+Send 2M: leaves 0M,0C → but then boat is moving 2M to bank2. Then bank2 would have 4M,2C, which is impossible because there are only 3M. So that's not possible.
+
+Wait, I think I'm getting confused here. Let me try to track the steps more carefully.
+
+Let me outline the steps as per the thought process:
+
+Initial state: bank1 (3M,3C), bank2 (0,0), boat at bank1.
+Send 1M +1C to bank2. Now bank1 (2M,2C), bank2 (1M,1C), boat at bank2.
+Send 1M back to bank1. Now bank1 (3M,2C), bank2 (0M,1C), boat at bank1.
+Send 1C to bank2. Now bank1 (3M,1C), bank2 (0M,2C), boat at bank2.
+Send 1C back to bank1. Now bank1 (3M,2C), bank2 (0M,1C). This is the same as after step 3. Loop.
+Alternatively, after step 2, instead of sending 1M back, send 1C back.
+
+Wait, after step 2: bank1 (2M,2C), bank2 (1M,1C), boat at bank2.
+
+Send 1C back to bank1. Now bank1 (2M,3C) → invalid. So that's no good.
+
+Alternatively, after step 2, send both 1M and 1C back. That just reverts to initial state.
+
+Hmm. This isn't working. Let's try a different approach.
+
+Alternative idea: Maybe send two missionaries first, but that leaves bank1 invalid. Wait, but perhaps if we send two missionaries and then have a way to return without violating the constraints.
+
+Wait, let's try:
+
+Send 2M to bank2. Now bank1 (1M,3C) → invalid. So that's not allowed.
+No good.
+
+Alternative idea: Send one missionary and one cannibal, then send one cannibal back.
+
+Send 1M +1C to bank2. Bank1 (2M,2C), bank2 (1M,1C), boat at bank2.
+Send 1C back. Bank1 (2M,3C) → invalid. So no.
+Alternatively, send 1M back.
+
+Send 1M +1C to bank2. Bank1 (2M,2C), bank2 (1M,1C), boat at bank2.
+Send 1M back. Bank1 (3M,2C), bank2 (0M,1C), boat at bank1.
+Now send 2C to bank2. But boat can't carry 2C. So invalid.
+Alternatively, send 1C to bank2.
+
+Send 1C to bank2. Bank1 (3M,1C), bank2 (0M,2C), boat at bank2.
+Now send 1C back. Bank1 (3M,2C), bank2 (0M,1C). Loop.
+Not helpful.
+
+Hmm. Maybe the solution requires more steps. Let me think of another approach.
+
+What if we send two cannibals first, but wait, the boat can't carry two cannibals. So that's invalid.
+
+Alternatively, send one cannibal over, then one missionary over, but that might not help.
+
+Wait, let's try:
+
+Send 1C to bank2. Bank1 (3M,2C), bank2 (0M,1C), boat at bank2.
+Send 1C back. Bank1 (3M,3C), bank2 (0,0). Back to start.
+No good.
+
+Alternatively, send 1C over, then send 1M over.
+
+Send 1C to bank2. Bank1 (3M,2C), bank2 (0M,1C), boat at bank2.
+Send 1M to bank2. Boat has 1M. Bank1 (2M,2C), bank2 (1M,1C), boat at bank2.
+Now, check validity: bank1 has 2M,2C → okay. Bank2 has 1M,1C → okay. Boat has 1M → okay.
+
+Now, someone has to return. From bank2 (1M,1C), possible moves:
+
+Send 1M back: leaves 0M,1C → invalid.
+Send 1C back: leaves 1M,0C → okay. So boat returns 1C to bank1. Now, bank1 (2M,3C) → invalid.
+So that's no good.
+
+Alternatively, send both 1M and 1C back. But that would return to bank1 (3M,3C) and bank2 (0,0). Not helpful.
+
+Hmm. This is tricky. Let me think of the standard solution and see how to adapt it.
+
+In the standard problem, the solution involves moving two cannibals first, then one comes back, then two cannibals again, etc. But here, we can't move two cannibals because the boat can't have two cannibals. So we need to find another way.
+
+Wait, maybe the key is to move one missionary and one cannibal each time, but ensuring that the boat's composition is valid and the banks remain valid.
+
+Let me try:
+
+Send 1M +1C to bank2. Bank1 (2M,2C), bank2 (1M,1C), boat at bank2.
+Send 1M back. Bank1 (3M,2C), bank2 (0M,1C), boat at bank1.
+Send 1M +1C to bank2. Bank1 (2M,1C), bank2 (1M,2C), boat at bank2.
+Now, check validity: bank1 has 2M,1C → okay. Bank2 has 1M,2C → 2C > 1M → invalid. So that's no good.
+
+Alternatively, after step 2, send 1C back.
+
+Send 1C back. Bank1 (3M,3C), bank2 (0,0). No.
+Alternatively, after step 1, send 1C back.
+
+Send 1M +1C to bank2. Bank1 (2M,2C), bank2 (1M,1C), boat at bank2.
+Send 1C back. Bank1 (2M,3C) → invalid.
+No good.
+
+Hmm. Let's try a different sequence.
+
+Send 1M +1C to bank2. Bank1 (2M,2C), bank2 (1M,1C), boat at bank2.
+Send 1M back. Bank1 (3M,2C), bank2 (0M,1C), boat at bank1.
+Send 2M to bank2. Bank1 (1M,2C) → invalid.
+No.
+
+Alternatively, send 1C to bank2.
+
+Send 1C to bank2. Bank1 (3M,1C), bank2 (0M,2C), boat at bank2.
+Send 1C back. Bank1 (3M,2C), bank2 (0M,1C). Loop.
+Not helpful.
+
+Another idea: Maybe send two missionaries and one cannibal in some way, but how?
+
+Wait, the boat can only carry two people. So two missionaries would be allowed (as long as the boat's composition is valid, which it is: 2M). But moving two missionaries from bank1 would leave 1M and 3C, which is invalid. So that's not allowed.
+
+Alternatively, send one missionary and one cannibal, then send one missionary back.
+
+Send 1M +1C to bank2. Bank1 (2M,2C), bank2 (1M,1C), boat at bank2.
+Send 1M back. Bank1 (3M,2C), bank2 (0M,1C), boat at bank1.
+Send 1M +1C to bank2. Bank1 (2M,1C), bank2 (1M,2C), boat at bank2.
+But bank2 now has 1M and 2C → invalid.
+
+Hmm. Not working.
+
+Wait, perhaps after step 2, send 1C to bank2.
+
+Send 1C to bank2. Bank1 (3M,1C), bank2 (0M,2C), boat at bank2.
+Send 1C back. Bank1 (3M,2C), bank2 (0M,1C). Loop.
+No.
+
+Alternatively, after step 2, send 2C to bank2. But can't do that because boat can't carry two cannibals.
+
+This is really challenging. Let me think if there's a different approach.
+
+Maybe the solution requires moving one cannibal first, then a missionary, then a cannibal, etc., but I need to ensure that at each step, the boat's composition is valid and the banks are valid.
+
+Wait, let's try:
+
+Send 1C to bank2. Bank1 (3M,2C), bank2 (0M,1C), boat at bank2.
+Send 1M to bank2. Boat has 1M. Bank1 (2M,2C), bank2 (1M,1C), boat at bank2.
+Send 1C back. Bank1 (2M,3C) → invalid.
+No.
+
+Alternatively, send 1M back.
+
+Send 1M back. Bank1 (3M,2C), bank2 (0M,1C), boat at bank1.
+Send 1M +1C to bank2. Bank1 (2M,1C), bank2 (1M,2C) → bank2 invalid.
+No.
+
+Hmm. Maybe the solution requires more steps. Let me try to look for a pattern.
+
+In the standard problem, the solution involves moving two cannibals, then one back, then two cannibals, then one back, then two missionaries, etc. But here, we can't move two cannibals. So maybe we need to use combinations of one missionary and one cannibal.
+
+Let me try:
+
+Send 1M +1C to bank2. Bank1 (2M,2C), bank2 (1M,1C), boat at bank2.
+Send 1M back. Bank1 (3M,2C), bank2 (0M,1C), boat at bank1.
+Send 1M +1C to bank2. Bank1 (2M,1C), bank2 (1M,2C) → bank2 invalid.
+No.
+
+Alternatively, after step 2, send 1C to bank2.
+
+Send 1C to bank2. Bank1 (3M,1C), bank2 (0M,2C), boat at bank2.
+Send 1C back. Bank1 (3M,2C), bank2 (0M,1C). Loop.
+No.
+
+Another idea: Maybe send one missionary over, then two cannibals, but the boat can't carry two cannibals.
+
+Wait, let's try:
+
+Send 1M to bank2. Bank1 (2M,3C) → invalid. So no.
+No good.
+
+Hmm. I'm stuck. Maybe I need to look for a different strategy. Let's consider all possible valid moves and see if we can find a path.
+
+Let me list all possible valid moves from the initial state:
+
+From bank1 (3M,3C), boat at bank1.
+
+Possible boat loads: 1M, 1C, 2M, 1M+1C.
+
+But:
+
+1M: leaves 2M,3C → invalid.
+1C: leaves 3M,2C → valid. Boat moves 1C to bank2.
+2M: leaves 1M,3C → invalid.
+1M+1C: leaves 2M,2C → valid.
+So only two possible first moves: send 1C or send 1M+1C.
+
+We tried both and they lead to loops or invalid states. Let's explore the 1C first move.
+
+Send 1C to bank2. Bank1 (3M,2C), bank2 (0M,1C), boat at bank2.
+Now, from bank2, possible moves: send 1C back. That's the only option. So:
+
+Send 1C back. Bank1 (3M,3C), bank2 (0,0). Back to start.
+No progress.
+
+Now, the other first move: send 1M+1C.
+
+Send 1M+1C to bank2. Bank1 (2M,2C), bank2 (1M,1C), boat at bank2.
+From bank2, possible moves:
+
+Send 1M back: leaves 0M,1C → invalid.
+Send 1C back: leaves 1M,0C → valid. So:
+Send 1C back. Bank1 (2M,3C) → invalid.
+No good.
+
+Alternatively, send both back. But that's reverting.
+
+So this path also doesn't work.
+
+Wait, maybe after step 1, instead of sending someone back, we send another pair. But from bank2 (1M,1C), the boat is there. To send another pair, we need two people on bank2. But there's only 1M and 1C. So can't send two.
+
+Hmm. This seems impossible. But there must be a solution. Maybe I'm missing a move.
+
+Wait, let's think differently. Maybe after sending 1M+1C to bank2, then send 1M+1C again from bank1.
+
+Wait, after step 1: bank1 (2M,2C), bank2 (1M,1C), boat at bank2.
+
+From bank2, send 1M+1C back. But that would require the boat to carry 1M+1C, which is allowed. But that just reverts to the initial state.
+
+Alternatively, send 1M back. But that leaves 0M,1C on bank2 → invalid.
+
+Hmm.
+
+Wait, maybe the solution requires more than two trips. Let me try to think of a longer sequence.
+
+Send 1M+1C to bank2. Bank1 (2M,2C), bank2 (1M,1C), boat at bank2.
+Send 1M back. Bank1 (3M,2C), bank2 (0M,1C), boat at bank1.
+Send 1M+1C to bank2. Bank1 (2M,1C), bank2 (1M,2C) → bank2 invalid.
+No.
+
+Alternatively, step 3: send 1C to bank2. Bank1 (3M,1C), bank2 (0M,2C), boat at bank2.
+
+Send 1C back. Bank1 (3M,2C), bank2 (0M,1C). Loop.
+No.
+
+Another approach: Maybe send two missionaries and one cannibal in some way, but I can't see how.
+
+Wait, what if after step 1 (sending 1M+1C), we send 1C back, but that leads to invalid bank1.
+
+Alternatively, after step 1, send 1M back, then send 2C.
+
+But step 2: send 1M back. Bank1 (3M,2C), bank2 (0M,1C), boat at bank1.
+
+Step 3: send 2C. But boat can't carry two cannibals. Invalid.
+
+No.
+
+Hmm. I'm really stuck. Maybe I need to look for a different initial move. But according to the rules, the only valid initial moves are sending 1C or 1M+1C, both of which lead to problems.
+
+Wait, perhaps the key is to realize that when the boat is on bank2, even if there are no missionaries there, it's allowed to have cannibals as long as there are no missionaries. So maybe after moving some people to bank2, we can have more flexibility.
+
+Let me try:
+
+Send 1C to bank2. Bank1 (3M,2C), bank2 (0M,1C), boat at bank2.
+Send 1C back. Bank1 (3M,3C), bank2 (0,0). No progress.
+Alternatively, step 2: send 1M to bank2. But there's no M on bank2. So can't do that.
+
+Wait, bank2 has 0M and 1C. So from bank2, the only possible move is to send 1C back.
+
+So this path is stuck.
+
+Another idea: Maybe send 1M+1C to bank2, then send 1M+1C again from bank1.
+
+But after first move, bank1 has 2M,2C. Then sending another 1M+1C would leave 1M,1C on bank1. But boat is at bank2. So need to get the boat back.
+
+Wait, let's try:
+
+Send 1M+1C to bank2. Bank1 (2M,2C), bank2 (1M,1C), boat at bank2.
+Send 1M+1C back. Bank1 (3M,3C), bank2 (0,0). No progress.
+Alternatively, send 1C back.
+
+Send 1C back. Bank1 (2M,3C) → invalid.
+No.
+
+Hmm. I'm really not seeing the solution here. Maybe there's a different way to sequence the moves. Let me try to look for a solution step by step.
+
+Let me try:
+
+Send 1M +1C to bank2. Bank1 (2M,2C), bank2 (1M,1C), boat at bank2.
+Send 1M back. Bank1 (3M,2C), bank2 (0M,1C), boat at bank1.
+Send 1M +1C to bank2. Bank1 (2M,1C), bank2 (1M,2C) → bank2 invalid.
+No.
+
+Alternatively, step 3: send 1C to bank2. Bank1 (3M,1C), bank2 (0M,2C), boat at bank2.
+
+Send 1C back. Bank1 (3M,2C), bank2 (0M,1C). Loop.
+No.
+
+Another approach: Let's try to get two missionaries to bank2 first, but that leaves bank1 invalid. But maybe with some back-and-forth.
+
+Wait, let's try:
+
+Send 1M +1C to bank2. Bank1 (2M,2C), bank2 (1M,1C), boat at bank2.
+Send 1M back. Bank1 (3M,2C), bank2 (0M,1C), boat at bank1.
+Send 2M to bank2. Bank1 (1M,2C) → invalid.
+No.
+
+Alternatively, step 3: send 1M +1C to bank2. Bank1 (2M,1C), bank2 (1M,2C) → bank2 invalid.
+
+No.
+
+Hmm. I'm really stuck. Maybe the solution requires a different sequence where after some moves, the boat is on bank2 with enough people to make progress.
+
+Wait, let's try:
+
+Send 1M +1C to bank2. Bank1 (2M,2C), bank2 (1M,1C), boat at bank2.
+Send 1C back. Bank1 (2M,3C) → invalid.
+No.
+
+Alternatively, send 1M back. Bank1 (3M,2C), bank2 (0M,1C), boat at bank1.
+
+Send 1C to bank2. Bank1 (3M,1C), bank2 (0M,2C), boat at bank2.
+Send 1C back. Bank1 (3M,2C), bank2 (0M,1C). Loop.
+No.
+
+Another idea: Maybe send 1M +1C to bank2, then send 1M +1C again from bank1, but need to get the boat back.
+
+Wait, after first move:
+
+Send 1M +1C to bank2. Bank1 (2M,2C), bank2 (1M,1C), boat at bank2.
+Send 1M +1C back. Bank1 (3M,3C), bank2 (0,0). No progress.
+Alternatively, send 1C back.
+
+Send 1C back. Bank1 (2M,3C) → invalid.
+No.
+
+I'm really not making progress. Maybe I need to consider that the boat can also carry one person, not just two. Let's see.
+
+Wait, the boat can carry 1 or 2 people. So maybe after some moves, we can use single-person trips to adjust the numbers.
+
+Let me try:
+
+Send 1M +1C to bank2. Bank1 (2M,2C), bank2 (1M,1C), boat at bank2.
+Send 1C back. Bank1 (2M,3C) → invalid.
+No.
+
+Alternatively, send 1M back. Bank1 (3M,2C), bank2 (0M,1C), boat at bank1.
+
+Send 1C to bank2. Bank1 (3M,1C), bank2 (0M,2C), boat at bank2.
+Send 1C back. Bank1 (3M,2C), bank2 (0M,1C). Loop.
+No.
+
+Wait, maybe after step 3, send 1M to bank2.
+
+Send 1M to bank2. Bank1 (2M,1C), bank2 (1M,2C) → bank2 invalid.
+No.
+
+Hmm. I'm really stuck. Maybe the solution requires a different approach where we move two missionaries at some point, but only when it's safe.
+
+Wait, let's try:
+
+Send 1M +1C to bank2. Bank1 (2M,2C), bank2 (1M,1C), boat at bank2.
+Send 1M back. Bank1 (3M,2C), bank2 (0M,1C), boat at bank1.
+Send 2M to bank2. Bank1 (1M,2C) → invalid.
+No.
+
+Alternatively, step 3: send 1M +1C to bank2. Bank1 (2M,1C), bank2 (1M,2C) → bank2 invalid.
+
+No.
+
+Another idea: Maybe send 1M +1C to bank2, then send 1M +1C again, but need to get the boat back.
+
+Wait, after first move:
+
+Send 1M +1C to bank2. Bank1 (2M,2C), bank2 (1M,1C), boat at bank2.
+Send 1M +1C back. Bank1 (3M,3C), bank2 (0,0). No progress.
+Alternatively, send 1C back.
+
+Send 1C back. Bank1 (2M,3C) → invalid.
+No.
+
+I'm really not seeing the solution. Maybe I need to look for a different strategy. Let's think of all possible states and transitions.
+
+The possible states are combinations of M1, C1, B (location of boat), M2, C2. We need to find a path from (3,3,bank1,0,0) to (0,0,bank2,3,3) with valid moves.
+
+Let me try to represent this as a state space and perform BFS.
+
+Start: (3,3,1,0,0) where 1 represents bank1.
+
+Possible moves from start:
+
+Send 1C: (3,2,2,0,1) → check validity. Bank1: 3M,2C (okay), bank2: 0M,1C (okay). Boat has 1C (okay). Valid.
+Send 1M+1C: (2,2,2,1,1) → valid.
+Other moves are invalid.
+
+So first level:
+
+State1: (3,2,2,0,1) → boat at bank2.
+
+From State1, possible moves (boat at bank2):
+
+Send 1C back: (3,3,1,0,0) → back to start.
+No other moves since bank2 has 0M,1C. Only possible move is send 1C back.
+
+State2: (2,2,2,1,1) → boat at bank2.
+
+From State2, possible moves (boat at bank2):
+
+Possible boat loads from bank2 (1M,1C):
+
+Send 1M: leaves 0M,1C → invalid.
+Send 1C: leaves 1M,0C → valid. So send 1C back to bank1.
+New state: (2,3,1,1,0). Check validity: bank1 has 2M,3C → invalid.
+
+Send 1M+1C back: (3,3,1,0,0) → back to start.
+So no valid moves from State2 except reverting.
+
+So from the initial state, the only valid moves lead to either a loop or an invalid state.
+
+This suggests that there's no solution, but that can't be right. The problem states that a plan exists. So I must be missing something.
+
+Wait, maybe I made a mistake in the boat's constraints. The problem says the cannibals may never outnumber the missionaries on the boat. So the boat can have 1C if there are no missionaries, but if there are missionaries, then C ≤ M.
+
+Wait, in the boat, if there's 1C and 0M, is that allowed? The problem states "the cannibals may never outnumber the missionaries on the boat". If there are no missionaries on the boat, then cannibals can be any number, as long as they don't outnumber missionaries. But if there are zero missionaries, then cannibals can't outnumber them (since 0 missionaries can't be outnumbered). Wait, but the problem says "the cannibals may never outnumber the missionaries on the boat". So if there are zero missionaries on the boat, then cannibals can't be more than zero, which would mean no cannibals. But that contradicts. Wait, maybe the rule is that on the boat, the number of cannibals cannot exceed the number of missionaries. So if there are zero missionaries, then cannibals must be ≤ 0, which means zero. So the boat can't carry any cannibals unless there's at least one missionary. Therefore, the boat can only carry:
+
+1M
+2M
+1M +1C
+That's it. So the boat cannot carry 1C alone. Because that would be 1C and 0M, which violates the rule. Oh! That's a key point I missed earlier.
+
+So the boat can only carry:
+
+1M
+2M
+1M +1C
+So sending 1C alone is invalid. That changes everything!
+
+So the initial possible moves from the start state are only:
+
+1M
+2M
+1M +1C
+But sending 1M leaves bank1 with 2M,3C → invalid.
+
+Sending 2M leaves bank1 with 1M,3C → invalid.
+
+Sending 1M +1C leaves bank1 with 2M,2C → valid.
+
+So the only valid initial move is sending 1M +1C.
+
+So that's a crucial mistake I made earlier. I thought sending 1C was allowed, but according to the problem's rules, the boat cannot have cannibals outnumber missionaries, which includes having 1C and 0M. So sending 1C alone is invalid. Therefore, the only valid initial move is sending 1M +1C.
+
+That changes everything. Let's start over with this corrected understanding.
+
+Initial state: (3,3, bank1, 0,0). Boat at bank1.
+
+Possible moves:
+
+Send 1M +1C. Bank1 becomes (2,2), boat moves to bank2 with 1M+1C. Bank2 becomes (1,1). Valid.
+Other moves are invalid.
+
+So step 1: Send 1M +1C to bank2. Now state: bank1 (2M,2C), bank2 (1M,1C), boat at bank2.
+
+From bank2, possible moves (boat at bank2, which has 1M and 1C):
+
+Possible boat loads:
+
+1M: leaves 0M,1C on bank2 → invalid.
+1C: leaves 1M,0C on bank2 → valid. So send 1C back to bank1.
+New state: bank1 (2M,3C), bank2 (1M,0C), boat at bank1.
+
+But bank1 has 2M and 3C → invalid. So this move is invalid.
+
+1M +1C: send both back. Returns to initial state.
+So no valid moves from bank2 except invalid ones. Therefore, this path is stuck.
+
+Wait, but according to the corrected rules, the boat can only carry 1M, 2M, or 1M+1C. So from bank2 (1M,1C), possible boat loads are:
+
+1M: invalid because leaves 0M,1C.
+1C: invalid because boat can't carry 1C alone.
+1M +1C: valid, but that just returns to initial state.
+So this path is a dead end.
+
+Hmm. So the only valid initial move leads to a dead end. That can't be right. There must be a solution. Maybe I'm still missing something.
+
+Wait, perhaps after sending 1M +1C to bank2, we can send 2M back? But there's only 1M on bank2.
+
+No. Alternatively, send 1M back, but that leaves 0M,1C on bank2 → invalid.
+
+So this seems impossible. But the problem states that a plan exists. Therefore, I must have misunderstood the rules.
+
+Wait, let me re-read the problem statement.
+
+"the cannibals may never outnumber the missionaries on the boat or the missionaries will be eaten."
+
+So on the boat, C ≤ M. If there are no missionaries on the boat, then C must be ≤ 0, which means C=0. So the boat can only carry missionaries alone or missionaries with cannibals where C ≤ M.
+
+Therefore, the boat can carry:
+
+1M
+2M
+1M +1C
+That's it. So sending 1C alone is invalid. Sending 2C is invalid. Sending 1M+2C is invalid.
+
+So the initial valid moves are only 1M, 2M, or 1M+1C. But 1M and 2M leave bank1 invalid. So only 1M+1C is valid.
+
+But that leads to a dead end. So perhaps the problem has no solution under these constraints? But the problem says to find a plan, so there must be a solution.
+
+Wait, maybe the problem allows for the boat to have cannibals equal to missionaries, but not exceeding. So 1M+1C is allowed. 2M is allowed. 1M is allowed. But 2C is not allowed. So the initial move is 1M+1C.
+
+Then, from bank2, the only valid move is to send 1M+1C back, which returns to the start. So this is a loop.
+
+But the problem must have a solution. Maybe I'm missing a possible move.
+
+Wait, after sending 1M+1C to bank2, bank2 has 1M and 1C. Boat is there. Can we send 1M +1C again? But there's only 1M and 1C on bank2. So sending them both back.
+
+Alternatively, send 1M back. Leaves 0M,1C on bank2 → invalid.
+
+Send 1C back. Boat can't carry 1C alone.
+
+So no valid moves. This suggests that there's no solution, but that contradicts the problem statement.
+
+Wait, perhaps the problem allows for the boat to have only missionaries, and when there are no missionaries on a bank, cannibals can be there. Let me think differently.
+
+Wait, maybe after some moves, we can have a state where bank1 has 0 missionaries, and then we can send cannibals freely. But how to get there.
+
+Let me try:
+
+Send 1M +1C to bank2. Bank1 (2M,2C), bank2 (1M,1C), boat at bank2.
+Send 1M +1C back. Bank1 (3M,3C), bank2 (0,0). No progress.
+Alternatively, send 1M back. Bank1 (3M,2C), bank2 (0M,1C) → invalid.
+
+No.
+
+Alternatively, send 1C back. Boat can't carry 1C alone.
+
+No.
+
+Hmm. I'm really stuck. Maybe the problem requires a different interpretation. For example, maybe the boat's composition rule applies only when there are missionaries on the boat. So if there are no missionaries on the boat, cannibals can be any number. But the problem states "the cannibals may never outnumber the missionaries on the boat". So if there are no missionaries, cannibals can't outnumber them, which would mean cannibals can't be more than zero. So the boat can't have any cannibals unless there's at least one missionary. So the boat can only carry:
+
+1M
+2M
+1M +1C
+That's it.
+
+Therefore, the only valid initial move is 1M +1C. But that leads to a dead end.
+
+This suggests that under these constraints, there's no solution. But the problem says to find a plan, so I must be missing something.
+
+Wait, perhaps the problem allows the boat to have two cannibals if there are no missionaries on the boat. But according to the problem statement, "the cannibals may never outnumber the missionaries on the boat". If there are no missionaries, then cannibals can't outnumber them (since 0 missionaries can't be outnumbered). But the problem says "may never outnumber", which could be interpreted as "the number of cannibals must not be greater than the number of missionaries". If there are zero missionaries, then cannibals must be ≤ 0, which is impossible unless there are zero cannibals. So the boat can't have any cannibals unless there's at least one missionary. Therefore, the boat can only carry 1M, 2M, or 1M+1C.
+
+Given that, the initial move is 1M+1C, leading to a dead end. Therefore, the problem as stated has no solution. But that can't be right. The user must have intended a solution, so perhaps I made a mistake in interpreting the boat's constraints.
+
+Wait, let me check the original problem statement again:
+
+"the cannibals may never outnumber the missionaries on the boat or the missionaries will be eaten."
+
+So it's possible that "outnumber" means strictly greater than. So if there are zero missionaries, cannibals can be any number (since 0 is not greater than any number). Wait, no. If there are zero missionaries, then cannibals can't outnumber them because there's no missionaries to outnumber. So the boat can carry any number of cannibals if there are no missionaries. But the problem says "the cannibals may never outnumber the missionaries on the boat". So if there are zero missionaries, cannibals can be any number. Therefore, the boat can carry:
+
+Any number of cannibals alone (since 0 missionaries can't be outnumbered).
+1M
+2M
+1M +1C
+1M +2C (but 2C >1M → invalid)
+Wait, no. If there are missionaries on the boat, then cannibals can't outnumber them. So:
+
+If the boat has 1M, then can have 0 or 1C.
+If the boat has 2M, can have 0, 1, or 2C (but 2C would be equal to 2M, which is allowed? Wait, the problem says "outnumber", which means strictly greater. So 2C and 2M is allowed, since 2 is not greater than 2.
+Wait, the problem states "the cannibals may never outnumber the missionaries on the boat". So C ≤ M on the boat. So 2C and 2M is allowed (since 2 ≤ 2). But 3C and 2M would be invalid. But the boat can only carry up to 2 people. So possible valid boat loads are:
+
+0M, any C (but boat can't be empty, and can carry up to 2). So 1C or 2C.
+1M, 0C or 1C.
+2M, 0C, 1C, or 2C.
+Ah! This is the key. I misunderstood the boat's constraints. The boat can carry up to two people, and on the boat, the number of cannibals must not exceed the number of missionaries. So if there are missionaries on the boat, C ≤ M. If there are no missionaries, then C can be any number (since 0 missionaries can't be outnumbered). But the boat can't be empty. So possible valid boat loads are:
+
+1C
+2C
+1M
+1M +1C
+2M
+2M +1C (but 1C ≤ 2M → valid)
+2M +2C (2C ≤ 2M → valid)
+But wait, the boat can only carry up to two people. So:
+
+1C
+2C
+1M
+1M +1C
+2M
+2M +1C (but that's 3 people, which exceeds the boat's capacity). So invalid.
+Wait, no. The boat can carry at most two people. So possible valid boat loads are:
+
+1C
+2C
+1M
+1M +1C
+2M
+Because 2M +1C would be 3 people, which is over capacity.
+
+So the valid boat loads are:
+
+1C
+2C
+1M
+1M +1C
+2M
+But with the constraint that on the boat, C ≤ M if there are missionaries. So:
+
+For boat loads with missionaries:
+1M: C can be 0 or 1.
+2M: C can be 0, 1, or 2.
+But the boat can only carry up to two people. So:
+
+1M +1C is allowed (C=1 ≤ M=1).
+2M +2C is allowed (C=2 ≤ M=2).
+But 2M +2C is 4 people, which exceeds the boat's capacity. Wait, no. The boat can carry at most two people. So 2M is two people, 2C is two people, 1M+1C is two people. So the valid boat loads are:
+
+1C
+2C
+1M
+1M +1C
+2M
+But with the constraint that if there are missionaries on the boat, the number of cannibals must not exceed the number of missionaries.
+
+So for example:
+
+1M +1C is allowed (1C ≤ 1M).
+2M +2C is not allowed because the boat can only carry two people. So 2M +2C would require four people, which is impossible.
+Wait, no. If the boat has 2M, you can have 0C, 1C, or 2C, but the total number of people can't exceed two. So:
+
+2M +0C: valid.
+2M +1C: total 3 people → invalid.
+2M +2C: total 4 people → invalid.
+Therefore, the valid boat loads with missionaries are:
+
+1M +0C
+1M +1C
+2M +0C
+2M +1C (but this is 3 people → invalid)
+So the only valid boat loads with missionaries are:
+
+1M
+1M +1C
+2M
+And boat loads without missionaries:
+
+1C
+2C
+So the valid boat loads are:
+
+1C
+2C
+1M
+1M +1C
+2M
+Now, this changes everything. So the initial possible moves from bank1 (3M,3C) are:
+
+1C
+2C
+1M
+1M +1C
+2M
+But we need to check if moving these people leaves the bank1 in a valid state.
+
+Let's evaluate each:
+
+Send 1C: bank1 becomes (3M,2C) → valid. Boat moves 1C to bank2. Bank2 becomes (0M,1C). Valid.
+Send 2C: bank1 becomes (3M,1C) → valid. Boat moves 2C to bank2. Bank2 becomes (0M,2C). Valid.
+Send 1M: bank1 becomes (2M,3C) → invalid.
+Send 1M +1C: bank1 becomes (2M,2C) → valid. Boat moves to bank2. Bank2 becomes (1M,1C). Valid.
+Send 2M: bank1 becomes (1M,3C) → invalid.
+So the valid initial moves are:
+
+Send 1C
+Send 2C
+Send 1M +1C
+Now, let's explore each of these.
+
+First, sending 1C:
+
+Send 1C to bank2. Bank1 (3M,2C), bank2 (0M,1C), boat at bank2.
+From bank2, possible moves:
+
+Send 1C back. Bank1 (3M,3C), bank2 (0,0). Loop.
+Send 2C: but bank2 has only 1C. Can't do.
+Send 1M: no M on bank2.
+Send 1M +1C: no M on bank2.
+Send 2M: no M on bank2.
+So only possible move is send 1C back. Loop.
+
+Not helpful.
+
+Second, sending 2C:
+
+Send 2C to bank2. Bank1 (3M,1C), bank2 (0M,2C), boat at bank2.
+From bank2, possible moves:
+
+Send 1C back. Bank1 (3M,2C), bank2 (0M,1C). Then send 2C again. Loop.
+Send 2C back. Bank1 (3M,3C), bank2 (0,0). Loop.
+Send 1M: no M on bank2.
+Send 1M +1C: no M on bank2.
+Send 2M: no M on bank2.
+So no progress.
+
+Third, sending 1M +1C:
+
+Send 1M +1C to bank2. Bank1 (2M,2C), bank2 (1M,1C), boat at bank2.
+From bank2, possible moves:
+
+Send 1C back. Bank1 (2M,3C) → invalid.
+Send 2C back. Bank1 (2M,4C) → invalid.
+Send 1M back. Bank1 (3M,2C), bank2 (0M,1C), boat at bank1.
+Send 1M +1C back. Bank1 (3M,3C), bank2 (0,0). Loop.
+Send 2M back. No M on bank2 except 1M.
+So valid moves from bank2 are:
+
+Send 1M back. Bank1 (3M,2C), bank2 (0M,1C), boat at bank1.
+Now, from bank1 (3M,2C), possible moves:
+
+Send 1C: bank1 (3M,1C) → valid. Boat to bank2. Bank2 (0M,2C). Valid.
+Send 2C: bank1 (3M,0C) → valid. Boat to bank2. Bank2 (0M,2C). Valid.
+Send 1M: bank1 (2M,2C) → valid. Boat to bank2. Bank2 (1M,2C) → invalid.
+Send 1M +1C: bank1 (2M,1C) → valid. Boat to bank2. Bank2 (1M,3C) → invalid.
+Send 2M: bank1 (1M,2C) → invalid.
+So valid moves from bank1 (3M,2C):
+
+Send 1C to bank2. Bank1 (3M,1C), bank2 (0M,3C). Valid.
+Send 2C to bank2. Bank1 (3M,0C), bank2 (0M,4C). But there are only 3C total. So invalid.
+So only valid move is send 1C to bank2.
+
+So step 3: send 1C to bank2. Bank1 (3M,1C), bank2 (0M,3C). Boat at bank2.
+
+Now, from bank2 (0M,3C), possible moves:
+
+Send 1C back. Bank1 (3M,2C), bank2 (0M,2C). Valid.
+Send 2C back. Bank1 (3M,3C), bank2 (0M,1C). Valid.
+Send 1M: no M on bank2.
+Send 1M +1C: no M on bank2.
+Send 2M: no M on bank2.
+So possible moves:
+
+Send 1C back. Bank1 (3M,2C), bank2 (0M,2C). Boat at bank1.
+Send 2C back. Bank1 (3M,3C), bank2 (0M,1C). Boat at bank1.
+Let's explore both.
+
+First, send 1C back:
+
+Send 1C back. Bank1 (3M,2C), bank2 (0M,2C), boat at bank1.
+From bank1 (3M,2C), possible moves:
+
+Send 1C: bank1 (3M,1C) → valid. Boat to bank2. Bank2 (0M,3C). Valid.
+Send 2C: bank1 (3M,0C) → valid. Boat to bank2. Bank2 (0M,4C). Invalid.
+Send 1M: bank1 (2M,2C) → valid. Boat to bank2. Bank2 (1M,2C) → invalid.
+Send 1M +1C: bank1 (2M,1C) → valid. Boat to bank2. Bank2 (1M,3C) → invalid.
+Send 2M: bank1 (1M,2C) → invalid.
+So valid moves:
+
+Send 1C to bank2. Bank1 (3M,1C), bank2 (0M,3C). Boat at bank2.
+This is the same as after step 3. Loop.
+
+Second, send 2C back:
+
+Send 2C back. Bank1 (3M,3C), bank2 (0M,1C). Boat at bank1.
+This is the initial state. Loop.
+
+So this path also leads to a loop.
+
+Hmm. This is still not working. Let's try a different path.
+
+From the initial state, send 2C to bank2.
+
+Send 2C to bank2. Bank1 (3M,1C), bank2 (0M,2C), boat at bank2.
+From bank2, possible moves:
+
+Send 1C back. Bank1 (3M,2C), bank2 (0M,1C). Boat at bank1.
+Send 2C back. Bank1 (3M,3C), bank2 (0,0). Loop.
+Other moves invalid.
+So send 1C back:
+
+Send 1C back. Bank1 (3M,2C), bank2 (0M,1C), boat at bank1.
+From bank1, possible moves:
+
+Send 1C: bank1 (3M,1C) → valid. Boat to bank2. Bank2 (0M,2C). Valid.
+Send 2C: bank1 (3M,0C) → valid. Boat to bank2. Bank2 (0M,3C). Valid.
+Send 1M: bank1 (2M,2C) → valid. Boat to bank2. Bank2 (1M,2C) → invalid.
+Send 1M +1C: bank1 (2M,1C) → valid. Boat to bank2. Bank2 (1M,3C) → invalid.
+Send 2M: bank1 (1M,2C) → invalid.
+So valid moves:
+
+Send 1C to bank2. Bank1 (3M,1C), bank2 (0M,3C). Boat at bank2.
+Send 2C to bank2. Bank1 (3M,0C), bank2 (0M,3C). Boat at bank2.
+Let's try sending 2C:
+
+Send 2C to bank2. Bank1 (3M,0C), bank2 (0M,3C). Boat at bank2.
+From bank2 (0M,3C), possible moves:
+
+Send 1C back. Bank1 (3M,1C), bank2 (0M,2C). Boat at bank1.
+Send 2C back. Bank1 (3M,2C), bank2 (0M,1C). Boat at bank1.
+Other moves invalid.
+So send 1C back:
+
+Send 1C back. Bank1 (3M,1C), bank2 (0M,2C). Boat at bank1.
+From bank1 (3M,1C), possible moves:
+
+Send 1C: bank1 (3M,0C) → valid. Boat to bank2. Bank2 (0M,3C). Valid.
+Send 2C: invalid.
+Send 1M: bank1 (2M,1C) → valid. Boat to bank2. Bank2 (1M,3C) → invalid.
+Send 1M +1C: bank1 (2M,0C) → valid. Boat to bank2. Bank2 (1M,4C) → invalid.
+Send 2M: bank1 (1M,1C) → valid. Boat to bank2. Bank2 (2M,3C) → invalid.
+So valid move:
+
+Send 1C to bank2. Bank1 (3M,0C), bank2 (0M,4C). Invalid.
+No. So this path is stuck.
+
+Hmm. This is really challenging. Let's try another approach. Maybe send 1M +1C first, then send 1M back, then send 2C.
+
+Send 1M +1C to bank2. Bank1 (2M,2C), bank2 (1M,1C), boat at bank2.
+Send 1M back. Bank1 (3M,2C), bank2 (0M,1C), boat at bank1.
+Send 2C to bank2. Bank1 (3M,0C), bank2 (0M,3C). Boat at bank2.
+Now, from bank2 (0M,3C), possible moves:
+
+Send 1C back. Bank1 (3M,1C), bank2 (0M,2C). Boat at bank1.
+Send 2C back. Bank1 (3M,2C), bank2 (0M,1C). Boat at bank1.
+Other moves invalid.
+Send 1C back:
+
+Send 1C back. Bank1 (3M,1C), bank2 (0M,2C). Boat at bank1.
+From bank1 (3M,1C), possible moves:
+
+Send 1C: bank1 (3M,0C) → valid. Boat to bank2. Bank2 (0M,3C). Valid.
+Send 2C: invalid.
+Send 1M: bank1 (2M,1C) → valid. Boat to bank2. Bank2 (1M,3C) → invalid.
+Send 1M +1C: bank1 (2M,0C) → valid. Boat to bank2. Bank2 (1M,4C) → invalid.
+Send 2M: bank1 (1M,1C) → valid. Boat to bank2. Bank2 (2M,3C) → invalid.
+So send 1C to bank2:
+
+Send 1C to bank2. Bank1 (3M,0C), bank2 (0M,4C). Invalid.
+No good.
+
+Alternatively, send 2C back from step 3:
+
+Send 2C back. Bank1 (3M,2C), bank2 (0M,1C). Boat at bank1.
+From bank1 (3M,2C), possible moves:
+
+Send 1C: bank1 (3M,1C) → valid. Boat to bank2. Bank2 (0M,2C). Valid.
+Send 2C: bank1 (3M,0C) → valid. Boat to bank2. Bank2 (0M,3C). Valid.
+Send 1M: bank1 (2M,2C) → valid. Boat to bank2. Bank2 (1M,2C) → invalid.
+Send 1M +1C: bank1 (2M,1C) → valid. Boat to bank2. Bank2 (1M,3C) → invalid.
+Send 2M: bank1 (1M,2C) → invalid.
+So send 1C to bank2:
+
+Send 1C to bank2. Bank1 (3M,1C), bank2 (0M,3C). Boat at bank2.
+From bank2 (0M,3C), possible moves:
+
+Send 1C back. Bank1 (3M,2C), bank2 (0M,2C). Boat at bank1.
+Send 2C back. Bank1 (3M,3C), bank2 (0M,1C). Boat at bank1.
+This is the same as step 3. Loop.
+
+Hmm. This is really frustrating. I must be missing something. Let's try to think of the solution in terms of the standard problem but adapted to the new boat constraints.
+
+In the standard problem, the solution involves moving two cannibals, then one back, then two cannibals, etc. But here, we can't move two cannibals. So perhaps we need to use different combinations.
+
+Wait, let's try:
+
+Send 2C to bank2. Bank1 (3M,1C), bank2 (0M,2C), boat at bank2.
+Send 1C back. Bank1 (3M,2C), bank2 (0M,1C), boat at bank1.
+Send 2M to bank2. Bank1 (1M,2C) → invalid.
+No.
+
+Alternatively, step 3: send 1M +1C to bank2. Bank1 (2M,1C), bank2 (1M,2C) → bank2 invalid.
+
+No.
+
+Another idea: Send 1M +1C to bank2, then send 1C back, then send 2M.
+
+Send 1M +1C to bank2. Bank1 (2M,2C), bank2 (1M,1C), boat at bank2.
+Send 1C back. Bank1 (2M,3C) → invalid.
+No.
+
+Hmm. I'm really stuck. Let me try to look for a solution online for the missionaries and cannibals problem with the added constraint that cannibals cannot outnumber missionaries on the boat.
+
+After a quick search, I find that the standard solution involves moving two cannibals first, but with the added constraint, that's not possible. However, there might be a solution that involves moving one missionary and one cannibal multiple times.
+
+Wait, here's a possible sequence:
+
+Send 1M +1C to bank2. Bank1 (2M,2C), bank2 (1M,1C), boat at bank2.
+Send 1M back. Bank1 (3M,2C), bank2 (0M,1C), boat at bank1.
+Send 2C to bank2. Bank1 (3M,0C), bank2 (0M,3C), boat at bank2.
+Send 1C back. Bank1 (3M,1C), bank2 (0M,2C), boat at bank1.
+Send 2M to bank2. Bank1 (1M,1C), bank2 (2M,2C), boat at bank2.
+Send 1M +1C back. Bank1 (2M,2C), bank2 (1M,1C), boat at bank1.
+Send 2M to bank2. Bank1 (0M,2C), bank2 (3M,1C), boat at bank2.
+Send 1C back. Bank1 (0M,3C), bank2 (3M,0C), boat at bank1.
+Send 2C to bank2. Bank1 (0M,1C), bank2 (3M,2C), boat at bank2.
+Send 1C back. Bank1 (0M,2C), bank2 (3M,1C), boat at bank1.
+Send 2C to bank2. Bank1 (0M,0C), bank2 (3M,3C). Done.
+Let me check each step for validity.
+
+Send 1M +1C: valid. Bank1 (2M,2C), bank2 (1M,1C). Boat has 1M+1C.
+Send 1M back: valid. Bank1 (3M,2C), bank2 (0M,1C). Boat has 1M.
+Send 2C: valid. Bank1 (3M,0C), bank2 (0M,3C). Boat has 2C.
+Send 1C back: valid. Bank1 (3M,1C), bank2 (0M,2C). Boat has 1C.
+Send 2M: valid. Bank1 (1M,1C), bank2 (2M,2C). Boat has 2M.
+Send 1M +1C back: valid. Bank1 (2M,2C), bank2 (1M,1C). Boat has 1M+1C.
+Send 2M: valid. Bank1 (0M,2C), bank2 (3M,1C). Boat has 2M.
+Send 1C back: valid. Bank1 (0M,3C), bank2 (3M,0C). Boat has 1C.
+Send 2C: valid. Bank1 (0M,1C), bank2 (3M,2C). Boat has 2C.
+Send 1C back: valid. Bank1 (0M,2C), bank2 (3M,1C). Boat has 1C.
+Send 2C: valid. Bank1 (0M,0C), bank2 (3M,3C). Boat has 2C.
+All steps are valid, and the final state is achieved. So this is the solution.
+
+To solve the problem of transporting three missionaries and three cannibals across the river without violating the constraints, follow this step-by-step plan:
+
+Send 1 missionary and 1 cannibal to bank2.
+State: Bank1 (2M, 2C), Bank2 (1M, 1C), Boat at bank2.
+Send 1 missionary back to bank1.
+State: Bank1 (3M, 2C), Bank2 (0M, 1C), Boat at bank1.
+Send 2 cannibals to bank2.
+State: Bank1 (3M, 0C), Bank2 (0M, 3C), Boat at bank2.
+Send 1 cannibal back to bank1.
+State: Bank1 (3M, 1C), Bank2 (0M, 2C), Boat at bank1.
+Send 2 missionaries to bank2.
+State: Bank1 (1M, 1C), Bank2 (2M, 2C), Boat at bank2.
+Send 1 missionary and 1 cannibal back to bank1.
+State: Bank1 (2M, 2C), Bank2 (1M, 1C), Boat at bank1.
+Send 2 missionaries to bank2.
+State: Bank1 (0M, 2C), Bank2 (3M, 1C), Boat at bank2.
+Send 1 cannibal back to bank1.
+State: Bank1 (0M, 3C), Bank2 (3M, 0C), Boat at bank1.
+Send 2 cannibals to bank2.
+State: Bank1 (0M, 1C), Bank2 (3M, 2C), Boat at bank2.
+Send 1 cannibal back to bank1.
+State: Bank1 (0M, 2C), Bank2 (3M, 1C), Boat at bank1.
+Send 2 cannibals to bank2.
+State: Bank1 (0M, 0C), Bank2 (3M, 3C), Boat at bank2.
+Final State: All missionaries and cannibals are safely on bank2.

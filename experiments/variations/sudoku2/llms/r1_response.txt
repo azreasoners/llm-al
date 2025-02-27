@@ -1,0 +1,297 @@
+Okay, let's try to solve this Sudoku puzzle. I'm a bit new to Sudoku, but I'll take it step by step. First, I need to set up the given numbers correctly. The problem lists several pre-filled cells, so I'll start by jotting those down on a 9x9 grid. Let me visualize the grid rows 0 to 8 and columns 0 to 8.
+
+Starting with row 0:
+
+- (0,2) is 4
+
+- (0,3) is 3
+
+- (0,6) is 2
+
+- (0,8) is 9
+
+Row 1:
+
+- (1,2) is 5
+
+- (1,5) is 9
+
+- (1,8) is 1
+
+Row 2:
+
+- (2,1) is 7
+
+- (2,4) is 6
+
+- (2,7) is 4
+
+- (2,8) is 3
+
+Row 3:
+
+- (3,2) is 6
+
+- (3,5) is 2
+
+- (3,7) is 8
+
+- (3,8) is 7
+
+Row 4:
+
+- (4,0) is 1
+
+- (4,1) is 9
+
+- (4,5) is 7
+
+- (4,6) is 4
+
+Row 5:
+
+- (5,1) is 5
+
+- (5,4) is 8
+
+- (5,5) is 3
+
+Row 6:
+
+- (6,0) is 6
+
+- (6,6) is 1
+
+- (6,8) is 5
+
+Row 7:
+
+- (7,2) is 3
+
+- (7,3) is 5
+
+- (7,5) is 8
+
+- (7,6) is 6
+
+- (7,7) is 9
+
+Row 8:
+
+- (8,1) is 4
+
+- (8,2) is 2
+
+- (8,3) is 9
+
+- (8,4) is 1
+
+- (8,6) is 3
+
+Alright, let me sketch this out. Maybe I'll represent empty cells as zeros for now to get a clearer picture.
+
+Row 0: [0, 0, 4, 3, 0, 0, 2, 0, 9]
+
+Row 1: [0, 0, 5, 0, 0, 9, 0, 0, 1]
+
+Row 2: [0, 7, 0, 0, 6, 0, 0, 4, 3]
+
+Row 3: [0, 0, 6, 0, 0, 2, 0, 8, 7]
+
+Row 4: [1, 9, 0, 0, 0, 7, 4, 0, 0]
+
+Row 5: [0, 5, 0, 0, 8, 3, 0, 0, 0]
+
+Row 6: [6, 0, 0, 0, 0, 0, 1, 0, 5]
+
+Row 7: [0, 0, 3, 5, 0, 8, 6, 9, 0]
+
+Row 8: [0, 4, 2, 9, 1, 0, 3, 0, 0]
+
+Now, let's start filling in the blanks. Let's look for cells where only one number is possible based on the existing numbers in the row, column, and 3x3 box.
+
+Starting with Row 0: [0, 0, 4, 3, 0, 0, 2, 0, 9]
+
+Columns 0 and 1 are empty. Let's check column 0. Column 0 has 1 (from row 4), 6 (row 6). So possible numbers for (0,0): 2,3,5,7,8,9. But also check the 3x3 box. Row 0-2, columns 0-2. In that box, existing numbers are 4 (0,2), 5 (1,2), 7 (2,1). So missing numbers are 1,2,3,6,8,9. But (0,0) can't be 1,3,6. Wait, 1 is already in row 4, column 0, but in the same box (rows 0-2, columns 0-2), is there a 1? No. Wait, the box for rows 0-2 and columns 0-2. Let me check. In rows 0-2, columns 0-2: (0,2)=4, (1,2)=5, (2,1)=7. So numbers present: 4,5,7. So possible numbers for (0,0) are 1,2,3,6,8,9. But row 0 already has 4,3,2,9. So in row 0, possible numbers for (0,0): 1,5,6,7,8. Wait, but row 0 has 4,3,2,9, so missing are 1,5,6,7,8. But column 0 has 1,6. So (0,0) can't be 1 or 6. So possible numbers: 5,7,8. But the box (0-2,0-2) allows 1,2,3,6,8,9. Wait, conflict here. Let me double-check.
+
+Wait, in row 0, (0,0) can't have numbers already in row 0: 4,3,2,9. So possible: 1,5,6,7,8. Column 0 has 1 (row4), 6 (row6), so (0,0) can't be 1 or 6. So possible: 5,7,8. Now the box (0-2,0-2) includes (0,0), (0,1), (0,2), (1,0), etc. Existing numbers in the box: (0,2)=4, (1,2)=5, (2,1)=7. So in the box, missing numbers: 1,2,3,6,8,9. But (0,0) can only be 5,7,8 from row and column. But in the box, possible numbers are 1,2,3,6,8,9. So the only overlapping number is 8. So (0,0) must be 8? Because 8 is in both possible sets. Let me verify: If (0,0)=8, then check row 0, column 0, and box. Row 0 doesn't have 8 yet. Column 0 has 1,6,8 would be new. Box doesn't have 8 yet. So yes, (0,0)=8. Then, row 0 becomes [8, 0,4,3,0,0,2,0,9].
+
+Now, (0,1): possible numbers. Row 0 has 8,4,3,2,9. Missing:1,5,6,7. Column 1: existing numbers are 7 (row2), 9 (row4),5 (row5),4 (row8). So column 1 has 4,5,7,9. So possible for (0,1):1,2,3,6,8. But row 0 missing are 1,5,6,7. Wait, row 0 missing are 1,5,6,7. Column 1 missing are 1,2,3,6,8. The intersection is 1,6. So possible 1 or 6. Now check the box (0-2,0-2). In that box, we now have 8 (0,0),4,5,7. So missing:1,2,3,6,9. So possible for (0,1) are 1,2,3,6,9. But row 0 missing 1,5,6,7. So intersection is 1,6. But 9 is in row0 already (at (0,8)). Wait, row0 has 9, so (0,1) can't be 9. So yes, 1 or 6. But in the box, possible 1,2,3,6,9. So 1 or 6. Let's see if either is possible. Let's check if 1 is in any conflicting cells. Column1: no 1. Row0: no 1. Box: no 1. Similarly for 6. Column1 has no 6. Row0: no 6. Box: no 6. So we can't determine yet. Maybe move to another cell.
+
+Looking at row 0, (0,4) is empty. Let's check. Row0: 8,4,3,2,9. So missing 1,5,6,7. Column4: existing numbers are 6 (row2),8 (row5),1 (row8). So possible numbers: 2,3,4,5,7,9. But row0 missing 1,5,6,7. Intersection:5,7. Then check the box. (0,4) is in the top-middle box (rows0-2, columns3-5). In that box, existing numbers are (0,3)=3, (1,5)=9, (2,4)=6. So missing:1,2,4,5,7,8. So possible for (0,4):1,2,4,5,7,8. But row0 allows 1,5,6,7. Column4 allows 5,7. So intersection:5,7. So (0,4) could be 5 or7. Hmm, not sure. Let's try another cell.
+
+Looking at row 1: [0,0,5,0,0,9,0,0,1]. Let's check column0 for row1. Column0 has 8 (row0),1 (row4),6 (row6). So possible numbers:2,3,4,5,7,9. But row1 has 5,9,1. So missing in row1: 2,3,4,6,7,8. Intersection with column0 possible:2,3,4,7,9. But (1,0) can't be 9 (since row1 has 9 at (1,5)). Wait, row1 has 9 at (1,5) and 1 at (1,8). So row1 missing:2,3,4,6,7,8. Column0 missing:2,3,4,5,7,9 (since column0 has 8,1,6). Wait, column0 already has 8 (row0),1 (row4),6 (row6). So possible for (1,0) is 2,3,4,5,7,9. But row1 allows 2,3,4,6,7,8. So intersection:2,3,4,7. Because 5 and9 are excluded by row1. So (1,0) could be 2,3,4,7. Let's check the box. (1,0) is in the top-left box (rows0-2, columns0-2). Existing numbers in that box:8 (0,0),4 (0,2),5 (1,2),7 (2,1). So missing:1,2,3,6,9. So possible numbers:1,2,3,6,9. But from previous, possible 2,3,4,7. Intersection:2,3. So (1,0) could be 2 or3. Let's see if we can find more info elsewhere.
+
+Looking at row1, column3 (1,3). Row1 has 5,9,1. Missing:2,3,4,6,7,8. Column3: existing numbers are 3 (0,3), 9 (8,3). So possible numbers:1,2,4,5,6,7,8. But row1 missing:2,3,4,6,7,8. Intersection:2,4,6,7,8. Check box (rows0-2, columns3-5). Existing numbers:3 (0,3), 9 (1,5),6 (2,4). Missing:1,2,4,5,7,8. So possible for (1,3):1,2,4,5,7,8. Intersection with previous:2,4,5,7,8. But row1 allows 2,3,4,6,7,8. So (1,3) possible:2,4,5,7,8. Not helpful yet. Maybe another cell.
+
+Looking at row2: [0,7,0,0,6,0,0,4,3]. Let's check (2,0). Column0 has 8, possible 2,3,4,5,7,9. Row2 missing:1,2,3,5,8,9 (since it has 7,6,4,3). Wait, row2 has 7,6,4,3. Wait, row2's current entries: (2,1)=7, (2,4)=6, (2,7)=4, (2,8)=3. So missing numbers:1,2,5,8,9. Column0: existing are 8 (row0),1 (row4),6 (row6). So possible for (2,0):2,3,4,5,7,9. But row2 needs 1,2,5,8,9. Intersection:2,5,9. Check box (rows0-2, columns0-2). Existing:8,4,5,7. Missing:1,2,3,6,9. So possible for (2,0):2,9. So (2,0) could be 2 or9. Let's see if either is possible. If 2, check column0: no 2. Row2: no 2 yet. Box: no 2. If 9, check column0: no 9. Row2: no 9 yet. Box: no 9. So both possible. Not helpful.
+
+Let's check another cell. How about row3: [0,0,6,0,0,2,0,8,7]. Let's look at (3,0). Column0:8,1,6, and others? Let's list column0:
+
+Row0:8
+
+Row1: ?
+
+Row2: ?
+
+Row3: ?
+
+Row4:1
+
+Row5:0 (empty)
+
+Row6:6
+
+Row7:0
+
+Row8:0
+
+So column0 has 8,1,6. So possible for (3,0):2,3,4,5,7,9. Row3 missing:1,2,3,4,5,9 (since row3 has 6,2,8,7). So intersection:2,3,4,5,9. Check box (rows3-5, columns0-2). In this box, existing numbers: row3 has 6 at (3,2), row4 has 1 at (4,0),9 at (4,1), row5 has 5 at (5,1). So existing numbers:1,5,6,9. Missing:2,3,4,7,8. So possible for (3,0):2,3,4,7,8. But from row and column, possible are 2,3,4,5,9. Intersection:2,3,4. So (3,0) could be 2,3,4. Let's see if we can find more clues.
+
+Looking at row3, (3,3) is empty. Row3 missing:1,2,3,4,5,9. Column3 has 3 (0,3),5 (7,3),9 (8,3). So column3 missing:1,2,4,6,7,8. Intersection with row3:1,2,4. Check box (rows3-5, columns3-5). In this box, row3: nothing yet except (3,5)=2, row4: (4,5)=7, row5: (5,4)=8, (5,5)=3. So existing numbers:2,7,8,3. Missing:1,4,5,6,9. So possible for (3,3):1,4,5,6,9. But from earlier, possible 1,2,4. Wait, conflict. Maybe I made a mistake. Let's recheck.
+
+Row3: [0,0,6,0,0,2,0,8,7]. So missing in row3:1,2,3,4,5,9. But wait, (3,5)=2, so row3 already has 2. So missing in row3:1,3,4,5,9. So for (3,3), possible numbers:1,3,4,5,9. Column3: existing 3,5,9. So column3 missing:1,2,4,6,7,8. Intersection:1,4. So (3,3) can only be 1 or4. Check the box (rows3-5, columns3-5). Existing in that box: row3 has (3,5)=2, row4 has (4,5)=7, row5 has (5,4)=8, (5,5)=3. So missing:1,4,5,6,9. So (3,3) can be 1,4,5,6,9. But from row and column, it's 1 or4. So possible 1 or4. Let's see if either is possible. If (3,3)=1, does that conflict with anything? Check row3, column3, box. If 1, then row3 has 1, column3 has 1. Wait, column3 currently has 3,5,9. So 1 is okay. Box: the 3-5 rows, 3-5 columns. If (3,3)=1, then no conflict. Similarly for 4. If (3,3)=4, check column3: no 4. Box: no 4. So both possible. Not helpful yet.
+
+Moving to row4: [1,9,0,0,0,7,4,0,0]. Missing numbers:2,3,5,6,8. Let's check (4,2). Column2: existing numbers 4 (0,2),5 (1,2),6 (3,2),3 (7,2),2 (8,2). So column2 has 2,3,4,5,6. Missing:1,7,8,9. But row4 missing:2,3,5,6,8. Intersection: none? Wait, that can't be. Wait, row4 has 1,9,7,4. Wait, no: row4 is [1,9,0,0,0,7,4,0,0]. So missing:2,3,5,6,8. Column2: existing numbers as above (4,5,6,3,2). So column2 missing 1,7,8,9. So possible for (4,2): must be in row4's missing (2,3,5,6,8) but column2 allows none of these? Wait, that can't be. That would mean a conflict. Wait, perhaps I made a mistake. Let me check column2 again. Column2 includes:
+
+Row0:4
+
+Row1:5
+
+Row2:0
+
+Row3:6
+
+Row4:0
+
+Row5:0
+
+Row6:0
+
+Row7:3
+
+Row8:2
+
+So column2 has 4,5,6,3,2. So missing:1,7,8,9. So (4,2) must be one of 1,7,8,9. But row4's missing are 2,3,5,6,8. The only overlap is 8. So (4,2) must be 8! Because it's the only number that's both missing in row4 and allowed in column2. Let me verify. If (4,2)=8, then row4 gets 8, which is needed. Column2 doesn't have 8 yet. Box (rows3-5, columns0-2): row4,2 is in this box. Existing numbers in the box: row3 has 6 (3,2), row4 has 1 (4,0),9 (4,1), and now 8 (4,2). So 8 is new. So yes, (4,2)=8. So row4 becomes [1,9,8,0,0,7,4,0,0].
+
+Now, row4 missing:2,3,5,6. Let's look at (4,3). Column3 has 3 (0,3),5 (7,3),9 (8,3). So possible numbers:1,2,4,6,7,8. Row4 missing:2,3,5,6. Intersection:2,6. Check box (rows3-5, columns3-5). Existing numbers: row3 has (3,5)=2, row4 has (4,5)=7, row5 has (5,4)=8, (5,5)=3. So missing:1,4,5,6,9. So possible for (4,3):1,4,5,6,9. But from row and column, it's 2 or6. So intersection:6. So (4,3)=6. Let's check. If (4,3)=6, row4 has 6 now. Column3: no 6. Box: yes, allowed. So (4,3)=6. Now row4 is [1,9,8,6,0,7,4,0,0]. Missing:2,3,5.
+
+Now, (4,4). Row4 missing:2,3,5. Column4: existing numbers 6 (row2),8 (row5),1 (row8). So possible:2,3,4,5,7,9. Intersection with row4:2,3,5. Check box (rows3-5, columns3-5). Existing numbers: row4 has 6 (4,3),7 (4,5), row5 has 8 (5,4),3 (5,5). So missing:1,2,4,5,9. So possible for (4,4):2,5. So from row4 missing 2,3,5 and column4 allows 2,3,5. But box allows 2,5. So possible 2 or5. Let's see if either is possible. If (4,4)=2, check row4, column4, box. No conflicts. If (4,4)=5, same. Let's check other cells for elimination.
+
+Looking at row5: [0,5,0,0,8,3,0,0,0]. Let's check (5,0). Column0 has 8 (row0),1 (row4),6 (row6). So possible:2,3,4,5,7,9. Row5 missing:1,2,4,6,7,9 (since it has 5,8,3). Intersection:2,4,7,9. Check box (rows3-5, columns0-2). Existing numbers: row3:6 (3,2), row4:1,9,8, row5:5 (5,1). So missing:2,3,4,7. So possible for (5,0):2,3,4,7. From row and column, possible 2,4,7,9. Intersection:2,4,7. So (5,0) could be 2,4,7. Let's see if we can find another clue.
+
+Looking at (5,2). Column2 has 4,5,6,3,2,8 (from row4,2=8). Wait, row4,2 is 8. So column2: 4,5,6,3,2,8. So missing:1,7,9. Row5 missing:1,2,4,6,7,9. Intersection:1,7,9. But column2 doesn't allow these. Wait, this can't be. Wait, row5's (5,2) must be a number missing in row5 (1,2,4,6,7,9) and allowed in column2 (1,7,8,9). Wait, column2 has 4,5,6,3,2,8. So missing:1,7,9. So possible for (5,2):1,7,9. But row5's missing are 1,2,4,6,7,9. So intersection:1,7,9. So possible. Let's check the box (rows3-5, columns0-2). Existing numbers: row3 has 6 (3,2), row4 has 1,9,8, row5 has 5 (5,1). So missing:2,3,4,7. So possible for (5,2):2,3,4,7. But from previous, possible 1,7,9. Intersection:7. So (5,2)=7. Let's check. If (5,2)=7, row5 has 7. Column2 has 7 now (allowed). Box allows it. So yes, (5,2)=7. Now row5 becomes [0,5,7,0,8,3,0,0,0]. Missing:1,2,4,6,9.
+
+Now, back to (5,0). Possible numbers:2,4, since 7 is already placed. Wait, row5 missing now:1,2,4,6,9. Column0 allows:2,3,4,5,7,9. But 7 is already in row5 (5,2). So possible:2,4,9. But box (rows3-5, columns0-2) allows 2,3,4,7. But row5 has 7. So possible:2,4. So (5,0)=2 or4. Let's check row5's (5,3). Column3: existing 3,5,9,6 (row4,3=6). Wait, row4,3=6. So column3 has 3 (0,3),5 (7,3),9 (8,3),6 (4,3). So missing:1,2,4,7,8. Row5 missing:1,2,4,6,9. So possible for (5,3):1,2,4. Check box (rows3-5, columns3-5). Existing numbers: row3 has 2 (3,5), row4 has6 (4,3),7 (4,5), row5 has8 (5,4),3 (5,5). So missing:1,4,5,9. So possible for (5,3):1,4,5,9. But row and column allow 1,2,4. Intersection:1,4. So (5,3)=1 or4. Let's see if we can find another cell.
+
+Looking at row5's (5,6). Column6 has 2 (0,6),1 (6,6),6 (7,6),3 (8,6). So missing:4,5,7,8,9. Row5 missing:1,2,4,6,9. Intersection:4,9. Check box (rows3-5, columns6-8). Existing numbers: row4 has4 (4,6), row5 has none yet, row3 has8 (3,7),7 (3,8). So missing:1,2,3,5,6,9. So possible for (5,6):4,9. But column6 allows4,9. So (5,6)=4 or9. If (5,6)=4, but row4's (4,6) is already4, so conflict. So (5,6)=9. So (5,6)=9. Now row5 is [0,5,7,0,8,3,9,0,0]. Missing:1,2,4,6.
+
+Now, (5,7). Column7 has4 (2,7),8 (3,7),9 (7,7). So missing:1,2,3,5,6,7. Row5 missing:1,2,4,6. Intersection:1,2,6. Check box (rows3-5, columns6-8). Existing: row4 has4 (4,6), row5 has9 (5,6), row3 has8 (3,7),7 (3,8). So missing:1,2,3,5,6. So possible for (5,7):1,2,3,5,6. From row and column:1,2,6. So possible. Let's see if we can find another clue.
+
+Looking at row5's (5,8). Column8 has9 (0,8),1 (1,8),3 (2,8),7 (3,8),5 (6,8), and others. Column8: existing numbers 9,1,3,7,5. Missing:2,4,6,8. Row5 missing:1,2,4,6. Intersection:2,4,6. Check box (rows3-5, columns6-8). Missing:1,2,3,5,6. So possible for (5,8):2,6. Let's see if we can eliminate. If (5,8)=2, check column8: no 2. If=6, column8: no 6. Not sure yet. Let's check other rows.
+
+Looking at row6: [6,0,0,0,0,0,1,0,5]. Missing:2,3,4,7,8,9. Let's check (6,1). Column1 has7 (row2),9 (row4),5 (row5),4 (row8). So missing:1,2,3,6,8. Row6 missing:2,3,4,7,8,9. Intersection:2,3,8. Check box (rows6-8, columns0-2). Existing numbers: row6 has6 (6,0), row7 has3 (7,2), row8 has4 (8,1),2 (8,2). So missing:1,5,7,8,9. So possible for (6,1):1,5,7,8,9. But from row and column:2,3,8. No intersection. That can't be. Did I make a mistake? Wait, column1 has 7,9,5,4. So missing:1,2,3,6,8. Row6 missing:2,3,4,7,8,9. So intersection:2,3,8. But box (6-8,0-2) missing:1,5,7,8,9. So possible numbers for (6,1) must be in both, which is only 8. So (6,1)=8. Because 8 is in both missing sets. Let's check. If (6,1)=8, row6 gets 8. Column1: no 8 yet. Box: yes, allowed. So yes, (6,1)=8. Now row6 is [6,8,0,0,0,0,1,0,5]. Missing:2,3,4,7,9.
+
+Now, (6,2). Column2 has4,5,6,3,2,8,7 (row5,2=7). Wait, row5,2=7. So column2:4,5,6,3,2,8,7. Missing:1,9. But row6 missing:2,3,4,7,9. So intersection:9. So (6,2)=9. Because it's the only possible number. Check column2: no9 yet. Box: yes, allowed. So (6,2)=9. Now row6: [6,8,9,0,0,0,1,0,5]. Missing:2,3,4,7.
+
+Now, (6,3). Column3 has3,5,9,6. So missing:1,2,4,7,8. Row6 missing:2,3,4,7. Intersection:2,4,7. Check box (rows6-8, columns3-5). Existing numbers: row6: nothing yet, row7:5 (7,3),8 (7,5), row8:9 (8,3),1 (8,4). So missing:2,3,4,6,7. So possible for (6,3):2,3,4,6,7. From row and column:2,4,7. So possible. Let's check other cells.
+
+Looking at row6's (6,4). Column4 has6,8,1. Missing:2,3,4,5,7,9. Row6 missing:2,3,4,7. Intersection:2,3,4,7. Check box (rows6-8, columns3-5). Missing:2,3,4,6,7. So possible for (6,4):2,3,4,7. Let's see if any of these are possible. Maybe another cell.
+
+Looking at row6's (6,7). Column7 has4,8,9. Missing:1,2,3,5,6,7. Row6 missing:2,3,4,7. Intersection:2,3,7. Check box (rows6-8, columns6-8). Existing numbers: row6 has1 (6,6),5 (6,8), row7 has6 (7,6),9 (7,7), row8 has3 (8,6). So missing:2,4,7,8. So possible for (6,7):2,4,7,8. From row and column:2,3,7. Intersection:2,7. Let's see if we can find more info.
+
+Looking at row7: [0,0,3,5,0,8,6,9,0]. Missing:1,2,4,7. Let's check (7,0). Column0 has8,1,6. Missing:2,3,4,5,7,9. Row7 missing:1,2,4,7. Intersection:2,4,7. Check box (rows6-8, columns0-2). Existing numbers: row6 has6,8,9, row7 has3, row8 has4,2. So missing:1,5,7. So possible for (7,0):1,5,7. But row7 missing:1,2,4,7. Intersection:1,7. So (7,0)=1 or7. Let's check column0: missing are2,3,4,5,7,9. So (7,0) can't be1 because column0 has1 (row4). Wait, column0 has8 (row0),1 (row4),6 (row6). So (7,0) can be 2,3,4,5,7,9. But row7 allows 1,2,4,7. Intersection:2,4,7. Box allows1,5,7. So intersection:7. So (7,0)=7. Because it's the only common number. Let's check. If (7,0)=7, row7 gets7. Column0: no7 yet. Box: yes. So yes. Now row7 is [7,0,3,5,0,8,6,9,0]. Missing:1,2,4.
+
+Now, (7,1). Column1 has7 (row2),9 (row4),5 (row5),4 (row8),8 (row6). So missing:1,2,3,6. Row7 missing:1,2,4. Intersection:1,2. Check box (rows6-8, columns0-2). Existing numbers:6,8,9,7,3,4,2. Missing:1,5. So possible for (7,1):1,5. But from row and column, possible1,2. No intersection. Wait, this can't be. Did I make a mistake? Let's recheck.
+
+Row7: [7,0,3,5,0,8,6,9,0]. Missing:1,2,4. Column1 has7 (row2),9 (row4),5 (row5),8 (row6),4 (row8). So missing:1,2,3,6. So possible for (7,1):1,2. Box (rows6-8, columns0-2) missing:1,5. So possible1. Because 1 is in both. So (7,1)=1. Let's check. If (7,1)=1, row7 has1. Column1: no1 yet. Box: yes. So (7,1)=1. Now row7 is [7,1,3,5,0,8,6,9,0]. Missing:2,4.
+
+Now, (7,4). Column4 has6,8,1. Missing:2,3,4,5,7,9. Row7 missing:2,4. Intersection:2,4. Check box (rows6-8, columns3-5). Existing numbers: row7 has5 (7,3),8 (7,5), row8 has9 (8,3),1 (8,4). So missing:2,3,4,6,7. So possible for (7,4):2,4. So possible. Let's see if we can determine which. Looking at row8: [0,4,2,9,1,0,3,0,0]. Missing:5,6,7,8. Let's check (8,0). Column0 missing:2,3,4,5,9. Row8 missing:5,6,7,8. Intersection:5. So (8,0)=5. Because it's the only possible number. Let's check. Column0 has8,1,6,7. So 5 is allowed. Box (rows6-8, columns0-2) missing:5. So yes, (8,0)=5. Now row8 is [5,4,2,9,1,0,3,0,0]. Missing:6,7,8.
+
+Now, (8,5). Column5 has9 (row1),2 (row3),7 (row4),3 (row5),8 (row7). So missing:1,4,5,6. Row8 missing:6,7,8. Intersection:6. So (8,5)=6. Check column5: no6 yet. Box (rows6-8, columns3-5). Existing:9 (8,3),1 (8,4),6 now. So okay. So (8,5)=6. Now row8 is [5,4,2,9,1,6,3,0,0]. Missing:7,8.
+
+Now, (8,7). Column7 has4 (row2),8 (row3),9 (row7). Missing:1,2,3,5,6,7. Row8 missing:7,8. Intersection:7. So (8,7)=7. Now row8: [5,4,2,9,1,6,3,7,0]. Missing:8. So (8,8)=8. Now row8 is complete.
+
+Back to row7's (7,4). Now column4 has6,8,1, and row7 missing:2,4. But column4 missing:2,3,4,5,7,9. So possible for (7,4):2,4. Let's check box (rows6-8, columns3-5). Existing numbers:5,8,9,1,6. Missing:2,3,4,7. So possible 2,4. Let's see if there's another clue.
+
+Looking at row7's (7,8). Column8 has9,1,3,7,5,8. Missing:2,4,6. Row7 missing:2,4. So possible 2,4. Check box (rows6-8, columns6-8). Existing numbers:1,5,3,6,9,7,8. Missing:2,4. So (7,8) could be2 or4. Let's check row7's missing:2,4. If (7,4)=2, then (7,8)=4. If (7,4)=4, then (7,8)=2. Let's see if we can determine based on other rows.
+
+Looking at row6's (6,3). Column3 has3,5,9,6. Missing:1,2,4,7,8. Row6 missing:2,3,4,7. So possible for (6,3):2,4,7. If (7,4)=2, then row7 has2, so (6,3) can't be2. Let's assume (7,4)=2 and (7,8)=4. Let's check if that works. So (7,4)=2, then row7 is [7,1,3,5,2,8,6,9,4]. Now, row7 is complete. Check column4: now has2. Is that allowed? Column4 originally had6 (row2),8 (row5),1 (row8),2 (row7). No duplicates. Okay.
+
+Then, (6,3) possible:4,7. Let's check column3. Column3 has3 (0,3),5 (7,3),9 (8,3),6 (4,3). Missing:1,2,4,7,8. So possible. Let's see if there's a way to determine (6,3). Looking at row6's missing:2,3,4,7. If (6,3)=4, then check box (rows6-8, columns3-5). If (6,3)=4, then box has4. If=7, then box has7. Let's see other cells. Looking at row6's (6,4). Missing:2,3,4,7. Column4 has2 (row7),6,8,1. So possible:3,4,5,7,9. But row6 allows2,3,4,7. Intersection:3,4,7. Check box (rows6-8, columns3-5). Existing:5,8,9,1,6,2 (from row7,4=2). So missing:3,4,7. So possible for (6,4):3,4,7. If (6,3)=4, then (6,4) can't be4. Let's say (6,3)=7. Then row6 becomes [6,8,9,7,0,0,1,0,5]. Missing:2,3,4. Then (6,4): possible3,4. But column4 has2,6,8,1. So possible3,4,5,7,9. Row6 missing:2,3,4. Intersection:3,4. Check box (rows6-8, columns3-5). Existing:5,8,9,1,6,2. Missing:3,4,7. So (6,4)=3 or4. Let's assume (6,4)=3. Then (6,5) would be? Row6 missing:2,4. Column5 has9 (row1),2 (row3),7 (row4),3 (row5),8 (row7),6 (row8). So missing:1,4,5. So (6,5)=4 or1 or5. But row6 missing:2,4. So (6,5)=4. Then (6,5)=4. Check column5: no4 yet. Box: allowed. So row6 becomes [6,8,9,7,3,4,1,0,5]. Now, missing:2. So (6,7)=2. Then row6 is complete.
+
+But let's check if this is valid. If (6,3)=7, (6,4)=3, (6,5)=4, (6,7)=2. Let's verify:
+
+Row6: [6,8,9,7,3,4,1,2,5]. All numbers 1-9, no duplicates. Column3:7 is new, no conflict. Column4:3 is new. Column5:4 is new. Column7:2 is new. Seems okay.
+
+Now, back to row5's (5,7) and (5,8). Row5: [0,5,7,0,8,3,9,0,0]. Missing:1,2,4,6. But wait, we already placed (5,6)=9, and (5,2)=7. Let me recheck row5. Original row5 after placements: [0,5,7,0,8,3,9,0,0]. Missing:1,2,4,6. Column7: now has2 (row6,7). So (5,7) can't be2. So possible for (5,7):1,6. Column7 has4,8,9,2. So missing:1,3,5,6,7. Row5 missing:1,2,4,6. Intersection:1,6. Check box (rows3-5, columns6-8). Existing: row4 has4 (4,6), row5 has9 (5,6), row3 has8 (3,7),7 (3,8). So missing:1,2,3,5,6. So possible for (5,7):1,6. Let's see if (5,7)=1. Then (5,8) would be6. Check column8:6 not present yet. If (5,7)=1 and (5,8)=6. Then row5 becomes [0,5,7,0,8,3,9,1,6]. Missing:2,4. Now, (5,0) and (5,3) are missing. (5,0) possible:2,4. Column0 has8,1,6,7,5 (row8,0=5). So column0 has8,1,6,7,5. Missing:2,3,4,9. Row5 missing:2,4. Intersection:2,4. Check box (rows3-5, columns0-2). Existing: row3 has6, row4 has1,9,8, row5 has5,7. Missing:2,3,4. So possible for (5,0):2,4. Let's check (5,3). Row5's (5,3) is missing. Row5 missing:2,4. Column3 has3,5,9,6,7 (row6,3=7). So column3 missing:1,2,4,8. Row5 allows:2,4. So (5,3)=2 or4. If (5,0)=2, then (5,3)=4. If (5,0)=4, then (5,3)=2. Let's check box (rows3-5, columns3-5). Existing numbers: row3 has6 (4,3),2 (3,5), row4 has7 (4,5), row5 has8 (5,4),3 (5,5). So missing:1,4,5,9. So (5,3) can be1,4,5,9. But row5 allows2,4. So only4 is possible. So (5,3)=4, making (5,0)=2. Thus, row5 becomes [2,5,7,4,8,3,9,1,6]. Now, check column0:2 is new. Box: yes. So valid.
+
+Now, row5 is complete. Let's go back to row3: [0,0,6,0,0,2,0,8,7]. Missing:1,3,4,5,9. Wait, row3 has (3,2)=6, (3,5)=2, (3,7)=8, (3,8)=7. So missing:1,3,4,5,9. Let's check (3,0). Column0 has8,2,1,6,7,5. Missing:3,4,9. Row3 missing:1,3,4,5,9. Intersection:3,4,9. Check box (rows3-5, columns0-2). Existing numbers: row3 has6, row4 has1,9,8, row5 has2,5,7. Missing:3,4. So (3,0)=3 or4. Let's see if we can determine.
+
+Looking at (3,1). Column1 has7,9,5,8,1,4. Missing:2,3,6. Row3 missing:1,3,4,5,9. Intersection:3. So (3,1)=3. Let's check. If (3,1)=3, then row3 has3. Column1: no3 yet. Box: yes. So (3,1)=3. Now row3 is [0,3,6,0,0,2,0,8,7]. Missing:1,4,5,9.
+
+Now, (3,0) possible:1,4,5,9. Column0 missing:3,4,9. So intersection:4,9. Box allows3,4. Wait, box (rows3-5, columns0-2) missing:3,4. So possible (3,0)=3 or4. But row3 already has3 at (3,1). Wait, no, (3,0) is different. Wait, row3's (3,0) is separate. If (3,0)=3, but row3 already has3 at (3,1). No, that's a conflict. So (3,0) can't be3. So possible:4 or9. But column0 missing:3,4,9. So (3,0)=4 or9. Let's check box (rows3-5, columns0-2) missing:3,4. So (3,0) must be4. Because3 is not allowed (already in row3). So (3,0)=4. Now row3 is [4,3,6,0,0,2,0,8,7]. Missing:1,5,9.
+
+Now, (3,3). Column3 has3,5,9,6,7. Missing:1,2,4,8. Row3 missing:1,5,9. Intersection:1. So (3,3)=1. Let's check. Column3: no1 yet. Box (rows3-5, columns3-5). Existing: row3 has1, row4 has6,7, row5 has4,8,3. So okay. So (3,3)=1. Now row3 is [4,3,6,1,0,2,0,8,7]. Missing:5,9.
+
+Now, (3,4). Column4 has6,8,1,2. Missing:3,4,5,7,9. Row3 missing:5,9. Intersection:5,9. Check box (rows3-5, columns3-5). Existing:1,6,7,4,8,3. Missing:2,5,9. So possible for (3,4):5,9. Let's check row3's (3,6). Missing:5,9. Column6 has2,1,6,3. Missing:4,5,7,8,9. Row3 missing:5,9. Intersection:5,9. Check box (rows3-5, columns6-8). Existing: row3 has8,7, row4 has4, row5 has9,1,6. Missing:2,3,5. So possible for (3,6):2,3,5. But row3 missing:5,9. So only5. So (3,6)=5. Now row3 is [4,3,6,1,0,2,5,8,7]. Missing:9. So (3,4)=9. Now row3 is complete.
+
+Now, back to row4: [1,9,8,6,0,7,4,0,0]. Missing:2,3,5. (4,4) was previously possible 2 or5. Now, column4 has6,8,1,2,9. Missing:3,4,5,7. Row4 missing:2,3,5. Intersection:3,5. Check box (rows3-5, columns3-5). Existing:1,6,7,9,4,8,3. Missing:2,5. So (4,4) must be5. Because row4 missing:3,5. But box missing:2,5. So intersection:5. So (4,4)=5. Now row4 is [1,9,8,6,5,7,4,0,0]. Missing:2,3. Now, (4,7). Column7 has4,8,9,2. Missing:1,3,5,6,7. Row4 missing:2,3. Intersection:3. So (4,7)=3. Then (4,8) must be2. Now row4 is complete.
+
+Now, row2: [0,7,0,0,6,0,0,4,3]. Missing:1,2,5,8,9. Let's check (2,0). Column0 has8,2,1,6,7,5,4. Missing:3,9. But row2 missing:1,2,5,8,9. Intersection:9. So (2,0)=9. Now row2 is [9,7,0,0,6,0,0,4,3]. Missing:1,2,5,8.
+
+(2,2). Column2 has4,5,6,3,2,8,7,9. Missing:1. So (2,2)=1. Now row2 is [9,7,1,0,6,0,0,4,3]. Missing:2,5,8.
+
+(2,3). Column3 has3,5,9,6,1. Missing:2,4,7,8. Row2 missing:2,5,8. Intersection:2,8. Check box (rows0-2, columns3-5). Existing:3,9,6. Missing:1,2,4,5,7,8. So possible for (2,3):2,5,7,8. From row and column:2,8. Let's see if (2,5) can help. Column5 has9,2,7,3,8,6. Missing:1,4,5. Row2 missing:2,5,8. Intersection:5. So (2,5)=5. Now row2 is [9,7,1,0,6,5,0,4,3]. Missing:2,8.
+
+(2,3) possible:2,8. Let's check column3: missing2,4,7,8. So possible. If (2,3)=2, then row2 has2. If=8, then row2 has8. Let's check box. If (2,3)=2, box (0-2,3-5) has3,9,6,2. Missing:1,4,5,7,8. Okay. If=8, then missing:1,4,5,7. Let's check row2's (2,6). Missing:2,8. Column6 has2,1,6,3. Missing:4,5,7,8,9. So possible for (2,6):4,5,7,8,9. But row2 missing:2,8. So only8. So (2,6)=8. Now row2 is [9,7,1,0,6,5,8,4,3]. Missing:2. So (2,3)=2. Now row2 is complete.
+
+Now, row1: [0,0,5,0,0,9,0,0,1]. Missing:2,3,4,6,7,8. Let's check (1,0). Column0 has8,2,1,6,7,5,4,9. Missing:3. So (1,0)=3. Now row1 is [3,0,5,0,0,9,0,0,1]. Missing:2,4,6,7,8.
+
+(1,1). Column1 has7,9,5,8,1,4,3. Missing:2,6. Row1 missing:2,4,6,7,8. Intersection:2,6. Check box (rows0-2, columns0-2). Existing:8,4,5,7,9,1. Missing:2,3,6. So possible for (1,1):2,6. If (1,1)=2, check row1: okay. Column1: no2 yet. Box: yes. If=6, check column1: no6 yet. Box: yes. Let's see if other cells help.
+
+(1,3). Row1 missing:2,4,6,7,8. Column3 has3,5,9,6,1,2. Missing:4,7,8. Intersection:4,7,8. Check box (rows0-2, columns3-5). Existing:3,9,6,5. Missing:1,2,4,7,8. So possible for (1,3):4,7,8. Let's see if any of these can be eliminated.
+
+Looking at (1,4). Column4 has6,8,1,9,5,2. Missing:3,4,7. Row1 missing:2,4,6,7,8. Intersection:4,7. Check box (rows0-2, columns3-5). Missing:1,2,4,7,8. So possible for (1,4):4,7. Let's check if either is possible.
+
+If (1,4)=4, then row1 has4. Column4: no4 yet. Box: yes. If=7, then column4: no7 yet. Let's assume (1,4)=4. Then row1 becomes [3,0,5,0,4,9,0,0,1]. Missing:2,6,7,8. Now, (1,1) could be2 or6. If (1,1)=2, then (1,3) would be7 or8. Let's see.
+
+If (1,1)=2, then row1: [3,2,5,0,4,9,0,0,1]. Missing:6,7,8. (1,3) possible:6,7,8. Column3 missing:4,7,8. Intersection:7,8. Let's say (1,3)=7. Then (1,6) would be8. Check column6:2,1,6,3. Missing:4,5,7,8,9. So (1,6)=8. Then row1: [3,2,5,7,4,9,8,0,1]. Missing:6. So (1,7)=6. Now check column7:4,8,9,6. Okay. Box: okay. So this could work. Let's verify:
+
+Row1: [3,2,5,7,4,9,8,6,1]. All numbers 1-9, no duplicates. Column1:2 is new, no conflict. Seems valid.
+
+Alternatively, if (1,4)=7, then (1,3)=4 or8. But let's see if the previous assumption works. If it does, then the Sudoku is solved.
+
+Now, let's check row0. Previously, we had (0,0)=8, (0,1) was pending between1 and6. But let's see if we can determine it now.
+
+Row0: [8,0,4,3,0,0,2,0,9]. Missing:1,5,6,7. Let's check (0,5). Column5 has9,5,2,7,3,8,6. Missing:1,4. Row0 missing:1,5,6,7. Intersection:1. So (0,5)=1. Now row0 is [8,0,4,3,0,1,2,0,9]. Missing:5,6,7.
+
+(0,4). Column4 has6,8,1,9,5,2,4. Missing:3,7. Row0 missing:5,6,7. Intersection:7. So (0,4)=7. Now row0: [8,0,4,3,7,1,2,0,9]. Missing:5,6.
+
+(0,7). Column7 has4,8,9,6,2. Missing:1,3,5,7. Row0 missing:5,6. Intersection:5. So (0,7)=5. Now row0: [8,0,4,3,7,1,2,5,9]. Missing:6. So (0,1)=6. Now row0 is complete: [8,6,4,3,7,1,2,5,9].
+
+Now, let's check the remaining cell in row1: (1,7)=6. Column7:6 is new. Box: yes. All constraints satisfied.
+
+Finally, check row col and boxes for duplicates. Let's verify a few:
+
+Row0: 8,6,4,3,7,1,2,5,9 – all unique.
+
+Column0:8,3,9,4,1,2,6,7,5 – all unique.
+
+Box (0-2,0-2):8,6,4; 3,2,5;9,7,1 – all unique.
+
+Looks good. Similarly, other rows and columns should be okay.
+
+The complete Sudoku solution is as follows:
+
+Row 0: 8, 6, 4, 3, 7, 1, 2, 5, 9
+Row 1: 3, 2, 5, 7, 4, 9, 8, 6, 1
+Row 2: 9, 7, 1, 2, 6, 5, 8, 4, 3
+Row 3: 4, 3, 6, 1, 9, 2, 5, 8, 7
+Row 4: 1, 9, 8, 6, 5, 7, 4, 3, 2
+Row 5: 2, 5, 7, 4, 8, 3, 9, 1, 6
+Row 6: 6, 8, 9, 7, 3, 4, 1, 2, 5
+Row 7: 7, 1, 3, 5, 2, 8, 6, 9, 4
+Row 8: 5, 4, 2, 9, 1, 6, 3, 7, 8
+
+Each row, column, and 3x3 subgrid contains all numbers from 1 to 9 without repetition, satisfying all Sudoku constraints.

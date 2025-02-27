@@ -1,0 +1,35 @@
+Reasoned for 3m 40s
+I’m given a 9x9 sudoku with some numbers as clues. The task is to solve it by filling the whole grid. I’ll reformat the rows with missing values marked as “X” to keep track of what's given versus what’s missing.
+
+For example, Row 0 has certain numbers already placed, but some columns are empty — I’ll use “?” for those. I'll now try to solve it manually by figuring out what fits based on logic and sudoku rules. Let's start with labeling unknowns using letters.
+
+I’m approaching the sudoku by working row by row and box by box. For each row, I list the known digits and then calculate the missing ones based on what’s already filled.
+
+For example, in Row 0, the missing digits are {2, 3, 6, 7, 8, 9}. For Box 0 (top-left 3x3), the missing digits are {3, 6, 8, 9}.
+
+I’ll continue filling out the grid this way, analyzing the possibilities for each box and row systematically to solve the puzzle.
+
+For Row3, after recalculation, the candidates for col0 are {4, 9}. Row4's col0 becomes {4, 7}, and row5's col1 is refined to {1, 7}. In column 3, row6's possibilities for col3 narrow down to {2}. For Box1, the interaction of missing digits with other cells restricts options further, leaving some cells with fewer candidates. I'm narrowing things down step by step, filling in digits based on constraints and intersections to simplify the puzzle. Still many intersections to check!
+
+Row6 is now complete after refining the columns for col2, col3, and col5 to distinct candidates. In column 5, row5 takes 4, and eventually, this narrows down choices for other cells in that column as well. In Box5, with row5’s placement of 9, I can move forward with refining box intersections, such as with column 7. There’s still work to do resolving overlaps in columns and boxes, but this system of logical intersections is helping clarify the puzzle.
+
+Row2 is now completely filled, and we’ve updated Box2 accordingly. I also resolved column errors, such as removing used digits and mutually exclusive candidates. Row0 is nearly finished after updating with missing digits. For column3, I solved some cells by considering exclusions from both row and box constraints. Row1, with a key update to col3 (5), helps resolve some missing digits systematically. With further corrections in columns and boxes, the puzzle is progressing with a clearer structure.
+
+After updating row5 (col3=7, col1=1), I found that row5 is now solved. Column3 has missing digits {3, 4, 8}, which I narrowed down using the constraints and filled in. Row3 is more defined now too, with updates in various columns. Row7 col1 is solved as 3, and row7 col3 as 4. Column5 is essentially done after identifying row7’s missing digit as 5. The puzzle is nearing completion, with only a few remaining cells to resolve.
+
+The unique solution to the puzzle is:
+
+diff
+Copy
+3 4 6 | 1 7 9 | 2 5 8
+1 8 7 | 5 2 3 | 9 6 4
+5 2 9 | 6 4 8 | 3 7 1
+------+------+------
+9 6 5 | 8 3 2 | 4 1 7
+4 7 2 | 9 1 6 | 8 3 5
+8 1 3 | 7 5 4 | 6 2 9
+------+------+------
+7 9 8 | 2 6 1 | 5 4 3
+6 3 1 | 4 8 5 | 7 9 2
+2 5 4 | 3 9 7 | 1 8 6
+Each row, column, and 3×3 block contains the digits 1–9 exactly once.

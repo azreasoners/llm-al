@@ -1,0 +1,568 @@
+
+Okay, let's tackle this problem. So, we need to move all disks to peg c, right? Let me start by understanding the initial setup and the rules.
+
+First, the disks are ordered by weight from heaviest to lightest: d1, d2, d3, d4, d5. That means d1 is the heaviest and d5 is the lightest. The rules say a disk can't be placed on a lighter one. So, for example, d1 can only be placed on a peg or under another disk, but since it's the heaviest, nothing can be on top of it except maybe pegs. Wait, no—pegs are locations. So disks can be on pegs or on other disks, as long as the disk below is heavier.
+
+The initial state is:
+
+- d1 on peg b.
+
+- d2 on d1.
+
+- d3 on peg c.
+
+- d4 on peg a.
+
+- d5 on d4.
+
+So, visually, peg a has d4 with d5 on top. Peg b has d1 with d2 on top. Peg c has d3 alone. The goal is to get all disks onto peg c in a stack ordered from heaviest at the bottom to lightest at the top. Since the heaviest is d1, then d2, d3, d4, d5, the final stack on c should be d1, d2, d3, d4, d5.
+
+But wait, the order from heaviest to lightest is d1 > d2 > d3 > d4 > d5, so the tower should have d1 at the bottom, then d2, then d3, then d4, then d5 on top. So we need to move all disks to c in that order.
+
+Starting with the current setup:
+
+Peg a: d4 (with d5 on top)
+
+Peg b: d1 (with d2 on top)
+
+Peg c: d3
+
+So the current disks on c is just d3, which is the third heaviest. The problem is that to move d1 and d2 to c, we need to first move them off their current positions, but they're on peg b. Also, since d2 is on d1, we can't move d1 until d2 is moved. Similarly, d5 is on d4, so we can't move d4 until d5 is moved.
+
+So the initial steps might involve moving the smaller disks first to free up the pegs. Let me think in terms of the classic Tower of Hanoi problem, but with different initial states and more disks.
+
+In the classic problem, you move the top n-1 disks to a temporary peg, then move the nth disk, then move the n-1 disks on top. But here, the initial positions are different. Let's list out each disk's position:
+
+- d1 on b, under d2.
+
+- d2 on d1 (so can't move d1 until d2 is moved).
+
+- d3 on c.
+
+- d4 on a, under d5.
+
+- d5 on d4 (can't move d4 until d5 is moved).
+
+So the first thing to note is that d5 is on top of d4 on peg a. Since d5 is the lightest, we can move it anywhere. Let's start by moving d5 to another peg to free up d4. But where? Maybe to peg b or c. But peg c already has d3, which is heavier than d5, so d5 can be placed on c. Wait, but if we move d5 from a to c, we can place it on d3, since d3 is heavier. That's allowed. But is that helpful? Maybe not immediately. Alternatively, we could move d5 to peg b, which currently has d2 on d1. But since d5 is lighter than d2 (since d2 is heavier than d5), we can place d5 on peg b, but on top of d2? Wait, no. If we move d5 to peg b, it can be placed on d2 only if d2 is the top disk. But d2 is on d1. So to place d5 on peg b, we can put it on the peg itself, but if there's already disks, we can put it on top of the top disk. Wait, the current top disk on peg b is d2. Since d5 is lighter than d2, yes, we can place d5 on d2. But moving d5 to peg b would put it on top of d2. But then, if we do that, we can later move d2 only if d5 is moved off first. Hmm, maybe not the best approach.
+
+Alternatively, moving d5 to peg c. Since c has d3, which is heavier than d5, so we can put d5 on d3. That might be better. Let's try that.
+
+Step 1: Move d5 from d4 (peg a) to peg c (on top of d3). Now, peg a has d4, peg c has d3 and d5 (with d5 on top). Now, d4 is free to move because nothing is on top of it.
+
+Step 2: Move d4 from peg a to... where? The goal is to get all disks on c. So we need d4 to be part of the stack on c. But the current stack on c is d3, then d5. If we move d4 to c, can we put it on d3? Wait, d4 is lighter than d3? Wait, the order is d1 > d2 > d3 > d4 > d5. So d3 is heavier than d4. So yes, d4 can be placed on d3, but only if d3 is the top disk. But currently, d5 is on top of d3. So we can't place d4 on d3 unless we move d5 off. Hmm. So maybe moving d4 to peg b? Let's see.
+
+Wait, peg b has d1 and d2. The top disk there is d2. Since d4 is heavier than d2? No, d2 is heavier than d3, which is heavier than d4. So d2 is heavier than d4. Therefore, d4 can be placed on d2. Wait, no, because d4 is lighter than d2. So yes, you can place a lighter disk on a heavier one. So if we move d4 to peg b, we can place it on top of d2. Then, peg b would have d1, d2, d4. But then, to move d2 later, we'd have to move d4 first. Alternatively, maybe moving d4 to peg c, but since d5 is on top of d3, we need to move d5 first. So perhaps step 1 was moving d5 to c, then step 2 moving d4 to peg b on top of d2. Then step 3: move d5 from c to b on top of d4. Wait, but d5 is lighter than d4, so that's allowed. Then peg b would have d1, d2, d4, d5. But that's complicating things. Maybe another approach.
+
+Alternatively, after moving d5 to c, we can move d4 to c as well, but since d5 is on top of d3, we need to move d5 first. So step 1: move d5 to c. Now, d4 is free. Step 2: move d4 to c. But to place d4 on c, the top disk there is d5. Since d4 is heavier than d5, we can't put d4 on d5. So that's invalid. So instead, we need to move d5 off c first. So perhaps step 2: move d5 from c to another peg, say peg a (which is now empty except for d4, which we just moved from there). Wait, no, peg a had d4 and d5. After moving d5 to c, peg a has only d4. Then moving d5 back to a would put it on d4 again, which is allowed. But that seems like a loop. Hmm.
+
+Alternatively, maybe moving d5 to peg b. Let's see. After step 1: d5 is on c. Step 2: move d4 to c is impossible because d5 is on top. So step 2: move d5 from c to b. Then peg b has d2, d5 (since d5 is lighter than d2). Then peg c now has d3. Step 3: move d4 from a to c. Now, peg c has d3 and d4 (d4 on top of d3, which is allowed since d3 is heavier). Then step 4: move d5 from b to c on top of d4. That's allowed because d5 is lighter than d4. Now, peg c has d3, d4, d5. But our goal is to have all disks on c. So far, that's d3, d4, d5. Then we need to get d1 and d2 there as well.
+
+But d1 is on peg b with d2 on top. So we need to move d2 first. To move d2, we need to have somewhere to put it. Since d2 is heavier than d3, we can't place it on top of d3 unless d3 is the top disk. But currently, peg c has d3, d4, d5. So the top is d5. So we need to move d5, d4, and d3 off to another peg to place d2 on c. Wait, this seems getting complicated. Let me try to outline the steps more carefully.
+
+First, let's consider that the main challenge is moving d1 and d2 to peg c. Since d1 is the heaviest, it needs to be at the bottom of the stack on c. But currently, d1 is on peg b with d2 on top. So to move d1 to c, we need to first move d2 somewhere else, then move d1 to c. Then move d2 on top of d1. But where to move d2 temporarily?
+
+So the plan might involve:
+
+1. Clear peg c of all disks except eventually the final stack. But currently, peg c has d3. So we need to move d3 somewhere else temporarily to make room for d1 and d2. Wait, but d3 is part of the final stack. So maybe we need to move d3 to a temporary peg, then move d1 and d2 to c, then move d3 back on top of d2. But how?
+
+Alternatively, since the final stack on c should be d1, d2, d3, d4, d5, we need to have d1 at the bottom. So first, move d1 to c. But d1 is under d2 on peg b. So first, move d2 off of d1. Then move d1 to c. Then move d2 to c on top of d1. But to move d2, we need to place it somewhere temporarily. Let's see.
+
+So steps could be:
+
+1. Move d2 from d1 (peg b) to another peg. But where? The available pegs are a and c. Peg a has d4 (and was d5, but we moved d5 earlier). Wait, initially, peg a has d4 with d5 on top. Let's re-express the initial state after moving d5 and d4.
+
+Wait, perhaps I need to approach this step by step. Let me try to write down the initial state again clearly:
+
+Initial state:
+
+- Peg a: d4 (bottom), d5 (top)
+
+- Peg b: d1 (bottom), d2 (top)
+
+- Peg c: d3
+
+Goal: All disks on peg c in order d1, d2, d3, d4, d5.
+
+So first, we need to get d1 to c. But d1 is under d2 on peg b. So first, move d2 off peg b. To move d2, since it's on top of d1, we can move it to another peg. The possible destinations are a or c. But where can we place d2? Let's see:
+
+If we move d2 to peg a: Peg a currently has d4 and d5. The top disk is d5. Since d2 is heavier than d5, we can place d2 on peg a, but on top of d5? Wait, no. If we move d2 to peg a, we can place it on the peg itself, but since there are already disks there, we have to place it on top of the existing stack. The existing stack on a is d4 (bottom) and d5 (top). Since d5 is lighter than d2, we can place d2 on top of d5. But then, d2 would be on d5, which is lighter. Wait, no! The rule is that a disk cannot be placed on a lighter disk. So d2 is heavier than d5, so placing d2 on d5 is invalid. So we can't move d2 to peg a.
+
+If we try to move d2 to peg c: Peg c has d3. d2 is heavier than d3, so we can place d2 on d3. Wait, but the rule is that you can't place a heavier disk on a lighter one. So d2 is heavier than d3, so placing d2 on d3 is not allowed. Therefore, moving d2 to peg c is also invalid.
+
+Hmm, so we can't move d2 to either a or c. That's a problem. So we need to create space on another peg to temporarily hold d2. But how?
+
+Wait, the only other peg is a, but we can't put d2 there because of d5. So maybe we need to move d5 and d4 from a first. Let's think: To move d2 from b, we need to have a peg where the top disk is either a peg (empty) or a heavier disk. Since all other pegs have lighter disks on top, we need to free up a peg.
+
+So perhaps first, we need to move all disks from peg a (d4 and d5) to another peg, freeing up peg a. Then, we can use peg a as a temporary storage.
+
+So let's start by moving d5 from a to another peg. The options are b or c. Let's choose c. So:
+
+Step 1: Move d5 from a (on top of d4) to c (on top of d3). Now, peg a has d4, peg c has d3 and d5.
+
+Now, d4 is free to move. Let's move d4 from a to b. Wait, peg b has d1 and d2. The top disk is d2. Since d4 is lighter than d2, we can place d4 on top of d2.
+
+Step 2: Move d4 from a to b, placing it on top of d2. Now, peg b has d1, d2, d4. Peg a is empty.
+
+Now, we need to move d2 from b. But now, d4 is on top of d2. So we can't move d2 until we move d4. So perhaps we need to move d4 somewhere else. But where? The available pegs are a (empty) and c (d3, d5). So:
+
+Step 3: Move d4 from b to a. Since a is empty, we can place it there. Now, peg a has d4. Peg b has d1 and d2.
+
+Now, we can move d2 from b to a, but d4 is on a. Wait, no, d2 is heavier than d4, so we can place d2 on d4. Let's try:
+
+Step 4: Move d2 from b to a (on top of d4). But d2 is heavier than d4, so placing d2 on d4 is invalid. So that's not allowed. Therefore, moving d2 to a is not possible. So we need another approach.
+
+Alternatively, after step 2, peg b has d1, d2, d4. We need to move d2 off, but d4 is on top. So perhaps move d4 to c. Let's backtrack:
+
+After step 1: d5 on c, d4 on a.
+
+Step 2: move d4 from a to c. Wait, but c has d3 and d5. To place d4 on c, the top disk is d5. Since d4 is heavier than d5, we can't place d4 on d5. So invalid.
+
+Hmm, this is getting tricky. Let's try a different approach. Instead of moving d5 to c first, maybe move d5 to peg b. Let's try that.
+
+Alternative Step 1: Move d5 from a (on d4) to b (on d2). Since d5 is lighter than d2, this is allowed. Now, peg a has d4, peg b has d1, d2, d5. Peg c has d3.
+
+Now, d4 is free to move. Step 2: move d4 from a to c. Since c has d3, which is heavier than d4, we can place d4 on d3. Now, peg c has d3, d4.
+
+Now, we need to move d5 from b to somewhere. Let's move d5 to c. Step 3: move d5 from b (top of d2) to c (top of d4). Since d5 is lighter than d4, this is allowed. Now, peg c has d3, d4, d5. Peg b has d1, d2.
+
+Now, we need to move d2 from b to c. But c's top disk is d5. Since d2 is heavier than d5, we can't place d2 on d5. So we need to move d5 and d4 off of c to make room. Let's try moving d5 from c to a (which is empty). Step 4: move d5 from c to a. Now, peg a has d5. Peg c has d3, d4. Now, we can move d4 from c to a on top of d5, but since d4 is heavier than d5, we can't. Alternatively, move d4 to b. Step 4: move d4 from c to b. Now, peg b has d1, d2, d4. Peg c has d3. Then, move d5 from a to c (on d3). Now, peg c has d3, d5. Then move d4 from b to c. But d4 is lighter than d3, so we can place it on d3. Wait, peg c has d3 and d5. The top is d5. So to move d4 to c, we need to place it on d5, which is lighter. Not allowed. Hmm.
+
+This approach isn't working. Let me think again.
+
+The main problem is that we need to move d2 from b to c, but c's current top is either d3, d4, d5, or some combination. To place d2 on c, we need the top disk on c to be either empty (peg) or a heavier disk. Since d2 is heavier than d3, d4, d5, the only way to place d2 on c is if c is empty. But c already has d3. So we need to move d3 off c first. But where?
+
+Wait, d3 is on c initially. To move d3, we need to place it on a heavier disk. Since d3 is lighter than d2 and d1, but heavier than d4 and d5. So if we move d3 to a peg that has d1 or d2, but those are on b. Wait, peg b has d1 and d2. So if we move d3 to b, we can place it on top of d2 only if d2 is the top disk. But peg b currently has d1 and d2. Wait, in the initial setup, peg b has d1 and d2. After moving d5 to b in the alternative step 1, peg b has d1, d2, d5. Then moving d4 to c, then d5 to c, etc. Maybe this isn't the right path.
+
+Alternative approach: Let's consider that to move d1 to c, we need to first move all disks above d1 (which is d2) to other pegs. Then move d1 to c. Then move d2 on top of d1. But to move d2, we need to place it on a peg where the top disk is heavier. Since d2 is heavier than d3, d4, d5, the only possible place is on a peg that's empty or has a heavier disk. The only heavier disk is d1. So if we can move d2 to c (which will have d1 eventually), but first we need to move d1 to c.
+
+Wait, but d1 is under d2. So first, move d2 from b to somewhere. But as established earlier, we can't move d2 to a or c because of the existing disks. Therefore, we need to create a temporary peg that can hold d2. To do that, we need to move the disks on a (d4 and d5) to another peg, freeing up a. Then, we can use a to temporarily hold d2.
+
+Let's try this:
+
+Step 1: Move d5 from a to c. Now, peg a has d4, peg c has d3, d5.
+
+Step 2: Move d4 from a to b. Since b has d1 and d2, and d4 is lighter than d2, we can place d4 on d2. Now, peg b has d1, d2, d4.
+
+Step 3: Now, peg a is empty. Move d2 from b to a. Since a is empty, we can place d2 there. Now, peg a has d2. Peg b has d1, d4.
+
+Now, we can move d1 from b to c. Because c has d3 and d5. Wait, but we need to place d1 on c. The current top disk on c is d5. Since d1 is heavier than d5, we can place d1 on c. Wait, no. The rule says you can't place a disk on a lighter one. So d1 can't go on top of d5. Therefore, we need to move d3 and d5 off c first.
+
+So, to move d1 to c, we need c to be empty. So we need to move d3 and d5 from c to another peg. Let's see. Peg a has d2. Peg b has d1 and d4. So the only available peg is a or b. But moving d3 and d5:
+
+Step 4: Move d5 from c to b. Since b has d1 and d4. The top disk is d4, which is lighter than d5? Wait, d4 is lighter than d5? No, the order is d1 > d2 > d3 > d4 > d5. So d4 is heavier than d5. Therefore, we can place d5 on top of d4 on peg b. So step 4: move d5 from c to b (on d4). Now, peg b has d1, d4, d5. Peg c has d3.
+
+Step 5: Now, move d3 from c to a. Since a has d2. d3 is lighter than d2, so we can place d3 on d2. Step 5: move d3 from c to a (on d2). Now, peg a has d2, d3. Peg c is empty.
+
+Now, we can move d1 from b to c. Step 6: move d1 from b to c. Now, peg c has d1. Peg b has d4, d5.
+
+Now, we need to move d2 from a to c on top of d1. But peg a has d2 and d3. To move d2, we need to move d3 first.
+
+Step 7: Move d3 from a to b. Since b has d4, d5. d3 is heavier than d4 and d5, so we can place d3 on top of d5. Wait, no. d3 is heavier than d4 and d5, so placing d3 on top of d5 (lighter) is invalid. So can't do that. Alternatively, move d3 to peg c. But c has d1. d3 is lighter than d1, so we can place d3 on d1. Step 7: move d3 from a to c (on d1). Now, peg c has d1, d3. Peg a has d2.
+
+Now, we can move d2 from a to c. Step 8: move d2 from a to c (on d3). Since d2 is heavier than d3, this is invalid. So we need to move d3 off c first. So step 7 alternative: instead of moving d3 to c, move it to b. But as before, peg b has d4 and d5. d3 is heavier than both, so can't place on top. So we're stuck.
+
+This is getting too complicated. Maybe there's a better sequence.
+
+Let me try a different initial approach. Since the final stack on c should be d1, d2, d3, d4, d5, and currently d3 is already on c, maybe we need to build the stack around d3. But d3 is lighter than d2 and d1, so they need to be below d3. Wait, no. The heaviest must be at the bottom. So d1 must be at the bottom, then d2, then d3, then d4, then d5.
+
+Since d3 is already on c, but we need d1 and d2 below it. That's impossible because d3 is lighter than d2 and d1. So we need to move d3 off c temporarily, place d1 and d2 on c, then move d3 back on top of d2. Similarly for d4 and d5.
+
+So the plan might involve:
+
+1. Move d3 from c to another peg to make room for d1 and d2.
+
+2. Move d1 and d2 to c.
+
+3. Move d3 back on top of d2.
+
+4. Then move d4 and d5 from their current locations to c.
+
+But how to execute this.
+
+First, moving d3 from c. To move d3, we can place it on a peg where the top disk is heavier. The only heavier disks are d1 and d2, which are on b. So to place d3 on top of d2, but d2 is under d1. Wait, peg b has d1 and d2. So if we move d3 to b, we can place it on top of d2, but d3 is lighter than d2, so allowed. Wait, no, the rule is you can place a lighter disk on a heavier one. So yes, placing d3 on d2 is allowed. Let's try:
+
+Step 1: Move d3 from c to b (on top of d2). Now, peg b has d1, d2, d3. Peg c is empty.
+
+Now, we can move d2 from b to c. But wait, d2 is under d3. So to move d2, we need to move d3 first. So step 2: move d3 from b to a. Since a has d4 and d5. Wait, no, peg a has d4 and d5 initially. Wait, initial state is peg a has d4 and d5. So if we move d3 to a, we need to place it on top of d5. d3 is heavier than d5, so that's invalid. Can't do that. Alternatively, move d3 to peg a, but since a has d4 and d5, we need to clear them first.
+
+This seems like a dead end. Let's consider that the key is to first move the smaller disks (d5, d4, d3) to temporary pegs so that we can free up d1 and d2.
+
+Alternatively, think recursively: the largest disk that needs to be moved is d1. To move d1 to c, we need to move all disks above it (d2) to another peg. To move d2, we need to move the disks above it (none), but also have a place to put d2. Since d2 is heavier than d3, d4, d5, we need to move those disks to other pegs so that d2 can be placed on c after d1.
+
+This is similar to the classic Tower of Hanoi problem where you have to move n-1 disks to a temporary peg. But here, the initial positions are different.
+
+Let me try to outline the steps:
+
+1. Move d5 from a to c. (Since d5 is on d4, move it to c on d3.)
+
+2. Move d4 from a to b. (On top of d2, which is allowed since d4 < d2.)
+
+3. Move d5 from c to b. (On top of d4.)
+
+4. Now, peg a is empty, peg b has d1, d2, d4, d5; peg c has d3.
+
+5. Move d3 from c to a. (Now, c is empty.)
+
+6. Move d1 from b to c. (Now, c has d1.)
+
+7. Move d2 from b to a. (But a has d3. d2 > d3, so can't place d2 on d3. So need to move d3 first.)
+
+8. Move d3 from a to b. (But b has d4 and d5. d3 > d4 and d5, so can't place on top. So this is invalid.)
+
+Hmm, not working. Let's try again.
+
+Alternative approach inspired by Tower of Hanoi:
+
+The target is to have all disks on c. The largest disk d1 must be at the bottom. To get d1 to c, we need to move d2 off b, then move d1. To move d2, we need to move any disks above it (none), but also have a place to put d2. Since d2 is heavier than d3, d4, d5, we need to move those to other pegs.
+
+So steps:
+
+1. Move d5 from a to c. (c now has d3, d5.)
+
+2. Move d4 from a to c. (But can't, since d5 is lighter. So first move d5 from c to b.)
+
+3. Move d5 from c to b. (Now, c has d3; b has d2, d5.)
+
+4. Move d4 from a to c. (Now, c has d3, d4.)
+
+5. Move d5 from b to c. (Now, c has d3, d4, d5.)
+
+6. Now, peg a is empty. Move d2 from b to a. (Now, a has d2; b has d1.)
+
+7. Move d1 from b to c. (Now, c has d1; need to move d2, d3, d4, d5 onto d1.)
+
+8. Move d2 from a to c. (But c's top is d1. d2 < d1? No, d2 is lighter than d1. Wait, d1 is heavier. Wait, no: the order is d1 > d2 > d3 > d4 > d5. So d2 is lighter than d1. So placing d2 on d1 is allowed. Wait, no, the rule is you can't place a disk on a lighter one. Wait, d2 is lighter than d1, so placing d2 on d1 is allowed. Because d1 is heavier. So step 8: move d2 from a to c (on d1). Now, c has d1, d2.
+
+9. Now, move d3 from c (current top is d2) to a. Because to get d3 on top of d2, but d3 is lighter than d2. Wait, no, d3 is lighter than d2, so placing d3 on d2 is allowed. Wait, no, you can't place a lighter disk on a heavier one. Wait, the rule is that you can't place a heavier disk on a lighter one. So placing a lighter disk on a heavier one is allowed. So yes, you can place d3 on d2. So maybe step 9: move d3 from c to a. Wait, no. c has d1, d2. The top is d2. To move d3, which is on d4, which is on d3. Wait, I'm getting confused. Let's retrace.
+
+After step 7, c has d1. Then step 8: move d2 from a to c on d1. Now, c has d1, d2. The other disks are d3, d4, d5 on c (wait, no, after step 5, c has d3, d4, d5. Then step 6: move d2 from b to a. Then step 7: move d1 from b to c. Then step 8: move d2 to c. Now, c has d1, d2. Then we need to move d3, d4, d5 from where? After step 5, c has d3, d4, d5. Then step 6: moving d2 from b to a. But wait, after step 5, peg b has d1 and d5? Wait, no. Let me re-express the steps clearly:
+
+Let me start over with a clear step-by-step plan.
+
+1. Move d5 from a to c. Now, a has d4; c has d3, d5.
+
+2. Move d4 from a to b. b has d1, d2; placing d4 on d2 (lighter than d4? No, d4 is lighter than d2. Wait, d2 is heavier than d3, so d4 is lighter than d2. So yes, can place d4 on d2. Now, b has d1, d2, d4.
+
+3. Move d5 from c to b. Now, b has d1, d2, d4, d5. c has d3.
+
+4. Move d3 from c to a. a is empty, so now a has d3.
+
+5. Now, move d1 from b to c. To do this, need to move d2, d4, d5 off b. But they are on top of d1. So first, move d5 from b to a (which has d3). But d5 is lighter than d3, so can place on d3.
+
+6. Move d5 from b to a. a now has d3, d5.
+
+7. Move d4 from b to c. c has d1, d4. Wait, no: after step 5, moving d1 to c would make c have d1. But wait, step 5 hasn't happened yet. Let me correct.
+
+After step 4: a has d3; b has d1, d2, d4, d5; c is empty.
+
+Wait, no. Step 1: d5 to c (d3, d5). Step 2: d4 to b (d1, d2, d4). Step 3: d5 to b (d1, d2, d4, d5). Step 4: d3 to a (a has d3). Now, c is empty. So step 5: move d1 from b to c. To do that, we need to move d2, d4, d5 off b.
+
+But d1 is at the bottom of b, with d2, d4, d5 on top. So to move d1, we need to first move d5, d4, d2.
+
+Starting with step 5: need to move d5 from b to a. a has d3. d5 is lighter than d3, so can place on d3. Step 5: move d5 from b to a. Now, a has d3, d5; b has d1, d2, d4.
+
+Step 6: move d4 from b to c. c is empty, so d4 goes there. Now, b has d1, d2; c has d4.
+
+Step 7: move d5 from a to c. d5 is lighter than d4, so can place on d4. Now, c has d4, d5; a has d3.
+
+Step 8: move d2 from b to a. a has d3. d2 is heavier than d3, so can't place on d3. So need to move d3 first. Move d3 from a to c. c has d4, d5. d3 is heavier than d4 and d5, so can't place on them. So invalid. Hmm.
+
+Alternatively, move d2 from b to c. c has d4, d5. d2 is heavier than d4 and d5, so can't place on them. So invalid.
+
+So stuck again. This is really challenging.
+
+Perhaps a better approach is to realize that this problem requires a sequence similar to the Tower of Hanoi, but with a different initial configuration. Let's think of the disks in terms of their sizes:
+
+Desired order on c: d1 (heaviest), d2, d3, d4, d5 (lightest).
+
+Currently:
+
+- d1 and d2 are on b, with d2 on top.
+
+- d3 is on c.
+
+- d4 and d5 are on a, with d5 on top.
+
+To build the tower on c, we need d1 at the bottom. So first, we need to move d1 to c. To do that, we need to move d2 off b. To move d2, we need to have a place to put it. The only way is to move the smaller disks (d3, d4, d5) to act as temporary storage.
+
+Let's try:
+
+1. Move d5 from a to c. Now, a has d4; c has d3, d5.
+
+2. Move d4 from a to b. b has d1, d2; can place d4 on d2 (since d4 is lighter than d2). Now, b has d1, d2, d4.
+
+3. Move d5 from c to b. Now, b has d1, d2, d4, d5; c has d3.
+
+4. Move d3 from c to a. Now, a has d3; c is empty.
+
+5. Now, move d1 from b to c. But b has d2, d4, d5 on top of d1. So need to move them first.
+
+6. Move d5 from b to a. a has d3; d5 can be placed on d3. Now, a has d3, d5; b has d1, d2, d4.
+
+7. Move d4 from b to c. c is empty, so d4 goes there. Now, c has d4; b has d1, d2.
+
+8. Move d5 from a to c. c has d4; d5 is lighter, so can be placed on d4. Now, c has d4, d5.
+
+9. Move d2 from b to a. a has d3, d5. Can't place d2 on d5 (heavier). So need to move d5 and d3 first.
+
+10. Move d5 from a to b. b has d1, d2; can place d5 on d2 (lighter). Now, a has d3; b has d1, d2, d5.
+
+11. Move d3 from a to c. c has d4, d5. Can't place d3 on d5. So move d5 from c to a. Now, c has d4; a has d5.
+
+12. Move d3 from a to c. Wait, a has d5 and d3. No, after step 10, a has d3 and step 11 moved d5 to a? Wait, let's retrace:
+
+Step 9: Move d2 from b to a. But a has d3, d5. So step 9 is invalid. This is getting too tangled. I think I need to find a systematic way, perhaps using the Tower of Hanoi algorithm but adapted.
+
+In Tower of Hanoi, for n disks, the minimal moves are 2^n - 1. Here, we have 5 disks, but the initial configuration is different. The key is that some disks are already in the target peg (d3 on c), but they need to be moved off to allow heavier disks.
+
+Alternatively, think of this as two separate Tower of Hanoi problems: one for the stack on a (d4, d5), and another for the stack on b (d1, d2). We need to move both to c, but considering the weight restrictions.
+
+Let's tackle the stack on a first: d4 and d5. Since they are lighter than d3, we can move them to c once d3 is moved. But d3 is already on c, so we need to move d3 off first.
+
+So:
+
+1. Move d5 from a to b. b has d1, d2. d5 is lighter than d2, so can be placed on d2. Now, a has d4; b has d1, d2, d5; c has d3.
+
+2. Move d4 from a to c. d4 is lighter than d3, so can be placed on d3. Now, c has d3, d4.
+
+3. Move d5 from b to c. d5 is lighter than d4, so can be placed on d4. Now, c has d3, d4, d5.
+
+Now, the stack on a is empty. The stack on b is d1, d2, d5. Wait, no, after step 1, b has d1, d2, d5. Then step 2: move d4 to c. Then step 3: move d5 from b to c. Now, c has d3, d4, d5. But we need to move d1 and d2 to c.
+
+Next steps:
+
+4. Move d5 from c to a. Now, a has d5; c has d3, d4.
+
+5. Move d4 from c to b. b has d1, d2, d4. d4 is lighter than d2, so allowed.
+
+6. Move d5 from a to b. b has d1, d2, d4, d5.
+
+7. Now, c has d3. Move d3 from c to a. a has d5, so move d5 first.
+
+8. Move d5 from a to b. Already done in step 6. Hmm, this isn't working.
+
+Alternative approach after step 3 (c has d3, d4, d5):
+
+4. Now, we need to move d2 and d1 to c. To move d2, we need to move d5 and d4 from c. Let's move d5 and d4 back to a.
+
+4. Move d5 from c to a. a has d5.
+
+5. Move d4 from c to a. a has d4, d5.
+
+6. Now, c has d3. Move d3 from c to b. b has d1, d2, d5. But d3 is lighter than d2, so can be placed on d2. Now, b has d1, d2, d3, d5.
+
+7. Now, c is empty. Move d1 from b to c. Now, c has d1.
+
+8. Move d2 from b to c. But b has d3 and d5 on top of d2. So need to move them first.
+
+This is too convoluted. Maybe there's a better way.
+
+Let's try to find a valid sequence:
+
+1. Move d5 from a to c. (c: d3, d5)
+
+2. Move d4 from a to b. (b: d1, d2, d4)
+
+3. Move d5 from c to b. (b: d1, d2, d4, d5)
+
+4. Move d3 from c to a. (a: d3)
+
+5. Move d1 from b to c. (c: d1)
+
+6. Move d2 from b to a. (a: d3, d2) [Invalid, since d2 is heavier than d3. Can't place d2 on d3.]
+
+Ah, step 6 is invalid. So need to move d3 from a first.
+
+5. After step 4: a has d3, c is empty. Move d1 from b to c. (c: d1)
+
+6. Now, move d3 from a to c. (c: d1, d3)
+
+7. Move d2 from b to a. (a: d2)
+
+8. Move d3 from c to a. (a: d2, d3) [Invalid, since d3 is lighter than d2, so can't place on d2.]
+
+No good. Another approach:
+
+After step 5 (c has d1), we need to move d2 to c. But to do that, we need to move d4 and d5 from b.
+
+5. Move d5 from b to a. (a: d3, d5)
+
+6. Move d4 from b to c. (c: d1, d4)
+
+7. Move d5 from a to c. (c: d1, d4, d5)
+
+8. Now, move d2 from b to a. (a: d3, d2) [Invalid.]
+
+This is frustrating. Let's try using a different initial step.
+
+Alternative step 1: Move d5 from a to b. (b: d1, d2, d5)
+
+Step 2: Move d4 from a to c. (c: d3, d4)
+
+Step 3: Move d5 from b to c. (c: d3, d4, d5)
+
+Step 4: Move d3 from c to a. (a: d3)
+
+Step 5: Move d4 from c to b. (b: d1, d2, d4)
+
+Step 6: Move d5 from c to b. (b: d1, d2, d4, d5)
+
+Step 7: Move d3 from a to c. (c: d3)
+
+Step 8: Move d1 from b to c. (c: d1, d3) [Can't place d1 on d3, since d1 is heavier.]
+
+No, step 8 is invalid. d1 needs to go to an empty peg or on a heavier disk. So move d3 first.
+
+Step 7: Move d3 from a to b. (b: d1, d2, d4, d5, d3) [Invalid, since d3 is lighter than d4.]
+
+This isn't working. I think I need to look for a different strategy altogether.
+
+Perhaps the key is to realize that d3 is already on c, which is part of the final stack. So instead of moving d3 away, we need to build the lower part of the tower (d1, d2) below d3. But since d3 is lighter than d2, this is impossible. Therefore, we have to move d3 off c, build the lower part with d1 and d2, then put d3, d4, d5 on top.
+
+So the plan is:
+
+1. Move d3 from c to another peg (a or b).
+
+2. Move d1 and d2 to c.
+
+3. Move d3 back on top of d2.
+
+4. Move d4 and d5 to c.
+
+Let's try this:
+
+Step 1: Move d3 from c to a. (a: d3, d4, d5) [Invalid, because d3 is heavier than d4 and d5. Can't place d3 on d4.]
+
+So need to first move d4 and d5 from a.
+
+Step 1: Move d5 from a to b. (b: d1, d2, d5)
+
+Step 2: Move d4 from a to c. (c: d3, d4)
+
+Step 3: Move d5 from b to c. (c: d3, d4, d5)
+
+Step 4: Now, a is empty. Move d3 from c to a. (a: d3)
+
+Step 5: Move d4 from c to b. (b: d1, d2, d4)
+
+Step 6: Move d5 from c to b. (b: d1, d2, d4, d5)
+
+Step 7: Now, c is empty. Move d1 from b to c. (c: d1)
+
+Step 8: Move d2 from b to c. (c: d1, d2)
+
+Step 9: Move d3 from a to c. (c: d1, d2, d3)
+
+Step 10: Move d4 from b to a. (a: d4)
+
+Step 11: Move d5 from b to a. (a: d4, d5)
+
+Step 12: Move d4 from a to c. (c: d1, d2, d3, d4)
+
+Step 13: Move d5 from a to c. (c: d1, d2, d3, d4, d5)
+
+This seems to work. Let's check each step for validity:
+
+1. Move d5 from a to b: a has d4, d5. Moving d5 to b (d1, d2). Since d5 < d2, allowed. Now b: d1, d2, d5.
+
+2. Move d4 from a to c: c has d3. d4 < d3, so allowed. c: d3, d4.
+
+3. Move d5 from b to c: d5 < d4, so allowed. c: d3, d4, d5.
+
+4. Move d3 from c to a: a is empty. Valid. a: d3.
+
+5. Move d4 from c to b: c has d3, d4, d5. Moving d4 to b (d1, d2, d5). d4 < d2, so allowed. b: d1, d2, d4, d5.
+
+6. Move d5 from c to b: d5 < d4, allowed. b: d1, d2, d4, d5. c: d3.
+
+7. Move d1 from b to c: c is empty. Valid. c: d1.
+
+8. Move d2 from b to c: c has d1. d2 < d1? No, d2 is lighter than d1. Wait, no. The rule is you can place a disk on another if it's lighter. So since d2 is lighter than d1, placing d2 on d1 is allowed. So valid. c: d1, d2.
+
+9. Move d3 from a to c: c has d1, d2. d3 < d2, so allowed. c: d1, d2, d3.
+
+10. Move d4 from b to a: a is empty. Valid. a: d4.
+
+11. Move d5 from b to a: a has d4. d5 < d4, so allowed. a: d4, d5.
+
+12. Move d4 from a to c: c has d1, d2, d3. d4 < d3, so allowed. c: d1, d2, d3, d4.
+
+13. Move d5 from a to c: c has d4. d5 < d4, allowed. c: d1, d2, d3, d4, d5.
+
+Yes! This sequence works. Let's verify each step:
+
+- All moves adhere to the rules: no disk is placed on a lighter one, and only the top disk is moved.
+
+- Final state: all disks on c in order d1, d2, d3, d4, d5.
+
+So the plan is as follows:
+
+1. Move d5 from a to b.
+
+2. Move d4 from a to c.
+
+3. Move d5 from b to c.
+
+4. Move d3 from c to a.
+
+5. Move d4 from c to b.
+
+6. Move d5 from c to b.
+
+7. Move d1 from b to c.
+
+8. Move d2 from b to c.
+
+9. Move d3 from a to c.
+
+10. Move d4 from b to a.
+
+11. Move d5 from b to a.
+
+12. Move d4 from a to c.
+
+13. Move d5 from a to c.
+
+To stack all disks on peg c in the order d1, d2, d3, d4, d5 (heaviest to lightest), follow these steps:
+
+Move d5 from peg a to peg b.
+(This frees d4 on a and places d5 on top of d2 on b.)
+
+Move d4 from peg a to peg c.
+(Places d4 on top of d3, which is heavier.)
+
+Move d5 from peg b to peg c.
+(Now, c has d3, d4, d5, and a is empty.)
+
+Move d3 from peg c to peg a.
+(Clears c for heavier disks.)
+
+Move d4 from peg c to peg b.
+(Prepares to move d5 later.)
+
+Move d5 from peg c to peg b.
+(Now, b has d1, d2, d4, d5.)
+
+Move d1 from peg b to peg c.
+(D1, the heaviest, is now at the base of c.)
+
+Move d2 from peg b to peg c.
+(D2 goes on top of d1 on c.)
+
+Move d3 from peg a to peg c.
+(D3 is placed on d2, which is heavier.)
+
+Move d4 from peg b to peg a.
+(Frees d4 from b to later move to c.)
+
+Move d5 from peg b to peg a.
+(Prepares to stack d4 and d5 on c.)
+
+Move d4 from peg a to peg c.
+(D4 is placed on d3, which is heavier.)
+
+Move d5 from peg a to peg c.
+(Final move places d5 on d4, completing the stack.)
+
+Final Configuration on peg c:
+d1 (bottom), d2, d3, d4, d5 (top).

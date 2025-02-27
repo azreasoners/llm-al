@@ -1,0 +1,161 @@
+
+Okay, so I need to figure out how to move all the disks from peg a to peg c, right? Let me start by recalling the problem details. There are three disks: d1, d2, d3. They're stacked on peg a with d1 at the bottom, then d2, then d3 on top. The heaviest is d1, then d2, then d3. The pegs are a, b, c. The rules are that you can't put a heavier disk on a lighter one, and you can only move a disk if there's nothing on top of it.
+
+Hmm, this is similar to the Tower of Hanoi problem. Wait, but in the classic Tower of Hanoi, the disks are in order of size, with the largest at the bottom. But here, the weights are ordered such that d1 is heaviest, then d2, then d3. So even though d1 is the bottom disk (physically largest?), in terms of weight, it's the heaviest. So the rules still apply the same way: you can't place a heavier disk on a lighter one. So even if the physical size is different, the weight determines the stacking.
+
+Wait, but in the problem description, the initial setup is d1 on peg a, d2 on d1, and d3 on d2. So the order from bottom to top is d1, d2, d3, which is from heaviest to lightest. So that's a valid stack. But we need to move them all to peg c, maintaining the same order? Or just stack them in any order as long as heavier disks are below lighter ones. But since the problem says "stack all disks on peg c", I assume the goal is to have them all on peg c in a tower where each disk is lighter than the one below it. So the order from bottom to top on peg c should be d1, d2, d3, just like the initial state on peg a. But since the problem says "ordered stack", perhaps the desired order is heaviest at the bottom, so d1, d2, d3.
+
+But the problem statement just says "stack all disks on peg c", so I think the standard Tower of Hanoi applies here. Wait, but in the classic problem, the disks are ordered by size, with the largest at the bottom. Here, the order of heaviness is d1 > d2 > d3. So even if d3 is on top, it's the lightest. So moving them would require the same steps as the Tower of Hanoi. Let's think: the solution for 3 disks in Tower of Hanoi requires 7 moves. Let's verify.
+
+The steps for Tower of Hanoi with 3 disks:
+
+1. Move top disk (smallest) from source to target.
+
+2. Move middle disk to auxiliary.
+
+3. Move smallest disk to auxiliary.
+
+4. Move largest disk to target.
+
+5. Move smallest to source.
+
+6. Move middle to target.
+
+7. Move smallest to target.
+
+But in this case, the source peg is a, target is c, and auxiliary is b. Wait, but let me make sure the order here. Let me think again.
+
+Wait, in the classic solution, the steps are as follows for moving 3 disks from A to C:
+
+1. Move disk 1 (smallest) from A to C.
+
+Wait no, maybe I need to get this right. Let me recall the recursive approach. To move n disks from A to C using B as auxiliary:
+
+- Move n-1 disks from A to B, using C as auxiliary.
+
+- Move the nth disk from A to C.
+
+- Move n-1 disks from B to C, using A as auxiliary.
+
+So for n=3:
+
+First, move top 2 disks (d2 and d3) from A to B, using C as auxiliary. Then move d1 from A to C. Then move the two disks from B to C.
+
+But wait, the actual steps for 3 disks would be:
+
+1. Move d3 from A to C.
+
+2. Move d2 from A to B.
+
+3. Move d3 from C to B.
+
+4. Move d1 from A to C.
+
+5. Move d3 from B to A.
+
+6. Move d2 from B to C.
+
+7. Move d3 from A to C.
+
+Wait, but in this problem, the disks are ordered d1 (heaviest) at the bottom, then d2, then d3 (lightest). So the initial stack is d1 (A), d2 (on d1), d3 (on d2). So the top disk is d3, which is the lightest. So the steps would be similar to Tower of Hanoi, but the names are different here. Let me map this correctly.
+
+In the classic problem, the disks are numbered 1 (smallest) to n (largest). Here, d1 is the heaviest (like the largest), d2 next, d3 lightest (smallest). So the order is d1 (heaviest) at the bottom, d2, then d3. So the order from bottom to top is d1, d2, d3. So moving them to peg c would require the same steps as moving 3 disks in Tower of Hanoi, with the largest at the bottom.
+
+Wait, but in the classic problem, the smallest disk is the topmost, so here d3 is the lightest and topmost. So the steps would be:
+
+1. Move d3 (lightest) from a to c.
+
+But wait, in the classic solution, the first move is to move the smallest disk to the target peg. But maybe here, the target is c, so perhaps the first move should be to move d3 to another peg. Wait, perhaps I should think recursively.
+
+The goal is to move all three disks from a to c. The steps would be:
+
+- Move d2 and d3 from a to b (using c as auxiliary).
+
+- Move d1 from a to c.
+
+- Move d2 and d3 from b to c (using a as auxiliary).
+
+But how to move d2 and d3 from a to b? That's similar to moving two disks. So:
+
+To move two disks (d2 and d3) from a to b:
+
+- Move d3 from a to c.
+
+- Move d2 from a to b.
+
+- Move d3 from c to b.
+
+Then move d1 from a to c.
+
+Then move the two disks (d2 and d3) from b to c:
+
+- Move d3 from b to a.
+
+- Move d2 from b to c.
+
+- Move d3 from a to c.
+
+So total steps:
+
+1. Move d3 from a to c.
+
+2. Move d2 from a to b.
+
+3. Move d3 from c to b.
+
+4. Move d1 from a to c.
+
+5. Move d3 from b to a.
+
+6. Move d2 from b to c.
+
+7. Move d3 from a to c.
+
+But wait, let's check each move for validity. The rules are that a disk can't be moved if there's something on top, and can't be placed on a lighter disk.
+
+In step 1: Moving d3 (lightest) from a to c. Since d3 is on top, it's allowed. c is a peg (which is a location), so that's fine. Now, a has d1, d2. c has d3. b is empty.
+
+Step 2: Move d2 from a to b. d2 is now on top of a (since d3 was moved). So moving d2 is allowed. Place on b. Now, a has d1, b has d2, c has d3.
+
+Step 3: Move d3 from c to b. Since d3 is lighter than d2 (d2 is heavier than d3), placing d3 on top of d2 is allowed. Now, b has d2 with d3 on top. a has d1. c is empty.
+
+Step4: Move d1 from a to c. d1 is heaviest, so can be placed on c (empty). Now, c has d1. a is empty. b has d2 and d3.
+
+Step5: Move d3 from b to a. d3 is on top of d2, so can be moved. Place on a (empty). Now, a has d3. b has d2. c has d1.
+
+Step6: Move d2 from b to c. d2 is lighter than d1 (since d1 is heaviest), so placing d2 on d1 is allowed. Now, c has d1, d2. a has d3. b is empty.
+
+Step7: Move d3 from a to c. d3 is lighter than d2, so placing on d2 is allowed. Now, c has d1, d2, d3. Success.
+
+Each step follows the rules: no disk is moved with something on top, and no heavier disk is placed on a lighter one.
+
+So the plan is seven steps as above.
+
+To stack all disks on peg c, follow these steps:
+
+Move d3 from a to c.
+(Now, a has d1, d2; c has d3.)
+
+Move d2 from a to b.
+(a has d1; b has d2; c has d3.)
+
+Move d3 from c to b.
+(a has d1; b has d2, d3; c is empty.)
+
+Move d1 from a to c.
+(a is empty; b has d2, d3; c has d1.)
+
+Move d3 from b to a.
+(a has d3; b has d2; c has d1.)
+
+Move d2 from b to c.
+(a has d3; c has d1, d2; b is empty.)
+
+Move d3 from a to c.
+(All disks are now on c: d1 (bottom), d2, d3 (top).)
+
+Final State:
+
+Peg c has disks stacked as d1, d2, d3 (heaviest to lightest).
+
+Pegs a and b are empty.
